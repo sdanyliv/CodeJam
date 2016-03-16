@@ -32,5 +32,4 @@ _ReSharper*/
 !*.dll
 !*.exe
 !*.pdb
-!packages/**
 packages/
