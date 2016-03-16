@@ -10,7 +10,7 @@
         <dependencies />
     </metadata>
     <files>
-        <file src="src\bin\Release\CodeJam.Main.dll" target="lib\CodeJam.Main.dll" />
-        <file src="src\bin\Release\CodeJam.Main.pdb" target="lib\CodeJam.Main.pdb" />
+        <file src="bin\Release\CodeJam.Main.dll" target="lib\CodeJam.Main.dll" />
+        <file src="bin\Release\CodeJam.Main.pdb" target="lib\CodeJam.Main.pdb" />
     </files>
 </package>

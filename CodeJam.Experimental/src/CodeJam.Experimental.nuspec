@@ -9,7 +9,7 @@
         <description>CodeJam .NET library - experimental part</description>
     </metadata>
     <files>
-        <file src="src\bin\Release\CodeJam.Experimental.dll" target="lib\CodeJam.Experimental.dll" />
-        <file src="src\bin\Release\CodeJam.Experimental.pdb" target="lib\CodeJam.Experimental.pdb" />
+        <file src="bin\Release\CodeJam.Experimental.dll" target="lib\CodeJam.Experimental.dll" />
+        <file src="bin\Release\CodeJam.Experimental.pdb" target="lib\CodeJam.Experimental.pdb" />
     </files>
 </package>
