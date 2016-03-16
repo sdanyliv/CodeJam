@@ -12,14 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam.Experimental-Tests", "CodeJam.Experimental\tests\CodeJam.Experimental-Tests.csproj", "{F6F97573-4D26-4217-89F6-819DF96FCB4A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{C99F66F0-32AA-45EB-B112-D18498754A6B}"
-	ProjectSection(SolutionItems) = preProject
-		CodeJam.Main\CodeJam.Main.nuspec = CodeJam.Main\CodeJam.Main.nuspec
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Experimental", "Experimental", "{D56CF63D-0A29-4F5A-8E2C-0DAF338119EE}"
-	ProjectSection(SolutionItems) = preProject
-		CodeJam.Experimental\CodeJam.Experimental.nuspec = CodeJam.Experimental\CodeJam.Experimental.nuspec
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
