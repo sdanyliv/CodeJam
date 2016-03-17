@@ -1,5 +1,10 @@
-﻿namespace CodeJam
+﻿using System;
+
+using JetBrains.Annotations;
+
+namespace CodeJam
 {
+	[PublicAPI]
 	public static partial class StringExtensions
 	{
 		/// <summary>
@@ -32,6 +37,21 @@
 		public static bool NotNullNorWhiteSpace(this string str)
 		{
 			return !string.IsNullOrWhiteSpace(str);
+		}
+
+		/// <summary>
+		/// Replaces the format items in a specified string with the string representations 
+		///  of corresponding objects in a specified array.
+		/// A parameter supplies culture-specific formatting information.
+		/// </summary>
+		/// <param name="format">A composite format string.</param>
+		/// <param name="args">An object array that contains zero or more objects to format.</param>
+		/// <returns></returns>
+		[StringFormatMethod("format")]
+		public static string Args(this string format, params object[] args)
+		{
+			var a = $"{args}";
+			return string.Format(format, args);
 		}
 	}
 }
