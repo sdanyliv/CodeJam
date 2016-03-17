@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using JetBrains.Annotations;
 
 namespace CodeJam
 {
+	/// <summary>
+	/// <see cref="Array"/> class extensions.
+	/// </summary>
+	[PublicAPI]
 	public static class ArrayExtensions
 	{
 		public static ReadOnlyCollection<T> AsReadOnly<T>(this T[] array) => Array.AsReadOnly(array);
