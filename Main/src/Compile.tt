@@ -1,0 +1,50 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cmd" #>
+<#
+
+	var msBuildExe      = @"%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe";
+	var projectName     = "CodeJam.Main";
+
+	var projects = new[]
+	{
+		new ProjectInfo("4.0",   "v4.0",   "FW40"),
+		new ProjectInfo("4.5",   "v4.5",   "FW45"),
+		new ProjectInfo("4.5.1", "v4.5.1", "FW451"),
+		new ProjectInfo("4.5.2", "v4.5.2", "FW452"),
+		new ProjectInfo("4.6",   "v4.6",   "FW6"),
+		new ProjectInfo("4.6.1", "v4.6.1", "FW61"),
+	};
+
+#>
+<#
+	foreach (var p in projects)
+	{
+#>
+"<#= msBuildExe #>" <#= projectName #>.csproj /target:Clean   /property:Configuration=Debug   /property:OutputPath=bin\Debug.<#= p.OutputPath #>\
+"<#= msBuildExe #>" <#= projectName #>.csproj /target:Clean   /property:Configuration=Release /property:OutputPath=bin\Release.<#= p.OutputPath #>\
+"<#= msBuildExe #>" <#= projectName #>.csproj /target:ReBuild /property:Configuration=Debug   /property:OutputPath=bin\Debug.<#= p.OutputPath #>\   /property:TargetFrameworkVersion=<#= p.TargetFramework #> /p:DefineConstants=<#= p.DefineConstants #>
+"<#= msBuildExe #>" <#= projectName #>.csproj /target:ReBuild /property:Configuration=Release /property:OutputPath=bin\Release.<#= p.OutputPath #>\ /property:TargetFrameworkVersion=<#= p.TargetFramework #> /p:DefineConstants=<#= p.DefineConstants #>
+
+<#
+	}
+#>
+<#+
+class ProjectInfo
+{
+	public ProjectInfo(string outputPath, string targetFramework, string defineConstants)
+	{
+		OutputPath      = outputPath;
+		TargetFramework = targetFramework;
+		DefineConstants = defineConstants;
+	}
+
+	public string OutputPath;
+	public string TargetFramework;
+	public string DefineConstants;
+}
+#>
+
