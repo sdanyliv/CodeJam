@@ -45,13 +45,13 @@ namespace CodeJam
 		/// <summary>
 		/// Replaces the format items in a specified string with the string representations 
 		///  of corresponding objects in a specified array.
-		/// A parameter supplies culture-specific formatting information.
 		/// </summary>
 		/// <param name="format">A composite format string.</param>
 		/// <param name="args">An object array that contains zero or more objects to format.</param>
-		/// <returns></returns>
+		/// <returns>A copy of format in which the format items have been replaced by the string representation of the corresponding objects in args</returns>
 		[StringFormatMethod("format")]
 		[NotNull]
+		//TODO: The nethod name looks ugly. May be better to name it Expand or ExpandArgs or Apply or Substitute or Evaluate
 		public static string Args([NotNull] this string format, params object[] args)
 		{
 			return string.Format(format, args);
