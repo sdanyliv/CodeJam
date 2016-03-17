@@ -50,7 +50,6 @@ namespace CodeJam
 		[StringFormatMethod("format")]
 		public static string Args(this string format, params object[] args)
 		{
-			var a = $"{args}";
 			return string.Format(format, args);
 		}
 	}
