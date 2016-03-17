@@ -33,11 +33,13 @@ namespace CodeJam
 				var ca = CharAt(a, ia);
 				var cb = CharAt(b, ib);
 
-				if (!char.IsDigit(ca) && !char.IsDigit(cb))
+				var caIsDigit = ca.IsDigit();
+				var cbIsDigit = cb.IsDigit();
+				if (!caIsDigit && !cbIsDigit)
 					return bias;
-				if (!char.IsDigit(ca))
+				if (!caIsDigit)
 					return -1;
-				if (!char.IsDigit(cb))
+				if (!cbIsDigit)
 					return +1;
 				if (ca < cb)
 				{
@@ -72,7 +74,7 @@ namespace CodeJam
 				var cb = CharAt(b, ib);
 
 				// skip over leading spaces or zeros
-				while (char.IsWhiteSpace(ca) || ca == '0')
+				while (ca.IsWhiteSpace() || ca == '0')
 				{
 					if (ca == '0')
 						nza++;
@@ -83,7 +85,7 @@ namespace CodeJam
 					ca = CharAt(a, ++ia);
 				}
 
-				while (char.IsWhiteSpace(cb) || cb == '0')
+				while (cb.IsWhiteSpace() || cb == '0')
 				{
 					if (cb == '0')
 						nzb++;
@@ -95,7 +97,7 @@ namespace CodeJam
 				}
 
 				// process run of digits
-				if (char.IsDigit(ca) && char.IsDigit(cb))
+				if (ca.IsDigit() && cb.IsDigit())
 				{
 					int result;
 					if ((result = CompareRight(a.Substring(ia), b.Substring(ib))) != 0)

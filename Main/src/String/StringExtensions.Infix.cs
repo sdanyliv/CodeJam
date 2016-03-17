@@ -4,6 +4,9 @@ using JetBrains.Annotations;
 
 namespace CodeJam
 {
+	/// <summary>
+	/// <see cref="string"/> class extensions.
+	/// </summary>
 	[PublicAPI]
 	public static class StringExtensions
 	{
