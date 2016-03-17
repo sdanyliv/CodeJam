@@ -39,11 +39,39 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdLine\CommandLineChecker.cs" />
+    <Compile Include="CmdLine\CommandLineHelper.cs" />
+    <Compile Include="CmdLine\Model\Checking\CmdLineRules.cs" />
+    <Compile Include="CmdLine\Model\Checking\CommandLineCheckException.cs" />
+    <Compile Include="CmdLine\Model\Checking\CommandQuantifier.cs" />
+    <Compile Include="CmdLine\Model\Checking\CommandRule.cs" />
+    <Compile Include="CmdLine\Model\Checking\OptionRule.cs" />
+    <Compile Include="CmdLine\Model\OptionType.cs" />
+    <Compile Include="CmdLine\OptionPrefix.cs" />
+    <Compile Include="CmdLine\Parser\CharInput.cs" />
+    <Compile Include="CmdLine\Parser\CmdLineNode.cs" />
+    <Compile Include="CmdLine\Parser\CmdLineNodeBase.cs" />
+    <Compile Include="CmdLine\Parser\CommandLineParser.cs" />
+    <Compile Include="CmdLine\Parser\CommandLineParser.Helpers.cs" />
+    <Compile Include="CmdLine\Parser\CommandNode.cs" />
+    <Compile Include="CmdLine\Parser\ICharInput.cs" />
+    <Compile Include="CmdLine\Parser\OptionNode.cs" />
+    <Compile Include="CmdLine\Parser\ParseResult.cs" />
+    <Compile Include="CmdLine\Parser\ParsingException.cs" />
+    <Compile Include="CmdLine\Parser\QuotedOrNonquotedValueNode.cs" />
+    <Compile Include="CmdLine\PrintUsageSettings.cs" />
+    <Compile Include="CmdLine\UsagePrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CodeJam.Experimental.nuspec" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Main\src\CodeJam.Main.csproj">
+      <Project>{2f2046cc-fb47-4318-b335-5a82b04b6c40}</Project>
+      <Name>CodeJam.Main</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
