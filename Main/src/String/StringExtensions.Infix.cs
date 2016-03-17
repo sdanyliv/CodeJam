@@ -10,7 +10,7 @@ namespace CodeJam
 		/// <summary>
 		/// Infix form of <see cref="string.IsNullOrEmpty"/>.
 		/// </summary>
-		public static bool IsNullOrEmpty(this string str)
+		public static bool IsNullOrEmpty([CanBeNull] this string str)
 		{
 			return string.IsNullOrEmpty(str);
 		}
@@ -18,7 +18,7 @@ namespace CodeJam
 		/// <summary>
 		/// Returns true if argument is not null nor empty.
 		/// </summary>
-		public static bool NotNullNorEmpty(this string str)
+		public static bool NotNullNorEmpty([CanBeNull] this string str)
 		{
 			return !string.IsNullOrEmpty(str);
 		}
@@ -26,7 +26,7 @@ namespace CodeJam
 		/// <summary>
 		/// Infix form of <see cref="string.IsNullOrWhiteSpace"/>.
 		/// </summary>
-		public static bool IsNullOrWhiteSpace(this string str)
+		public static bool IsNullOrWhiteSpace([CanBeNull] this string str)
 		{
 			return string.IsNullOrWhiteSpace(str);
 		}
@@ -34,7 +34,7 @@ namespace CodeJam
 		/// <summary>
 		/// Returns true if argument is not null nor whitespace.
 		/// </summary>
-		public static bool NotNullNorWhiteSpace(this string str)
+		public static bool NotNullNorWhiteSpace([CanBeNull] this string str)
 		{
 			return !string.IsNullOrWhiteSpace(str);
 		}
@@ -48,7 +48,8 @@ namespace CodeJam
 		/// <param name="args">An object array that contains zero or more objects to format.</param>
 		/// <returns></returns>
 		[StringFormatMethod("format")]
-		public static string Args(this string format, params object[] args)
+		[NotNull]
+		public static string Args([NotNull] this string format, params object[] args)
 		{
 			return string.Format(format, args);
 		}
@@ -59,6 +60,14 @@ namespace CodeJam
 		public static string Join(this IEnumerable<string> values, string separator)
 		{
 			return string.Join(separator, values);
+		}
+
+		/// <summary>
+		/// Returns length of argument, even if argument is null.
+		/// </summary>
+		public static int Length([CanBeNull] this string str)
+		{
+			return str?.Length ?? 0;
 		}
 	}
 }
