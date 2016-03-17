@@ -18,7 +18,7 @@ namespace CodeJam.Csv
 		/// Parses CSV.
 		/// </summary>
 		[NotNull]
-		public static string[][] Parse([NotNull] string text)
+		public static IEnumerable<string[]> Parse([NotNull] string text)
 		{
 			if (text == null) throw new ArgumentNullException(nameof(text));
 			return Parse(new StringReader(text));
@@ -28,20 +28,18 @@ namespace CodeJam.Csv
 		/// Parses CSV.
 		/// </summary>
 		[NotNull]
-		public static string[][] Parse([NotNull] TextReader reader)
+		public static IEnumerable<string[]> Parse([NotNull] TextReader reader)
 		{
 			if (reader == null) throw new ArgumentNullException(nameof(reader));
 
-			var result = new List<string[]>();
 			while (true)
 			{
 				var line = ParseLine(reader);
 				if (line == null)
 					break;
 				if (line.Length > 0) // Skip empty lines
-					result.Add(line);
+					yield return line;
 			}
-			return result.ToArray();
 		}
 
 		[CanBeNull]

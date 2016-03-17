@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 
 using NUnit.Framework;
 
@@ -12,7 +13,7 @@ namespace CodeJam.Csv
 		public void Parse()
 		{
 			const string csv = "abc ,def, ghi   \r\no_p_r, stu, vwx\r\n\"123\", \" 4 5 6 \", \"78 \r\n9\"";
-			var result = CsvParser.Parse(new StringReader(csv));
+			var result = CsvParser.Parse(new StringReader(csv)).ToArray();
 
 			var expected = new[] { new[] { "abc", "def", "ghi" }, new[] { "o_p_r", "stu", "vwx" }, new[] { "123", " 4 5 6 ", "78 \r\n9" } };
 
@@ -45,7 +46,7 @@ ne""",
 		public void NoValues()
 		{
 			const string csv = "a,b,c\r\nd,,f\r\n,h,";
-			var values = CsvParser.Parse(csv);
+			var values = CsvParser.Parse(csv).ToArray();
 			Assert.AreEqual(3, values.Length, "#A01");
 			Assert.AreEqual(3, values[0].Length, "#A02");
 			Assert.AreEqual(3, values[1].Length, "#A03");
@@ -64,7 +65,7 @@ ne""",
 		public void SingleColumn()
 		{
 			const string csv = "a\r\nb\r\nc\r\n\r\n\"\"";
-			var result = CsvParser.Parse(csv);
+			var result = CsvParser.Parse(csv).ToArray();
 			var expected = new[] { new[] { "a" }, new[] { "b" }, new[] { "c" }, new[] { "" } };
 
 			Assert.AreEqual(4, result.Length, "#A01");
