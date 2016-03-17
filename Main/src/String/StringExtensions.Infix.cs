@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
@@ -51,6 +51,14 @@ namespace CodeJam
 		public static string Args(this string format, params object[] args)
 		{
 			return string.Format(format, args);
+		}
+
+		/// <summary>
+		/// Infix form of <see cref="string.Join(string,IEnumerable{string})"/>.
+		/// </summary>
+		public static string Join(this IEnumerable<string> values, string separator)
+		{
+			return string.Join(separator, values);
 		}
 	}
 }
