@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Based on the C version by Martin Pool.
+
+using System;
 using System.Collections.Generic;
 
 using JetBrains.Annotations;
@@ -11,44 +13,113 @@ namespace CodeJam
 	[PublicAPI]
 	public class NaturalStringComparer : IComparer<string>
 	{
-		public static readonly NaturalStringComparer Comparer = new NaturalStringComparer();
-		public static readonly Comparison<string> Comparision = Compare;
+		[NotNull] public static readonly NaturalStringComparer Comparer = new NaturalStringComparer();
+		[NotNull] public static readonly Comparison<string> Comparision = Compare;
 
-		private NaturalStringComparer() {}
+		private NaturalStringComparer(){}
 
-		public static int Compare([CanBeNull] string x, [CanBeNull] string y)
+		private static int CompareRight(string a, string b)
 		{
-			if (x == null && y == null) return 0;
-			if (x == null) return -1;
-			if (y == null) return 1;
+			var bias = 0;
+			var ia = 0;
+			var ib = 0;
 
-			int lx = x.Length, ly = y.Length;
-			int nwx = lx, nwy = ly;
-
-			for (int mx = 0, my = 0; mx < lx && my < ly; mx++, my++)
+			// The longest run of digits wins. That aside, the greatest
+			// value wins, but we can't know that it will until we've scanned
+			// both numbers to know that they have the same magnitude, so we
+			// remember it in BIAS.
+			for (; ; ia++, ib++)
 			{
-				if (char.IsDigit(x[mx]) && char.IsDigit(y[my]))
+				var ca = CharAt(a, ia);
+				var cb = CharAt(b, ib);
+
+				if (!char.IsDigit(ca) && !char.IsDigit(cb))
+					return bias;
+				if (!char.IsDigit(ca))
+					return -1;
+				if (!char.IsDigit(cb))
+					return +1;
+				if (ca < cb)
 				{
-					long vx = 0, vy = 0;
+					if (bias == 0)
+						bias = -1;
+				}
+				else if (ca > cb)
+				{
+					if (bias == 0)
+						bias = +1;
+				}
+				else if (ca == 0 && cb == 0)
+					return bias;
+			}
+		}
 
-					for (; mx < lx && char.IsDigit(x[mx]); mx++)
-						vx = vx * 10 + x[mx] - '0';
+		public static int Compare([CanBeNull] string a, [CanBeNull] string b)
+		{
+			if (a == null && b == null) return 0;
+			if (a == null) return -1;
+			if (b == null) return 1;
 
-					for (; my < ly && char.IsDigit(y[my]); my++)
-						vy = vy * 10 + y[my] - '0';
+			int ia = 0, ib = 0;
 
-					if (vx != vy)
-						return vx > vy ? 1 : -1;
+			while (true)
+			{
+				// only count the number of zeroes leading the last number compared
+				var nzb = 0;
+				var nza = 0;
+
+				var ca = CharAt(a, ia);
+				var cb = CharAt(b, ib);
+
+				// skip over leading spaces or zeros
+				while (char.IsWhiteSpace(ca) || ca == '0')
+				{
+					if (ca == '0')
+						nza++;
+					else
+					// only count consecutive zeroes
+						nza = 0;
+
+					ca = CharAt(a, ++ia);
 				}
 
-				for (; mx < lx && char.IsWhiteSpace(x[mx]); mx++, nwx--) ;
-				for (; my < ly && char.IsWhiteSpace(y[my]); my++, nwy--) ;
+				while (char.IsWhiteSpace(cb) || cb == '0')
+				{
+					if (cb == '0')
+						nzb++;
+					else
+					// only count consecutive zeroes
+						nzb = 0;
 
-				if (mx < lx && my < ly && x[mx] != y[my])
-					return x[mx] > y[my] ? 1 : -1;
+					cb = CharAt(b, ++ib);
+				}
+
+				// process run of digits
+				if (char.IsDigit(ca) && char.IsDigit(cb))
+				{
+					int result;
+					if ((result = CompareRight(a.Substring(ia), b.Substring(ib))) != 0)
+						return result;
+				}
+
+				if (ca == 0 && cb == 0)
+					// The strings compare the same. Perhaps the caller
+					// will want to call strcmp to break the tie.
+					return nza - nzb;
+
+				if (ca < cb)
+					return -1;
+				if (ca > cb)
+					return +1;
+
+				++ia;
+				++ib;
 			}
+		}
 
-			return nwx - nwy;
+		private static char CharAt(string s, int i)
+		{
+			return i >= s.Length ? char.MinValue : s[i];
 		}
 
 		int IComparer<string>.Compare(string x, string y)

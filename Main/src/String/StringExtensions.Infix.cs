@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace CodeJam
 {
 	[PublicAPI]
-	public static partial class StringExtensions
+	public static class StringExtensions
 	{
 		/// <summary>
 		/// Infix form of <see cref="string.IsNullOrEmpty"/>.
