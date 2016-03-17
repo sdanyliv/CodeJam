@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam.Main", "CodeJam.Main\src\CodeJam.Main.csproj", "{2F2046CC-FB47-4318-B335-5A82B04B6C40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam.Main", "Main\src\CodeJam.Main.csproj", "{2F2046CC-FB47-4318-B335-5A82B04B6C40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam.Main-Tests", "CodeJam.Main\tests\CodeJam.Main-Tests.csproj", "{DD65E3F2-9658-4242-A8AA-056028473CB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam.Main-Tests", "Main\tests\CodeJam.Main-Tests.csproj", "{DD65E3F2-9658-4242-A8AA-056028473CB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam.Experimental", "CodeJam.Experimental\src\CodeJam.Experimental.csproj", "{7BD77DA2-A731-400C-A88E-215FC592E6E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam.Experimental", "Experimental\src\CodeJam.Experimental.csproj", "{7BD77DA2-A731-400C-A88E-215FC592E6E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam.Experimental-Tests", "CodeJam.Experimental\tests\CodeJam.Experimental-Tests.csproj", "{F6F97573-4D26-4217-89F6-819DF96FCB4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeJam.Experimental-Tests", "Experimental\tests\CodeJam.Experimental-Tests.csproj", "{F6F97573-4D26-4217-89F6-819DF96FCB4A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{C99F66F0-32AA-45EB-B112-D18498754A6B}"
 EndProject
