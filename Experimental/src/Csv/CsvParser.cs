@@ -36,7 +36,7 @@ namespace CodeJam.Csv
 			{
 				var line = ParseLine(reader);
 				if (line == null)
-					break;
+					yield break;
 				if (line.Length > 0) // Skip empty lines
 					yield return line;
 			}
