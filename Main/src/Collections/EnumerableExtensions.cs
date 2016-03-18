@@ -64,6 +64,17 @@ namespace CodeJam
 		}
 
 		/// <summary>
+		/// Creates a <see cref="HashSet{T}"/> from an <see cref="IEnumerable{T}"/>.
+		/// </summary>
+		public static HashSet<T> ToHashSet<T>([NotNull] this IEnumerable<T> source, IEqualityComparer<T> comparer)
+		{
+			if (source == null)
+				throw new ArgumentNullException(nameof(source));
+
+			return new HashSet<T>(source, comparer);
+		}
+
+		/// <summary>
 		/// Returns first element, or specified <paramref name="defaultValue"/>, if sequence is empty.
 		/// </summary>
 		public static T FirstOrDefault<T>([NotNull] this IEnumerable<T> source, T defaultValue)
