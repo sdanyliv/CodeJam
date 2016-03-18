@@ -23,11 +23,33 @@ namespace CodeJam
 		}
 
 		/// <summary>
+		/// Appends specified <paramref name="elements"/> to end of the collection.
+		/// </summary>
+		public static IEnumerable<T> Concat<T>(this IEnumerable<T> source, params T[] elements)
+		{
+			foreach (var item in source)
+				yield return item;
+			foreach (var element in elements)
+				yield return element;
+		}
+
+		/// <summary>
 		/// Prepends specified <paramref name="element"/> to the collection start.
 		/// </summary>
 		public static IEnumerable<T> Prepend<T>(this IEnumerable<T> source, T element)
 		{
 			yield return element;
+			foreach (var item in source)
+				yield return item;
+		}
+
+		/// <summary>
+		/// Prepends specified <paramref name="elements"/> to the collection start.
+		/// </summary>
+		public static IEnumerable<T> Prepend<T>(this IEnumerable<T> source, params T[] elements)
+		{
+			foreach (var element in elements)
+				yield return element;
 			foreach (var item in source)
 				yield return item;
 		}

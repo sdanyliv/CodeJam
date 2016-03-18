@@ -45,7 +45,7 @@
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="String\CharExtensions.cs" />
-    <Compile Include="String\NaturalStringComparer.cs" />
+    <Compile Include="String\NaturalOrderStringComparer.cs" />
     <Compile Include="String\StringExtensions.Infix.cs" />
   </ItemGroup>
   <ItemGroup>
