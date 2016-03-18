@@ -31,4 +31,5 @@ build:
 after_build:
 - ps: nuget pack Main\src\CodeJam.Main.nuspec -version "$env:nugetVersion"
 - ps: nuget pack Experimental\src\CodeJam.Experimental.nuspec -version "$env:nugetVersion"
-- ps: Push-AppveyorArtifact Main\src\CodeJam.Main.$env:nugetVersion.nupkg
+- ps: Push-AppveyorArtifact CodeJam.Main.$env:nugetVersion.nupkg
+- ps: Push-AppveyorArtifact CodeJam.Experimental.$env:nugetVersion.nupkg
