@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CodeJam</RootNamespace>
-    <AssemblyName>CodeJam.Main-Tests</AssemblyName>
+    <AssemblyName>CodeJam-Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -39,7 +39,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\DictionaryExtensionsTest.cs" />
+    <Compile Include="Collections\EnumerableExtensionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="String\NaturalComparerTests.cs" />
+    <Compile Include="String\StringExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\CodeJam.Main.csproj">
