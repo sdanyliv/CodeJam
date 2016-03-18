@@ -10,7 +10,7 @@ namespace CodeJam
 	/// Extensions for <see cref="IEnumerable{T}"/>
 	/// </summary>
 	[PublicAPI]
-	public static class EnumerableExtensions
+	public static partial class EnumerableExtensions
 	{
 		/// <summary>
 		/// Appends specified <paramref name="element"/> to end of the collection.
