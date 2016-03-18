@@ -21,10 +21,9 @@ namespace CodeJam
 		/// The <see cref="IDisposable"/> object that reduce the recursion count for read mode, and exits read mode if the resulting count is 0 (zero).
 		/// </returns>
 		[Pure]
-		public static ReadLockInternal GetReadLock([NotNull] this ReaderWriterLockSlim readerWriterLock)
+		public static ReadLockScope GetReadLock([NotNull] this ReaderWriterLockSlim readerWriterLock)
 		{
-			readerWriterLock.EnterReadLock();
-			return new ReadLockInternal(readerWriterLock);
+			return new ReadLockScope(readerWriterLock);
 		}
 
 		/// <summary>
@@ -35,10 +34,9 @@ namespace CodeJam
 		/// The <see cref="IDisposable"/> object that reduce the recursion count for write mode, and exits write mode if the resulting count is 0 (zero).
 		/// </returns>
 		[Pure]
-		public static WriteLockInternal GetWriteLock([NotNull] this ReaderWriterLockSlim readerWriterLock)
+		public static WriteLockScope GetWriteLock([NotNull] this ReaderWriterLockSlim readerWriterLock)
 		{
-			readerWriterLock.EnterWriteLock();
-			return new WriteLockInternal(readerWriterLock);
+			return new WriteLockScope(readerWriterLock);
 		}
 
 		/// <summary>
@@ -49,23 +47,23 @@ namespace CodeJam
 		/// The <see cref="IDisposable"/> object that reduce the recursion count for upgradeable mode, and exits upgradeable mode if the resulting count is 0 (zero).
 		/// </returns>
 		[Pure]
-		public static UpgradeableReadLockInternal GetUpgradeableReadLock([NotNull] this ReaderWriterLockSlim readerWriterLock)
+		public static UpgradeableReadLockScope GetUpgradeableReadLock([NotNull] this ReaderWriterLockSlim readerWriterLock)
 		{
-			readerWriterLock.EnterUpgradeableReadLock();
-			return new UpgradeableReadLockInternal(readerWriterLock);
+			return new UpgradeableReadLockScope(readerWriterLock);
 		}
 
-		#region Inner type: ReadLockInternal
+		#region Inner type: ReadLockScope
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public struct ReadLockInternal : IDisposable
+		public struct ReadLockScope : IDisposable
 		{
 			private readonly ReaderWriterLockSlim _readerWriterLock;
 
 			[DebuggerStepThrough]
-			public ReadLockInternal([NotNull] ReaderWriterLockSlim readerWriterLock)
+			public ReadLockScope([NotNull] ReaderWriterLockSlim readerWriterLock)
 			{
 				_readerWriterLock = readerWriterLock;
+				readerWriterLock.EnterReadLock();
 			}
 
 			[DebuggerStepThrough]
@@ -74,16 +72,17 @@ namespace CodeJam
 
 		#endregion
 
-		#region Inner type: WriteLockInternal
+		#region Inner type: WriteLockScope
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public struct WriteLockInternal : IDisposable
+		public struct WriteLockScope : IDisposable
 		{
 			private readonly ReaderWriterLockSlim _readerWriterLock;
 
 			[DebuggerStepThrough]
-			public WriteLockInternal([NotNull] ReaderWriterLockSlim readerWriterLock) {
+			public WriteLockScope([NotNull] ReaderWriterLockSlim readerWriterLock) {
 				_readerWriterLock = readerWriterLock;
+				readerWriterLock.EnterWriteLock();
 			}
 
 			[DebuggerStepThrough]
@@ -92,17 +91,18 @@ namespace CodeJam
 
 		#endregion
 
-		#region Inner type: WriteLockInternal
+		#region Inner type: UpgradeableReadLockScope
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public struct UpgradeableReadLockInternal : IDisposable
+		public struct UpgradeableReadLockScope : IDisposable
 		{
 			private readonly ReaderWriterLockSlim _readerWriterLock;
 
 			[DebuggerStepThrough]
-			public UpgradeableReadLockInternal([NotNull] ReaderWriterLockSlim readerWriterLock)
+			public UpgradeableReadLockScope([NotNull] ReaderWriterLockSlim readerWriterLock)
 			{
 				_readerWriterLock = readerWriterLock;
+				readerWriterLock.EnterUpgradeableReadLock();
 			}
 
 			[DebuggerStepThrough]
