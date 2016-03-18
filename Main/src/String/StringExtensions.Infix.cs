@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 using JetBrains.Annotations;
 
@@ -52,5 +54,17 @@ namespace CodeJam
 		/// Returns length of argument, even if argument is null.
 		/// </summary>
 		public static int Length([CanBeNull] this string str) => str?.Length ?? 0;
+
+		/// <summary>
+		/// Culture invariant version of <see cref="IFormattable.ToString(string,System.IFormatProvider)"/>
+		/// </summary>
+		public static string ToInvariantString<T>(this T s) where T : IFormattable =>
+			s.ToString(null, CultureInfo.InvariantCulture);
+
+		/// <summary>
+		/// Culture invariant version of <see cref="IFormattable.ToString(string,System.IFormatProvider)"/>
+		/// </summary>
+		public static string ToInvariantString<T>(this T s, string format) where T : IFormattable =>
+			s.ToString(format, CultureInfo.InvariantCulture);
 	}
 }
