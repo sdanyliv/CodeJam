@@ -39,15 +39,19 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fn.cs" />
     <Compile Include="Collections\Array.cs" />
     <Compile Include="Collections\ArrayExtensions.Infix.cs" />
+    <Compile Include="Collections\KeyEqualityComparer.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
+    <Compile Include="Fn`1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="String\CharExtensions.cs" />
     <Compile Include="String\NaturalOrderStringComparer.cs" />
     <Compile Include="String\StringExtensions.Infix.cs" />
+    <Compile Include="Threading\ReaderWriterLockSlimExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CodeJam.Main.nuspec" />
