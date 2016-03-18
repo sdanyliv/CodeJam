@@ -41,9 +41,7 @@ namespace CodeJam
 		/// <returns>A copy of format in which the format items have been replaced by the string representation of the corresponding objects in args</returns>
 		[StringFormatMethod("format")]
 		[NotNull]
-		//TODO: The nethod name looks ugly. May be better to name it Expand or ExpandArgs or Apply or Substitute or Evaluate
-		//NOTTODO: IT: The name is the best ever. Don't change it.
-		public static string Args([NotNull] this string format, params object[] args) => string.Format(format, args);
+		public static string Format([NotNull] this string format, params object[] args) => string.Format(format, args);
 
 		/// <summary>
 		/// Infix form of <see cref="string.Join(string,IEnumerable{string})"/>.
