@@ -12,6 +12,7 @@ namespace CodeJam
 		/// Performs topological sort on <paramref name="source"/>.
 		/// </summary>
 		[NotNull]
+		[Pure]
 		public static List<T> TopoSort<T>(
 			[NotNull] this IEnumerable<T> source,
 			[NotNull] Func<T, IEnumerable<T>> dependsOnGetter) =>

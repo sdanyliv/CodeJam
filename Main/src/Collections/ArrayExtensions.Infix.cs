@@ -218,8 +218,14 @@ namespace CodeJam
 		/// <paramref name="array" /> is null.-or-<paramref name="match" /> is null.</exception>
 		public static bool Exists<T>([NotNull] this T[] array, [NotNull] Predicate<T> match) => Array.Exists(array, match);
 
-		/// <summary>Searches for an element that matches the conditions defined by the specified predicate, and returns the first occurrence within the entire <see cref="Array" />.</summary>
-		/// <returns>The first element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <paramref name="T" />.</returns>
+		/// <summary>
+		/// Searches for an element that matches the conditions defined by the specified predicate, and returns the
+		/// first occurrence within the entire <see cref="Array" />.
+		/// </summary>
+		/// <returns>
+		/// The first element that matches the conditions defined by the specified predicate, if found; otherwise,
+		/// the default value for type <typeparamref name="T" />.
+		/// </returns>
 		/// <param name="array">The one-dimensional, zero-based <see cref="Array" /> to search.</param>
 		/// <param name="match">The <see cref="Predicate{T}" /> that defines the conditions of the element to search for.</param>
 		/// <typeparam name="T">The type of the elements of the array.</typeparam>
@@ -272,8 +278,13 @@ namespace CodeJam
 		/// <paramref name="startIndex" /> is outside the range of valid indexes for <paramref name="array" />.-or-<paramref name="count" /> is less than zero.-or-<paramref name="startIndex" /> and <paramref name="count" /> do not specify a valid section in <paramref name="array" />.</exception>
 		public static int FindIndex<T>([NotNull] this T[] array, int startIndex, int count, [NotNull] Predicate<T> match) => Array.FindIndex(array, startIndex, count, match);
 
-		/// <summary>Searches for an element that matches the conditions defined by the specified predicate, and returns the last occurrence within the entire <see cref="Array" />.</summary>
-		/// <returns>The last element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <paramref name="T" />.</returns>
+		/// <summary>
+		/// Searches for an element that matches the conditions defined by the specified predicate, and returns the last
+		/// occurrence within the entire <see cref="Array" />.
+		/// </summary>
+		/// <returns>
+		/// The last element that matches the conditions defined by the specified predicate, if found; otherwise, the default
+		/// value for type <typeparamref name="T"/>.</returns>
 		/// <param name="array">The one-dimensional, zero-based <see cref="Array" /> to search.</param>
 		/// <param name="match">The <see cref="Predicate{T}" /> that defines the conditions of the element to search for.</param>
 		/// <typeparam name="T">The type of the elements of the array.</typeparam>
