@@ -8,6 +8,7 @@ namespace CodeJam {
 	/// An implementation of the <see cref="IEqualityComparer{T}"/>
 	/// interface for compare values by comparing their extracted key values.
 	/// </summary>
+	[PublicAPI]
 	public sealed class KeyEqualityComparer<T, TKey> : IEqualityComparer<T>
 	{
 		/// <summary>
