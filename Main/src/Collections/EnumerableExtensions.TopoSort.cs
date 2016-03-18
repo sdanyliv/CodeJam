@@ -22,6 +22,7 @@ namespace CodeJam
 		/// Performs topological sort on <paramref name="source"/>.
 		/// </summary>
 		[NotNull]
+		[Pure]
 		public static List<T> TopoSort<T>(
 			[NotNull] this IEnumerable<T> source,
 			[NotNull] Func<T, IEnumerable<T>> dependsOnGetter,
@@ -45,6 +46,7 @@ namespace CodeJam
 			HashSet<T> cycleDetector,
 			List<T> result)
 		{
+			// TODO: replace recursive algorythm by linear
 			if (cycleDetector.Contains(item))
 				throw new ArgumentException("There is a cycle in supplied source.");
 			cycleDetector.Add(item);

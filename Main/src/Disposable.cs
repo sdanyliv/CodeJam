@@ -14,12 +14,12 @@ namespace CodeJam
 		/// <summary>
 		/// <see cref="IDisposable"/> instance without any code in <see cref="IDisposable.Dispose"/>.
 		/// </summary>
-		public static readonly IDisposable Empty = new EmptyDisposable();
+		public static readonly EmptyDisposable Empty;
 
 		/// <summary>
 		/// Creates <see cref="IDisposable"/> instanse that calls <paramref name="disposeAction"/> on disposing.
 		/// </summary>
-		public static IDisposable Create(Action disposeAction) => new AnonymousDisposable(disposeAction);
+		public static AnonymousDisposable Create(Action disposeAction) => new AnonymousDisposable(disposeAction);
 
 		/// <summary>
 		/// Combine multiple <see cref="IDisposable"/> instances into single one.
@@ -37,13 +37,13 @@ namespace CodeJam
 		/// </summary>
 		public static IDisposable Merge(params IDisposable[] disposables) => Merge((IEnumerable<IDisposable>)disposables);
 
-		private struct EmptyDisposable : IDisposable
+		public struct EmptyDisposable : IDisposable
 		{
 			public void Dispose()
 			{}
 		}
 
-		private struct AnonymousDisposable : IDisposable
+		public struct AnonymousDisposable : IDisposable
 		{
 			private readonly Action _disposeAction;
 

@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\EnumerableExtensions.TopoSort.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="Fn.cs" />
     <Compile Include="Collections\Array.cs" />
     <Compile Include="Collections\ArrayExtensions.Infix.cs" />
