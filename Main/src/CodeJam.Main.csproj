@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Collections\Array.cs" />
     <Compile Include="Collections\ArrayExtensions.Infix.cs" />
+    <Compile Include="Collections\KeyEqualityComparer.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
