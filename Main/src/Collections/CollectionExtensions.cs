@@ -11,27 +11,39 @@ namespace CodeJam
 	public static class CollectionExtensions
 	{
 		/// <summary>
-		/// Returns the input typed as <typeparamref name="T"/>[].
+		/// Adds the elements to the end of the <see cref="ICollection{T}"/>.
 		/// </summary>
-		public static T[] AsArray<T>(this T[] source)
+		/// <typeparam name="T">The type of the items that the collection contains.</typeparam>
+		/// <param name="source">The collection to add the elements to.</param>
+		/// <param name="items">The items to add to the collection.</param>
+		public static void AddRange<T>([NotNull] this ICollection<T> source, [NotNull] T[] items)
 		{
-			return source;
+			foreach (var item in items)
+				source.Add(item);
 		}
 
 		/// <summary>
-		/// Returns the input typed as <see cref="List{T}"/>.
+		/// Adds the elements to the end of the <see cref="ICollection{T}"/>.
 		/// </summary>
-		public static List<T> AsList<T>(this List<T> source)
+		/// <typeparam name="T">The type of the items that the collection contains.</typeparam>
+		/// <param name="source">The collection to add the elements to.</param>
+		/// <param name="items">The items to add to the collection.</param>
+		public static void AddRange<T>([NotNull] this ICollection<T> source, [NotNull] IList<T> items)
 		{
-			return source;
+			for (int i = 0, count = items.Count; i < count; i++)
+				source.Add(items[i]);
 		}
 
 		/// <summary>
-		/// Returns the input typed as <see cref="HashSet{T}"/>.
+		/// Adds the elements to the end of the <see cref="ICollection{T}"/>.
 		/// </summary>
-		public static HashSet<T> AsHashSet<T>(this HashSet<T> source)
+		/// <typeparam name="T">The type of the items that the collection contains.</typeparam>
+		/// <param name="source">The collection to add the elements to.</param>
+		/// <param name="items">The items to add to the collection.</param>
+		public static void AddRange<T>([NotNull] this ICollection<T> source, [NotNull] IEnumerable<T> items)
 		{
-			return source;
+			foreach (var item in items)
+				source.Add(item);
 		}
 	}
 }
