@@ -63,6 +63,9 @@
     <Compile Include="CmdLine\UsagePrinter.cs" />
     <Compile Include="Csv\CsvParser.cs" />
     <Compile Include="Csv\CsvPrinter.cs" />
+    <Compile Include="Ranges\ImmutableRangeList.cs" />
+    <Compile Include="Ranges\ImmutableRangeListExtensions.cs" />
+    <Compile Include="Ranges\Range.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

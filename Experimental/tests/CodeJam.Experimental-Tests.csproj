@@ -43,6 +43,8 @@
     <Compile Include="CmdLine\ParserTest.cs" />
     <Compile Include="CmdLine\PrintUsageTest.cs" />
     <Compile Include="Csv\CsvParserTest.cs" />
+    <Compile Include="Ranges\ImmutableRangeListTests.cs" />
+    <Compile Include="Ranges\RangeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
