@@ -9,10 +9,7 @@ namespace CodeJam.Ranges
 	public static class ImmutableRangeListExtensions
 	{
 		public static ImmutableRangeList<TValue> ToRangeList<TValue>(this Range<TValue> range)
-			where TValue : IComparable<TValue>
-		{
-			return new ImmutableRangeList<TValue>(range);
-		}
+			where TValue : IComparable<TValue> => new ImmutableRangeList<TValue>(range);
 
 		public static ImmutableRangeList<TValue> ToRangeList<TValue>(this IEnumerable<Range<TValue>> ranges)
 			where TValue : IComparable<TValue>
@@ -33,7 +30,7 @@ namespace CodeJam.Ranges
 
 			newRanges.Sort();
 
-			int i = 0;
+			var i = 0;
 			do
 			{
 				var current = newRanges[i];
