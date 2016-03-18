@@ -11,6 +11,7 @@ namespace CodeJam
 	/// String comparisons using a "natural order" algorithm.
 	/// </summary>
 	[PublicAPI]
+	// TODO: The name is not clear. Propos: NaturalOrderStringComparer, NaturalSortStringComparer, NaturalSortComparer
 	public class NaturalStringComparer : IComparer<string>
 	{
 		[NotNull] public static readonly NaturalStringComparer Comparer = new NaturalStringComparer();
