@@ -40,6 +40,7 @@ namespace CodeJam
 		[StringFormatMethod("format")]
 		[NotNull]
 		//TODO: The nethod name looks ugly. May be better to name it Expand or ExpandArgs or Apply or Substitute or Evaluate
+		//NOTTODO: IT: The name is the best ever. Don't change it.
 		public static string Args([NotNull] this string format, params object[] args) => string.Format(format, args);
 
 		/// <summary>

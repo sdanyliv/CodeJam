@@ -94,6 +94,13 @@ namespace CodeJam
 		/// <filterpriority>1</filterpriority>
 		public static void Clear([NotNull] this Array array, int index, int length) => Array.Clear(array, index, length);
 
+		/// <summary>Sets all elements in an <see cref="Array" /> to the default value of each element type.</summary>
+		/// <param name="array">The <see cref="Array" /> whose elements need to be cleared.</param>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="array" /> is null.</exception>
+		/// <filterpriority>1</filterpriority>
+		public static void Clear([NotNull] this Array array) => Array.Clear(array, 0, array.Length);
+
 		/// <summary>Copies a range of elements from an <see cref="Array" /> starting at the specified source index and pastes them to another <see cref="Array" /> starting at the specified destination index.  Guarantees that all changes are undone if the copy does not succeed completely.</summary>
 		/// <param name="sourceArray">The <see cref="Array" /> that contains the data to copy.</param>
 		/// <param name="sourceIndex">A 32-bit integer that represents the index in the <paramref name="sourceArray" /> at which copying begins.</param>
