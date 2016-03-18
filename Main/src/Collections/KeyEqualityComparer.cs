@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
-namespace CodeJam {
+namespace CodeJam
+{
 	/// <summary>
 	/// An implementation of the <see cref="IEqualityComparer{T}"/>
 	/// interface for compare values by comparing their extracted key values.
