@@ -28,13 +28,13 @@ namespace CodeJam.Csv
 		/// Parses CSV.
 		/// </summary>
 		[NotNull]
-		public static IEnumerable<string[]> Parse([NotNull] TextReader reader)
+		public static IEnumerable<string[]> Parse([NotNull] TextReader reader, bool allowEscaping = true)
 		{
 			if (reader == null) throw new ArgumentNullException(nameof(reader));
 
 			while (true)
 			{
-				var line = ParseLine(reader);
+				var line = allowEscaping ? ParseLineWithEscaping(reader) : ParseLineNoEscaping(reader);
 				if (line == null)
 					yield break;
 				if (line.Length > 0) // Skip empty lines
@@ -43,7 +43,13 @@ namespace CodeJam.Csv
 		}
 
 		[CanBeNull]
-		private static string[] ParseLine(TextReader reader)
+		private static string[] ParseLineNoEscaping(TextReader reader)
+		{
+			return reader.ReadLine()?.Split(',');
+		}
+
+		[CanBeNull]
+		private static string[] ParseLineWithEscaping(TextReader reader)
 		{
 			var curChar = CharReader.Create(reader);
 			if (curChar.IsEof)

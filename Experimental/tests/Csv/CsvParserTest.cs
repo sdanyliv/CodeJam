@@ -23,6 +23,22 @@ namespace CodeJam.Csv
 		}
 
 		[Test]
+		public void ParseNoEscaping()
+		{
+			const string csv = "abc ,def, ghi\r\n o_p_r,stu,vwx\r\n\"123\", \" 4 5 6 \",\"78 9\"";
+			var result = CsvParser.Parse(new StringReader(csv), false).ToArray();
+
+			var expected = new[]
+			{
+				new[] { "abc ", "def", " ghi" }, new[] { " o_p_r", "stu", "vwx" }, new[] { "\"123\"", " \" 4 5 6 \"", "\"78 9\"" }
+			};
+
+			for (var line = 0; line < 3; line++)
+				for (var i = 0; i < 3; i++)
+					Assert.AreEqual(expected[line][i], result[line][i], "#A01");
+		}
+
+		[Test]
 		public void Print()
 		{
 			var values =
