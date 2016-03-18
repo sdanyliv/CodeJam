@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using JetBrains.Annotations;
 
@@ -38,6 +39,36 @@ namespace CodeJam
 		{
 			if (source == null) throw new ArgumentNullException(nameof(source));
 			return new HashSet<T>(source);
+		}
+
+		/// <summary>
+		/// Returns first element, or specified <paramref name="defaultValue"/>, if sequence is empty.
+		/// </summary>
+		public static T FirstOrDefault<T>([NotNull] this IEnumerable<T> source, T defaultValue)
+		{
+			if (source == null)
+				throw new ArgumentNullException(nameof(source));
+			foreach (var item in source)
+				return item;
+			return defaultValue;
+		}
+
+		/// <summary>
+		/// Returns first element, or specified <paramref name="defaultValue"/>, if sequence is empty.
+		/// </summary>
+		public static T FirstOrDefault<T>(
+			[NotNull] this IEnumerable<T> source,
+			T defaultValue,
+			[NotNull] Func<T, bool> predicate)
+		{
+			if (source == null)
+				throw new ArgumentNullException(nameof(source));
+			if (predicate == null)
+				throw new ArgumentNullException(nameof(predicate));
+			foreach (var item in source)
+				if (predicate(item))
+					return item;
+			return defaultValue;
 		}
 	}
 }
