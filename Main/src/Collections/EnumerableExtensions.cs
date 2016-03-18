@@ -248,5 +248,29 @@ namespace CodeJam
 					return item;
 			return defaultValue;
 		}
+
+		/// <summary>
+		/// Casts the specified sequence to <see cref="List{T}"/> if possible, or creates a <see cref="List{T}"/> from.
+		/// </summary>
+		/// <typeparam name="T">The type of the elements of source.</typeparam>
+		/// <param name="source">The <see cref="IEnumerable{T}"/> to create a <see cref="List{T}"/> from.</param>
+		/// <returns>
+		/// A <see cref="List{T}"/> that contains elements from the input sequence.
+		/// </returns>
+		[NotNull, Pure]
+		public static List<T> AsList<T>([NotNull] this IEnumerable<T> source) =>
+			source as List<T> ?? new List<T>(source);
+
+		/// <summary>
+		/// Casts the specified sequence to array if possible, or creates an array from.
+		/// </summary>
+		/// <typeparam name="T">The type of the elements of source.</typeparam>
+		/// <param name="source">The <see cref="IEnumerable{T}"/> to create an array from.</param>
+		/// <returns>
+		/// An array that contains elements from the input sequence.
+		/// </returns>
+		[NotNull, Pure]
+		public static T[] AsArray<T>([NotNull] this IEnumerable<T> source) =>
+			source as T[] ?? source.ToArray();
 	}
 }
