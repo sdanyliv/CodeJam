@@ -1,7 +1,10 @@
 ﻿using System;
 
+using JetBrains.Annotations;
+
 namespace CodeJam
 {
+	[PublicAPI]
 	public static class Fn
 	{
 		/// <summary>
