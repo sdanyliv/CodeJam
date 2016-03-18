@@ -23,7 +23,6 @@ namespace CodeJam
 		[Pure]
 		public static ReadLockInternal GetReadLock([NotNull] this ReaderWriterLockSlim readerWriterLock)
 		{
-			readerWriterLock.EnterReadLock();
 			return new ReadLockInternal(readerWriterLock);
 		}
 
@@ -37,7 +36,6 @@ namespace CodeJam
 		[Pure]
 		public static WriteLockInternal GetWriteLock([NotNull] this ReaderWriterLockSlim readerWriterLock)
 		{
-			readerWriterLock.EnterWriteLock();
 			return new WriteLockInternal(readerWriterLock);
 		}
 
@@ -51,7 +49,6 @@ namespace CodeJam
 		[Pure]
 		public static UpgradeableReadLockInternal GetUpgradeableReadLock([NotNull] this ReaderWriterLockSlim readerWriterLock)
 		{
-			readerWriterLock.EnterUpgradeableReadLock();
 			return new UpgradeableReadLockInternal(readerWriterLock);
 		}
 
@@ -66,6 +63,7 @@ namespace CodeJam
 			public ReadLockInternal([NotNull] ReaderWriterLockSlim readerWriterLock)
 			{
 				_readerWriterLock = readerWriterLock;
+				readerWriterLock.EnterReadLock();
 			}
 
 			[DebuggerStepThrough]
@@ -84,6 +82,7 @@ namespace CodeJam
 			[DebuggerStepThrough]
 			public WriteLockInternal([NotNull] ReaderWriterLockSlim readerWriterLock) {
 				_readerWriterLock = readerWriterLock;
+				readerWriterLock.EnterWriteLock();
 			}
 
 			[DebuggerStepThrough]
@@ -103,6 +102,7 @@ namespace CodeJam
 			public UpgradeableReadLockInternal([NotNull] ReaderWriterLockSlim readerWriterLock)
 			{
 				_readerWriterLock = readerWriterLock;
+				readerWriterLock.EnterUpgradeableReadLock();
 			}
 
 			[DebuggerStepThrough]
