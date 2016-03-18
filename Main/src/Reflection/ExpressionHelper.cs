@@ -41,7 +41,8 @@ namespace CodeJam
 		public static string GetMethodName([NotNull] LambdaExpression expression) =>
 			((MethodCallExpression)expression.Body).Method.Name;
 
-		private static string GetFullPropertyNameImpl(MemberExpression expression) {
+		private static string GetFullPropertyNameImpl(MemberExpression expression)
+		{
 			var name = expression.Member.Name;
 			while ((expression = expression.Expression as MemberExpression) != null)
 				name = expression.Member.Name + "." + name;
