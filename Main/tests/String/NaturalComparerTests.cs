@@ -75,11 +75,11 @@ namespace CodeJam
 				};
 
 			var comparerSort = data.ToList();
-			comparerSort.Sort(NaturalStringComparer.Comparer);
+			comparerSort.Sort(NaturalOrderStringComparer.Comparer);
 			Assert.IsTrue(comparerSort.Zip(expected, (x, y) => x == y).All(s => s), "#A01");
 
 			var comparisionSort = data.ToList();
-			comparisionSort.Sort(NaturalStringComparer.Comparision);
+			comparisionSort.Sort(NaturalOrderStringComparer.Comparision);
 			Assert.IsTrue(comparisionSort.Zip(expected, (x, y) => x == y).All(s => s), "#A02");
 		}
 	}

@@ -11,16 +11,15 @@ namespace CodeJam
 	/// String comparisons using a "natural order" algorithm.
 	/// </summary>
 	[PublicAPI]
-	// TODO: The name is not clear. Propos: NaturalOrderStringComparer, NaturalSortStringComparer, NaturalSortComparer
-	public class NaturalStringComparer : IComparer<string>
+	public class NaturalOrderStringComparer : IComparer<string>
 	{
-		[NotNull] public static readonly NaturalStringComparer Comparer = new NaturalStringComparer();
+		[NotNull] public static readonly NaturalOrderStringComparer Comparer = new NaturalOrderStringComparer();
 		[NotNull] public static readonly Comparison<string> Comparision = Compare;
 
 		/// <summary>End of line character</summary>
 		private const char Eol = char.MinValue;
 
-		private NaturalStringComparer() { }
+		private NaturalOrderStringComparer() { }
 
 		/// <summary>Compares numerical strings starting from non-zeroes</summary>
 		private static int CompareNumerical(string a, string b, ref int ia, ref int ib)
