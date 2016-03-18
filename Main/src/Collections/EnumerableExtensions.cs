@@ -15,7 +15,8 @@ namespace CodeJam
 		/// <summary>
 		/// Appends specified <paramref name="element"/> to end of the collection.
 		/// </summary>
-		public static IEnumerable<T> Concat<T>(this IEnumerable<T> source, T element)
+		[Pure, NotNull]
+		public static IEnumerable<T> Concat<T>([NotNull] this IEnumerable<T> source, T element)
 		{
 			foreach (var item in source)
 				yield return item;
@@ -25,7 +26,8 @@ namespace CodeJam
 		/// <summary>
 		/// Appends specified <paramref name="elements"/> to end of the collection.
 		/// </summary>
-		public static IEnumerable<T> Concat<T>(this IEnumerable<T> source, params T[] elements)
+		[Pure, NotNull]
+		public static IEnumerable<T> Concat<T>([NotNull] this IEnumerable<T> source, params T[] elements)
 		{
 			foreach (var item in source)
 				yield return item;
@@ -36,7 +38,8 @@ namespace CodeJam
 		/// <summary>
 		/// Prepends specified <paramref name="element"/> to the collection start.
 		/// </summary>
-		public static IEnumerable<T> Prepend<T>(this IEnumerable<T> source, T element)
+		[Pure, NotNull]
+		public static IEnumerable<T> Prepend<T>([NotNull] this IEnumerable<T> source, T element)
 		{
 			yield return element;
 			foreach (var item in source)
@@ -46,7 +49,8 @@ namespace CodeJam
 		/// <summary>
 		/// Prepends specified <paramref name="elements"/> to the collection start.
 		/// </summary>
-		public static IEnumerable<T> Prepend<T>(this IEnumerable<T> source, params T[] elements)
+		[Pure, NotNull]
+		public static IEnumerable<T> Prepend<T>([NotNull] this IEnumerable<T> source, params T[] elements)
 		{
 			foreach (var element in elements)
 				yield return element;
@@ -57,13 +61,13 @@ namespace CodeJam
 		/// <summary>
 		/// Creates a <see cref="HashSet{T}"/> from an <see cref="IEnumerable{T}"/>.
 		/// </summary>
-		[NotNull]
+		[Pure, NotNull]
 		public static HashSet<T> ToHashSet<T>([NotNull] this IEnumerable<T> source) => new HashSet<T>(source);
 
 		/// <summary>
 		/// Creates a <see cref="HashSet{T}"/> from an <see cref="IEnumerable{T}"/>.
 		/// </summary>
-		[NotNull]
+		[Pure, NotNull]
 		public static HashSet<T> ToHashSet<T>(
 			[NotNull] this IEnumerable<T> source,
 			[NotNull] IEqualityComparer<T> comparer) =>
@@ -72,6 +76,7 @@ namespace CodeJam
 		/// <summary>
 		/// Returns first element, or specified <paramref name="defaultValue"/>, if sequence is empty.
 		/// </summary>
+		[Pure]
 		public static T FirstOrDefault<T>([NotNull] this IEnumerable<T> source, T defaultValue)
 		{
 			if (source == null)
@@ -84,6 +89,7 @@ namespace CodeJam
 		/// <summary>
 		/// Returns first element, or specified <paramref name="defaultValue"/>, if sequence is empty.
 		/// </summary>
+		[Pure]
 		public static T FirstOrDefault<T>(
 			[NotNull] this IEnumerable<T> source,
 			T defaultValue,
