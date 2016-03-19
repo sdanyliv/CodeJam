@@ -22,6 +22,10 @@ namespace CodeJam
 			ExpressionHelper.GetPropertyOrField(expression);
 
 		[NotNull, Pure]
+		public static ConstructorInfo Constructor<T>([NotNull] Expression<Func<T>> expression) =>
+			ExpressionHelper.GetConstructor(expression);
+
+		[NotNull, Pure]
 		public static MethodInfo Method([NotNull] Expression<Action> expression) =>
 			ExpressionHelper.GetMethod(expression);
 	}

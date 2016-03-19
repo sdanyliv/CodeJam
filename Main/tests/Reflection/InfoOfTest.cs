@@ -36,9 +36,11 @@ namespace CodeJam
 		public void ExtarctingCtor()
 		{
 			var expected = typeof (User).GetConstructors().First(c => c.GetParameters().Length != 0);
-			var ctor = InfoOf<User>.Constructor(() => new User("", ""));
+			var ctor1 = InfoOf.Constructor(() => new User("", ""));
+			var ctor2 = InfoOf<User>.Constructor(() => new User("", ""));
 
-			Assert.AreEqual(expected, ctor);
+			Assert.AreEqual(expected, ctor1, "#1");
+			Assert.AreEqual(expected, ctor2, "#2");
 		}
 
 		[Test]
@@ -48,8 +50,8 @@ namespace CodeJam
 			var method1 = InfoOf.Method(() => new User().Debug());
 			var method2 = InfoOf<User>.Method(u => u.Debug());
 
-			Assert.AreEqual(expected, method1);
-			Assert.AreEqual(expected, method2);
+			Assert.AreEqual(expected, method1, "#1");
+			Assert.AreEqual(expected, method2, "#2");
 		}
 
 		#region Inner types
