@@ -21,5 +21,21 @@ namespace CodeJam
 		[TestCase("abc", StringOrigin.Begin, 4, ExpectedResult = "abc")]
 		[TestCase("abc", StringOrigin.End, 4, ExpectedResult = "abc")]
 		public string SubstringOrg(string str, StringOrigin origin, int length) => str.Substring(origin, length);
+
+		[TestCase("abc", null, ExpectedResult = "abc")]
+		[TestCase("abc", "", ExpectedResult = "abc")]
+		[TestCase("abc", "abcd", ExpectedResult = "abc")]
+		[TestCase("abc", "ab", ExpectedResult = "c")]
+		[TestCase("abc", "ac", ExpectedResult = "abc")]
+		[TestCase("abc", "abc", ExpectedResult = "")]
+		public string TrimPrefix(string str, string prefix) => str.TrimPrefix(prefix);
+
+		[TestCase("abc", null, ExpectedResult = "abc")]
+		[TestCase("abc", "", ExpectedResult = "abc")]
+		[TestCase("abc", "abcd", ExpectedResult = "abc")]
+		[TestCase("abc", "bc", ExpectedResult = "a")]
+		[TestCase("abc", "ac", ExpectedResult = "abc")]
+		[TestCase("abc", "abc", ExpectedResult = "")]
+		public string TrimSuffix(string str, string suffix) => str.TrimSuffix(suffix);
 	}
 }

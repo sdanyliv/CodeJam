@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
@@ -24,6 +25,8 @@ namespace CodeJam
 		/// <paramref name="origin"/> in  <paramref name="str"/>, or Empty if length of <paramref name="str"/>
 		/// or <paramref name="length"/> is zero.
 		/// </returns>
+		[NotNull]
+		[Pure]
 		public static string Substring([NotNull] this string str, StringOrigin origin, int length)
 		{
 			if (str == null) throw new ArgumentNullException(nameof(str));
@@ -50,6 +53,8 @@ namespace CodeJam
 		/// </summary>
 		/// <param name="str"></param>
 		/// <param name="length">The number of characters in the substring.</param>
+		[NotNull]
+		[Pure]
 		public static string Prefix([NotNull] this string str, int length) => str.Substring(StringOrigin.Begin, length);
 
 		/// <summary>
@@ -57,6 +62,73 @@ namespace CodeJam
 		/// </summary>
 		/// <param name="str"></param>
 		/// <param name="length">The number of characters in the substring.</param>
+		[NotNull]
+		[Pure]
 		public static string Suffix([NotNull] this string str, int length) => str.Substring(StringOrigin.End, length);
+
+		/// <summary>
+		/// Trims <paramref name="str"/> prefix if it equals to <paramref name="prefix"/>.
+		/// </summary>
+		[NotNull]
+		[Pure]
+		public static string TrimPrefix(
+			[NotNull] this string str,
+			[CanBeNull] string prefix,
+			[NotNull] IEqualityComparer<string> comparer)
+		{
+			if (str == null) throw new ArgumentNullException(nameof(str));
+			if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+
+			// FastPath
+			if (prefix == null)
+				return str;
+			var prefixLen = prefix.Length;
+			if (prefixLen == 0 || str.Length < prefixLen)
+				return str;
+
+			var actPrefix = str.Prefix(prefixLen);
+			return !comparer.Equals(prefix, actPrefix) ? str : str.Substring(prefixLen);
+		}
+
+		/// <summary>
+		/// Trims <paramref name="str"/> prefix if it equals to <paramref name="prefix"/>.
+		/// </summary>
+		[NotNull]
+		[Pure]
+		public static string TrimPrefix([NotNull] this string str, [CanBeNull] string prefix) =>
+			TrimPrefix(str, prefix, StringComparer.CurrentCulture);
+
+		/// <summary>
+		/// Trims <paramref name="str"/> suffix if it equals to <paramref name="suffix"/>.
+		/// </summary>
+		[NotNull]
+		[Pure]
+		public static string TrimSuffix(
+			[NotNull] this string str,
+			[CanBeNull] string suffix,
+			[NotNull] IEqualityComparer<string> comparer)
+		{
+			if (str == null) throw new ArgumentNullException(nameof(str));
+			if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+
+			// FastPath
+			if (suffix == null)
+				return str;
+			var strLen = str.Length;
+			var suffixLen = suffix.Length;
+			if (suffixLen == 0 || strLen < suffixLen)
+				return str;
+
+			var actPrefix = str.Suffix(suffixLen);
+			return !comparer.Equals(suffix, actPrefix) ? str : str.Substring(0, strLen - suffixLen);
+		}
+
+		/// <summary>
+		/// Trims <paramref name="str"/> prefix if it equals to <paramref name="suffix"/>.
+		/// </summary>
+		[NotNull]
+		[Pure]
+		public static string TrimSuffix([NotNull] this string str, [CanBeNull] string suffix) =>
+			TrimSuffix(str, suffix, StringComparer.CurrentCulture);
 	}
 }
