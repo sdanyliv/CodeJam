@@ -12,15 +12,14 @@ namespace CodeJam
 	public static class DisposableExtensions
 	{
 		/// <summary>
-		/// Invokes the dispose for each item in the specified collection.
+		/// Invokes the dispose for each item in the <paramref name="disposables"/>.
 		/// </summary>
-		/// <param name="collection">The multiple <see cref="IDisposable"/> instances.</param>
-		public static void DisposeAll([NotNull, InstantHandle] this IEnumerable<IDisposable> collection)
+		/// <param name="disposables">The multiple <see cref="IDisposable"/> instances.</param>
+		public static void DisposeAll([NotNull, InstantHandle] this IEnumerable<IDisposable> disposables)
 		{
 			List<Exception> exceptions = null;
 
-			foreach (var item in collection)
-			{
+			foreach (var item in disposables)
 				try
 				{
 					item.Dispose();
@@ -32,23 +31,21 @@ namespace CodeJam
 
 					exceptions.Add(ex);
 				}
-			}
 
 			if (exceptions != null)
 				throw new AggregateException(exceptions);
 		}
 
 		/// <summary>
-		/// Invokes the dispose for each item in the specified collection.
+		/// Invokes the dispose for each item in the <paramref name="disposables"/>.
 		/// </summary>
-		/// <param name="collection">The multiple <see cref="IDisposable"/> instances.</param>
+		/// <param name="disposables">The multiple <see cref="IDisposable"/> instances.</param>
 		/// <param name="exceptionHandler">The exception handler.</param>
 		public static void DisposeAll(
-			[NotNull, InstantHandle] this IEnumerable<IDisposable> collection,
+			[NotNull, InstantHandle] this IEnumerable<IDisposable> disposables,
 			[NotNull] Func<Exception, bool> exceptionHandler)
 		{
-			foreach (var item in collection)
-			{
+			foreach (var item in disposables)
 				try
 				{
 					item.Dispose();
@@ -56,7 +53,6 @@ namespace CodeJam
 				catch (Exception ex) when (exceptionHandler(ex))
 				{
 				}
-			}
 		}
 	}
 }

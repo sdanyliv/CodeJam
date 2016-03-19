@@ -32,8 +32,7 @@ namespace CodeJam
 		/// Combine multiple <see cref="IDisposable"/> instances into single one.
 		/// </summary>
 		[NotNull, Pure]
-		public static IDisposable Merge(params IDisposable[] disposables) =>
-			Merge((IEnumerable<IDisposable>)disposables);
+		public static IDisposable Merge(params IDisposable[] disposables) => Merge((IEnumerable<IDisposable>)disposables);
 
 		public struct EmptyDisposable : IDisposable
 		{
