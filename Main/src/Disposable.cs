@@ -19,23 +19,21 @@ namespace CodeJam
 		/// <summary>
 		/// Creates <see cref="IDisposable"/> instanse that calls <paramref name="disposeAction"/> on disposing.
 		/// </summary>
-		public static AnonymousDisposable Create(Action disposeAction) => new AnonymousDisposable(disposeAction);
+		public static AnonymousDisposable Create([NotNull] Action disposeAction) => new AnonymousDisposable(disposeAction);
 
 		/// <summary>
 		/// Combine multiple <see cref="IDisposable"/> instances into single one.
 		/// </summary>
-		public static IDisposable Merge(this IEnumerable<IDisposable> disposables) =>
-			Create(
-				() =>
-				{
-					foreach (var disposable in disposables)
-						disposable.Dispose();
-				});
+		[NotNull, Pure]
+		public static IDisposable Merge([NotNull] this IEnumerable<IDisposable> disposables) =>
+			Create(disposables.DisposeAll);
 
 		/// <summary>
 		/// Combine multiple <see cref="IDisposable"/> instances into single one.
 		/// </summary>
-		public static IDisposable Merge(params IDisposable[] disposables) => Merge((IEnumerable<IDisposable>)disposables);
+		[NotNull, Pure]
+		public static IDisposable Merge(params IDisposable[] disposables) =>
+            Merge((IEnumerable<IDisposable>)disposables);
 
 		public struct EmptyDisposable : IDisposable
 		{
