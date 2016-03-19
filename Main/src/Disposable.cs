@@ -33,7 +33,7 @@ namespace CodeJam
 		/// </summary>
 		[NotNull, Pure]
 		public static IDisposable Merge(params IDisposable[] disposables) =>
-            Merge((IEnumerable<IDisposable>)disposables);
+			Merge((IEnumerable<IDisposable>)disposables);
 
 		public struct EmptyDisposable : IDisposable
 		{
