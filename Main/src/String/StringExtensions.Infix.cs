@@ -6,11 +6,7 @@ using JetBrains.Annotations;
 
 namespace CodeJam
 {
-	/// <summary>
-	/// <see cref="string"/> class extensions.
-	/// </summary>
-	[PublicAPI]
-	public static class StringExtensions
+	static partial class StringExtensions
 	{
 		/// <summary>
 		/// Infix form of <see cref="string.IsNullOrEmpty"/>.

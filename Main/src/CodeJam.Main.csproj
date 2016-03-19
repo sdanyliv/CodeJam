@@ -56,7 +56,9 @@
     <Compile Include="Reflection\InfoOf`1.cs" />
     <Compile Include="String\CharExtensions.cs" />
     <Compile Include="String\NaturalOrderStringComparer.cs" />
+    <Compile Include="String\StringExtensions.cs" />
     <Compile Include="String\StringExtensions.Infix.cs" />
+    <Compile Include="String\StringOrigin.cs" />
     <Compile Include="Threading\ReaderWriterLockSlimExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
