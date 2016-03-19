@@ -39,6 +39,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.TopoSort.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Fn.cs" />
