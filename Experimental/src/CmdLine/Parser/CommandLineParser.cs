@@ -22,10 +22,8 @@ namespace CodeJam.CmdLine
 		/// </summary>
 		private const char _quota = '"';
 
-		private static ParseResult<T> CreateResult<T>(T result, ICharInput inputRest)
-		{
-			return new ParseResult<T>(result, inputRest);
-		}
+		private static ParseResult<T> CreateResult<T>(T result, ICharInput inputRest) =>
+			new ParseResult<T>(result, inputRest);
 
 		/// <summary>
 		/// Parse command line.
@@ -83,16 +81,11 @@ namespace CodeJam.CmdLine
 					res.InputRest);
 		}
 
-		private static ParseResult<QuotedOrNonquotedValueNode> ParseQuotedOrNonquotedValue(ICharInput input)
-		{
-			return input.Current == _quota ? ParseQuotedValue(input) : ParseNonquotedValue(input);
-		}
+		private static ParseResult<QuotedOrNonquotedValueNode> ParseQuotedOrNonquotedValue(ICharInput input) =>
+			input.Current == _quota ? ParseQuotedValue(input) : ParseNonquotedValue(input);
 
 		#region Commands and options
-		private static bool IsOptionPrefix(char prefixChar)
-		{
-			return prefixChar == '/' || prefixChar == '-';
-		}
+		private static bool IsOptionPrefix(char prefixChar) => prefixChar == '/' || prefixChar == '-';
 
 		private static ParseResult<CommandOrOption> ParseCommandOrOption(ICharInput input)
 		{

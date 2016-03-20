@@ -277,6 +277,7 @@ namespace CodeJam
 		[NotNull, Pure]
 		public static IEnumerable<string> ToStrings<T>([NotNull] this IEnumerable<T> source)
 		{
+			// ReSharper disable once LoopCanBeConvertedToQuery
 			foreach (var obj in source)
 				yield return obj?.ToString() ?? "";
 		}

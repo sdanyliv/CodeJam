@@ -167,7 +167,7 @@ namespace CodeJam.CmdLine
 					.Select(opt => GetOptionString(opt, false, optPrefix))
 					.Join(", ");
 			if (optOpts.Length > 0)
-				sb.AppendFormat(" Optional: {0}.", optOpts);
+				sb.AppendFormat(" Option: {0}.", optOpts);
 			return sb.ToString();
 		}
 

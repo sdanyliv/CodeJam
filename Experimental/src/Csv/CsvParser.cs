@@ -43,10 +43,7 @@ namespace CodeJam.Csv
 		}
 
 		[CanBeNull]
-		private static string[] ParseLineNoEscaping(TextReader reader)
-		{
-			return reader.ReadLine()?.Split(',');
-		}
+		private static string[] ParseLineNoEscaping(TextReader reader) => reader.ReadLine()?.Split(',');
 
 		[CanBeNull]
 		private static string[] ParseLineWithEscaping(TextReader reader)
@@ -195,20 +192,11 @@ namespace CodeJam.Csv
 				return code;
 			}
 
-			public static CharReader Create(TextReader reader)
-			{
-				return new CharReader(reader, Read(reader));
-			}
+			public static CharReader Create(TextReader reader) => new CharReader(reader, Read(reader));
 
-			public CharReader Next()
-			{
-				return Create(m_Reader);
-			}
+			public CharReader Next() => Create(m_Reader);
 
-			public CharReader Peek()
-			{
-				return new CharReader(m_Reader, m_Reader.Peek());
-			}
+			public CharReader Peek() => new CharReader(m_Reader, m_Reader.Peek());
 		}
 		#endregion
 

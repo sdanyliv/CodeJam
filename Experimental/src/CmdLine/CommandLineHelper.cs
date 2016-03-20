@@ -14,26 +14,19 @@ namespace CodeJam.CmdLine
 		/// <summary>
 		/// Parse command line.
 		/// </summary>
-		public static CmdLineNode ParseCommandLine(string source)
-		{
-			return CommandLineParser.ParseCommandLine(source);
-		}
+		public static CmdLineNode ParseCommandLine(string source) => CommandLineParser.ParseCommandLine(source);
 
 		/// <summary>
 		/// Check command line semantics.
 		/// </summary>
-		public static void Check(string commandLine, CmdLineRules rules)
-		{
+		public static void Check(string commandLine, CmdLineRules rules) =>
 			Check(CommandLineParser.ParseCommandLine(commandLine), rules);
-		}
 
 		/// <summary>
 		/// Check command line semantics.
 		/// </summary>
-		public static void Check(CmdLineNode commandLine, CmdLineRules rules)
-		{
+		public static void Check(CmdLineNode commandLine, CmdLineRules rules) =>
 			CommandLineChecker.Check(commandLine, rules);
-		}
 
 		/// <summary>
 		/// Print usage.
@@ -67,9 +60,7 @@ namespace CodeJam.CmdLine
 		/// </summary>
 		public static void PrintUsage(
 			[NotNull] this CmdLineRules rules,
-			[NotNull] TextWriter writer)
-		{
-			PrintUsage(rules, writer, new PrintUsageSettings());
-		}
+			[NotNull] TextWriter writer) =>
+				PrintUsage(rules, writer, new PrintUsageSettings());
 	}
 }

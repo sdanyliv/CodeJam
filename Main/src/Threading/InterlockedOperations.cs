@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 
 namespace CodeJam
 {
+	[PublicAPI]
 	public static class InterlockedOperations
 	{
 		/// <summary>
