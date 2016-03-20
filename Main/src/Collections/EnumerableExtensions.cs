@@ -222,7 +222,7 @@ namespace CodeJam
 		/// Returns first element, or specified <paramref name="defaultValue"/>, if sequence is empty.
 		/// </summary>
 		[Pure]
-		public static T FirstOrDefault<T>([NotNull] this IEnumerable<T> source, T defaultValue)
+		public static T FirstOrDefault<T>([NotNull, InstantHandle] this IEnumerable<T> source, T defaultValue)
 		{
 			if (source == null)
 				throw new ArgumentNullException(nameof(source));
@@ -236,9 +236,9 @@ namespace CodeJam
 		/// </summary>
 		[Pure]
 		public static T FirstOrDefault<T>(
-			[NotNull] this IEnumerable<T> source,
+			[NotNull, InstantHandle] this IEnumerable<T> source,
 			T defaultValue,
-			[NotNull] Func<T, bool> predicate)
+			[NotNull, InstantHandle] Func<T, bool> predicate)
 		{
 			if (source == null)
 				throw new ArgumentNullException(nameof(source));
@@ -259,7 +259,7 @@ namespace CodeJam
 		/// A <see cref="List{T}"/> that contains elements from the input sequence.
 		/// </returns>
 		[NotNull, Pure]
-		public static List<T> AsList<T>([NotNull] this IEnumerable<T> source) => source as List<T> ?? new List<T>(source);
+		public static List<T> AsList<T>([NotNull, InstantHandle] this IEnumerable<T> source) => source as List<T> ?? new List<T>(source);
 
 		/// <summary>
 		/// Casts the specified sequence to array if possible, or creates an array from.
@@ -270,14 +270,13 @@ namespace CodeJam
 		/// An array that contains elements from the input sequence.
 		/// </returns>
 		[NotNull, Pure]
-		public static T[] AsArray<T>([NotNull] this IEnumerable<T> source) => source as T[] ?? source.ToArray();
+		public static T[] AsArray<T>([NotNull, InstantHandle] this IEnumerable<T> source) => source as T[] ?? source.ToArray();
 
 		/// <summary>
 		/// Returns string representations of <paramref name="source"/> items.
 		/// </summary>
-		[NotNull]
-		[Pure]
-		public static IEnumerable<string> ToStrings(this IEnumerable<object> source)
+		[NotNull, Pure]
+		public static IEnumerable<string> ToStrings([NotNull] this IEnumerable<object> source)
 		{
 			foreach (var obj in source)
 				yield return obj?.ToString() ?? "";

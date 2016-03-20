@@ -11,21 +11,25 @@ namespace CodeJam
 		/// <summary>
 		/// Infix form of <see cref="string.IsNullOrEmpty"/>.
 		/// </summary>
+		[Pure]
 		public static bool IsNullOrEmpty([CanBeNull] this string str) => string.IsNullOrEmpty(str);
 
 		/// <summary>
 		/// Returns true if argument is not null nor empty.
 		/// </summary>
+		[Pure]
 		public static bool NotNullNorEmpty([CanBeNull] this string str) => !string.IsNullOrEmpty(str);
 
 		/// <summary>
 		/// Infix form of <see cref="string.IsNullOrWhiteSpace"/>.
 		/// </summary>
+		[Pure]
 		public static bool IsNullOrWhiteSpace([CanBeNull] this string str) => string.IsNullOrWhiteSpace(str);
 
 		/// <summary>
 		/// Returns true if argument is not null nor whitespace.
 		/// </summary>
+		[Pure]
 		public static bool NotNullNorWhiteSpace([CanBeNull] this string str) => !string.IsNullOrWhiteSpace(str);
 
 		/// <summary>
@@ -36,7 +40,7 @@ namespace CodeJam
 		/// <param name="args">An object array that contains zero or more objects to format.</param>
 		/// <returns>A copy of format in which the format items have been replaced by the string representation of the corresponding objects in args</returns>
 		[StringFormatMethod("format")]
-		[NotNull]
+		[NotNull, Pure]
 		public static string Args([NotNull] this string format, params object[] args) => string.Format(format, args);
 
 		/// <summary>
@@ -93,18 +97,21 @@ namespace CodeJam
 		/// <summary>
 		/// Returns length of argument, even if argument is null.
 		/// </summary>
+		[Pure]
 		public static int Length([CanBeNull] this string str) => str?.Length ?? 0;
 
 		/// <summary>
 		/// Culture invariant version of <see cref="IFormattable.ToString(string,System.IFormatProvider)"/>
 		/// </summary>
-		public static string ToInvariantString<T>(this T s) where T : IFormattable =>
+		[NotNull, Pure]
+		public static string ToInvariantString<T>([NotNull] this T s) where T : IFormattable =>
 			s.ToString(null, CultureInfo.InvariantCulture);
 
 		/// <summary>
 		/// Culture invariant version of <see cref="IFormattable.ToString(string,System.IFormatProvider)"/>
 		/// </summary>
-		public static string ToInvariantString<T>(this T s, string format) where T : IFormattable =>
+		[NotNull, Pure]
+		public static string ToInvariantString<T>([NotNull] this T s, string format) where T : IFormattable =>
 			s.ToString(format, CultureInfo.InvariantCulture);
 	}
 }
