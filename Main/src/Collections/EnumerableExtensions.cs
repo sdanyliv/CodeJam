@@ -275,7 +275,7 @@ namespace CodeJam
 		/// Returns string representations of <paramref name="source"/> items.
 		/// </summary>
 		[NotNull, Pure]
-		public static IEnumerable<string> ToStrings([NotNull] this IEnumerable<object> source)
+		public static IEnumerable<string> ToStrings<T>([NotNull] this IEnumerable<T> source)
 		{
 			foreach (var obj in source)
 				yield return obj?.ToString() ?? "";
