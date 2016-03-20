@@ -34,7 +34,7 @@ namespace CodeJam
 
 		/// <summary>
 		/// Replaces the format items in a specified string with the string representations 
-		///  of corresponding objects in a specified array.
+		/// of corresponding objects in a specified array.
 		/// </summary>
 		/// <param name="format">A composite format string.</param>
 		/// <param name="args">An object array that contains zero or more objects to format.</param>
