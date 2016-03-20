@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 
 using JetBrains.Annotations;
 
@@ -258,8 +259,7 @@ namespace CodeJam
 		/// A <see cref="List{T}"/> that contains elements from the input sequence.
 		/// </returns>
 		[NotNull, Pure]
-		public static List<T> AsList<T>([NotNull] this IEnumerable<T> source) =>
-			source as List<T> ?? new List<T>(source);
+		public static List<T> AsList<T>([NotNull] this IEnumerable<T> source) => source as List<T> ?? new List<T>(source);
 
 		/// <summary>
 		/// Casts the specified sequence to array if possible, or creates an array from.
@@ -270,7 +270,17 @@ namespace CodeJam
 		/// An array that contains elements from the input sequence.
 		/// </returns>
 		[NotNull, Pure]
-		public static T[] AsArray<T>([NotNull] this IEnumerable<T> source) =>
-			source as T[] ?? source.ToArray();
+		public static T[] AsArray<T>([NotNull] this IEnumerable<T> source) => source as T[] ?? source.ToArray();
+
+		/// <summary>
+		/// Returns string representations of <paramref name="source"/> items.
+		/// </summary>
+		[NotNull]
+		[Pure]
+		public static IEnumerable<string> ToStrings(this IEnumerable<object> source)
+		{
+			foreach (var obj in source)
+				yield return obj?.ToString() ?? "";
+		}
 	}
 }

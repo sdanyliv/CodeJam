@@ -37,6 +37,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DisposableExtensions.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="String\StringExtensions.Infix.cs" />
     <Compile Include="String\StringOrigin.cs" />
     <Compile Include="Threading\ReaderWriterLockSlimExtensions.cs" />
+    <Compile Include="XNodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CodeJam.Main.nuspec" />
