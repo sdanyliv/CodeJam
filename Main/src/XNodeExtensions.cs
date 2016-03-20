@@ -68,7 +68,7 @@ namespace CodeJam
 			foreach (var element in parent.Elements())
 				if (namesSet.Contains(element.Name))
 					return element;
-			throw new XmlException($"Element with names {names.ToStrings().Join(", ")} not exists.");
+			throw new XmlException($"Element with names {names.Join(", ")} not exists.");
 		}
 
 		/// <summary>
