@@ -40,9 +40,55 @@ namespace CodeJam
 		public static string Args([NotNull] this string format, params object[] args) => string.Format(format, args);
 
 		/// <summary>
-		/// Infix form of <see cref="string.Join(string,IEnumerable{string})"/>.
+		/// Concatenates all the elements of a string array, using the specified separator between each element. 
 		/// </summary>
-		public static string Join(this IEnumerable<string> values, string separator) => string.Join(separator, values);
+		/// <remarks>
+		/// Infix form of <see cref="string.Join(string,string[])"/>.
+		/// </remarks>
+		/// <param name="values">An array that contains the elements to concatenate.</param>
+		/// <param name="separator">The string to use as a separator. <paramref name="separator"/> is included in the returned string only
+		/// if <paramref name="values"/> has more than one element.</param>
+		/// <returns>
+		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/> string.
+		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
+		/// </returns>
+		[NotNull, Pure]
+		public static string Join([NotNull] this string[] values, [CanBeNull] string separator) => string.Join(separator, values);
+
+		/// <summary>
+		/// Concatenates the members of a constructed <see cref="IEnumerable{T}"/> collection of type <see cref="string"/>,
+		/// using the specified separator between each member.
+		/// </summary>
+		/// <remarks>
+		/// Infix form of <see cref="string.Join(string,IEnumerable{string})"/>.
+		/// </remarks>
+		/// <param name="values">A collection that contains the strings to concatenate.</param>
+		/// <param name="separator">The string to use as a separator. <paramref name="separator"/> is included in the returned string only
+		/// if <paramref name="values"/> has more than one element.</param>
+		/// <returns>
+		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/> string.
+		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
+		/// </returns>
+		[NotNull, Pure]
+		public static string Join([NotNull, InstantHandle] this IEnumerable<string> values, [CanBeNull] string separator) =>
+			string.Join(separator, values);
+
+		/// <summary>
+		/// Concatenates the members of a collection, using the specified separator between each member.
+		/// </summary>
+		/// <remarks>
+		/// Infix form of <see cref="string.Join{T}(string, IEnumerable{T})"/>.
+		/// </remarks>
+		/// <param name="values">A collection that contains the strings to concatenate.</param>
+		/// <param name="separator">The string to use as a separator. <paramref name="separator"/> is included in the returned string only
+		/// if <paramref name="values"/> has more than one element.</param>
+		/// <returns>
+		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/> string.
+		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
+		/// </returns>
+		[NotNull, Pure]
+		public static string Join<T>([NotNull, InstantHandle] this IEnumerable<T> values, [CanBeNull] string separator) =>
+			string.Join(separator, values);
 
 		/// <summary>
 		/// Returns length of argument, even if argument is null.
