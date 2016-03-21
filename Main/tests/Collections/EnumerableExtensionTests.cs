@@ -55,6 +55,7 @@ namespace CodeJam
 			var items = GetDepStructure(source, out deps);
 
 			// Perform sort
+			// ReSharper disable once ReturnValueOfPureMethodIsNotUsed
 			Assert.Throws<ArgumentException>(() => items.TopoSort(i => deps[i]).Join(", "));
 		}
 

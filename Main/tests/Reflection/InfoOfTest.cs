@@ -55,11 +55,10 @@ namespace CodeJam
 		}
 
 		#region Inner types
-
-		public class User
+		private class User
 		{
-			public string Name { get; set; }
-			public string LastName;
+			public string Name { get; }
+			public readonly string LastName;
 
 			public User()
 			{
@@ -71,9 +70,9 @@ namespace CodeJam
 				LastName = lastName;
 			}
 
+			// ReSharper disable once MemberCanBeMadeStatic.Local
 			public void Debug()
-			{
-			}
+			{}
 		}
 
 		#endregion
