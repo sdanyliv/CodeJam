@@ -7,7 +7,7 @@ namespace CodeJam
 {
 	partial class EnumerableExtensions
 	{
-		#region Min
+		#region MinItem
 
 		#region int
 
@@ -20,7 +20,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, int> selector)
 		{
@@ -57,7 +57,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, int?> selector)
 			where TSource : class
@@ -115,7 +115,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, long> selector)
 		{
@@ -152,7 +152,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, long?> selector)
 			where TSource : class
@@ -210,7 +210,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, float> selector)
 		{
@@ -247,7 +247,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, float?> selector)
 			where TSource : class
@@ -305,7 +305,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, double> selector)
 		{
@@ -342,7 +342,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, double?> selector)
 			where TSource : class
@@ -400,7 +400,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, decimal> selector)
 		{
@@ -437,7 +437,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource>(
+		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, decimal?> selector)
 			where TSource : class
@@ -486,7 +486,7 @@ namespace CodeJam
 
 		#endregion
 
-		#region Max
+		#region MaxItem
 
 		#region int
 
@@ -499,7 +499,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, int> selector)
 		{
@@ -536,7 +536,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, int?> selector)
 			where TSource : class
@@ -594,7 +594,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, long> selector)
 		{
@@ -631,7 +631,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, long?> selector)
 			where TSource : class
@@ -689,7 +689,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, float> selector)
 		{
@@ -726,7 +726,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, float?> selector)
 			where TSource : class
@@ -784,7 +784,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, double> selector)
 		{
@@ -821,7 +821,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, double?> selector)
 			where TSource : class
@@ -879,7 +879,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, decimal> selector)
 		{
@@ -916,7 +916,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource>(
+		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, decimal?> selector)
 			where TSource : class

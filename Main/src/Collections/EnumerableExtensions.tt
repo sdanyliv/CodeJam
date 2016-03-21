@@ -12,8 +12,8 @@ namespace CodeJam
 <#
 	foreach (var info in new[]
 	{
-		new { Method = "Min", Operator = "<" },
-		new { Method = "Max", Operator = ">" },
+		new { Method = "MinItem", Operator = "<" },
+		new { Method = "MaxItem", Operator = ">" },
 	})
 	{
 #>

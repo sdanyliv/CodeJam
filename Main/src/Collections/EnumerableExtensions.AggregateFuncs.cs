@@ -19,7 +19,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
-		public static TSource Min<TSource, TValue>(
+		public static TSource MinItem<TSource, TValue>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, TValue> selector)
 		{
@@ -88,7 +88,7 @@ namespace CodeJam
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <returns>The item with maximum value in the sequence.</returns>
 		[Pure]
-		public static TSource Max<TSource, TValue>(
+		public static TSource MaxItem<TSource, TValue>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, TValue> selector)
 		{
