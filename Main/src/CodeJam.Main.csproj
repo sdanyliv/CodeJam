@@ -41,7 +41,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\EnumerableExtensions.Min.cs" />
+    <Compile Include="Collections\EnumerableExtensions.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnumerableExtensions.tt</DependentUpon>
+    </Compile>
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.TopoSort.cs" />
     <Compile Include="Disposable.cs" />
@@ -79,6 +83,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Collections\EnumerableExtensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EnumerableExtensions.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Compile.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Compile.cmd</LastGenOutput>

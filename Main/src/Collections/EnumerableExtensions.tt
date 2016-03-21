@@ -1,0 +1,130 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".generated.cs" #>
+using System;
+using System.Collections.Generic;
+
+using JetBrains.Annotations;
+
+namespace CodeJam
+{
+	partial class EnumerableExtensions
+	{
+<#
+	foreach (var info in new[]
+	{
+		new { Method = "Min", Operator = "<" },
+		new { Method = "Max", Operator = ">" },
+	})
+	{
+#>
+		#region <#= info.Method #>
+
+<#
+		foreach (var type in new[] { "int", "long", "float", "double", "decimal" })
+		{
+#>
+		#region <#= type #>
+
+		/// <summary>
+		/// Invokes a <paramref name="selector"/> on each element of a <paramref name="source"/>
+		/// and returns the item with minimum value.
+		/// </summary>
+		/// <typeparam name="TSource">The type of the elements of source.</typeparam>
+		/// <param name="source">A sequence of values to determine the minimum value of.</param>
+		/// <param name="selector">A transform function to apply to each element.</param>
+		/// <returns>The item with minimum value in the sequence.</returns>
+		[Pure]
+		public static TSource <#= info.Method #><TSource>(
+			[NotNull] this IEnumerable<TSource> source,
+			[NotNull, InstantHandle] Func<TSource, <#= type #>> selector)
+		{
+			if (source == null) throw new ArgumentNullException(nameof(source));
+			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			TSource item;
+			using (var e = source.GetEnumerator())
+			{
+				if (!e.MoveNext())
+					throw NoElementsException();
+
+				var value = selector(e.Current);
+				item = e.Current;
+				while (e.MoveNext())
+				{
+					var x = selector(e.Current);
+					if (x <#= info.Operator #> value)
+					{
+						value = x;
+						item = e.Current;
+					}
+				}
+			}
+
+			return item;
+		}
+
+		/// <summary>
+		/// Invokes a <paramref name="selector"/> on each element of a <paramref name="source"/>
+		/// and returns the item with minimum value.
+		/// </summary>
+		/// <typeparam name="TSource">The type of the elements of source.</typeparam>
+		/// <param name="source">A sequence of values to determine the minimum value of.</param>
+		/// <param name="selector">A transform function to apply to each element.</param>
+		/// <returns>The item with minimum value in the sequence.</returns>
+		[Pure]
+		public static TSource <#= info.Method #><TSource>(
+			[NotNull] this IEnumerable<TSource> source,
+			[NotNull, InstantHandle] Func<TSource, <#= type #>?> selector)
+			where TSource : class
+		{
+			if (source == null) throw new ArgumentNullException(nameof(source));
+			if (selector == null) throw new ArgumentNullException(nameof(selector));
+
+			TSource item;
+			using (var e = source.GetEnumerator())
+			{
+				<#= type #>? value;
+				// Start off knowing that we've a non-null value (or exit here, knowing we don't)
+				// so we don't have to keep testing for nullity.
+				do
+				{
+					if (!e.MoveNext())
+						return default(TSource);
+
+					value = selector(e.Current);
+				}
+				while (!value.HasValue);
+
+				// Keep hold of the wrapped value, and do comparisons on that, rather than
+				// using the lifted operation each time.
+				var valueVal = value.GetValueOrDefault();
+				item = e.Current;
+				while (e.MoveNext())
+				{
+					var cur = selector(e.Current);
+					var x = cur.GetValueOrDefault();
+
+					// Do not replace & with &&. The branch prediction cost outweighs the extra operation
+					// unless nulls either never happen or always happen.
+					if (cur.HasValue & x <#= info.Operator #> valueVal)
+					{
+						valueVal = x;
+						item = e.Current;
+					}
+				}
+			}
+
+			return item;
+		}
+
+		#endregion
+
+<#
+		}
+#>
+		#endregion
+
+<#
+	}
+#>
+	}
+}
