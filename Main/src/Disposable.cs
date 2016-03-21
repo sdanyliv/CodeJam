@@ -19,6 +19,7 @@ namespace CodeJam
 		/// <summary>
 		/// Creates <see cref="IDisposable"/> instanse that calls <paramref name="disposeAction"/> on disposing.
 		/// </summary>
+		[Pure]
 		public static AnonymousDisposable Create([NotNull] Action disposeAction) => new AnonymousDisposable(disposeAction);
 
 		/// <summary>

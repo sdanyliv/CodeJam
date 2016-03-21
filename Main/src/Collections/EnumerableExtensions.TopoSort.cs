@@ -15,7 +15,7 @@ namespace CodeJam
 		[Pure]
 		public static List<T> TopoSort<T>(
 			[NotNull] this IEnumerable<T> source,
-			[NotNull] Func<T, IEnumerable<T>> dependsOnGetter) =>
+			[NotNull, InstantHandle] Func<T, IEnumerable<T>> dependsOnGetter) =>
 				TopoSort(source, dependsOnGetter, EqualityComparer<T>.Default);
 
 		/// <summary>
@@ -25,7 +25,7 @@ namespace CodeJam
 		[Pure]
 		public static List<T> TopoSort<T>(
 			[NotNull] this IEnumerable<T> source,
-			[NotNull] Func<T, IEnumerable<T>> dependsOnGetter,
+			[NotNull, InstantHandle] Func<T, IEnumerable<T>> dependsOnGetter,
 			IEqualityComparer<T> equalityComparer)
 		{
 			if (source == null) throw new ArgumentNullException(nameof(source));

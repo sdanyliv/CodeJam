@@ -93,7 +93,7 @@ namespace CodeJam
 		public static TValue GetOrAdd<TKey, TValue>(
 			[NotNull] this IDictionary<TKey, TValue> dictionary,
 			TKey key,
-			[InstantHandle] Func<TKey, TValue> valueFactory)
+			[NotNull, InstantHandle] Func<TKey, TValue> valueFactory)
 		{
 			if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 			TValue result;
@@ -121,7 +121,7 @@ namespace CodeJam
 			[NotNull] this IDictionary<TKey, TValue> dictionary,
 			TKey key,
 			TValue addValue,
-			[InstantHandle] Func<TKey, TValue, TValue> updateValueFactory)
+			[NotNull, InstantHandle] Func<TKey, TValue, TValue> updateValueFactory)
 		{
 			if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 			TValue result;
@@ -151,8 +151,8 @@ namespace CodeJam
 		public static TValue AddOrUpdate<TKey, TValue>(
 			[NotNull] this IDictionary<TKey, TValue> dictionary,
 			TKey key,
-			[InstantHandle] Func<TKey, TValue> addValueFactory,
-			[InstantHandle] Func<TKey, TValue, TValue> updateValueFactory)
+			[NotNull, InstantHandle] Func<TKey, TValue> addValueFactory,
+			[NotNull, InstantHandle] Func<TKey, TValue, TValue> updateValueFactory)
 		{
 			if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 			TValue result;

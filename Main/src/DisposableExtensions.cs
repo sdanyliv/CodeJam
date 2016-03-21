@@ -43,7 +43,7 @@ namespace CodeJam
 		/// <param name="exceptionHandler">The exception handler.</param>
 		public static void DisposeAll(
 			[NotNull, InstantHandle] this IEnumerable<IDisposable> disposables,
-			[NotNull] Func<Exception, bool> exceptionHandler)
+			[NotNull, InstantHandle] Func<Exception, bool> exceptionHandler)
 		{
 			foreach (var item in disposables)
 				try
