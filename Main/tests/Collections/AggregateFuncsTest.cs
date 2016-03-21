@@ -18,6 +18,15 @@ namespace CodeJam
 
 		[TestCase(new[] { 3, 1, 0, 4, 6 }, ExpectedResult = 0)]
 		[TestCase(new[] { 1 }, ExpectedResult = 1)]
+		public long MinLong(int[] source) => source.Select(v => new Item<long>(v)).Min(i => i.Value).Value;
+
+		[TestCase(new[] { 3, 1, 0, 4, 6 }, ExpectedResult = 0)]
+		[TestCase(new[] { 1 }, ExpectedResult = 1)]
+		[TestCase(new int[0], ExpectedResult = null)]
+		public long? MinNullableLong(int[] source) => source.Select(v => new Item<long?>(v)).Min(i => i.Value)?.Value;
+
+		[TestCase(new[] { 3, 1, 0, 4, 6 }, ExpectedResult = 0)]
+		[TestCase(new[] { 1 }, ExpectedResult = 1)]
 		public float MinFloat(int[] source) => source.Select(v => new Item<float>(v)).Min(i => i.Value).Value;
 
 		[TestCase(new[] { 3, 1, 0, 4, 6 }, ExpectedResult = 0)]
