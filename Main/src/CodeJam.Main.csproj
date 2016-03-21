@@ -52,6 +52,8 @@
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Fn`1.cs" />
+    <Compile Include="Option.cs" />
+    <Compile Include="OptionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\ExpressionHelper.cs" />
     <Compile Include="Reflection\InfoOf.cs" />
