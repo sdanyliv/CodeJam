@@ -4,6 +4,10 @@ using JetBrains.Annotations;
 
 namespace CodeJam.Collections
 {
+	/// <summary>
+	/// <see cref="Array"/> type extensions.
+	/// </summary>
+	/// <typeparam name="T">Type of an array.</typeparam>
 	[PublicAPI]
 	public static class Array<T>
 	{
