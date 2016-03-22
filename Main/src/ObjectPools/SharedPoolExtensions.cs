@@ -91,7 +91,7 @@ namespace CodeJam.ObjectPools
 		/// </returns>
 		[Pure]
 		public static PooledObject<T> GetPooledObject<T>([NotNull] this ObjectPool<T> pool) where T : class =>
-			new PooledObject<T>(pool, p => p.Allocate(), (p, o) => p.Free(o));
+			new PooledObject<T>(pool);
 
 		/// <summary>
 		/// Allocates a <see cref="StringBuilder"/> and clears a wrapped <see cref="StringBuilder"/> instance.
