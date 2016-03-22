@@ -6,6 +6,9 @@ using JetBrains.Annotations;
 
 namespace CodeJam.Threading
 {
+	/// <summary>
+	/// Provides a helper class for initializing a values in a thread-safe manner.
+	/// </summary>
 	[PublicAPI]
 	public static class InterlockedOperations
 	{
