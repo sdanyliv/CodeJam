@@ -60,7 +60,7 @@
     <Compile Include="Fn`1.cs" />
     <Compile Include="ObjectPools\SharedPools.cs" />
     <Compile Include="ObjectPools\SharedPoolExtensions.cs" />
-    <Compile Include="ObjectPools\PooledObject`1.cs" />
+    <Compile Include="ObjectPools\PooledObject.cs" />
     <Compile Include="ObjectPools\ObjectPool.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="OptionExtensions.cs" />

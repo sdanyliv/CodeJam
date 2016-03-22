@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace CodeJam.ObjectPools
 {
 	/// <summary>
-	/// The RAII object to automatically release pooled object when its owning pool
+	/// The RAII object to automatically release pooled object when its owning pool.
 	/// </summary>
 	public struct PooledObject<T> : IDisposable where T : class
 	{
@@ -15,16 +15,28 @@ namespace CodeJam.ObjectPools
 		private readonly ObjectPool<T> _pool;
 		private T _pooledObject;
 
+		/// <summary>
+		/// Gets the object instance.
+		/// </summary>
 		[NotNull]
 		public T Object => _pooledObject;
 
-		public PooledObject(ObjectPool<T> pool) : this()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PooledObject{T}"/> class.
+		/// </summary>
+		/// <param name="pool">The object pool.</param>
+		public PooledObject([NotNull] ObjectPool<T> pool) : this()
 		{
 			_pool = pool;
 			_pooledObject = pool.Allocate();
 			_releaser = null;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PooledObject{T}"/> class.
+		/// </summary>
+		/// <param name="pool">The object pool.</param>
+		/// <param name="releaser">The function to release object.</param>
 		public PooledObject([NotNull] ObjectPool<T> pool, [NotNull] Action<ObjectPool<T>, T> releaser)
 		{
 			_pool = pool;
@@ -32,7 +44,16 @@ namespace CodeJam.ObjectPools
 			_releaser = releaser;
 		}
 
-		public PooledObject([NotNull] ObjectPool<T> pool, [NotNull] Func<ObjectPool<T>, T> allocator, [NotNull] Action<ObjectPool<T>, T> releaser)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PooledObject{T}"/> class.
+		/// </summary>
+		/// <param name="pool">The object pool.</param>
+		/// <param name="allocator">Th function to allocate object from the specified pool.</param>
+		/// <param name="releaser">The function to release object.</param>
+		public PooledObject(
+			[NotNull] ObjectPool<T> pool,
+			[NotNull] Func<ObjectPool<T>, T> allocator,
+			[NotNull] Action<ObjectPool<T>, T> releaser)
 		{
 			_pool = pool;
 			_pooledObject = allocator(pool);
