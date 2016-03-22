@@ -119,10 +119,10 @@ namespace CodeJam.ObjectPools
 		[NotNull, Pure]
 		public static Stack<T> AllocateAndClear<T>([NotNull] this ObjectPool<Stack<T>> pool)
 		{
-			var set = pool.Allocate();
-			set.Clear();
+			var stack = pool.Allocate();
+			stack.Clear();
 
-			return set;
+			return stack;
 		}
 
 		/// <summary>
@@ -135,10 +135,10 @@ namespace CodeJam.ObjectPools
 		[NotNull, Pure]
 		public static Queue<T> AllocateAndClear<T>([NotNull] this ObjectPool<Queue<T>> pool)
 		{
-			var set = pool.Allocate();
-			set.Clear();
+			var queue = pool.Allocate();
+			queue.Clear();
 
-			return set;
+			return queue;
 		}
 
 		/// <summary>
