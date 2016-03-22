@@ -42,7 +42,7 @@ namespace CodeJam.ObjectPools
 		[DebuggerDisplay("{Value,nq}")]
 		private struct Element
 		{
-			internal T Value;
+			public T Value;
 		}
 
 		/// <remarks>

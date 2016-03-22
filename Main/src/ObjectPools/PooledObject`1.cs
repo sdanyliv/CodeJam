@@ -15,6 +15,20 @@ namespace CodeJam.ObjectPools
 
 		public T Object => _pooledObject;
 
+		public PooledObject(ObjectPool<T> pool) : this()
+		{
+			_pool = pool;
+			_pooledObject = pool.Allocate();
+			_releaser = null;
+		}
+
+		public PooledObject(ObjectPool<T> pool, Action<ObjectPool<T>, T> releaser) : this()
+		{
+			_pool = pool;
+			_pooledObject = pool.Allocate();
+			_releaser = releaser;
+		}
+
 		public PooledObject(ObjectPool<T> pool, Func<ObjectPool<T>, T> allocator, Action<ObjectPool<T>, T> releaser) : this()
 		{
 			_pool = pool;

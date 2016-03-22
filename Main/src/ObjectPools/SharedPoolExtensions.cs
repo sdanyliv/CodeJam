@@ -9,40 +9,19 @@ namespace CodeJam.ObjectPools
 	{
 		private const int Threshold = 512;
 
-		public static PooledObject<StringBuilder> GetPooledObject(this ObjectPool<StringBuilder> pool)
-		{
-			return PooledObject.Create(pool);
-		}
+		public static PooledObject<StringBuilder> GetPooledObject(this ObjectPool<StringBuilder> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<Stack<TItem>> GetPooledObject<TItem>(this ObjectPool<Stack<TItem>> pool)
-		{
-			return PooledObject.Create(pool);
-		}
+		public static PooledObject<Stack<TItem>> GetPooledObject<TItem>(this ObjectPool<Stack<TItem>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<Queue<TItem>> GetPooledObject<TItem>(this ObjectPool<Queue<TItem>> pool)
-		{
-			return PooledObject.Create(pool);
-		}
+		public static PooledObject<Queue<TItem>> GetPooledObject<TItem>(this ObjectPool<Queue<TItem>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<HashSet<TItem>> GetPooledObject<TItem>(this ObjectPool<HashSet<TItem>> pool)
-		{
-			return PooledObject.Create(pool);
-		}
+		public static PooledObject<HashSet<TItem>> GetPooledObject<TItem>(this ObjectPool<HashSet<TItem>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<Dictionary<TKey, TValue>> GetPooledObject<TKey, TValue>(this ObjectPool<Dictionary<TKey, TValue>> pool)
-		{
-			return PooledObject.Create(pool);
-		}
+		public static PooledObject<Dictionary<TKey, TValue>> GetPooledObject<TKey, TValue>(this ObjectPool<Dictionary<TKey, TValue>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<List<TItem>> GetPooledObject<TItem>(this ObjectPool<List<TItem>> pool)
-		{
-			return PooledObject.Create(pool);
-		}
+		public static PooledObject<List<TItem>> GetPooledObject<TItem>(this ObjectPool<List<TItem>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<T> GetPooledObject<T>(this ObjectPool<T> pool) where T : class
-		{
-			return new PooledObject<T>(pool, p => p.Allocate(), (p, o) => p.Free(o));
-		}
+		public static PooledObject<T> GetPooledObject<T>(this ObjectPool<T> pool) where T : class => new PooledObject<T>(pool, p => p.Allocate(), (p, o) => p.Free(o));
 
 		public static StringBuilder AllocateAndClear(this ObjectPool<StringBuilder> pool)
 		{
