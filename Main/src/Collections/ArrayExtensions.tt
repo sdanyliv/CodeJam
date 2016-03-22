@@ -1,7 +1,6 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ output extension=".generated.cs" #>
 using System;
-using System.Collections.Generic;
 
 using JetBrains.Annotations;
 

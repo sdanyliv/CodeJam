@@ -38,6 +38,7 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
-		public static bool EqualsTo<T>(this T[] a, T[] b) => EqualsTo(a, b, EqualityComparer<T>.Default);
+		[Pure]
+		public static bool EqualsTo<T>([CanBeNull] this T[] a, [CanBeNull] T[] b) => EqualsTo(a, b, EqualityComparer<T>.Default);
 	}
 }
