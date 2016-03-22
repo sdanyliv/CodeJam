@@ -28,6 +28,7 @@ before_build:
 - cmd: nuget restore
 
 build:
+  project: CodeJam.sln
   publish_nuget: false
   verbosity: minimal
 
