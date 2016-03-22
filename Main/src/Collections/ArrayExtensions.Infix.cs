@@ -6,11 +6,7 @@ using JetBrains.Annotations;
 
 namespace CodeJam.Collections
 {
-	/// <summary>
-	/// <see cref="Array" /> class extensions.
-	/// </summary>
-	[PublicAPI]
-	public static class ArrayExtensions
+	static partial class ArrayExtensions
 	{
 		/// <summary>Returns a read-only wrapper for the specified array.</summary>
 		/// <returns>A read-only <see cref="ReadOnlyCollection{T}" /> wrapper for the specified array.</returns>
