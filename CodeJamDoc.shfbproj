@@ -37,6 +37,11 @@
     <DocumentationSources>
       <DocumentationSource sourceFile="Main\src\bin\Debug\CodeJam.XML" />
 <DocumentationSource sourceFile="Main\src\bin\Debug\CodeJam.dll" /></DocumentationSources>
+    <ProjectSummary>CodeJam library</ProjectSummary>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False">&lt;summary&gt;CodeJam library&lt;/summary&gt;</NamespaceSummaryItem>
+<NamespaceSummaryItem name="CodeJam (Group)" isGroup="True" isDocumented="True">&lt;summary&gt;CodeJam library&lt;/summary&gt;</NamespaceSummaryItem></NamespaceSummaries>
+    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, AutoDocumentDispose</MissingTags>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
