@@ -94,6 +94,18 @@ namespace CodeJam.ObjectPools
 			new PooledObject<T>(pool);
 
 		/// <summary>
+		/// Gets an <see cref="PooledObject{T}"/> from the specified pool that can be released automatically.
+		/// </summary>
+		/// <param name="pool">The object pool to allocate from.</param>
+		/// <param name="releaser">The function to release object.</param>
+		/// <returns>
+		/// The <see cref="PooledObject{T}"/> instance.
+		/// </returns>
+		[Pure]
+		public static PooledObject<T> GetPooledObject<T>([NotNull] this ObjectPool<T> pool, [NotNull] Action<ObjectPool<T>, T> releaser) where T : class =>
+			new PooledObject<T>(pool, releaser);
+
+		/// <summary>
 		/// Allocates a <see cref="StringBuilder"/> and clears a wrapped <see cref="StringBuilder"/> instance.
 		/// </summary>
 		/// <param name="pool">The object pool to allocate from.</param>
