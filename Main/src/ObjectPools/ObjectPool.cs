@@ -39,6 +39,7 @@ namespace CodeJam.ObjectPools
 	/// Rationale: 
 	///    If there is no intent for reusing the object, do not use pool - just use "new". 
 	/// </summary>
+	[PublicAPI]
 	public class ObjectPool<T> where T : class
 	{
 		[DebuggerDisplay("{Value,nq}")]

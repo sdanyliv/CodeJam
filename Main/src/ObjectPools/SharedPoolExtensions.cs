@@ -11,6 +11,7 @@ namespace CodeJam.ObjectPools
 	/// <summary>
 	/// The <see cref="ObjectPool{T}"/> extension.
 	/// </summary>
+	[PublicAPI]
 	public static class SharedPoolExtensions
 	{
 		private const int Threshold = 512;

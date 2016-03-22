@@ -9,6 +9,7 @@ namespace CodeJam.ObjectPools
 	/// <summary>
 	/// The RAII object to automatically release pooled object when its owning pool.
 	/// </summary>
+	[PublicAPI]
 	public struct PooledObject<T> : IDisposable where T : class
 	{
 		private readonly Action<ObjectPool<T>, T> _releaser;
