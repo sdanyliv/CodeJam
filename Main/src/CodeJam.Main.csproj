@@ -42,6 +42,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\ArrayExtensions.cs" />
+    <Compile Include="Collections\ArrayExtensions.generated.cs">
+      <DependentUpon>ArrayExtensions.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Collections\EnumerableExtensions.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -88,6 +94,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Collections\ArrayExtensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ArrayExtensions.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Collections\EnumerableExtensions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EnumerableExtensions.generated.cs</LastGenOutput>
