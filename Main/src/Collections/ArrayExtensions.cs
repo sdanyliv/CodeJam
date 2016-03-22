@@ -14,6 +14,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo<T>([CanBeNull] this T[] a, [CanBeNull] T[] b, [NotNull] IEqualityComparer<T> comparer)
 		{
@@ -38,6 +40,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo<T>([CanBeNull] this T[] a, [CanBeNull] T[] b) => EqualsTo(a, b, EqualityComparer<T>.Default);
 	}

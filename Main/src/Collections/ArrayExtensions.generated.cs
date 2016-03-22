@@ -11,6 +11,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this int[] a, [CanBeNull] int[] b)
 		{
@@ -33,6 +35,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this int?[] a, [CanBeNull] int?[] b)
 		{
@@ -59,6 +63,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this long[] a, [CanBeNull] long[] b)
 		{
@@ -81,6 +87,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this long?[] a, [CanBeNull] long?[] b)
 		{
@@ -107,6 +115,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this float[] a, [CanBeNull] float[] b)
 		{
@@ -129,6 +139,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this float?[] a, [CanBeNull] float?[] b)
 		{
@@ -155,6 +167,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this double[] a, [CanBeNull] double[] b)
 		{
@@ -177,6 +191,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this double?[] a, [CanBeNull] double?[] b)
 		{
@@ -203,6 +219,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this decimal[] a, [CanBeNull] decimal[] b)
 		{
@@ -225,6 +243,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this decimal?[] a, [CanBeNull] decimal?[] b)
 		{
@@ -251,6 +271,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this short[] a, [CanBeNull] short[] b)
 		{
@@ -273,6 +295,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this short?[] a, [CanBeNull] short?[] b)
 		{
@@ -299,6 +323,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this sbyte[] a, [CanBeNull] sbyte[] b)
 		{
@@ -321,6 +347,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this sbyte?[] a, [CanBeNull] sbyte?[] b)
 		{
@@ -347,6 +375,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this uint[] a, [CanBeNull] uint[] b)
 		{
@@ -369,6 +399,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this uint?[] a, [CanBeNull] uint?[] b)
 		{
@@ -395,6 +427,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this ulong[] a, [CanBeNull] ulong[] b)
 		{
@@ -417,6 +451,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this ulong?[] a, [CanBeNull] ulong?[] b)
 		{
@@ -443,6 +479,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this ushort[] a, [CanBeNull] ushort[] b)
 		{
@@ -465,6 +503,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this ushort?[] a, [CanBeNull] ushort?[] b)
 		{
@@ -491,6 +531,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this byte[] a, [CanBeNull] byte[] b)
 		{
@@ -513,6 +555,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this byte?[] a, [CanBeNull] byte?[] b)
 		{
@@ -539,6 +583,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this DateTime[] a, [CanBeNull] DateTime[] b)
 		{
@@ -561,6 +607,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this DateTime?[] a, [CanBeNull] DateTime?[] b)
 		{
@@ -587,6 +635,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this TimeSpan[] a, [CanBeNull] TimeSpan[] b)
 		{
@@ -609,6 +659,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this TimeSpan?[] a, [CanBeNull] TimeSpan?[] b)
 		{
@@ -635,6 +687,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this DateTimeOffset[] a, [CanBeNull] DateTimeOffset[] b)
 		{
@@ -657,6 +711,8 @@ namespace CodeJam.Collections
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this DateTimeOffset?[] a, [CanBeNull] DateTimeOffset?[] b)
 		{
