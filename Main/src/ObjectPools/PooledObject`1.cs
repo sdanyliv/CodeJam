@@ -2,6 +2,8 @@
 
 using System;
 
+using JetBrains.Annotations;
+
 namespace CodeJam.ObjectPools
 {
 	/// <summary>
@@ -13,6 +15,7 @@ namespace CodeJam.ObjectPools
 		private readonly ObjectPool<T> _pool;
 		private T _pooledObject;
 
+		[NotNull]
 		public T Object => _pooledObject;
 
 		public PooledObject(ObjectPool<T> pool) : this()
@@ -22,20 +25,23 @@ namespace CodeJam.ObjectPools
 			_releaser = null;
 		}
 
-		public PooledObject(ObjectPool<T> pool, Action<ObjectPool<T>, T> releaser) : this()
+		public PooledObject([NotNull] ObjectPool<T> pool, [NotNull] Action<ObjectPool<T>, T> releaser)
 		{
 			_pool = pool;
 			_pooledObject = pool.Allocate();
 			_releaser = releaser;
 		}
 
-		public PooledObject(ObjectPool<T> pool, Func<ObjectPool<T>, T> allocator, Action<ObjectPool<T>, T> releaser) : this()
+		public PooledObject([NotNull] ObjectPool<T> pool, [NotNull] Func<ObjectPool<T>, T> allocator, [NotNull] Action<ObjectPool<T>, T> releaser)
 		{
 			_pool = pool;
 			_pooledObject = allocator(pool);
 			_releaser = releaser;
 		}
 
+		/// <summary>
+		/// Returns object to the pool.
+		/// </summary>
 		public void Dispose()
 		{
 			if (_pooledObject == null)

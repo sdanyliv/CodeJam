@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.
 
+using System;
 using System.Collections.Generic;
 using System.Text;
+
+using JetBrains.Annotations;
 
 namespace CodeJam.ObjectPools
 {
@@ -9,21 +12,29 @@ namespace CodeJam.ObjectPools
 	{
 		private const int Threshold = 512;
 
-		public static PooledObject<StringBuilder> GetPooledObject(this ObjectPool<StringBuilder> pool) => PooledObject.Create(pool);
+		[Pure]
+		public static PooledObject<StringBuilder> GetPooledObject([NotNull] this ObjectPool<StringBuilder> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<Stack<TItem>> GetPooledObject<TItem>(this ObjectPool<Stack<TItem>> pool) => PooledObject.Create(pool);
+		[Pure]
+		public static PooledObject<Stack<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<Stack<TItem>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<Queue<TItem>> GetPooledObject<TItem>(this ObjectPool<Queue<TItem>> pool) => PooledObject.Create(pool);
+		[Pure]
+		public static PooledObject<Queue<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<Queue<TItem>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<HashSet<TItem>> GetPooledObject<TItem>(this ObjectPool<HashSet<TItem>> pool) => PooledObject.Create(pool);
+		[Pure]
+		public static PooledObject<HashSet<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<HashSet<TItem>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<Dictionary<TKey, TValue>> GetPooledObject<TKey, TValue>(this ObjectPool<Dictionary<TKey, TValue>> pool) => PooledObject.Create(pool);
+		[Pure]
+		public static PooledObject<Dictionary<TKey, TValue>> GetPooledObject<TKey, TValue>([NotNull] this ObjectPool<Dictionary<TKey, TValue>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<List<TItem>> GetPooledObject<TItem>(this ObjectPool<List<TItem>> pool) => PooledObject.Create(pool);
+		[Pure]
+		public static PooledObject<List<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<List<TItem>> pool) => PooledObject.Create(pool);
 
-		public static PooledObject<T> GetPooledObject<T>(this ObjectPool<T> pool) where T : class => new PooledObject<T>(pool, p => p.Allocate(), (p, o) => p.Free(o));
+		[Pure]
+		public static PooledObject<T> GetPooledObject<T>([NotNull] this ObjectPool<T> pool) where T : class => new PooledObject<T>(pool, p => p.Allocate(), (p, o) => p.Free(o));
 
-		public static StringBuilder AllocateAndClear(this ObjectPool<StringBuilder> pool)
+		[NotNull, Pure]
+		public static StringBuilder AllocateAndClear([NotNull] this ObjectPool<StringBuilder> pool)
 		{
 			var sb = pool.Allocate();
 			sb.Clear();
@@ -31,7 +42,8 @@ namespace CodeJam.ObjectPools
 			return sb;
 		}
 
-		public static Stack<T> AllocateAndClear<T>(this ObjectPool<Stack<T>> pool)
+		[NotNull, Pure]
+		public static Stack<T> AllocateAndClear<T>([NotNull] this ObjectPool<Stack<T>> pool)
 		{
 			var set = pool.Allocate();
 			set.Clear();
@@ -39,7 +51,8 @@ namespace CodeJam.ObjectPools
 			return set;
 		}
 
-		public static Queue<T> AllocateAndClear<T>(this ObjectPool<Queue<T>> pool)
+		[NotNull, Pure]
+		public static Queue<T> AllocateAndClear<T>([NotNull] this ObjectPool<Queue<T>> pool)
 		{
 			var set = pool.Allocate();
 			set.Clear();
@@ -47,7 +60,8 @@ namespace CodeJam.ObjectPools
 			return set;
 		}
 
-		public static HashSet<T> AllocateAndClear<T>(this ObjectPool<HashSet<T>> pool)
+		[NotNull, Pure]
+		public static HashSet<T> AllocateAndClear<T>([NotNull] this ObjectPool<HashSet<T>> pool)
 		{
 			var set = pool.Allocate();
 			set.Clear();
@@ -55,7 +69,8 @@ namespace CodeJam.ObjectPools
 			return set;
 		}
 
-		public static Dictionary<TKey, TValue> AllocateAndClear<TKey, TValue>(this ObjectPool<Dictionary<TKey, TValue>> pool)
+		[NotNull, Pure]
+		public static Dictionary<TKey, TValue> AllocateAndClear<TKey, TValue>([NotNull] this ObjectPool<Dictionary<TKey, TValue>> pool)
 		{
 			var map = pool.Allocate();
 			map.Clear();
@@ -63,7 +78,8 @@ namespace CodeJam.ObjectPools
 			return map;
 		}
 
-		public static List<T> AllocateAndClear<T>(this ObjectPool<List<T>> pool)
+		[NotNull, Pure]
+		public static List<T> AllocateAndClear<T>([NotNull] this ObjectPool<List<T>> pool)
 		{
 			var list = pool.Allocate();
 			list.Clear();
@@ -71,7 +87,7 @@ namespace CodeJam.ObjectPools
 			return list;
 		}
 
-		public static void ClearAndFree(this ObjectPool<StringBuilder> pool, StringBuilder sb)
+		public static void ClearAndFree([NotNull] this ObjectPool<StringBuilder> pool, StringBuilder sb)
 		{
 			if (sb == null)
 				return;
@@ -84,7 +100,7 @@ namespace CodeJam.ObjectPools
 			pool.Free(sb);
 		}
 
-		public static void ClearAndFree<T>(this ObjectPool<HashSet<T>> pool, HashSet<T> set)
+		public static void ClearAndFree<T>([NotNull] this ObjectPool<HashSet<T>> pool, HashSet<T> set)
 		{
 			if (set == null)
 				return;
@@ -98,7 +114,7 @@ namespace CodeJam.ObjectPools
 			pool.Free(set);
 		}
 
-		public static void ClearAndFree<T>(this ObjectPool<Stack<T>> pool, Stack<T> set)
+		public static void ClearAndFree<T>([NotNull] this ObjectPool<Stack<T>> pool, Stack<T> set)
 		{
 			if (set == null)
 				return;
@@ -112,7 +128,7 @@ namespace CodeJam.ObjectPools
 			pool.Free(set);
 		}
 
-		public static void ClearAndFree<T>(this ObjectPool<Queue<T>> pool, Queue<T> set)
+		public static void ClearAndFree<T>([NotNull] this ObjectPool<Queue<T>> pool, Queue<T> set)
 		{
 			if (set == null)
 				return;
@@ -126,7 +142,7 @@ namespace CodeJam.ObjectPools
 			pool.Free(set);
 		}
 
-		public static void ClearAndFree<TKey, TValue>(this ObjectPool<Dictionary<TKey, TValue>> pool, Dictionary<TKey, TValue> map)
+		public static void ClearAndFree<TKey, TValue>([NotNull] this ObjectPool<Dictionary<TKey, TValue>> pool, Dictionary<TKey, TValue> map)
 		{
 			if (map == null)
 				return;
@@ -142,7 +158,7 @@ namespace CodeJam.ObjectPools
 			pool.Free(map);
 		}
 
-		public static void ClearAndFree<T>(this ObjectPool<List<T>> pool, List<T> list)
+		public static void ClearAndFree<T>([NotNull] this ObjectPool<List<T>> pool, List<T> list)
 		{
 			if (list == null)
 				return;

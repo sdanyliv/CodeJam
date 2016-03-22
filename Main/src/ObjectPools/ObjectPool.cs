@@ -14,6 +14,8 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
+using JetBrains.Annotations;
+
 #if DETECT_LEAKS
 using System.Runtime.CompilerServices;
 
@@ -102,10 +104,19 @@ namespace CodeJam.ObjectPools
 		}
 #endif
 
-		public ObjectPool(Factory factory)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ObjectPool{T}"/> class.
+		/// </summary>
+		/// <param name="factory">The instance factory.</param>
+		public ObjectPool([NotNull] Factory factory)
 			: this(factory, Environment.ProcessorCount * 2)
 		{ }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ObjectPool{T}"/> class with the specified pool size.
+		/// </summary>
+		/// <param name="factory">The instance factory.</param>
+		/// <param name="size">The pool size.</param>
 		public ObjectPool(Factory factory, int size)
 		{
 			Debug.Assert(size >= 1);
@@ -127,6 +138,7 @@ namespace CodeJam.ObjectPools
 		/// Note that Free will try to store recycled objects close to the start thus statistically 
 		/// reducing how far we will typically search.
 		/// </remarks>
+		[NotNull, Pure]
 		public T Allocate()
 		{
 			// PERF: Examine the first element. If that fails, AllocateSlow will look at the remaining elements.
@@ -176,7 +188,7 @@ namespace CodeJam.ObjectPools
 		/// Note that Free will try to store recycled objects close to the start thus statistically 
 		/// reducing how far we will typically search in Allocate.
 		/// </remarks>
-		public void Free(T obj)
+		public void Free([NotNull] T obj)
 		{
 			Validate(obj);
 			ForgetTrackedObject(obj);
