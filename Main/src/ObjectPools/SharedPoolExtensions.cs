@@ -13,25 +13,32 @@ namespace CodeJam.ObjectPools
 		private const int Threshold = 512;
 
 		[Pure]
-		public static PooledObject<StringBuilder> GetPooledObject([NotNull] this ObjectPool<StringBuilder> pool) => PooledObject.Create(pool);
+		public static PooledObject<StringBuilder> GetPooledObject([NotNull] this ObjectPool<StringBuilder> pool) =>
+			new PooledObject<StringBuilder>(pool, p => p.AllocateAndClear(), (p, sb) => p.ClearAndFree(sb));
 
 		[Pure]
-		public static PooledObject<Stack<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<Stack<TItem>> pool) => PooledObject.Create(pool);
+		public static PooledObject<Stack<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<Stack<TItem>> pool) =>
+			new PooledObject<Stack<TItem>>(pool, p => p.AllocateAndClear(), (p, obj) => p.ClearAndFree(obj));
 
 		[Pure]
-		public static PooledObject<Queue<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<Queue<TItem>> pool) => PooledObject.Create(pool);
+		public static PooledObject<Queue<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<Queue<TItem>> pool) =>
+			new PooledObject<Queue<TItem>>(pool, p => p.AllocateAndClear(), (p, obj) => p.ClearAndFree(obj));
 
 		[Pure]
-		public static PooledObject<HashSet<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<HashSet<TItem>> pool) => PooledObject.Create(pool);
+		public static PooledObject<HashSet<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<HashSet<TItem>> pool) =>
+			new PooledObject<HashSet<TItem>>(pool, p => p.AllocateAndClear(), (p, obj) => p.ClearAndFree(obj));
 
 		[Pure]
-		public static PooledObject<Dictionary<TKey, TValue>> GetPooledObject<TKey, TValue>([NotNull] this ObjectPool<Dictionary<TKey, TValue>> pool) => PooledObject.Create(pool);
+		public static PooledObject<Dictionary<TKey, TValue>> GetPooledObject<TKey, TValue>([NotNull] this ObjectPool<Dictionary<TKey, TValue>> pool) =>
+			new PooledObject<Dictionary<TKey, TValue>>(pool, p => p.AllocateAndClear(), (p, obj) => p.ClearAndFree(obj));
 
 		[Pure]
-		public static PooledObject<List<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<List<TItem>> pool) => PooledObject.Create(pool);
+		public static PooledObject<List<TItem>> GetPooledObject<TItem>([NotNull] this ObjectPool<List<TItem>> pool) =>
+			new PooledObject<List<TItem>>(pool, p => p.AllocateAndClear(), (p, obj) => p.ClearAndFree(obj));
 
 		[Pure]
-		public static PooledObject<T> GetPooledObject<T>([NotNull] this ObjectPool<T> pool) where T : class => new PooledObject<T>(pool, p => p.Allocate(), (p, o) => p.Free(o));
+		public static PooledObject<T> GetPooledObject<T>([NotNull] this ObjectPool<T> pool) where T : class =>
+			new PooledObject<T>(pool, p => p.Allocate(), (p, o) => p.Free(o));
 
 		[NotNull, Pure]
 		public static StringBuilder AllocateAndClear([NotNull] this ObjectPool<StringBuilder> pool)
