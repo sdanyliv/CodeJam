@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Collections
 {
 	/// <summary>
 	/// Various collections extensions.

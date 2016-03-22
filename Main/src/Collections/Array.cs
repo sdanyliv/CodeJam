@@ -1,6 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿using System;
 
-namespace CodeJam
+using JetBrains.Annotations;
+
+namespace CodeJam.Collections
 {
 	[PublicAPI]
 	public static class Array<T>

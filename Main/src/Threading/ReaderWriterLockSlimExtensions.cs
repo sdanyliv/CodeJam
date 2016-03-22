@@ -5,7 +5,7 @@ using System.Threading;
 
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Threading
 {
 	/// <summary>
 	/// Represents the extenion methods for <see cref="ReaderWriterLockSlim"/>.

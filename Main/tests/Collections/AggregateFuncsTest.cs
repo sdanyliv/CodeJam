@@ -11,7 +11,7 @@ namespace CodeJam
 
 		[TestCase(new[] {3, 1, 0, 4, 6}, ExpectedResult = "0")]
 		[TestCase(new[] {1}, ExpectedResult = "1")]
-		public string MinItemString(int[] source) => source.Select(v => new Item<string>(v.ToString())).MinItem(i => i.Value).Value;
+		public string MinItemString(int[] source) => Collections.EnumerableExtensions.MinItem(source.Select(v => new Item<string>(v.ToString())), i => i.Value).Value;
 		#endregion
 
 
@@ -19,7 +19,7 @@ namespace CodeJam
 
 		[TestCase(new[] { 3, 1, 8, 0, 6 }, ExpectedResult = "8")]
 		[TestCase(new[] { 1 }, ExpectedResult = "1")]
-		public string MaxItemString(int[] source) => source.Select(v => new Item<string>(v.ToString())).MaxItem(i => i.Value).Value;
+		public string MaxItemString(int[] source) => Collections.EnumerableExtensions.MaxItem(source.Select(v => new Item<string>(v.ToString())), i => i.Value).Value;
 
 		#endregion
 

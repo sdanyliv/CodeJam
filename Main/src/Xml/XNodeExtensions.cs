@@ -2,9 +2,11 @@
 using System.Xml;
 using System.Xml.Linq;
 
+using CodeJam.Collections;
+
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Xml
 {
 	/// <summary>
 	/// Extensions for XLinq.

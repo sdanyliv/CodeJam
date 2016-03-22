@@ -4,7 +4,7 @@ using System.Threading;
 
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Threading
 {
 	[PublicAPI]
 	public static class InterlockedOperations

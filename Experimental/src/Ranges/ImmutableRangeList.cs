@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
+using CodeJam.Collections;
+
 using JetBrains.Annotations;
 
 namespace CodeJam.Ranges

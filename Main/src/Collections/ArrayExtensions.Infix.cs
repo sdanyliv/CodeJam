@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Collections
 {
 	/// <summary>
 	/// <see cref="Array" /> class extensions.

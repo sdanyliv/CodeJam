@@ -4,7 +4,7 @@ using System.Linq;
 
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Collections
 {
 	/// <summary>
 	/// Extensions for <see cref="IEnumerable{T}"/>

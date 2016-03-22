@@ -4,7 +4,7 @@ using System.Reflection;
 
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Reflection
 {
 	[PublicAPI]
 	public static class ExpressionHelper

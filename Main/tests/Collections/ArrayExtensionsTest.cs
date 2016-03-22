@@ -1,5 +1,7 @@
 ﻿using System;
 
+using CodeJam.Collections;
+
 using NUnit.Framework;
 
 namespace CodeJam
