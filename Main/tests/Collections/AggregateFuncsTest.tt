@@ -21,7 +21,7 @@ namespace CodeJam
 		#region <#= info.Method #>
 
 <#
-		foreach (var type in new[] { "Int32", "Int64", "Single", "Double", "Decimal" })
+		foreach (var type in new[] { "Int32", "Int64", "Single", "Double", "Decimal", "Int16", "SByte", "UInt32", "UInt64", "UInt16", "Byte" })
 		{
 #>
 		#region <#= type #>
@@ -29,13 +29,13 @@ namespace CodeJam
 		[TestCase(new[] {3, 1, 0, 4, 6}, TestName = "<#= info.Method #> <#= type #> Array",  ExpectedResult = <#= info.Result #>)]
 		[TestCase(new[] {1},             TestName = "<#= info.Method #> <#= type #> Single", ExpectedResult = 1)]
 		public <#= type #>  <#= info.Method #><#= type #>(int[] source)
-			=> source.Select(v => new Item<<#= type #>>(v)). <#= info.Method #>(i => i.Value).Value;
+			=> source.Select(v => new Item<<#= type #>>((<#= type #>)v)). <#= info.Method #>(i => i.Value).Value;
 
 		[TestCase(new[] {3, 1, 0, 4, 6}, TestName = "<#= info.Method #> <#= type #> Nullable Array",  ExpectedResult = <#= info.Result #>)]
 		[TestCase(new[] {1},             TestName = "<#= info.Method #> <#= type #> Nullable Single", ExpectedResult = 1)]
 		[TestCase(new int[0],            TestName = "<#= info.Method #> <#= type #> Nullable Empty",  ExpectedResult = null)]
 		public <#= type #>?  <#= info.Method #><#= type #>Nullable(int[] source)
-			=> source.Select(v => new Item<<#= type #>?>(v)). <#= info.Method #>(i => i.Value)?.Value;
+			=> source.Select(v => new Item<<#= type #>?>((<#= type #>)v)). <#= info.Method #>(i => i.Value)?.Value;
 
 		#endregion
 
