@@ -20,13 +20,31 @@ namespace CodeJam.Collections
 		/// <returns>The item with minimum value in the sequence.</returns>
 		[Pure]
 		public static TSource MinItem<TSource, TValue>(
-			[NotNull] this IEnumerable<TSource> source,
-			[NotNull, InstantHandle] Func<TSource, TValue> selector)
+			[NotNull, InstantHandle] this IEnumerable<TSource> source,
+			[NotNull, InstantHandle] Func<TSource, TValue> selector) => MinItem(source, selector, Comparer<TValue>.Default);
+
+		/// <summary>
+		/// Invokes a <paramref name="selector"/> on each element of a <paramref name="source"/>
+		/// and returns the item with minimum value.
+		/// </summary>
+		/// <typeparam name="TSource">The type of the elements of source.</typeparam>
+		/// <typeparam name="TValue">Type of the value</typeparam>
+		/// <param name="source">A sequence of values to determine the minimum value of.</param>
+		/// <param name="selector">A transform function to apply to each element.</param>
+		/// <param name="comparer">The <see cref="IComparer{T}"/> to compare values.</param>
+		/// <returns>The item with minimum value in the sequence.</returns>
+		[Pure]
+		public static TSource MinItem<TSource, TValue>(
+			[NotNull, InstantHandle] this IEnumerable<TSource> source,
+			[NotNull, InstantHandle] Func<TSource, TValue> selector,
+			[CanBeNull] IComparer<TValue> comparer)
 		{
 			if (source == null) throw new ArgumentNullException(nameof(source));
 			if (selector == null) throw new ArgumentNullException(nameof(selector));
 
-			var comparer = Comparer<TValue>.Default;
+			if (comparer == null)
+				comparer = Comparer<TValue>.Default;
+
 			var value = default(TValue);
 			var item = default(TSource);
 			if (value == null)
@@ -89,13 +107,31 @@ namespace CodeJam.Collections
 		/// <returns>The item with maximum value in the sequence.</returns>
 		[Pure]
 		public static TSource MaxItem<TSource, TValue>(
-			[NotNull] this IEnumerable<TSource> source,
-			[NotNull, InstantHandle] Func<TSource, TValue> selector)
+			[NotNull, InstantHandle] this IEnumerable<TSource> source,
+			[NotNull, InstantHandle] Func<TSource, TValue> selector) => MaxItem(source, selector, Comparer<TValue>.Default);
+
+		/// <summary>
+		/// Invokes a <paramref name="selector"/> on each element of a <paramref name="source"/>
+		/// and returns the item with maximum value.
+		/// </summary>
+		/// <typeparam name="TSource">The type of the elements of source.</typeparam>
+		/// <typeparam name="TValue">Type of the value</typeparam>
+		/// <param name="source">A sequence of values to determine the maximum value of.</param>
+		/// <param name="selector">A transform function to apply to each element.</param>
+		/// <param name="comparer">The <see cref="IComparer{T}"/> to compare values.</param>
+		/// <returns>The item with maximum value in the sequence.</returns>
+		[Pure]
+		public static TSource MaxItem<TSource, TValue>(
+			[NotNull, InstantHandle] this IEnumerable<TSource> source,
+			[NotNull, InstantHandle] Func<TSource, TValue> selector,
+			[CanBeNull] IComparer<TValue> comparer)
 		{
 			if (source == null) throw new ArgumentNullException(nameof(source));
 			if (selector == null) throw new ArgumentNullException(nameof(selector));
 
-			var comparer = Comparer<TValue>.Default;
+			if (comparer == null)
+				comparer = Comparer<TValue>.Default;
+
 			var value = default(TValue);
 			var item = default(TSource);
 			if (value == null)
