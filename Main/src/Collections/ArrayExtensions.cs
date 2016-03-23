@@ -31,6 +31,7 @@ namespace CodeJam.Collections
 			if (a.Length != b.Length)
 				return false;
 
+			// ReSharper disable once LoopCanBeConvertedToQuery
 			for (var i = 0; i < a.Length; i++)
 				if (!comparer.Equals(a[i], b[i]))
 					return false;

@@ -61,7 +61,7 @@ namespace CodeJam
 			Assert.Throws<ArgumentException>(() => items.TopoSort(i => deps[i]).Join(", "));
 		}
 
-		private static HashSet<string> GetDepStructure(string[] source, out Dictionary<string, string[]> deps)
+		private static IEnumerable<string> GetDepStructure(IEnumerable<string> source, out Dictionary<string, string[]> deps)
 		{
 			var items = new HashSet<string>();
 			deps = new Dictionary<string, string[]>();

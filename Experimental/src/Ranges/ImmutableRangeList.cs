@@ -41,12 +41,8 @@ namespace CodeJam.Ranges
 				&& Values.Count == 1
 				&& Values[0].IsFull;
 
-		public IEnumerator<Range<TValue>> GetEnumerator()
-		{
-			if (Values == null)
-				return Enumerable.Empty<Range<TValue>>().GetEnumerator();
-			return Values.GetEnumerator();
-		}
+		public IEnumerator<Range<TValue>> GetEnumerator() =>
+			Values?.GetEnumerator() ?? Enumerable.Empty<Range<TValue>>().GetEnumerator();
 
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -201,9 +197,10 @@ namespace CodeJam.Ranges
 			if (Values == null || ranges == null)
 				return this;
 
-			var intersected = ranges
-				.SelectMany(r => Values, (r, v) => r.Intersect(v))
-				.SelectMany(outer => outer);
+			var intersected =
+				ranges
+					.SelectMany(r => Values, (r, v) => r.Intersect(v))
+					.SelectMany(outer => outer);
 
 			return intersected.ToRangeList();
 		}

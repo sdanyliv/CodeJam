@@ -288,10 +288,10 @@ namespace CodeJam.Ranges
 		{
 			var current = this;
 			if (current.HasEnd && other.HasStart)
-				return (current.IncludeEnd || other.IncludeStart) && (current.End.CompareTo(other.Start) == 0);
+				return (current.IncludeEnd || other.IncludeStart) && current.End.CompareTo(other.Start) == 0;
 
 			if (other.HasEnd && current.HasStart)
-				return (other.IncludeEnd || current.IncludeStart) && (other.End.CompareTo(current.Start) == 0);
+				return (other.IncludeEnd || current.IncludeStart) && other.End.CompareTo(current.Start) == 0;
 			return false;
 		}
 

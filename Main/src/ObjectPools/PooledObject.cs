@@ -20,6 +20,7 @@ namespace CodeJam.ObjectPools
 		/// Gets the object instance.
 		/// </summary>
 		[NotNull]
+		// ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
 		public T Object => _pooledObject;
 
 		/// <summary>

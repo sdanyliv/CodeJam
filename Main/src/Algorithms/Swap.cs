@@ -4,7 +4,7 @@ namespace CodeJam
 {
 	/// <summary>Miscellaneous algorithms</summary>
 	[PublicAPI]
-	public static partial class Algorithms
+	public static class Algorithms
 	{
 		/// <summary>Swaps two objects</summary>
 		public static void Swap<T>(ref T value1, ref T value2)

@@ -13,13 +13,13 @@ namespace CodeJam.CmdLine
 					new []
 					{
 						new CommandRule("cmd1"),
-						new CommandRule("cmd2"),
+						new CommandRule("cmd2")
 					},
 					new []
 					{
 						new OptionRule("opt1", OptionType.Valueless),
 						new OptionRule("opt2", OptionType.Bool),
-						new OptionRule("opt3", OptionType.Value),
+						new OptionRule("opt3", OptionType.Value)
 					}));
 
 		[Test]
@@ -135,7 +135,7 @@ namespace CodeJam.CmdLine
 							},
 							new[]
 							{
-								new OptionRule("opt1", OptionType.Bool, true, "cmd1"),
+								new OptionRule("opt1", OptionType.Bool, true, "cmd1")
 							})));
 	}
 }

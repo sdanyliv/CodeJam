@@ -133,25 +133,24 @@ namespace CodeJam.CmdLine
 				throw new ParsingException("option name expected", input.Position);
 
 			var nextChar = name.InputRest.Current;
-			if (nextChar == '+' || nextChar == '-')
+			switch (nextChar)
 			{
-				return
-					CreateResult(
-						new OptionNode(name.Result, startPos, name.InputRest.Position - startPos + 1, nextChar == '+'),
-						name.InputRest.GetNext());
-			}
-
-			if (nextChar == '=')
-			{
-				var value = ParseQuotedOrNonquotedValue(name.InputRest.GetNext());
-				if (value.Result.Text.Length == 0)
-					throw new ParsingException(
-						$"option '{name.Result}' value not specified",
-						value.Result.Position);
-				return
-					new ParseResult<OptionNode>(
-						new OptionNode(name.Result, startPos, value.InputRest.Position - startPos, value.Result),
-						value.InputRest);
+				case '+':
+				case '-':
+					return
+						CreateResult(
+							new OptionNode(name.Result, startPos, name.InputRest.Position - startPos + 1, nextChar == '+'),
+							name.InputRest.GetNext());
+				case '=':
+					var value = ParseQuotedOrNonquotedValue(name.InputRest.GetNext());
+					if (value.Result.Text.Length == 0)
+						throw new ParsingException(
+							$"option '{name.Result}' value not specified",
+							value.Result.Position);
+					return
+						new ParseResult<OptionNode>(
+							new OptionNode(name.Result, startPos, value.InputRest.Position - startPos, value.Result),
+							value.InputRest);
 			}
 
 			return
