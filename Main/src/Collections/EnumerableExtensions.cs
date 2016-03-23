@@ -10,7 +10,7 @@ namespace CodeJam
 	/// Extensions for <see cref="IEnumerable{T}"/>
 	/// </summary>
 	[PublicAPI]
-	public static class EnumerableExtensions
+	public static partial class EnumerableExtensions
 	{
 		/// <summary>
 		/// Appends specified <paramref name="element"/> to end of the collection.
@@ -221,7 +221,7 @@ namespace CodeJam
 		/// Returns first element, or specified <paramref name="defaultValue"/>, if sequence is empty.
 		/// </summary>
 		[Pure]
-		public static T FirstOrDefault<T>([NotNull] this IEnumerable<T> source, T defaultValue)
+		public static T FirstOrDefault<T>([NotNull, InstantHandle] this IEnumerable<T> source, T defaultValue)
 		{
 			if (source == null)
 				throw new ArgumentNullException(nameof(source));
@@ -235,9 +235,9 @@ namespace CodeJam
 		/// </summary>
 		[Pure]
 		public static T FirstOrDefault<T>(
-			[NotNull] this IEnumerable<T> source,
+			[NotNull, InstantHandle] this IEnumerable<T> source,
 			T defaultValue,
-			[NotNull] Func<T, bool> predicate)
+			[NotNull, InstantHandle] Func<T, bool> predicate)
 		{
 			if (source == null)
 				throw new ArgumentNullException(nameof(source));
@@ -247,6 +247,39 @@ namespace CodeJam
 				if (predicate(item))
 					return item;
 			return defaultValue;
+		}
+
+		/// <summary>
+		/// Casts the specified sequence to <see cref="List{T}"/> if possible, or creates a <see cref="List{T}"/> from.
+		/// </summary>
+		/// <typeparam name="T">The type of the elements of source.</typeparam>
+		/// <param name="source">The <see cref="IEnumerable{T}"/> to create a <see cref="List{T}"/> from.</param>
+		/// <returns>
+		/// A <see cref="List{T}"/> that contains elements from the input sequence.
+		/// </returns>
+		[NotNull, Pure]
+		public static List<T> AsList<T>([NotNull, InstantHandle] this IEnumerable<T> source) => source as List<T> ?? new List<T>(source);
+
+		/// <summary>
+		/// Casts the specified sequence to array if possible, or creates an array from.
+		/// </summary>
+		/// <typeparam name="T">The type of the elements of source.</typeparam>
+		/// <param name="source">The <see cref="IEnumerable{T}"/> to create an array from.</param>
+		/// <returns>
+		/// An array that contains elements from the input sequence.
+		/// </returns>
+		[NotNull, Pure]
+		public static T[] AsArray<T>([NotNull, InstantHandle] this IEnumerable<T> source) => source as T[] ?? source.ToArray();
+
+		/// <summary>
+		/// Returns string representations of <paramref name="source"/> items.
+		/// </summary>
+		[NotNull, Pure]
+		public static IEnumerable<string> ToStrings<T>([NotNull] this IEnumerable<T> source)
+		{
+			// ReSharper disable once LoopCanBeConvertedToQuery
+			foreach (var obj in source)
+				yield return obj?.ToString() ?? "";
 		}
 	}
 }

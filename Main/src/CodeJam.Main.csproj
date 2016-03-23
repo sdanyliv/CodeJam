@@ -37,8 +37,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisposableExtensions.cs" />
+    <Compile Include="Collections\EnumerableExtensions.TopoSort.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="Fn.cs" />
     <Compile Include="Collections\Array.cs" />
     <Compile Include="Collections\ArrayExtensions.Infix.cs" />
@@ -47,11 +52,20 @@
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Fn`1.cs" />
+    <Compile Include="Option.cs" />
+    <Compile Include="OptionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\ExpressionHelper.cs" />
+    <Compile Include="Reflection\InfoOf.cs" />
+    <Compile Include="Reflection\InfoOf`1.cs" />
     <Compile Include="String\CharExtensions.cs" />
     <Compile Include="String\NaturalOrderStringComparer.cs" />
+    <Compile Include="String\StringExtensions.cs" />
     <Compile Include="String\StringExtensions.Infix.cs" />
+    <Compile Include="String\StringOrigin.cs" />
+    <Compile Include="Threading\InterlockedOperations.cs" />
     <Compile Include="Threading\ReaderWriterLockSlimExtensions.cs" />
+    <Compile Include="XNodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CodeJam.Main.nuspec" />

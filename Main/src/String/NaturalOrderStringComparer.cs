@@ -17,7 +17,7 @@ namespace CodeJam
 		[NotNull] public static readonly Comparison<string> Comparision = Compare;
 
 		/// <summary>End of line character</summary>
-		private const char Eol = char.MinValue;
+		private const char _eol = char.MinValue;
 
 		private NaturalOrderStringComparer() { }
 
@@ -101,7 +101,7 @@ namespace CodeJam
 				if (ca > cb)
 					return +1;
 
-				if (ca == Eol && cb == Eol)
+				if (ca == _eol && cb == _eol)
 				{
 					// The strings are equal. Perhaps the caller
 					// will want to call strcmp to break the tie.
@@ -137,14 +137,8 @@ namespace CodeJam
 			}
 		}
 
-		private static char CharAt(string s, int i)
-		{
-			return i >= s.Length ? Eol : s[i];
-		}
+		private static char CharAt(string s, int i) => i >= s.Length ? _eol : s[i];
 
-		int IComparer<string>.Compare(string x, string y)
-		{
-			return Compare(x, y);
-		}
+		int IComparer<string>.Compare(string x, string y) => Compare(x, y);
 	}
 }

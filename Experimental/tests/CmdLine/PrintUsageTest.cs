@@ -5,17 +5,14 @@ namespace CodeJam.CmdLine
 	[TestFixture]
 	public class PrintUsageTest
 	{
-		private static PrintUsageSettings GetSettings()
-		{
-			return
-				new PrintUsageSettings
-				{
-					ProductNameString = "Test program.",
-					CopyrightString = "Copyright (C) 2010 by CodeJam Team. All rights reserved.",
-					ProgramFileName = "program.exe",
-					RealOptionsInHeadLine = true
-				};
-		}
+		private static PrintUsageSettings GetSettings() =>
+			new PrintUsageSettings
+			{
+				ProductNameString = "Test program.",
+				CopyrightString = "Copyright (C) 2010 by CodeJam Team. All rights reserved.",
+				ProgramFileName = "program.exe",
+				RealOptionsInHeadLine = true
+			};
 
 		// TODO: Replace to dump comparision
 		[Test]

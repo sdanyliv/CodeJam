@@ -12,10 +12,7 @@ namespace CodeJam.CmdLine
 		/// <summary>
 		/// True, if end of file reached.
 		/// </summary>
-		private static bool IsEof(this ICharInput input)
-		{
-			return input.Current == CharInput.Eof;
-		}
+		private static bool IsEof(this ICharInput input) => input.Current == CharInput.Eof;
 
 		/// <summary>
 		/// Throw exception if EOF reached.
@@ -29,10 +26,7 @@ namespace CodeJam.CmdLine
 		///<summary>
 		/// Convert string to char input.
 		///</summary>
-		private static ICharInput ToCharInput(this string source)
-		{
-			return new CharInput(source);
-		}
+		private static ICharInput ToCharInput(this string source) => new CharInput(source);
 
 		/// <summary>
 		/// Consume single char.

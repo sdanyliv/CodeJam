@@ -72,21 +72,15 @@ namespace CodeJam.CmdLine
 		}
 
 		[Test]
-		public void ParseNoCloseQuota()
-		{
+		public void ParseNoCloseQuota() =>
 			Assert.Throws<ParsingException>(() => CommandLineHelper.ParseCommandLine("\"program"));
-		}
 
 		[Test]
-		public void ParseNoOptionName()
-		{
+		public void ParseNoOptionName() =>
 			Assert.Throws<ParsingException>(() => CommandLineHelper.ParseCommandLine("program /"));
-		}
 
 		[Test]
-		public void ParseNoOptionValue()
-		{
+		public void ParseNoOptionValue() =>
 			Assert.Throws<ParsingException>(() => CommandLineHelper.ParseCommandLine("program /aa= "));
-		}
 	}
 }

@@ -16,6 +16,7 @@ namespace CodeJam
 		/// Returns value associated with <paramref name="key"/>, or default(TValue) if key does not exists in
 		/// <paramref name="dictionary"/>
 		/// </summary>
+		[Pure]
 		public static TValue GetValueOrDefault<TKey, TValue>([NotNull] this IDictionary<TKey, TValue> dictionary, TKey key)
 		{
 			if (dictionary == null)
@@ -31,16 +32,16 @@ namespace CodeJam
 		/// Returns value associated with <paramref name="key"/>, or default(TValue) if key does not exists in
 		/// <paramref name="dictionary"/>
 		/// </summary>
-		public static TValue GetValueOrDefault<TKey, TValue>([NotNull] this Dictionary<TKey, TValue> dictionary, TKey key)
-		{
-			// Resolve ambiguity between IDictionary and IReadOnlyDictionary in System.Dictionary class.
-			return GetValueOrDefault((IDictionary<TKey, TValue>) dictionary, key);
-		}
+		// Resolve ambiguity between IDictionary and IReadOnlyDictionary in System.Dictionary class.
+		[Pure]
+		public static TValue GetValueOrDefault<TKey, TValue>([NotNull] this Dictionary<TKey, TValue> dictionary, TKey key) =>
+			GetValueOrDefault((IDictionary<TKey, TValue>) dictionary, key);
 
 		/// <summary>
 		/// Returns value associated with <paramref name="key"/>, or default(TValue) if key does not exists in
 		/// <paramref name="dictionary"/>
 		/// </summary>
+		[Pure]
 		public static TValue GetValueOrDefault<TKey, TValue>(
 			[NotNull] this IReadOnlyDictionary<TKey, TValue> dictionary,
 			TKey key)
@@ -92,7 +93,7 @@ namespace CodeJam
 		public static TValue GetOrAdd<TKey, TValue>(
 			[NotNull] this IDictionary<TKey, TValue> dictionary,
 			TKey key,
-			Func<TKey, TValue> valueFactory)
+			[NotNull, InstantHandle] Func<TKey, TValue> valueFactory)
 		{
 			if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 			TValue result;
@@ -120,7 +121,7 @@ namespace CodeJam
 			[NotNull] this IDictionary<TKey, TValue> dictionary,
 			TKey key,
 			TValue addValue,
-			Func<TKey, TValue, TValue> updateValueFactory)
+			[NotNull, InstantHandle] Func<TKey, TValue, TValue> updateValueFactory)
 		{
 			if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 			TValue result;
@@ -150,8 +151,8 @@ namespace CodeJam
 		public static TValue AddOrUpdate<TKey, TValue>(
 			[NotNull] this IDictionary<TKey, TValue> dictionary,
 			TKey key,
-			Func<TKey, TValue> addValueFactory,
-			Func<TKey, TValue, TValue> updateValueFactory)
+			[NotNull, InstantHandle] Func<TKey, TValue> addValueFactory,
+			[NotNull, InstantHandle] Func<TKey, TValue, TValue> updateValueFactory)
 		{
 			if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
 			TValue result;
