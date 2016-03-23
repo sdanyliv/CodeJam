@@ -12,5 +12,6 @@
     <files>
         <file src="bin\Release\CodeJam.dll" target="lib\CodeJam.dll" />
         <file src="bin\Release\CodeJam.pdb" target="lib\CodeJam.pdb" />
+        <file src="bin\Release\CodeJam.xml" target="lib\CodeJam.xml" />
     </files>
 </package>

@@ -26,10 +26,11 @@ namespace CodeJam.Collections
 		public static List<T> TopoSort<T>(
 			[NotNull] this IEnumerable<T> source,
 			[NotNull, InstantHandle] Func<T, IEnumerable<T>> dependsOnGetter,
-			IEqualityComparer<T> equalityComparer)
+			[NotNull] IEqualityComparer<T> equalityComparer)
 		{
 			if (source == null) throw new ArgumentNullException(nameof(source));
 			if (dependsOnGetter == null) throw new ArgumentNullException(nameof(dependsOnGetter));
+			if (equalityComparer == null) throw new ArgumentNullException(nameof(equalityComparer));
 
 			var result = new List<T>();
 			var visited = new HashSet<T>(equalityComparer);
