@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-using CodeJam.Reflection;
-
 using NUnit.Framework;
 
-namespace CodeJam
+namespace CodeJam.Reflection
 {
 	[TestFixture]
 	public class InfoOfTest
