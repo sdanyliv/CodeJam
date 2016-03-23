@@ -2,24 +2,25 @@
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Helpers;
-using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
+
 using NUnit.Framework;
+
 using System;
 using System.Linq;
 
 namespace BenchmarkDotNet.NUnit
 {
-    public static class CompetitionBenchmarkRunner
-    {
-        #region Public API overloads
-        // Benchmarks do not compile, disabled for now
+	public static class CompetitionBenchmarkRunner
+	{
+		#region Public API overloads
+		// Benchmarks do not compile, disabled for now
 #if DISABLED_FEATURES
-		/// <summary>
-		/// Runs the competition benchmark from source
-		/// </summary>
+	/// <summary>
+	/// Runs the competition benchmark from source
+	/// </summary>
 		public static void RunFromSource(double maxRatio, [CallerFilePath]string callerFile = null)
 		{
 			RunCompetition(0, maxRatio, null, File.ReadAllText(callerFile), null);
@@ -40,141 +41,146 @@ namespace BenchmarkDotNet.NUnit
 		}
 #endif
 
-        /// <summary>
-        /// Runs the competition benchmark
-        /// </summary>
-        public static void Run<T>(double maxRatio)
-        {
-            RunCompetition(0, maxRatio, typeof(T), null, null);
-        }
-        /// <summary>
-        /// Runs the competition benchmark 
-        /// </summary>
-        public static void Run<T>(double minRatio, double maxRatio)
-        {
-            RunCompetition(minRatio, maxRatio, typeof(T), null, null);
-        }
-        /// <summary>
-        /// Runs the competition benchmark
-        /// </summary>
-        public static void Run<T>(double minRatio, double maxRatio, IConfig config)
-        {
-            RunCompetition(minRatio, maxRatio, typeof(T), null, config);
-        }
-        #endregion
+		/// <summary>
+		/// Runs the competition benchmark
+		/// </summary>
+		public static void Run<T>(double maxRatio)
+		{
+			RunCompetition(0, maxRatio, typeof(T), null, null);
+		}
 
-        /// <summary>
-        /// Runs the competition benchmark
-        /// </summary>
-        // BASEDON: https://github.com/PerfDotNet/BenchmarkDotNet/blob/master/BenchmarkDotNet.IntegrationTests/PerformanceUnitTest.cs
-        public static void RunCompetition(double minRatio, double maxRatio, Type benchType, string benchSource, IConfig config)
-        {
-            var currentDirectory = Environment.CurrentDirectory;
-            try
-            {
-                // WORKAROUND: fixing the https://github.com/nunit/nunit3-vs-adapter/issues/96
-                Environment.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
+		/// <summary>
+		/// Runs the competition benchmark 
+		/// </summary>
+		public static void Run<T>(double minRatio, double maxRatio)
+		{
+			RunCompetition(minRatio, maxRatio, typeof(T), null, null);
+		}
 
-                RunCompetitionUnderSetup(minRatio, maxRatio, benchType, benchSource, config);
-            }
-            finally
-            {
-                Environment.CurrentDirectory = currentDirectory;
-            }
-        }
+		/// <summary>
+		/// Runs the competition benchmark
+		/// </summary>
+		public static void Run<T>(double minRatio, double maxRatio, IConfig config)
+		{
+			RunCompetition(minRatio, maxRatio, typeof(T), null, config);
+		}
+		#endregion
 
-        private static void RunCompetitionUnderSetup(double minRatio, double maxRatio, Type benchType, string benchSource, IConfig config)
-        {
-            // Based on 95th percentile
-            const double PercentileRatio = 0.95;
+		/// <summary>
+		/// Runs the competition benchmark
+		/// </summary>
+		// BASEDON: https://github.com/PerfDotNet/BenchmarkDotNet/blob/master/BenchmarkDotNet.IntegrationTests/PerformanceUnitTest.cs
+		public static void RunCompetition(
+			double minRatio, double maxRatio, Type benchType, string benchSource, IConfig config)
+		{
+			string currentDirectory = Environment.CurrentDirectory;
+			try
+			{
+				// WORKAROUND: fixing the https://github.com/nunit/nunit3-vs-adapter/issues/96
+				Environment.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
 
-            Summary summary = RunComparisonCore(benchType, benchSource, config);
+				RunCompetitionUnderSetup(minRatio, maxRatio, benchType, benchSource, config);
+			}
+			finally
+			{
+				Environment.CurrentDirectory = currentDirectory;
+			}
+		}
 
-            var benchmarkGroups = summary.SameConditionBenchmarks();
-            foreach (var benchmarkGroup in benchmarkGroups)
-            {
-                var baselineBenchmarks = benchmarkGroup.Where(b => b.Target.Baseline).ToArray();
-                if (baselineBenchmarks.Length == 0)
-                {
-                    throw new InvalidOperationException("Define Baseline benchmark");
-                }
-                if (baselineBenchmarks.Length != 1)
-                {
-                    throw new InvalidOperationException("There should be only one Baseline benchmark");
-                }
+		private static void RunCompetitionUnderSetup(
+			double minRatio, double maxRatio, Type benchType, string benchSource, IConfig config)
+		{
+			// Based on 95th percentile
+			const double PercentileRatio = 0.95;
 
-                var baselineBenchmark = baselineBenchmarks.Single();
-                var baselineMetric = summary.GetPercentile(baselineBenchmark, PercentileRatio);
-                if (baselineMetric == 0)
-                {
-                    throw new InvalidOperationException($"Baseline benchmark {baselineBenchmark.ShortInfo} does not compute");
-                }
+			var summary = RunComparisonCore(benchType, benchSource, config);
 
-                foreach (var benchmark in benchmarkGroup)
-                {
-                    if (benchmark == baselineBenchmark) continue;
+			var benchmarkGroups = summary.SameConditionBenchmarks();
+			foreach (var benchmarkGroup in benchmarkGroups)
+			{
+				var baselineBenchmarks = benchmarkGroup.Where(b => b.Target.Baseline).ToArray();
+				if (baselineBenchmarks.Length == 0)
+					throw new InvalidOperationException("Define Baseline benchmark");
+				if (baselineBenchmarks.Length != 1)
+					throw new InvalidOperationException("There should be only one Baseline benchmark");
 
-                    var reportMetric = summary.GetPercentile(benchmark, PercentileRatio);
-                    var ratio = Math.Round(reportMetric / baselineMetric, 2);
-                    var benchmarkMinRatio = minRatio;
-                    var benchmarkMaxRatio = maxRatio;
+				var baselineBenchmark = baselineBenchmarks.Single();
+				double baselineMetric = summary.GetPercentile(baselineBenchmark, PercentileRatio);
+				// ReSharper disable once CompareOfFloatsByEqualityOperator
+				if (baselineMetric == 0)
+					throw new InvalidOperationException($"Baseline benchmark {baselineBenchmark.ShortInfo} does not compute");
 
-                    var benchOptions = benchmark.Target.Method.TryGetAttribute<CompetitionBenchmarkAttribute>();
-                    if (benchOptions != null)
-                    {
-                        if (benchOptions.DoesNotCompete) continue;
+				foreach (var benchmark in benchmarkGroup)
+				{
+					if (benchmark == baselineBenchmark)
+						continue;
 
-                        if (benchOptions.MinRatio != 0)
-                        {
-                            benchmarkMinRatio = benchOptions.MinRatio;
-                        }
-                        if (benchOptions.MaxRatio != 0)
-                        {
-                            benchmarkMaxRatio = benchOptions.MaxRatio;
-                        }
-                    }
+					double reportMetric = summary.GetPercentile(benchmark, PercentileRatio);
+					double ratio = Math.Round(reportMetric / baselineMetric, 2);
+					double benchmarkMinRatio = minRatio;
+					double benchmarkMaxRatio = maxRatio;
 
-                    Assert.That(
-                        ratio >= benchmarkMinRatio,
-                        "Bench {0} runs faster than {1}x baseline. Actual ratio: {2}x",
-                        benchmark.ShortInfo, benchmarkMinRatio, ratio);
-                    Assert.That(
-                        ratio <= benchmarkMaxRatio,
-                        "Bench {0} runs slower than {1}x baseline. Actual ratio: {2}x",
-                        benchmark.ShortInfo, benchmarkMaxRatio, ratio);
-                }
-            }
-        }
+					var benchOptions = benchmark.Target.Method.TryGetAttribute<CompetitionBenchmarkAttribute>();
+					if (benchOptions != null)
+					{
+						if (benchOptions.DoesNotCompete)
+							continue;
 
-        private static Summary RunComparisonCore(Type benchType, string benchSource, IConfig config)
-        {
-            // Capturing the output
-            var logger = new AccumulationLogger();
-            logger.WriteLine();
-            logger.WriteLine();
-            logger.WriteLine(new string('=', 40));
-            logger.WriteLine();
+						// ReSharper disable once CompareOfFloatsByEqualityOperator
+						if (benchOptions.MinRatio != 0)
+						{
+							benchmarkMinRatio = benchOptions.MinRatio;
+						}
+						// ReSharper disable once CompareOfFloatsByEqualityOperator
+						if (benchOptions.MaxRatio != 0)
+						{
+							benchmarkMaxRatio = benchOptions.MaxRatio;
+						}
+					}
 
-            // TODO: better setup?
-            config = BenchmarkHelpers.CreateUnitTestConfig(config ?? DefaultConfig.Instance)
-                .With(logger)
-                .With(
-                    StatisticColumn.Min,
-                    ScaledPercentileColumn.S0Column,
-                    ScaledPercentileColumn.S50Column,
-                    ScaledPercentileColumn.S95Column,
-                    ScaledPercentileColumn.S100Column,
-                    StatisticColumn.Max);
+					Assert.That(
+						ratio >= benchmarkMinRatio,
+						"Bench {0} runs faster than {1}x baseline. Actual ratio: {2}x",
+						benchmark.ShortInfo, benchmarkMinRatio, ratio);
+					Assert.That(
+						ratio <= benchmarkMaxRatio,
+						"Bench {0} runs slower than {1}x baseline. Actual ratio: {2}x",
+						benchmark.ShortInfo, benchmarkMaxRatio, ratio);
+				}
+			}
+		}
 
-            // Running the benchmark
-            var summary = benchSource == null ? BenchmarkRunner.Run(benchType, config) : BenchmarkRunner.RunSource(benchSource, config);
+		private static Summary RunComparisonCore(Type benchType, string benchSource, IConfig config)
+		{
+			// Capturing the output
+			var logger = new AccumulationLogger();
+			logger.WriteLine();
+			logger.WriteLine();
+			logger.WriteLine(new string('=', 40));
+			logger.WriteLine();
 
-            // Dumping the benchmark results to console
-            MarkdownExporter.Default.ExportToLog(summary, ConsoleLogger.Default);
-            // Dumping all captured output below the benchmark results
-            ConsoleLogger.Default.WriteLine(logger.GetLog());
+			// TODO: better setup?
+			config = BenchmarkHelpers.CreateUnitTestConfig(config ?? DefaultConfig.Instance)
+				.With(logger)
+				.With(
+					StatisticColumn.Min,
+					ScaledPercentileColumn.S0Column,
+					ScaledPercentileColumn.S50Column,
+					ScaledPercentileColumn.S95Column,
+					ScaledPercentileColumn.S100Column,
+					StatisticColumn.Max);
 
-            return summary;
-        }
-    }
+			// Running the benchmark
+			var summary = benchSource == null ?
+				BenchmarkRunner.Run(benchType, config) :
+				BenchmarkRunner.RunSource(benchSource, config);
+
+			// Dumping the benchmark results to console
+			MarkdownExporter.Default.ExportToLog(summary, ConsoleLogger.Default);
+			// Dumping all captured output below the benchmark results
+			ConsoleLogger.Default.WriteLine(logger.GetLog());
+
+			return summary;
+		}
+	}
 }

@@ -1,20 +1,23 @@
 ﻿using System;
+
 using BenchmarkDotNet.Attributes;
 
 namespace BenchmarkDotNet.NUnit
 {
-    [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
 	public class CompetitionBenchmarkAttribute : BenchmarkAttribute
 	{
-        public CompetitionBenchmarkAttribute() { }
+		public CompetitionBenchmarkAttribute()
+		{
+		}
 
-        public CompetitionBenchmarkAttribute(double minRatio, double maxRatio)
-        {
-            MinRatio = minRatio;
-            MaxRatio = maxRatio;
-        }
+		public CompetitionBenchmarkAttribute(double minRatio, double maxRatio)
+		{
+			MinRatio = minRatio;
+			MaxRatio = maxRatio;
+		}
 
-        public bool DoesNotCompete { get; set; }
+		public bool DoesNotCompete { get; set; }
 
 		public double MaxRatio { get; private set; }
 
