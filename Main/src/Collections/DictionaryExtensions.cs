@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Collections
 {
 	/// <summary>
 	/// Extensions for <see cref="IDictionary{TKey,TValue}"/>

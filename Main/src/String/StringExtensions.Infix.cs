@@ -41,7 +41,7 @@ namespace CodeJam
 		/// <returns>A copy of format in which the format items have been replaced by the string representation of the corresponding objects in args</returns>
 		[StringFormatMethod("format")]
 		[NotNull, Pure]
-		public static string Args([NotNull] this string format, params object[] args) => string.Format(format, args);
+		public static string FormatWith([NotNull] this string format, params object[] args) => string.Format(format, args);
 
 		/// <summary>
 		/// Concatenates all the elements of a string array, using the specified separator between each element. 

@@ -147,6 +147,9 @@ namespace CodeJam.Csv
 								break;
 							}
 							throw new FormatException($"Unexpected char '{curChar.Char}'");
+
+						default:
+							throw new ArgumentOutOfRangeException();
 					}
 
 				curChar = curChar.Next();
@@ -168,7 +171,7 @@ namespace CodeJam.Csv
 				m_Code = code;
 			}
 
-			public char Char => (char) m_Code;
+			public char Char => (char)m_Code;
 
 			public bool IsEof => m_Code == s_Eof;
 

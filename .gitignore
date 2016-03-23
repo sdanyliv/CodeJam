@@ -33,3 +33,4 @@ _ReSharper*/
 !*.exe
 !*.pdb
 packages/
+Help/

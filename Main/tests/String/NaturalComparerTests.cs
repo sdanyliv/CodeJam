@@ -71,7 +71,7 @@ namespace CodeJam
 					"     b4.txt    ",
 					"b10.txt",
 					"x2m.txt",
-					"x10m.txt",
+					"x10m.txt"
 				};
 
 			var comparerSort = data.ToList();

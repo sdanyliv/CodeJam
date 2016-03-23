@@ -266,11 +266,11 @@ namespace CodeJam.Ranges
 			if (other.IsEmpty)
 				return this;
 
-			RangeValue currentStart	= current.StartValue;
-			RangeValue currentEnd	= current.EndValue;
+			var currentStart	= current.StartValue;
+			var currentEnd	= current.EndValue;
 
-			RangeValue otherStart	= other.StartValue;
-			RangeValue otherEnd		= other.EndValue;
+			var otherStart	= other.StartValue;
+			var otherEnd		= other.EndValue;
 
 			var overlap = currentStart <= otherEnd && otherStart <= currentEnd;
 
@@ -333,10 +333,10 @@ namespace CodeJam.Ranges
 		{
 			var current = this;
 			if (current.HasEnd && other.HasStart)
-				return (current.IncludeEnd || other.IncludeStart) && (current.End.CompareTo(other.Start) == 0);
+				return (current.IncludeEnd || other.IncludeStart) && current.End.CompareTo(other.Start) == 0;
 
 			if (other.HasEnd && current.HasStart)
-				return (other.IncludeEnd || current.IncludeStart) && (other.End.CompareTo(current.Start) == 0);
+				return (other.IncludeEnd || current.IncludeStart) && other.End.CompareTo(current.Start) == 0;
 			return false;
 		}
 
@@ -389,11 +389,11 @@ namespace CodeJam.Ranges
 				yield break;
 			}
 
-			RangeValue currentStart	= current.StartValue;
-			RangeValue currentEnd	= current.EndValue;
+			var currentStart	= current.StartValue;
+			var currentEnd	= current.EndValue;
 
-			RangeValue otherStart	= other.StartValue;
-			RangeValue otherEnd		= other.EndValue;
+			var otherStart	= other.StartValue;
+			var otherEnd		= other.EndValue;
 
 			var overlap = currentStart <= otherEnd && otherStart <= currentEnd;
 
@@ -465,11 +465,11 @@ namespace CodeJam.Ranges
 				return other;
 			}
 
-			RangeValue currentStart	= current.StartValue;
-			RangeValue currentEnd	= current.EndValue;
+			var currentStart	= current.StartValue;
+			var currentEnd	= current.EndValue;
 
-			RangeValue otherStart	= other.StartValue;
-			RangeValue otherEnd		= other.EndValue;
+			var otherStart	= other.StartValue;
+			var otherEnd		= other.EndValue;
 
 			var overlap = currentStart <= otherEnd && otherStart <= currentEnd;
 
@@ -587,20 +587,19 @@ namespace CodeJam.Ranges
 		private struct RangeValue : IComparable<RangeValue>
 		{
 			public readonly TValue Value;
-			private readonly ValueInfo _valueInfo;
 
-			public ValueInfo ValueInfo => _valueInfo;
+			public ValueInfo ValueInfo { get; }
 
 			public RangeValue(TValue value, ValueInfo valueInfo)
 			{
 				Value = value;
-				_valueInfo = valueInfo;
+				ValueInfo = valueInfo;
 			}
 
-			public bool IsMin		=> _valueInfo == ValueInfo.MinValue;
-			public bool IsMax		=> _valueInfo == ValueInfo.MaxValue;
-			public bool Included	=> _valueInfo == ValueInfo.Included;
-			public bool HasValue	=> _valueInfo == ValueInfo.Included || _valueInfo == ValueInfo.Excluded;
+			private bool IsMin => ValueInfo == ValueInfo.MinValue;
+			private bool IsMax => ValueInfo == ValueInfo.MaxValue;
+			public bool Included	=> ValueInfo == ValueInfo.Included;
+			public bool HasValue	=> ValueInfo == ValueInfo.Included || ValueInfo == ValueInfo.Excluded;
 
 			public int CompareTo(RangeValue other)
 			{
@@ -631,7 +630,7 @@ namespace CodeJam.Ranges
 
 			public override string ToString()
 			{
-				switch (_valueInfo)
+				switch (ValueInfo)
 				{
 					case ValueInfo.Excluded:
 						return $"({Value})";

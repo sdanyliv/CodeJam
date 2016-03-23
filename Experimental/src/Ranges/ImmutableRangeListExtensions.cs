@@ -19,13 +19,13 @@ namespace CodeJam.Ranges
 
 			var newRanges = ranges.Where(r => !r.IsEmpty).ToList();
 
-			if (newRanges.Count == 0)
-				return ImmutableRangeList<TValue>.Empty;
-
-			if (newRanges.Count == 1)
+			switch (newRanges.Count)
 			{
-				var first = newRanges[0];
-				return ToRangeList(first);
+				case 0:
+					return ImmutableRangeList<TValue>.Empty;
+				case 1:
+					var first = newRanges[0];
+					return ToRangeList(first);
 			}
 
 			newRanges.Sort();
@@ -58,11 +58,9 @@ namespace CodeJam.Ranges
 		}
 
 		public static ImmutableRangeList<TValue> Invert<TValue>(this IEnumerable<Range<TValue>> ranges)
-			where TValue : IComparable<TValue>
-		{
-			if (ranges == null)
-				return ToRangeList(Range.Full<TValue>());
-			return ToRangeList(ranges.SelectMany(r => r.Invert()));
-		}
+			where TValue : IComparable<TValue> =>
+				ranges == null
+					? ToRangeList(Range.Full<TValue>())
+					: ToRangeList(ranges.SelectMany(r => r.Invert()));
 	}
 }

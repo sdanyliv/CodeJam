@@ -25,13 +25,13 @@ namespace CodeJam.CmdLine
 					{
 						new CommandRule("cmd1", "Command 1."),
 						new CommandRule("cmd2", "Command 2."),
-						new CommandRule("command3", "Command #3."),
+						new CommandRule("command3", "Command #3.")
 					},
 					new[]
 					{
 						new OptionRule("opt1", "Option 1."),
 						new OptionRule("opt2", "Option #2.", OptionType.Value, true, "cmd2"),
-						new OptionRule("opt3", "Option Three.", OptionType.Bool, false, "cmd2"),
+						new OptionRule("opt3", "Option Three.", OptionType.Bool, false, "cmd2")
 					});
 
 			var res = rules.PrintUsage(GetSettings());
@@ -63,11 +63,11 @@ Usage: program.exe [cmd1|cmd2|command3] [-opt1|-opt2=|-opt3+...]
 					new[]
 					{
 						new CommandRule("cmd1"),
-						new CommandRule("cmd2"),
+						new CommandRule("cmd2")
 					},
 					new[]
 					{
-						new OptionRule("opt1"), 
+						new OptionRule("opt1")
 					});
 
 			var settings = GetSettings();

@@ -23,6 +23,6 @@ namespace CodeJam.CmdLine
 		/// <summary>
 		/// At least one command.
 		/// </summary>
-		OneOrMultiple,
+		OneOrMultiple
 	}
 }
