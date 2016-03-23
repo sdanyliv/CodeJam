@@ -28,27 +28,42 @@ namespace CodeJam.Ranges
 		}
 
 		[Test]
+		public void CompareTo()
+		{
+			Assert.AreEqual(-1, Range.StartsWith(1).CompareTo(Range.StartsWith(1, false)));
+			Assert.AreEqual(0, Range.StartsWith(1).CompareTo(Range.StartsWith(1)));
+			Assert.AreEqual(0, Range.StartsWith(1, false).CompareTo(Range.StartsWith(1, false)));
+			Assert.AreEqual(1, Range.StartsWith(1, false).CompareTo(Range.StartsWith(1, true)));
+
+			Assert.AreEqual(0, Range.Create(1, 3, true).CompareTo(Range.Create(1, 3, true)));
+			Assert.AreEqual(0, Range.Create(1, 3, false).CompareTo(Range.Create(1, 3, false)));
+
+			Assert.AreEqual(1, Range.Create(1, 3, true, true).CompareTo(Range.Create(1, 3, true, false)));
+			Assert.AreEqual(-1, Range.Create(1, 3, true, false).CompareTo(Range.Create(1, 3, true, true)));
+		}
+
+		[Test]
 		public void Intersects()
 		{
 			var range1 = Range.Create(0, 3);
 
-			Assert.IsTrue(range1.Intersects(Range.Create(1, 5)));
-			Assert.IsTrue(range1.Intersects(Range.Create(1, 3)));
-			Assert.IsTrue(range1.Intersects(Range.Create(3, 5)));
-			Assert.IsTrue(range1.Intersects(Range.Create(0, 0)));
-			Assert.IsFalse(range1.Intersects(Range.Create(-2, -1)));
+			Assert.IsTrue(range1.Overlaps(Range.Create(1, 5)));
+			Assert.IsTrue(range1.Overlaps(Range.Create(1, 3)));
+			Assert.IsTrue(range1.Overlaps(Range.Create(3, 5)));
+			Assert.IsTrue(range1.Overlaps(Range.Create(0, 0)));
+			Assert.IsFalse(range1.Overlaps(Range.Create(-2, -1)));
 
 
 			range1 = Range.Create(0, 3, false);
 
-			Assert.IsTrue(range1.Intersects(Range.Create(1, 5, false)));
-			Assert.IsTrue(range1.Intersects(Range.Create(1, 3, false)));
-			Assert.IsFalse(range1.Intersects(Range.Create(3, 5, false)));
-			Assert.IsFalse(range1.Intersects(Range.Create(0, 0, false)));
-			Assert.IsFalse(range1.Intersects(Range.Create(-2, -1, false)));
+			Assert.IsTrue(range1.Overlaps(Range.Create(1, 5, false)));
+			Assert.IsTrue(range1.Overlaps(Range.Create(1, 3, false)));
+			Assert.IsFalse(range1.Overlaps(Range.Create(3, 5, false)));
+			Assert.IsFalse(range1.Overlaps(Range.Create(0, 0, false)));
+			Assert.IsFalse(range1.Overlaps(Range.Create(-2, -1, false)));
 
-			Assert.IsFalse(range1.Intersects(Range.Empty<int>()));
-			Assert.IsTrue(Range.StartsWith(0, false).Intersects(Range.StartsWith(-2, false)));
+			Assert.IsFalse(range1.Overlaps(Range.Empty<int>()));
+			Assert.IsTrue(Range.StartsWith(0, false).Overlaps(Range.StartsWith(-2, false)));
 		}
 
 		[Test]
@@ -78,32 +93,74 @@ namespace CodeJam.Ranges
 		[Test]
 		public void Exclude()
 		{
-			var range1 = Range.Simple("Germany");
-			var range2 = Range.Simple("Germany");
+			CheckExclude(Range.EndsWith(5, true),	Range.Create(2, 3, true, true),		"..(2)", "(3)..5"	);
+			CheckExclude(Range.EndsWith(5, true),	Range.Create(2, 5, true, false),	"..(2)", "5"		);
+			CheckExclude(Range.EndsWith(5, true),	Range.Create(2, 5, true, true),		"..(2)"				);
+			CheckExclude(Range.EndsWith(5, false),	Range.Create(2, 5, true, true),		"..(2)"				);
+			CheckExclude(Range.EndsWith(5, false),	Range.Create(2, 5, true, false),	"..(2)"				);
 
-			Assert.AreEqual(0, range1.Exclude(range2).Count());
+			CheckExclude(Range.Create(0, 5, true, true), Range.Create(2, 5, true, true),	"0..(2)"		);
+			CheckExclude(Range.Create(0, 5, true, true), Range.Create(2, 10, true, true),	"0..(2)"		);
+			CheckExclude(Range.Create(0, 5, true, true), Range.StartsWith(2, true),			"0..(2)"		);
+			CheckExclude(Range.Create(0, 5, true, true), Range.StartsWith(5, false),		"0..5"			);
+			CheckExclude(Range.Create(0, 5, true, true), Range.StartsWith(5, true),			"0..(5)"		);
+		}
+
+		[Test]
+		public void Union()
+		{
+			CheckUnion(Range<int>.Empty,	Range<int>.Full,	"...");
+
+			CheckUnion(Range<int>.Empty,	Range.StartsWith(5, true),		"5..");
+			CheckUnion(Range<int>.Empty,	Range.StartsWith(5, false),		"(5)..");
+
+			CheckUnion(Range.StartsWith(5, false),	Range.EndsWith(10, true),	"...");
+			CheckUnion(Range.StartsWith(5, false),	Range.EndsWith(10, false),	"...");
+
+			CheckUnion(Range.StartsWith(5, true),	Range.StartsWith(10, true),	"5..");
+			CheckUnion(Range.StartsWith(5, false),	Range.StartsWith(10, true),	"(5)..");
+
+			CheckUnion(Range.EndsWith(5, true),		Range.EndsWith(10, true),	"..10");
+			CheckUnion(Range.EndsWith(5, false),	Range.EndsWith(10, false),	"..(10)");
+		}
+
+		private static void CheckUnion<TValue>(Range<TValue> range1, Range<TValue> range2, string representation)
+			where TValue : IComparable<TValue>
+		{
+			Assert.AreEqual(range1.Union(range2).DisplayValue(), representation);
+			Assert.AreEqual(range2.Union(range1).DisplayValue(), representation);
+		}
+
+		private static void CheckExclude<TValue>(Range<TValue> range1, Range<TValue> range2, params string[] representation)
+			where TValue : IComparable<TValue>
+		{
+			var result = range1.Exclude(range2).ToArray();
+			Assert.AreEqual(representation.Length, result.Length);
+
+			for (int i = 0; i < result.Length; i++)
+			{
+				Assert.AreEqual(representation[i], result[i].DisplayValue());
+			}
 		}
 
 		private static void CheckIntersect<TValue>(Range<TValue> range1, Range<TValue> range2, Range<TValue> expected)
 			where TValue : IComparable<TValue>
 		{
-			var intesection = range1.Intersect(range2).ToArray();
-			Assert.AreEqual(1, intesection.Length, "Intesection should have only one element");
-			Assert.AreEqual(expected, intesection[0]);
+			var intesection = range1.Intersect(range2);
+			Assert.AreEqual(expected, intesection);
 
-			intesection = range2.Intersect(range1).ToArray();
-			Assert.AreEqual(1, intesection.Length, "Intesection should have only one element");
-			Assert.AreEqual(expected, intesection[0]);
+			intesection = range2.Intersect(range1);
+			Assert.AreEqual(expected, intesection);
 		}
 
 		private static void CheckIntersect<TValue>(Range<TValue> range1, Range<TValue> range2)
 			where TValue : IComparable<TValue>
 		{
-			var intesection = range1.Intersect(range2).ToArray();
-			Assert.AreEqual(0, intesection.Length, "Intesection should be empty");
+			var intesection = range1.Intersect(range2);
+			Assert.AreEqual(true, intesection.IsEmpty, "Intesection should be empty");
 
-			intesection = range2.Intersect(range1).ToArray();
-			Assert.AreEqual(0, intesection.Length, "Intesection should be empty");
+			intesection = range2.Intersect(range1);
+			Assert.AreEqual(true, intesection.IsEmpty, "Intesection should be empty");
 		}
 	}
 }

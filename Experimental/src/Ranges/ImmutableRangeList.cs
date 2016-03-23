@@ -4,15 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-using CodeJam.Collections;
-
 using JetBrains.Annotations;
 
 namespace CodeJam.Ranges
 {
 	[PublicAPI]
 	[DebuggerDisplay("{DisplayValue()}")]
-	public class ImmutableRangeList<TValue> : IEnumerable<Range<TValue>>
+	public class ImmutableRangeList<TValue> : IEnumerable<Range<TValue>> 
 		where TValue : IComparable<TValue>
 	{
 		public static readonly ImmutableRangeList<TValue> Empty = new ImmutableRangeList<TValue>();
@@ -41,8 +39,12 @@ namespace CodeJam.Ranges
 				&& Values.Count == 1
 				&& Values[0].IsFull;
 
-		public IEnumerator<Range<TValue>> GetEnumerator() =>
-			Values?.GetEnumerator() ?? Enumerable.Empty<Range<TValue>>().GetEnumerator();
+		public IEnumerator<Range<TValue>> GetEnumerator()
+		{
+			if (Values == null)
+				return Enumerable.Empty<Range<TValue>>().GetEnumerator();
+			return Values.GetEnumerator();
+		}
 
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -129,7 +131,7 @@ namespace CodeJam.Ranges
 			return this.Concat(new[] {range}).ToRangeList();
 		}
 
-		public ImmutableRangeList<TValue> AddRange(IEnumerable<Range<TValue>> ranges)
+		public ImmutableRangeList<TValue> AddRanges(IEnumerable<Range<TValue>> ranges)
 		{
 			if (ranges == null)
 				return this;
@@ -137,7 +139,7 @@ namespace CodeJam.Ranges
 			return Values == null ? ranges.ToRangeList() : Values.Concat(ranges).ToRangeList();
 		}
 
-		public ImmutableRangeList<TValue> RemoveRange(IEnumerable<Range<TValue>> ranges)
+		public ImmutableRangeList<TValue> RemoveRanges(IList<Range<TValue>> ranges)
 		{
 			if (Values == null)
 				return this;
@@ -145,20 +147,18 @@ namespace CodeJam.Ranges
 			if (ranges == null)
 				return this;
 
-			var rangesList = ranges.ToList();
-
 			var sourceList = Values;
 			List<Range<TValue>> copyValues = null;
 
-			foreach (var toRemove in rangesList)
+			foreach (var toRemove in ranges)
 			{
 				var i = 0;
 				do
 				{
 					var current = sourceList[i];
-					if (current.Intersects(toRemove))
+					if (current.Overlaps(toRemove))
 					{
-						var removed = current.Exclude(toRemove);
+						var rangesAfterExclusion = current.Exclude(toRemove);
 						if (copyValues == null)
 						{
 							copyValues = Values.ToList();
@@ -166,7 +166,7 @@ namespace CodeJam.Ranges
 						}
 						sourceList.RemoveAt(i);
 						var prevCount = sourceList.Count;
-						sourceList.InsertRange(i, removed);
+						sourceList.InsertRange(i, rangesAfterExclusion);
 						i += sourceList.Count - prevCount;
 					}
 					else
@@ -189,7 +189,7 @@ namespace CodeJam.Ranges
 			if (IsEmpty)
 				return Full;
 
-			return Full.RemoveRange(Values);
+			return Full.RemoveRanges(Values);
 		}
 
 		public ImmutableRangeList<TValue> Intersect(IEnumerable<Range<TValue>> ranges)
@@ -197,14 +197,11 @@ namespace CodeJam.Ranges
 			if (Values == null || ranges == null)
 				return this;
 
-			var intersected =
-				ranges
-					.SelectMany(r => Values, (r, v) => r.Intersect(v))
-					.SelectMany(outer => outer);
+			var intersected = ranges
+				.SelectMany(r => Values, (r, v) => r.Intersect(v));
 
 			return intersected.ToRangeList();
 		}
-
 
 		public bool ConatinsValue(TValue value)
 		{
@@ -221,12 +218,12 @@ namespace CodeJam.Ranges
 		public static ImmutableRangeList<TValue> operator ~(ImmutableRangeList<TValue> list) => list.Invert();
 
 		public static ImmutableRangeList<TValue> operator +(
-			ImmutableRangeList<TValue> list1, ImmutableRangeList<TValue> list2) => list1.AddRange(list2);
+			ImmutableRangeList<TValue> list1, ImmutableRangeList<TValue> list2) => list1.AddRanges(list2);
 
 		public static ImmutableRangeList<TValue> operator -(
 			ImmutableRangeList<TValue> list1,
 			ImmutableRangeList<TValue> list2) =>
-				list1.RemoveRange(list2);
+				list1.RemoveRanges(list2.ToList());
 
 		public static ImmutableRangeList<TValue> operator &(
 			ImmutableRangeList<TValue> list1,
@@ -236,7 +233,7 @@ namespace CodeJam.Ranges
 		public static ImmutableRangeList<TValue> operator |(
 			ImmutableRangeList<TValue> list1,
 			ImmutableRangeList<TValue> list2) =>
-				list1.AddRange(list2);
+				list1.AddRanges(list2);
 
 		public static ImmutableRangeList<TValue> operator !(ImmutableRangeList<TValue> list) => list.Invert();
 		#endregion
