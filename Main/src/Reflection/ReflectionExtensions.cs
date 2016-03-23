@@ -48,7 +48,8 @@ namespace CodeJam.Reflection
 		}
 
 		/// <summary>
-		/// Returns true if at least one attribute of type <paramref name="attrType"/> specified in <paramref name="member"/>.
+		/// Returns true if at least one attribute of type <paramref name="attrType"/> specified in <paramref name="member"/>
+		/// exists.
 		/// </summary>
 		/// <param name="member">Member, on which custom attributes is looking for.</param>
 		/// <param name="attrType">The type of the custom attribute.</param>
@@ -65,13 +66,56 @@ namespace CodeJam.Reflection
 		}
 
 		/// <summary>
-		/// Returns true if at least one attribute of type <typeparamref name="T"/> specified in <paramref name="member"/>.
+		/// Returns true if at least one attribute of type <typeparamref name="T"/> specified in <paramref name="member"/>
+		/// exists.
 		/// </summary>
 		/// <param name="member">Member, on which custom attributes is looking for.</param>
 		/// <param name="inherit">When true, look up the hierarchy chain for the inherited custom attributes.</param>
 		[Pure]
-		public static bool HasCustomAttribute<T>([NotNull] this ICustomAttributeProvider member, bool inherit = false) =>
-			member.HasCustomAttribute(typeof (T), inherit);
+		public static bool HasCustomAttribute<T>([NotNull] this ICustomAttributeProvider member, bool inherit = false)
+			where T : Attribute  =>
+				member.HasCustomAttribute(typeof (T), inherit);
+
+		/// <summary>
+		/// Returns true if at least one attribute of type <paramref name="attrType"/> specified in <paramref name="member"/>
+		/// corresponds to <paramref name="predicate"/>.
+		/// </summary>
+		/// <param name="member">Member, on which custom attributes is looking for.</param>
+		/// <param name="attrType">The type of the custom attribute.</param>
+		/// <param name="predicate">A function to test each attribute for a condition</param>
+		/// <param name="inherit">When true, look up the hierarchy chain for the inherited custom attributes.</param>
+		[Pure]
+		public static bool HasCustomAttribute(
+			[NotNull] this ICustomAttributeProvider member,
+			[NotNull] Type attrType,
+			[NotNull] Func<Attribute, bool> predicate,
+			bool inherit = false)
+		{
+			if (member == null) throw new ArgumentNullException(nameof(member));
+			if (attrType == null) throw new ArgumentNullException(nameof(attrType));
+			if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+			return member.GetCustomAttributes(attrType, inherit).Cast<Attribute>().Any(predicate);
+		}
+
+		/// <summary>
+		/// Returns true if at least one attribute of type <typeparamref name="T"/> specified in <paramref name="member"/>
+		/// corresponds to <paramref name="predicate"/>.
+		/// </summary>
+		/// <param name="member">Member, on which custom attributes is looking for.</param>
+		/// <typeparam name="T">The type of the custom attribute.</typeparam>
+		/// <param name="predicate">A function to test each attribute for a condition</param>
+		/// <param name="inherit">When true, look up the hierarchy chain for the inherited custom attributes.</param>
+		[Pure]
+		public static bool HasCustomAttribute<T>(
+			[NotNull] this ICustomAttributeProvider member,
+			[NotNull] Func<T, bool> predicate,
+			bool inherit = false)
+			where T: Attribute
+		{
+			if (member == null) throw new ArgumentNullException(nameof(member));
+			if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+			return member.GetCustomAttributes<T>(inherit).Any(predicate);
+		}
 
 		/// <summary>
 		/// Loads the specified manifest resource from this assembly, and checks if it exists.
