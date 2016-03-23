@@ -49,6 +49,7 @@ namespace BenchmarkDotNet.Helpers
 			// DONTTOUCH: the following code was taken from http://stackoverflow.com/a/8137526 and it is proven
 			// to work in the same way the excel's counterpart does.
 			// So it's better to leave it as it is unless you do not want to reimplement it from scratch:)
+			// ReSharper disable SuggestVarOrType_BuiltInTypes
 			Array.Sort(elements);
 			double realIndex = percentileRatio * (elements.Length - 1);
 			int index = (int)realIndex;
@@ -57,6 +58,7 @@ namespace BenchmarkDotNet.Helpers
 				return elements[index] * (1 - frac) + elements[index + 1] * frac;
 
 			return elements[index];
+			// ReSharper restore SuggestVarOrType_BuiltInTypes
 		}
 
 		/// <summary>
@@ -66,17 +68,15 @@ namespace BenchmarkDotNet.Helpers
 		/// <param name="method">Method annotated with the attribute</param>
 		/// <returns>The instance of attribute or <c>null</c> if none</returns>
 		public static TAttribute TryGetAttribute<TAttribute>(this MethodInfo method) where TAttribute : Attribute
-		{
-			return (TAttribute)Attribute.GetCustomAttribute(method, typeof(TAttribute));
-		}
+			=> (TAttribute)Attribute.GetCustomAttribute(method, typeof(TAttribute));
 		#endregion
 
 		#region Column helpers
 		public static string ToTimeStr(this double value, TimeUnit unit = null, int unitNameWidth = 1)
 		{
 			unit = unit ?? TimeUnit.GetBestTimeUnit(value);
-			double unitValue = TimeUnit.Convert(value, TimeUnit.Nanoseconds, unit);
-			string unitName = unit.Name.PadLeft(unitNameWidth);
+			var unitValue = TimeUnit.Convert(value, TimeUnit.Nanoseconds, unit);
+			var unitName = unit.Name.PadLeft(unitNameWidth);
 			return $"{unitValue.ToStr("N4")} {unitName}";
 		}
 

@@ -10,13 +10,15 @@ using NUnit.Framework;
 namespace CodeJam.Tests.Performance
 {
 	[Config(typeof(FastRunConfig))]
-	[SuppressMessage("ReSharper", "InconsistentNaming")]
-	[SuppressMessage("ReSharper", "UnusedTypeParameter")]
-	[SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Local")]
-	[SuppressMessage("ReSharper", "ConvertToConstant.Local")]
-	[SuppressMessage("ReSharper", "ClassCanBeSealed.Local")]
 	[SuppressMessage("ReSharper", "AccessToModifiedClosure")]
+	[SuppressMessage("ReSharper", "ClassCanBeSealed.Local")]
+	[SuppressMessage("ReSharper", "ConvertMethodToExpressionBody")]
+	[SuppressMessage("ReSharper", "ConvertToConstant.Local")]
+	[SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Local")]
+	[SuppressMessage("ReSharper", "InconsistentNaming")]
+	[SuppressMessage("ReSharper", "SuggestVarOrType_BuiltInTypes")]
 	[SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]
+	[SuppressMessage("ReSharper", "UnusedTypeParameter")]
 	public class CompareCallsBenchmark : CompareCallsBenchmark.ICompareCalls, CompareCallsBenchmark.ICompareCalls<int>
 	{
 		[Test]

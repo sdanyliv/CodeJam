@@ -35,7 +35,7 @@ namespace BenchmarkDotNet.Columns
 
 		public virtual string GetValue(Summary summary, Benchmark benchmark)
 		{
-			double percentile = summary.GetPercentile(benchmark, PercentileRatio);
+			var percentile = summary.GetPercentile(benchmark, PercentileRatio);
 			return Format(percentile, summary.TimeUnit);
 		}
 	}
@@ -62,13 +62,13 @@ namespace BenchmarkDotNet.Columns
 			if (baselineBench == null)
 				return "N/A";
 
-			double baselinePercentile = summary.GetPercentile(baselineBench, PercentileRatio);
+			var baselinePercentile = summary.GetPercentile(baselineBench, PercentileRatio);
 			// ReSharper disable once CompareOfFloatsByEqualityOperator
 			if (baselinePercentile == 0)
 				return "N/A";
 
-			double percentile = summary.GetPercentile(benchmark, PercentileRatio);
-			double ratio = percentile / baselinePercentile;
+			var percentile = summary.GetPercentile(benchmark, PercentileRatio);
+			var ratio = percentile / baselinePercentile;
 
 			return Format(ratio, summary.TimeUnit);
 		}

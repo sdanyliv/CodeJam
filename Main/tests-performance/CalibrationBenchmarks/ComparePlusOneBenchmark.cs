@@ -1,4 +1,6 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
 using NUnit.Framework;
@@ -6,6 +8,7 @@ using NUnit.Framework;
 namespace CodeJam.Tests.Performance
 {
 	[Config(typeof(FastRunConfig))]
+	[SuppressMessage("ReSharper", "SuggestVarOrType_BuiltInTypes")]
 	public class ComparePlusOneBenchmark
 	{
 		[Params(1000, 10 * 1000, 100 * 1000, 1000 * 1000)]

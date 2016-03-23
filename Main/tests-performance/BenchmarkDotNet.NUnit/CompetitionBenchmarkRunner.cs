@@ -73,7 +73,7 @@ namespace BenchmarkDotNet.NUnit
 		public static void RunCompetition(
 			double minRatio, double maxRatio, Type benchType, string benchSource, IConfig config)
 		{
-			string currentDirectory = Environment.CurrentDirectory;
+			var currentDirectory = Environment.CurrentDirectory;
 			try
 			{
 				// WORKAROUND: fixing the https://github.com/nunit/nunit3-vs-adapter/issues/96
@@ -105,7 +105,7 @@ namespace BenchmarkDotNet.NUnit
 					throw new InvalidOperationException("There should be only one Baseline benchmark");
 
 				var baselineBenchmark = baselineBenchmarks.Single();
-				double baselineMetric = summary.GetPercentile(baselineBenchmark, PercentileRatio);
+				var baselineMetric = summary.GetPercentile(baselineBenchmark, PercentileRatio);
 				// ReSharper disable once CompareOfFloatsByEqualityOperator
 				if (baselineMetric == 0)
 					throw new InvalidOperationException($"Baseline benchmark {baselineBenchmark.ShortInfo} does not compute");
@@ -115,10 +115,10 @@ namespace BenchmarkDotNet.NUnit
 					if (benchmark == baselineBenchmark)
 						continue;
 
-					double reportMetric = summary.GetPercentile(benchmark, PercentileRatio);
-					double ratio = Math.Round(reportMetric / baselineMetric, 2);
-					double benchmarkMinRatio = minRatio;
-					double benchmarkMaxRatio = maxRatio;
+					var reportMetric = summary.GetPercentile(benchmark, PercentileRatio);
+					var ratio = Math.Round(reportMetric / baselineMetric, 2);
+					var benchmarkMinRatio = minRatio;
+					var benchmarkMaxRatio = maxRatio;
 
 					var benchOptions = benchmark.Target.Method.TryGetAttribute<CompetitionBenchmarkAttribute>();
 					if (benchOptions != null)
@@ -140,12 +140,10 @@ namespace BenchmarkDotNet.NUnit
 
 					Assert.That(
 						ratio >= benchmarkMinRatio,
-						"Bench {0} runs faster than {1}x baseline. Actual ratio: {2}x",
-						benchmark.ShortInfo, benchmarkMinRatio, ratio);
+						$"Bench {benchmark.ShortInfo} runs faster than {benchmarkMinRatio}x baseline. Actual ratio: {ratio}x");
 					Assert.That(
 						ratio <= benchmarkMaxRatio,
-						"Bench {0} runs slower than {1}x baseline. Actual ratio: {2}x",
-						benchmark.ShortInfo, benchmarkMaxRatio, ratio);
+						$"Bench {benchmark.ShortInfo} runs slower than {benchmarkMaxRatio}x baseline. Actual ratio: {ratio}x");
 				}
 			}
 		}
@@ -171,9 +169,9 @@ namespace BenchmarkDotNet.NUnit
 					StatisticColumn.Max);
 
 			// Running the benchmark
-			var summary = benchSource == null ?
-				BenchmarkRunner.Run(benchType, config) :
-				BenchmarkRunner.RunSource(benchSource, config);
+			var summary = benchSource == null
+				? BenchmarkRunner.Run(benchType, config)
+				: BenchmarkRunner.RunSource(benchSource, config);
 
 			// Dumping the benchmark results to console
 			MarkdownExporter.Default.ExportToLog(summary, ConsoleLogger.Default);

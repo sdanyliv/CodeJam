@@ -30,11 +30,12 @@ namespace BenchmarkDotNet.NUnit.Tests
 		/// <summary>
 		///  Some pseudo-random values
 		/// </summary>
-		public double[] Data = { 1, 2, 3, 4, 1, 2, 3, 1, 3, 45, 12, 43, 11 };
+		private static readonly double[] _data = { 1, 2, 3, 4, 1, 2, 3, 1, 3, 45, 12, 43, 11 };
+
 		/// <summary>
 		/// Output from Excel's PERCENTILE()
 		/// </summary>
-		public Dictionary<double, double> ExpectedPercentiles = new Dictionary<double, double>
+		private static readonly Dictionary<double, double> _expectedPercentiles = new Dictionary<double, double>
 		{
 			{ 0.0, 1 },
 			{ 0.1, 1 },
@@ -55,16 +56,16 @@ namespace BenchmarkDotNet.NUnit.Tests
 		public void PercentileTest()
 		{
 			Assert.Throws<ArgumentNullException>(() => BenchmarkHelpers.Percentile(null, 0));
-			Assert.Throws<ArgumentOutOfRangeException>(() => BenchmarkHelpers.Percentile(Data, -0.1));
-			Assert.Throws<ArgumentOutOfRangeException>(() => BenchmarkHelpers.Percentile(Data, 1.1));
+			Assert.Throws<ArgumentOutOfRangeException>(() => BenchmarkHelpers.Percentile(_data, -0.1));
+			Assert.Throws<ArgumentOutOfRangeException>(() => BenchmarkHelpers.Percentile(_data, 1.1));
 
 			Assert.AreEqual(BenchmarkHelpers.Percentile(new double[0], 0), 0);
 			Assert.AreEqual(BenchmarkHelpers.Percentile(new double[0], 0.5), 0);
 			Assert.AreEqual(BenchmarkHelpers.Percentile(new double[0], 1), 0);
 
-			foreach (var pair in ExpectedPercentiles)
+			foreach (var pair in _expectedPercentiles)
 			{
-				Assert.AreEqual(BenchmarkHelpers.Percentile(Data, pair.Key), pair.Value, Delta);
+				Assert.AreEqual(BenchmarkHelpers.Percentile(_data, pair.Key), pair.Value, Delta);
 			}
 		}
 		#endregion
