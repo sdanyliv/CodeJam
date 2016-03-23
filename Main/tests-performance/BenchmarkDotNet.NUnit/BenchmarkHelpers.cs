@@ -1,4 +1,9 @@
-﻿using BenchmarkDotNet.Configs;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Horology;
 using BenchmarkDotNet.Jobs;
@@ -6,11 +11,6 @@ using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Parameters;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace BenchmarkDotNet.Helpers
 {
@@ -39,7 +39,7 @@ namespace BenchmarkDotNet.Helpers
 			if (percentileRatio < 0 || percentileRatio > 1)
 			{
 				throw new ArgumentOutOfRangeException(
-					nameof(percentileRatio), "The percentile arg should be in range of 0.0 - 1.0.");
+					nameof(percentileRatio), "The percentileRatio arg should be in range of 0.0 - 1.0.");
 			}
 
 			var elements = values.ToArray();

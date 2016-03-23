@@ -1,7 +1,7 @@
-﻿using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
+﻿using System;
 
-using System;
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Jobs;
 
 namespace BenchmarkDotNet.NUnit
 {

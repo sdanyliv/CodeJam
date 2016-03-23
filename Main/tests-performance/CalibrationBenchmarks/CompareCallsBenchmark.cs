@@ -3,10 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.NUnit;
 
 using NUnit.Framework;
-
-using BenchmarkDotNet.NUnit;
 
 namespace CodeJam.Tests.Performance
 {

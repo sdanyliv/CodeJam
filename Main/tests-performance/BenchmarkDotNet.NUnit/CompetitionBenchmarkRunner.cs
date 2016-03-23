@@ -1,4 +1,7 @@
-﻿using BenchmarkDotNet.Columns;
+﻿using System;
+using System.Linq;
+
+using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Helpers;
@@ -7,9 +10,6 @@ using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
 using NUnit.Framework;
-
-using System;
-using System.Linq;
 
 namespace BenchmarkDotNet.NUnit
 {
