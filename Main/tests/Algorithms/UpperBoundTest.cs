@@ -4,8 +4,8 @@ using NUnit.Framework;
 
 namespace CodeJam
 {
-    [TestFixture]
-    public class UpperBoundTest
+	[TestFixture]
+	public class UpperBoundTest
 	{
 		[Test]
 		public void Test01NegativeFrom()
@@ -16,23 +16,23 @@ namespace CodeJam
 				, Throws.InstanceOf(typeof(ArgumentOutOfRangeException)));
 		}
 
-        [Test]
-        public void Test02NegativeTo()
-        {
+		[Test]
+		public void Test02NegativeTo()
+		{
 			var list = new List<int> { 0 };
 			const int to = -1;
 			Assert.That(() => list.UpperBound(10, 0, to, (x, y) => x - y)
 				, Throws.InstanceOf(typeof(ArgumentOutOfRangeException)));
-        }
+		}
 
-        [Test]
-        public void Test03ToExceedsCount()
-        {
+		[Test]
+		public void Test03ToExceedsCount()
+		{
 			var list = new List<int> { 0 };
 			var to = list.Count + 1;
 			Assert.That(() => list.UpperBound(10, 0, to, (x, y) => x - y)
 				, Throws.InstanceOf(typeof(ArgumentOutOfRangeException)));
-        }
+		}
 
 		[Test]
 		public void Test04BadFromToOrder()
@@ -93,5 +93,5 @@ namespace CodeJam
 
 			Assert.That(list.UpperBound(14534), Is.EqualTo(list.Count));
 		}
-    }
+	}
 }
