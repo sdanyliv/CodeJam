@@ -48,6 +48,32 @@ namespace CodeJam.Reflection
 		}
 
 		/// <summary>
+		/// Returns true if at least one attribute of type <paramref name="attrType"/> specified in <paramref name="member"/>.
+		/// </summary>
+		/// <param name="member">Member, on which custom attributes is looking for.</param>
+		/// <param name="attrType">The type of the custom attribute.</param>
+		/// <param name="inherit">When true, look up the hierarchy chain for the inherited custom attributes.</param>
+		[Pure]
+		public static bool HasCustomAttribute(
+			[NotNull] this ICustomAttributeProvider member,
+			[NotNull] Type attrType,
+			bool inherit = false)
+		{
+			if (member == null) throw new ArgumentNullException(nameof(member));
+			if (attrType == null) throw new ArgumentNullException(nameof(attrType));
+			return member.GetCustomAttributes(attrType, inherit).Length > 0;
+		}
+
+		/// <summary>
+		/// Returns true if at least one attribute of type <typeparamref name="T"/> specified in <paramref name="member"/>.
+		/// </summary>
+		/// <param name="member">Member, on which custom attributes is looking for.</param>
+		/// <param name="inherit">When true, look up the hierarchy chain for the inherited custom attributes.</param>
+		[Pure]
+		public static bool HasCustomAttribute<T>([NotNull] this ICustomAttributeProvider member, bool inherit = false) =>
+			member.HasCustomAttribute(typeof (T), inherit);
+
+		/// <summary>
 		/// Loads the specified manifest resource from this assembly, and checks if it exists.
 		/// </summary>
 		/// <param name="assembly">Resource assembly.</param>
