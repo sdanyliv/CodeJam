@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace CodeJam
 {
-	/// <summary>Miscellaneous algorithms</summary>
-	public static partial class Algorithms
+	partial class Algorithms
 	{
 		/// <summary>
 		/// Returns the minimum index i in the range [0, list.Count - 1] such that list[i] >= value
