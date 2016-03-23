@@ -16,7 +16,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this int[] a, [CanBeNull] int[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -40,7 +40,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this int?[] a, [CanBeNull] int?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -68,7 +68,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this long[] a, [CanBeNull] long[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -92,7 +92,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this long?[] a, [CanBeNull] long?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -120,7 +120,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this float[] a, [CanBeNull] float[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -144,7 +144,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this float?[] a, [CanBeNull] float?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -172,7 +172,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this double[] a, [CanBeNull] double[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -196,7 +196,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this double?[] a, [CanBeNull] double?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -224,7 +224,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this decimal[] a, [CanBeNull] decimal[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -248,7 +248,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this decimal?[] a, [CanBeNull] decimal?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -276,7 +276,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this short[] a, [CanBeNull] short[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -300,7 +300,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this short?[] a, [CanBeNull] short?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -328,7 +328,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this sbyte[] a, [CanBeNull] sbyte[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -352,7 +352,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this sbyte?[] a, [CanBeNull] sbyte?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -380,7 +380,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this uint[] a, [CanBeNull] uint[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -404,7 +404,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this uint?[] a, [CanBeNull] uint?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -432,7 +432,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this ulong[] a, [CanBeNull] ulong[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -456,7 +456,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this ulong?[] a, [CanBeNull] ulong?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -484,7 +484,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this ushort[] a, [CanBeNull] ushort[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -508,7 +508,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this ushort?[] a, [CanBeNull] ushort?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -536,7 +536,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this byte[] a, [CanBeNull] byte[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -560,7 +560,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this byte?[] a, [CanBeNull] byte?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -588,7 +588,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this DateTime[] a, [CanBeNull] DateTime[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -612,7 +612,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this DateTime?[] a, [CanBeNull] DateTime?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -640,7 +640,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this TimeSpan[] a, [CanBeNull] TimeSpan[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -664,7 +664,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this TimeSpan?[] a, [CanBeNull] TimeSpan?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -692,7 +692,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this DateTimeOffset[] a, [CanBeNull] DateTimeOffset[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -716,7 +716,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this DateTimeOffset?[] a, [CanBeNull] DateTimeOffset?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)

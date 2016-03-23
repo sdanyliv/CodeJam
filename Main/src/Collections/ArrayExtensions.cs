@@ -22,7 +22,7 @@ namespace CodeJam.Collections
 		{
 			if (comparer == null) throw new ArgumentNullException(nameof(comparer));
 
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)

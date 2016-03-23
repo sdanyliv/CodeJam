@@ -22,7 +22,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this <#= type #>[] a, [CanBeNull] <#= type #>[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
@@ -46,7 +46,7 @@ namespace CodeJam.Collections
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this <#= type #>?[] a, [CanBeNull] <#= type #>?[] b)
 		{
-			if (a == null && b == null)
+			if (a == b)
 				return true;
 
 			if (a == null || b == null)
