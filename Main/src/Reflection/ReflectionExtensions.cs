@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -44,6 +45,27 @@ namespace CodeJam.Reflection
 		{
 			if (member == null) throw new ArgumentNullException(nameof(member));
 			return member.GetCustomAttributes(typeof(T), inherit).Cast<T>().ToArray();
+		}
+
+		/// <summary>
+		/// Loads the specified manifest resource from this assembly, and checks if it exists.
+		/// </summary>
+		/// <param name="assembly">Resource assembly.</param>
+		/// <param name="name">The case-sensitive name of the manifest resource being requested.</param>
+		/// <returns>The manifest resource.</returns>
+		/// <exception cref="ArgumentNullException">The name parameter is null.</exception>
+		/// <exception cref="ArgumentException">Resource with specified name not found</exception>
+		[NotNull]
+		[Pure]
+		public static Stream GetRequiredResourceStream([NotNull] this Assembly assembly, [NotNull] string name)
+		{
+			if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+			if (name.IsNullOrWhiteSpace()) throw new ArgumentNullException(nameof(name));
+
+			var result = assembly.GetManifestResourceStream(name);
+			if (result == null)
+				throw new ArgumentException("Resource with specified name not found");
+			return result;
 		}
 	}
 }
