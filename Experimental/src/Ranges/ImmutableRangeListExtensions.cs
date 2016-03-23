@@ -38,7 +38,7 @@ namespace CodeJam.Ranges
 					return ImmutableRangeList<TValue>.Full;
 
 				var next = newRanges[i + 1];
-				if (current.IsAdjastent(next) || current.Intersects(next))
+				if (current.IsAdjastent(next) || current.Overlaps(next))
 				{
 					current = current.Union(next);
 

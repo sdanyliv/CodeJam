@@ -20,6 +20,7 @@ namespace CodeJam.Ranges
 	[PublicAPI]
 	public static class Range
 	{
+		[DebuggerStepThrough]
 		public static Range<TValue> Create<TValue>(TValue start, TValue end, bool includeStart, bool includeEnd)
 			where TValue : IComparable<TValue> =>
 				new Range<TValue>(
@@ -29,14 +30,12 @@ namespace CodeJam.Ranges
 						| (includeStart ? RangeOptions.IncludingStart : RangeOptions.None)
 						| (includeEnd ? RangeOptions.IncludingEnd : RangeOptions.None));
 
+		[DebuggerStepThrough]
 		public static Range<TValue> Create<TValue>(TValue start, TValue end, bool include = true)
 			where TValue : IComparable<TValue> =>
-				new Range<TValue>(
-					start,
-					end,
-					RangeOptions.HasStart | RangeOptions.HasEnd
-						| (include ? RangeOptions.IncludingStart | RangeOptions.IncludingEnd : RangeOptions.None));
+				Create(start, end, include, include);
 
+		[DebuggerStepThrough]
 		public static Range<TValue> StartsWith<TValue>(TValue start, bool include = true)
 			where TValue : IComparable<TValue> =>
 				new Range<TValue>(
@@ -44,9 +43,11 @@ namespace CodeJam.Ranges
 					default(TValue),
 					RangeOptions.HasStart | (include ? RangeOptions.IncludingStart : RangeOptions.None));
 
+		[DebuggerStepThrough]
 		public static Range<TValue> Simple<TValue>(TValue value)
 			where TValue : IComparable<TValue> => Create(value, value, true, true);
 
+		[DebuggerStepThrough]
 		public static Range<TValue> EndsWith<TValue>(TValue end, bool include = true)
 			where TValue : IComparable<TValue> =>
 				new Range<TValue>(
@@ -71,15 +72,20 @@ namespace CodeJam.Ranges
 			RangeOptions.None);
 
 		private readonly RangeOptions _options;
+
 		public readonly TValue End;
 		public readonly TValue Start;
 
+		[DebuggerStepThrough]
 		public Range(TValue start, TValue end, RangeOptions options)
 		{
 			if (options.HasFlag(RangeOptions.IsEmpty))
 			{
 				// clear other flags
-				options = RangeOptions.IsEmpty;
+				_options	= RangeOptions.IsEmpty;
+				Start		= default(TValue);
+				End			= default(TValue);
+				return;
 			}
 
 			if (ReferenceEquals(start, null))
@@ -102,58 +108,52 @@ namespace CodeJam.Ranges
 
 			_options = options;
 
-			if (options.HasFlag(RangeOptions.HasStart) && options.HasFlag(RangeOptions.HasEnd))
-			{
-				Debug.Assert(start != null, "start != null");
-				var compare = start.CompareTo(end);
-				if (compare > 0)
-				{
-					// clear including flags before split
-					_options &= ~(RangeOptions.IncludingStart | RangeOptions.IncludingEnd);
-
-					Start = end;
-					End = start;
-					if (options.HasFlag(RangeOptions.IncludingStart))
-						_options |= RangeOptions.IncludingEnd;
-					if (options.HasFlag(RangeOptions.IncludingEnd))
-						_options |= RangeOptions.IncludingEnd;
-				}
-				else
-				{
-					Start = start;
-					End = end;
-
-					if (compare == 0)
-					{
-						if (!(options.HasFlag(RangeOptions.IncludingStart)
-						      || options.HasFlag(RangeOptions.IncludingEnd)))
-						{
-							// empty
-							Start = default(TValue);
-							End = default(TValue);
-							_options = RangeOptions.IsEmpty;
-						}
-						else
-						{
-							// ensure that everyting included
-							_options |= RangeOptions.IncludingStart | RangeOptions.IncludingEnd;
-						}
-					}
-				}
-			}
-			else
+			if (!options.HasFlag(RangeOptions.HasStart) || !options.HasFlag(RangeOptions.HasEnd))
 			{
 				Start = start;
 				End = end;
+				return;
+			}
+
+			Debug.Assert(start != null, "start != null");
+			var compare = start.CompareTo(end);
+			if (compare > 0)
+			{
+				throw new ArgumentException("'Start' must be less or equal to the 'End' parameter");
+			}
+
+			Start = start;
+			End = end;
+
+			if (compare == 0)
+			{
+				if (!(options.HasFlag(RangeOptions.IncludingStart)
+				      || options.HasFlag(RangeOptions.IncludingEnd)))
+				{
+					// empty
+					Start = default(TValue);
+					End = default(TValue);
+					_options = RangeOptions.IsEmpty;
+				}
+				else
+				{
+					// ensure that everything are included
+					_options |= RangeOptions.IncludingStart | RangeOptions.IncludingEnd;
+				}
 			}
 		}
 
 		private Range(RangeValue start, RangeValue end)
+			: this(start, end, start.Included, end.Included)
+		{
+		}
+
+		private Range(RangeValue start, RangeValue end, bool icludeStart, bool icludeEnd)
 			: this(start.Value, end.Value,
 				(start.HasValue ? RangeOptions.HasStart : RangeOptions.None)
 				| (end.HasValue ? RangeOptions.HasEnd : RangeOptions.None)
-				| (start.Included ? RangeOptions.IncludingStart : RangeOptions.None)
-				| (end.Included ? RangeOptions.IncludingEnd : RangeOptions.None)
+				| (icludeStart  ? RangeOptions.IncludingStart : RangeOptions.None)
+				| (icludeEnd    ? RangeOptions.IncludingEnd : RangeOptions.None)
 				)
 		{
 		}
@@ -170,18 +170,20 @@ namespace CodeJam.Ranges
 
 		public bool IsFull => _options == RangeOptions.None;
 
-		private RangeValue StartValue => new RangeValue(Start, HasStart, IncludeStart);
+		private RangeValue StartValue => new RangeValue(Start, !HasStart ? ValueInfo.MinValue : IncludeStart ? ValueInfo.Included : ValueInfo.Excluded);
 
-		private RangeValue EndValue => new RangeValue(End, HasEnd, IncludeEnd);
+		private RangeValue EndValue => new RangeValue(End, !HasEnd ? ValueInfo.MaxValue : IncludeEnd ? ValueInfo.Included : ValueInfo.Excluded);
 
 		public int CompareTo(Range<TValue> other)
 		{
 			var current = this;
 			if (!current.HasStart)
+			{
 				if (!other.HasStart)
 					return 0;
 				else
 					return -1;
+			}
 
 			if (!other.HasStart)
 				return 1;
@@ -189,17 +191,27 @@ namespace CodeJam.Ranges
 			var compare = current.Start.CompareTo(other.Start);
 			if (compare == 0)
 			{
-				if (current.HasEnd && other.HasEnd)
+				if (current.IncludeStart != other.IncludeStart)
 				{
-					compare = current.End.CompareTo(other.End);
-					if (compare == 0)
+					if (current.IncludeStart)
+						compare = -1;
+					else
+						compare = 1;
+				}
+				else
+				{
+					if (current.HasEnd && other.HasEnd)
 					{
-						if (current.IncludeEnd != other.IncludeEnd)
+						compare = current.End.CompareTo(other.End);
+						if (compare == 0)
 						{
-							if (current.IncludeEnd)
-								compare = 1;
-							else
-								compare = -1;
+							if (current.IncludeEnd != other.IncludeEnd)
+							{
+								if (current.IncludeEnd)
+									compare = 1;
+								else
+									compare = -1;
+							}
 						}
 					}
 				}
@@ -230,14 +242,14 @@ namespace CodeJam.Ranges
 			}
 		}
 
-		public Range<TValue> SetStart(TValue newStart, bool? include = null) =>
+		public Range<TValue> ShiftStart(TValue newStart, bool? include = null) =>
 			new Range<TValue>(
 				newStart,
 				End,
 				((include ?? IncludeStart) ? RangeOptions.IncludingStart : RangeOptions.None)
 					| (IncludeEnd ? RangeOptions.IncludingEnd : RangeOptions.None));
 
-		public Range<TValue> SetEnd(TValue newEnd, bool? include = null) =>
+		public Range<TValue> ShiftEnd(TValue newEnd, bool? include = null) =>
 			new Range<TValue>(
 				Start,
 				newEnd,
@@ -254,8 +266,41 @@ namespace CodeJam.Ranges
 			if (other.IsEmpty)
 				return this;
 
-			var newStart = RangeValue.MinValue(other.StartValue, current.StartValue, false);
-			var newEnd = RangeValue.MaxValue(other.EndValue, current.EndValue, false);
+			RangeValue currentStart	= current.StartValue;
+			RangeValue currentEnd	= current.EndValue;
+
+			RangeValue otherStart	= other.StartValue;
+			RangeValue otherEnd		= other.EndValue;
+
+			var overlap = currentStart <= otherEnd && otherStart <= currentEnd;
+
+			if (!overlap)
+				return Empty;
+
+			RangeValue newStart;
+			RangeValue newEnd;
+
+			var compareStart = currentStart.CompareTo(otherStart);
+			if (compareStart < 0)
+				newStart = currentStart;
+			else if (compareStart > 0)
+				newStart = otherStart;
+			else
+				newStart = new RangeValue(currentStart.Value,
+					!currentStart.HasValue
+						? currentStart.ValueInfo
+						: (currentStart.Included || otherStart.Included ? ValueInfo.Included : ValueInfo.Excluded));
+
+			var compareEnd = currentEnd.CompareTo(otherEnd);
+			if (compareEnd > 0)
+				newEnd = currentEnd;
+			else if (compareEnd < 0)
+				newEnd = otherEnd;
+			else
+				newEnd = new RangeValue(currentEnd.Value,
+					!currentEnd.HasValue
+						? currentEnd.ValueInfo
+						: (currentEnd.Included || otherEnd.Included ? ValueInfo.Included : ValueInfo.Excluded));
 
 			return new Range<TValue>(newStart, newEnd);
 		}
@@ -295,7 +340,7 @@ namespace CodeJam.Ranges
 			return false;
 		}
 
-		public bool Intersects(Range<TValue> other)
+		public bool Overlaps(Range<TValue> other)
 		{
 			var current = this;
 
@@ -344,168 +389,124 @@ namespace CodeJam.Ranges
 				yield break;
 			}
 
-			// ?
+			RangeValue currentStart	= current.StartValue;
+			RangeValue currentEnd	= current.EndValue;
 
-			if (current.HasStart)
+			RangeValue otherStart	= other.StartValue;
+			RangeValue otherEnd		= other.EndValue;
+
+			var overlap = currentStart <= otherEnd && otherStart <= currentEnd;
+
+			if (!overlap)
+				yield return current; // Nothing to exclude
+
+			var compareStart = currentStart.CompareTo(otherStart);
+			if (compareStart <= 0) // currentStart <= otherStart
 			{
-				// cS---------------?
-				// ?
+				// =====---C---------      //
+				//      --------O--        //
+				//      --------O----      //
+				//      --------O--------- //
 
-				if (other.HasStart)
+				if (compareStart == 0)
 				{
-					//    cS---------------?
-					// oS------------------?
-					//          oS---------?
-
-					var compare = current.Start.CompareTo(other.Start);
-					if (compare <= 0)
+					if (!otherStart.Included && currentStart.Included)
 					{
-						//    cS=====----------?
-						//          oS---------?
-
-
-						if (compare == 0)
-						{
-							//          cS--------------?
-							//          oS---------?
-
-							if (current.IncludeStart && !other.IncludeStart)
-							{
-								var newRange = new Range<TValue>(current.Start, current.Start,
-									RangeOptions.HasStart | RangeOptions.HasEnd
-									| RangeOptions.IncludingStart
-									| RangeOptions.IncludingEnd
-									);
-								yield return newRange;
-							}
-						}
-
-						else
-						{
-							var newRange = new Range<TValue>(current.Start, other.Start,
-								RangeOptions.HasStart | RangeOptions.HasEnd
-								| (current.IncludeStart ? RangeOptions.IncludingStart : RangeOptions.None)
-								| (other.IncludeStart ? RangeOptions.None : RangeOptions.IncludingEnd) // ivert flag
-								);
-
-							if (!newRange.IsEmpty)
-								yield return newRange;
-						}
+						var singleValueRange = new Range<TValue>(currentStart, currentStart, true, true);
+						yield return singleValueRange;
 					}
+				}
+				else
+				{
+					var newRange = new Range<TValue>(currentStart, otherStart, currentStart.Included, !otherStart.Included);
+					yield return newRange;
 				}
 			}
 
-			if (current.HasEnd)
+			var compareEnd = currentEnd.CompareTo(otherEnd);
+			if (compareEnd >= 0) // currentEnd >= otherEnd
 			{
-				// ?---------------cE
-				// ?
+				//    --------C----=====      //
+				// --------O-------           //
+				// --------O------------      //
 
-				if (other.HasEnd)
+				if (compareEnd == 0)
 				{
-					//    ?----------------cE
-					//          oS-----oE
-					//          oS-------------oE
-
-					var compare = other.End.CompareTo(current.End);
-					if (compare <= 0)
+					if (!otherEnd.Included && currentEnd.Included)
 					{
-						//    ?-------------===cE
-						//          oS-----oE
-
-						if (compare == 0)
-						{
-							//    ?------------cE
-							//          oS-----oE
-
-							if (current.IncludeEnd && !other.IncludeEnd)
-							{
-								var newRange = new Range<TValue>(other.End, other.End,
-									RangeOptions.HasStart | RangeOptions.HasEnd
-									| RangeOptions.IncludingStart
-									| RangeOptions.IncludingEnd
-									);
-								yield return newRange;
-							}
-						}
-						else
-						{
-							var newRange = new Range<TValue>(other.End, current.End,
-								RangeOptions.HasStart | RangeOptions.HasEnd
-								| (other.IncludeEnd ? RangeOptions.None : RangeOptions.IncludingStart) // ivert flag
-								| (current.IncludeEnd ? RangeOptions.IncludingEnd : RangeOptions.None)
-								);
-
-							if (!newRange.IsEmpty)
-								yield return newRange;
-						}
+						var singleValueRange = new Range<TValue>(currentEnd, currentEnd, true, true);
+						yield return singleValueRange;
 					}
 				}
-			}
-			else
-			{
-				// cS---------------
-				// ?
-				if (other.HasEnd)
+				else
 				{
-					var newRange = new Range<TValue>(other.End, default(TValue),
-						RangeOptions.HasStart
-						| (other.IncludeEnd ? RangeOptions.None : RangeOptions.IncludingStart) // ivert flag
-						);
-
-					if (!newRange.IsEmpty)
-						yield return newRange;
+					var newRange = new Range<TValue>(otherEnd, currentEnd, !otherEnd.Included, currentEnd.Included);
+					yield return newRange;
 				}
 			}
 		}
 
-		public IEnumerable<Range<TValue>> Intersect(Range<TValue> other)
+		public Range<TValue> Intersect(Range<TValue> other)
 		{
 			var current = this;
 
 			if (current.IsEmpty || other.IsEmpty)
 			{
-				yield return Empty;
-				yield break;
+				return Empty;
 			}
 
 			if (other.IsFull)
 			{
-				yield return this;
-				yield break;
+				return this;
 			}
 
 			if (current.IsFull)
 			{
-				yield return other;
-				yield break;
+				return other;
 			}
 
+			RangeValue currentStart	= current.StartValue;
+			RangeValue currentEnd	= current.EndValue;
 
-			if (!current.Intersects(other))
-				yield break;
+			RangeValue otherStart	= other.StartValue;
+			RangeValue otherEnd		= other.EndValue;
+
+			var overlap = currentStart <= otherEnd && otherStart <= currentEnd;
+
+			if (!overlap)
+				return Empty;
 
 			RangeValue newStart;
 			RangeValue newEnd;
 
-			if (current.HasStart)
-			{
-				newStart =
-					other.HasStart ? RangeValue.MaxValue(current.StartValue, other.StartValue, true) : current.StartValue;
-			}
+			var compareStart = currentStart.CompareTo(otherStart);
+			if (compareStart > 0)
+				newStart = currentStart;
+			else if (compareStart < 0)
+				newStart = otherStart;
 			else
+				newStart = new RangeValue(currentStart.Value,
+					!currentStart.HasValue
+						? currentStart.ValueInfo
+						: (currentStart.Included && otherStart.Included ? ValueInfo.Included : ValueInfo.Excluded));
+
+			var compareEnd = currentEnd.CompareTo(otherEnd);
+			if (compareEnd < 0)
+				newEnd = currentEnd;
+			else if (compareEnd > 0)
+				newEnd = otherEnd;
+			else
+				newEnd = new RangeValue(currentEnd.Value,
+					!currentEnd.HasValue
+						? currentEnd.ValueInfo
+						: (currentEnd.Included && otherEnd.Included ? ValueInfo.Included : ValueInfo.Excluded));
+
+			if (newStart.CompareTo(newEnd) == 0 && (!newStart.Included || !newEnd.Included))
 			{
-				newStart = other.StartValue;
+				return Empty;
 			}
 
-			if (current.HasEnd)
-				newEnd =
-					other.HasEnd
-						? RangeValue.MinValue(current.EndValue, other.EndValue, true)
-						: current.EndValue;
-			else
-				newEnd = other.EndValue;
-
-			yield return new Range<TValue>(newStart, newEnd);
+			return new Range<TValue>(newStart, newEnd);
 		}
 
 		public IEnumerable<Range<TValue>> Invert()
@@ -573,72 +574,100 @@ namespace CodeJam.Ranges
 			return startValue + ".." + endValue;
 		}
 
-		private struct RangeValue
-		{
-			public readonly bool HasValue;
-			public readonly bool Included;
-			public readonly TValue Value;
 
-			public RangeValue(TValue value, bool hasValue, bool included)
+		private enum ValueInfo
+		{
+			Excluded,
+			Included,
+			MinValue,
+			MaxValue
+		}
+
+		[DebuggerDisplay("{ToString()}")]
+		private struct RangeValue : IComparable<RangeValue>
+		{
+			public readonly TValue Value;
+			private readonly ValueInfo _valueInfo;
+
+			public ValueInfo ValueInfo => _valueInfo;
+
+			public RangeValue(TValue value, ValueInfo valueInfo)
 			{
 				Value = value;
-				HasValue = hasValue;
-				Included = included;
+				_valueInfo = valueInfo;
+			}
+
+			public bool IsMin		=> _valueInfo == ValueInfo.MinValue;
+			public bool IsMax		=> _valueInfo == ValueInfo.MaxValue;
+			public bool Included	=> _valueInfo == ValueInfo.Included;
+			public bool HasValue	=> _valueInfo == ValueInfo.Included || _valueInfo == ValueInfo.Excluded;
+
+			public int CompareTo(RangeValue other)
+			{
+				var current = this;
+				if (current.IsMin)
+				{
+					if (other.IsMin)
+						return 0;
+					return -1;
+				}
+
+				if (current.IsMax)
+				{
+					if (other.IsMax)
+						return 0;
+					return 1;
+				}
+
+				if (other.IsMin)
+					return 1;
+
+				if (other.IsMax)
+					return -1;
+
+				var compare = current.Value.CompareTo(other.Value);
+				return compare;
 			}
 
 			public override string ToString()
 			{
-				if (!HasValue)
-					return string.Empty;
-				if (!Included)
-					return $"({Value})";
-				return Value.ToString();
+				switch (_valueInfo)
+				{
+					case ValueInfo.Excluded:
+						return $"({Value})";
+					case ValueInfo.Included:
+						return $"{Value}";
+					case ValueInfo.MinValue:
+						return "min";
+					case ValueInfo.MaxValue:
+						return "max";
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
 			}
 
-			public static RangeValue MinValue(RangeValue value1, RangeValue value2, bool isAnd)
+			public static bool operator < (RangeValue value1, RangeValue value2)
 			{
-				if (!value1.HasValue)
-					return value1;
-				if (!value2.HasValue)
-					return value2;
-
-				var compare = value1.Value.CompareTo(value2.Value);
-				if (compare > 0)
-					return value2;
-
-				var newIncluded = value1.Included;
-				if (compare == 0)
-				{
-					if (isAnd)
-						newIncluded = value2.Included && newIncluded;
-					else
-						newIncluded = value2.Included || newIncluded;
-				}
-
-				return new RangeValue(value1.Value, true, newIncluded);
+				var compare = value1.CompareTo(value2);
+				return compare < 0;
 			}
 
-			public static RangeValue MaxValue(RangeValue value1, RangeValue value2, bool isAnd)
+			public static bool operator >(RangeValue value1, RangeValue value2)
 			{
-				if (!value1.HasValue)
-					return value1;
-				if (!value2.HasValue)
-					return value2;
+				var compare = value1.CompareTo(value2);
+				return compare > 0;
+			}
 
-				var compare = value1.Value.CompareTo(value2.Value);
-				if (compare < 0)
-					return value2;
+			public static bool operator <=(RangeValue value1, RangeValue value2)
+			{
+				var compare = value1.CompareTo(value2);
+				return compare <= 0;
+			}
 
-				var newIncluded = value1.Included;
-				if (compare == 0)
-				{
-					if (isAnd)
-						newIncluded = value2.Included && newIncluded;
-					else
-						newIncluded = value2.Included || newIncluded;
-				}
-
-				return new RangeValue(value1.Value, true, newIncluded);
+			public static bool operator >=(RangeValue value1, RangeValue value2)
+			{
+				var compare = value1.CompareTo(value2);
+				return compare >= 0;
 			}
 		}
 	}

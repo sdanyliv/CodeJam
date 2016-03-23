@@ -67,7 +67,6 @@
     <Compile Include="Ranges\ImmutableRangeListExtensions.cs" />
     <Compile Include="Ranges\Range.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ranges\RangeValueUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CodeJam.Experimental.nuspec" />
