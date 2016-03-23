@@ -137,5 +137,32 @@ namespace CodeJam.Reflection
 				throw new ArgumentException("Resource with specified name not found");
 			return result;
 		}
+
+		/// <summary>
+		/// Returns path to assembly <paramref name="asm"/> file.
+		/// </summary>
+		/// <param name="asm">Assembly.</param>
+		[NotNull]
+		[Pure]
+		public static string GetAssemblyPath([NotNull] this Assembly asm)
+		{
+			if (asm == null) throw new ArgumentNullException(nameof(asm));
+			var codeBase = asm.CodeBase;
+			if (codeBase == null)
+				throw new ArgumentException("Specified assembly has no physical code base.");
+			var uri = new Uri(codeBase);
+			if (!uri.IsFile)
+				throw new ArgumentException("Specified assembly placed not on local disk.");
+			return uri.AbsolutePath;
+		}
+
+		/// <summary>
+		/// Returns directory part of path to assembly <paramref name="asm"/> file.
+		/// </summary>
+		/// <param name="asm">Assembly.</param>
+		[NotNull]
+		[Pure]
+		public static string GetAssemblyDirectory([NotNull] this Assembly asm) =>
+			Path.GetDirectoryName(GetAssemblyPath(asm)) ?? "";
 	}
 }
