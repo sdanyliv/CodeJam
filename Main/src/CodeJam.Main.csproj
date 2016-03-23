@@ -42,7 +42,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\LowerBound.cs" />
     <Compile Include="Algorithms\Swap.cs" />
+    <Compile Include="Algorithms\UpperBound.cs" />
     <Compile Include="Collections\ArrayExtensions.cs" />
     <Compile Include="Collections\ArrayExtensions.generated.cs">
       <DependentUpon>ArrayExtensions.tt</DependentUpon>
