@@ -16,6 +16,7 @@ namespace CodeJam.Collections
 		/// </summary>
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
+		/// <param name="comparer">Instance of <see cref="IComparer{T}"/> to compare values.</param>
 		[Pure]
 		public static bool EqualsTo<T>([CanBeNull] this T[] a, [CanBeNull] T[] b, [NotNull] IEqualityComparer<T> comparer)
 		{
