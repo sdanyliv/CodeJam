@@ -23,6 +23,29 @@ namespace CodeJam.Collections
 		/// </summary>
 		[NotNull]
 		[Pure]
+		public static List<T> TopoSort<T, TKey>(
+			[NotNull] this IEnumerable<T> source,
+			[NotNull, InstantHandle] Func<T, IEnumerable<T>> dependsOnGetter,
+			[NotNull, InstantHandle] Func<T, TKey> keySelector) =>
+				TopoSort(source, dependsOnGetter, KeyEqualityComparer.Create(keySelector));
+
+		/// <summary>
+		/// Performs topological sort on <paramref name="source"/>.
+		/// </summary>
+		[NotNull]
+		[Pure]
+		public static List<T> TopoSort<T, TKey>(
+			[NotNull] this IEnumerable<T> source,
+			[NotNull, InstantHandle] Func<T, IEnumerable<T>> dependsOnGetter,
+			[NotNull, InstantHandle] Func<T, TKey> keySelector,
+			[NotNull] IEqualityComparer<TKey> keyComparer) =>
+				TopoSort(source, dependsOnGetter, KeyEqualityComparer.Create(keySelector, keyComparer));
+
+		/// <summary>
+		/// Performs topological sort on <paramref name="source"/>.
+		/// </summary>
+		[NotNull]
+		[Pure]
 		public static List<T> TopoSort<T>(
 			[NotNull] this IEnumerable<T> source,
 			[NotNull, InstantHandle] Func<T, IEnumerable<T>> dependsOnGetter,

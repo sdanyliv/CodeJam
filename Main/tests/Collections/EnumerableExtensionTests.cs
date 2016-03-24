@@ -32,7 +32,7 @@ namespace CodeJam
 		public string Prepend(string[] input, string[] prepend)
 			=> input.Prepend(prepend).Join(", ");
 
-		[TestCase(arg: new[] {"a:b", "b:c", "c"}, ExpectedResult = "c, b, a")]
+		[TestCase(arg: new[] { "a:b", "b:c", "c" }, ExpectedResult = "c, b, a")]
 		[TestCase(arg: new[] { "a:c", "b:c", "c" }, ExpectedResult = "c, a, b")]
 		[TestCase(arg: new[] { "a", "b", "c: a, b" }, ExpectedResult = "a, b, c")]
 		[TestCase(arg: new[] { "a:c", "b:c", "c", "d:a, b" }, TestName = "Diamond", ExpectedResult = "c, a, b, d")]
@@ -47,7 +47,22 @@ namespace CodeJam
 			return items.TopoSort(i => deps[i]).Join(", ");
 		}
 
-		[TestCase(arg: new[] { "a:b", "b:a"})]
+		[TestCase(arg: new[] { "a:b", "b:c", "c" }, ExpectedResult = "c, b, a")]
+		[TestCase(arg: new[] { "a:c", "b:c", "c" }, ExpectedResult = "c, a, b")]
+		[TestCase(arg: new[] { "a", "b", "c: a, b" }, ExpectedResult = "a, b, c")]
+		[TestCase(arg: new[] { "a:c", "b:c", "c", "d:a, b" }, TestName = "Diamond", ExpectedResult = "c, a, b, d")]
+		// TODO: add more cases
+		public string TopoSortByKey(string[] source)
+		{
+			// Prepare dependency structure
+			Dictionary<Holder, Holder[]> deps;
+			var items = GetDepStructure(source, out deps);
+
+			// Perform sort
+			return items.TopoSort(i => deps[i], v => v.Value).Join(", ");
+		}
+
+		[TestCase(arg: new[] { "a:b", "b:a" })]
 		[TestCase(arg: new[] { "a:b", "b:c", "c:a" })]
 		// TODO: add more cases
 		public void TopoSortCycle(string[] source)
@@ -78,5 +93,31 @@ namespace CodeJam
 			}
 			return items;
 		}
+
+		private static IEnumerable<Holder> GetDepStructure(IEnumerable<string> source, out Dictionary<Holder, Holder[]> deps)
+		{
+			Dictionary<string, string[]> innerDeps;
+			var items = GetDepStructure(source, out innerDeps);
+			deps = innerDeps.ToDictionary(
+				kv => new Holder(kv.Key),
+				kv => kv.Value.Select(v => new Holder(v)).ToArray(),
+				new KeyEqualityComparer<Holder, string>(v => v.Value));
+
+			return items.Select(v => new Holder(v));
+		}
+
+		#region Inner type
+
+		private class Holder {
+			public string Value { get; }
+
+			public Holder(string value) {
+				Value = value;
+
+			}
+			public override string ToString() => Value;
+		}
+
+		#endregion
 	}
 }
