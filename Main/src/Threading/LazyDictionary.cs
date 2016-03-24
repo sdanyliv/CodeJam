@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
-namespace CodeJam.Collections
+namespace CodeJam.Threading
 {
 	/// <summary>
 	/// Dictionary with lazy values initialization.
@@ -16,6 +16,7 @@ namespace CodeJam.Collections
 	public class LazyDictionary<TKey, TValue>
 	{
 		private readonly Func<TKey, TValue> _valueFactory;
+		private readonly IEqualityComparer<TKey> _comparer;
 		private readonly ConcurrentDictionary<TKey, TValue> _map;
 
 		/// <summary>
@@ -23,9 +24,11 @@ namespace CodeJam.Collections
 		/// </summary>
 		/// <param name="valueFactory">Function to create value on demand.</param>
 		/// <param name="comparer">Key comparer.</param>
-		public LazyDictionary(Func<TKey, TValue> valueFactory, IEqualityComparer<TKey> comparer)
+		public LazyDictionary([NotNull] Func<TKey, TValue> valueFactory, IEqualityComparer<TKey> comparer)
 		{
+			if (valueFactory == null) throw new ArgumentNullException(nameof(valueFactory));
 			_valueFactory = valueFactory;
+			_comparer = comparer;
 			_map = new ConcurrentDictionary<TKey, TValue>(comparer);
 		}
 
@@ -33,7 +36,7 @@ namespace CodeJam.Collections
 		/// Initiaize instance.
 		/// </summary>
 		/// <param name="valueFactory">Function to create value on demand.</param>
-		public LazyDictionary(Func<TKey, TValue> valueFactory)
+		public LazyDictionary([NotNull] Func<TKey, TValue> valueFactory)
 			: this(valueFactory, EqualityComparer<TKey>.Default)
 		{ }
 
