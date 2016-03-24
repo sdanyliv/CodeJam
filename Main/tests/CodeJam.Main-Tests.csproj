@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\LowerBoundTest.cs" />
     <Compile Include="Algorithms\SwapTest.cs" />
+    <Compile Include="Algorithms\EqualRangeTest.cs" />
     <Compile Include="Algorithms\UpperBoundTest.cs" />
     <Compile Include="Collections\AggregateFuncsTest.cs" />
     <Compile Include="Collections\ArrayExtensionsTest.cs" />

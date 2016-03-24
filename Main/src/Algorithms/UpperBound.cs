@@ -58,6 +58,23 @@ namespace CodeJam
 		public static int UpperBound<TElement, TValue>(this IList<TElement> list, TValue value, int from, int to, Func<TElement, TValue, int> comparer)
 		{
 			ValidateIndicesRange(from, to, list.Count);
+			return UpperBoundCore(list, value, from, to, comparer);
+		}
+
+		/// <summary>
+		/// Returns the minimum index i in the range [from, to - 1] such that list[i] > value
+		/// or "to" if no such i exists
+		/// </summary>
+		/// <typeparam name="TElement">The list element type</typeparam>
+		/// <typeparam name="TValue">The type of the value</typeparam>
+		/// <param name="list">The sorted list</param>
+		/// <param name="value">The value to compare</param>
+		/// <param name="from">The minimum index</param>
+		/// <param name="to">The upper bound for the index (not included)</param>
+		/// <param name="comparer">The function with the Comparer&lt;T&gt;.Compare semantics</param>
+		/// <returns>The upper bound for the value</returns>
+		private static int UpperBoundCore<TElement, TValue>(this IList<TElement> list, TValue value, int from, int to, Func<TElement, TValue, int> comparer)
+		{
 			if (to <= from) // an empty range
 			{
 				return to;
