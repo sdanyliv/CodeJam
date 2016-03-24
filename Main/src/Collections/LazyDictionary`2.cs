@@ -39,7 +39,7 @@ namespace CodeJam.Threading
 		{ }
 
 		/// <summary>
-		/// Returns existing value associated to a key, or create new.
+		/// Returns existing value associated to a key, or creates new.
 		/// </summary>
 		public TValue Get(TKey key) => _map.GetOrAdd(key, _valueFactory);
 

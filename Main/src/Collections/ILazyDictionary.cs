@@ -18,7 +18,7 @@ namespace CodeJam.Collections
 		void Clear();
 
 		/// <summary>
-		/// Returns existing value associated to a key, or create new.
+		/// Returns existing value associated to a key, or creates new.
 		/// </summary>
 		TValue Get(TKey key);
 	}

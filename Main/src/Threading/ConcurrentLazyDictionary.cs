@@ -22,7 +22,7 @@ namespace CodeJam.Threading
 		private readonly ConcurrentDictionary<TKey, TValue> _map;
 
 		/// <summary>
-		/// Initiaize instance.
+		/// Initialize instance.
 		/// </summary>
 		/// <param name="valueFactory">Function to create value on demand.</param>
 		/// <param name="comparer">Key comparer.</param>
@@ -35,7 +35,7 @@ namespace CodeJam.Threading
 		}
 
 		/// <summary>
-		/// Initiaize instance.
+		/// Initiailze instance.
 		/// </summary>
 		/// <param name="valueFactory">Function to create value on demand.</param>
 		public ConcurrentLazyDictionary([NotNull] Func<TKey, TValue> valueFactory)
@@ -43,7 +43,7 @@ namespace CodeJam.Threading
 		{ }
 
 		/// <summary>
-		/// Returns existing value associated to a key, or create new.
+		/// Returns existing value associated to a key, or creates new.
 		/// </summary>
 		public TValue Get(TKey key) => _map.GetOrAdd(key, _valueFactory);
 
