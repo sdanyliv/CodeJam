@@ -53,7 +53,7 @@ namespace CodeJam.Threading
 		public static Func<TArg1, TArg2, TResult> Memoize<TArg1, TArg2, TResult>(
 			[NotNull] this Func<TArg1, TArg2, TResult> func) =>
 				(arg1, arg2) => new LazyDictionary<Tuple<TArg1, TArg2>, TResult>(
-					key => func(key.Item1, key.Item2)).Get(new Tuple<TArg1, TArg2>(arg1, arg2));
+					key => func(key.Item1, key.Item2)).Get(Tuple.Create(arg1, arg2));
 
 		/// <summary>
 		/// Caches function value for specific arguments.
@@ -69,7 +69,7 @@ namespace CodeJam.Threading
 		public static Func<TArg1, TArg2, TArg3, TResult> Memoize<TArg1, TArg2, TArg3, TResult>(
 			[NotNull] this Func<TArg1, TArg2, TArg3, TResult> func) =>
 				(arg1, arg2, arg3) => new LazyDictionary<Tuple<TArg1, TArg2, TArg3>, TResult>(
-					key => func(key.Item1, key.Item2, key.Item3)).Get(new Tuple<TArg1, TArg2, TArg3>(arg1, arg2, arg3));
+					key => func(key.Item1, key.Item2, key.Item3)).Get(Tuple.Create(arg1, arg2, arg3));
 
 		/// <summary>
 		/// Caches function value for specific arguments.
@@ -87,7 +87,7 @@ namespace CodeJam.Threading
 			[NotNull] this Func<TArg1, TArg2, TArg3, TArg4, TResult> func) =>
 				(arg1, arg2, arg3, arg4) => new LazyDictionary<Tuple<TArg1, TArg2, TArg3, TArg4>, TResult>(
 					key => func(key.Item1, key.Item2, key.Item3, key.Item4))
-						.Get(new Tuple<TArg1, TArg2, TArg3, TArg4>(arg1, arg2, arg3, arg4));
+						.Get(Tuple.Create(arg1, arg2, arg3, arg4));
 
 		/// <summary>
 		/// Caches function value for specific arguments.
@@ -106,7 +106,7 @@ namespace CodeJam.Threading
 			[NotNull] this Func<TArg1, TArg2, TArg3, TArg4, TArg5, TResult> func) =>
 				(arg1, arg2, arg3, arg4, arg5) => new LazyDictionary<Tuple<TArg1, TArg2, TArg3, TArg4, TArg5>, TResult>(
 					key => func(key.Item1, key.Item2, key.Item3, key.Item4, key.Item5))
-						.Get(new Tuple<TArg1, TArg2, TArg3, TArg4, TArg5>(arg1, arg2, arg3, arg4, arg5));
+						.Get(Tuple.Create(arg1, arg2, arg3, arg4, arg5));
 		#endregion
 	}
 }
