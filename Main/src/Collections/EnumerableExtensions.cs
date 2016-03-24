@@ -97,7 +97,7 @@ namespace CodeJam.Collections
 		public static IEnumerable<TSource> DistinctBy<TSource, TKey>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull] Func<TSource, TKey> keySelector) =>
-				source.Distinct(new KeyEqualityComparer<TSource, TKey>(keySelector));
+				source.Distinct(KeyEqualityComparer.Create(keySelector));
 
 		/// <summary>
 		/// Returns a sequence with distinct elements from the input sequence based on the specified key and key comparer.
@@ -113,7 +113,7 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull] Func<TSource, TKey> keySelector,
 			IEqualityComparer<TKey> comparer) =>
-				source.Distinct(new KeyEqualityComparer<TSource, TKey>(keySelector, comparer));
+				source.Distinct(KeyEqualityComparer.Create(keySelector, comparer));
 
 		/// <summary>
 		/// Produces the set difference of two sequences by using the specified key to compare values.
@@ -129,7 +129,7 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> first,
 			[NotNull] IEnumerable<TSource> second,
 			[NotNull] Func<TSource, TKey> keySelector) =>
-				first.Except(second, new KeyEqualityComparer<TSource, TKey>(keySelector));
+				first.Except(second, KeyEqualityComparer.Create(keySelector));
 
 		/// <summary>
 		/// Produces the set difference of two sequences by using the specified key and <see cref="IEqualityComparer{T}"/> to compare values.
@@ -147,7 +147,7 @@ namespace CodeJam.Collections
 			[NotNull] IEnumerable<TSource> second,
 			[NotNull] Func<TSource, TKey> keySelector,
 			IEqualityComparer<TKey> comparer) =>
-				first.Except(second, new KeyEqualityComparer<TSource, TKey>(keySelector, comparer));
+				first.Except(second, KeyEqualityComparer.Create(keySelector, comparer));
 
 		/// <summary>
 		/// Produces the set intersection of two sequences by using the specified key to compare values.
@@ -163,7 +163,7 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> first,
 			[NotNull] IEnumerable<TSource> second,
 			[NotNull] Func<TSource, TKey> keySelector) =>
-				first.Intersect(second, new KeyEqualityComparer<TSource, TKey>(keySelector));
+				first.Intersect(second, KeyEqualityComparer.Create(keySelector));
 
 		/// <summary>
 		/// Produces the set intersection of two sequences by using the specified key and <see cref="IEqualityComparer{T}"/> to compare values.
@@ -181,7 +181,7 @@ namespace CodeJam.Collections
 			[NotNull] IEnumerable<TSource> second,
 			[NotNull] Func<TSource, TKey> keySelector,
 			IEqualityComparer<TKey> comparer) =>
-				first.Intersect(second, new KeyEqualityComparer<TSource, TKey>(keySelector, comparer));
+				first.Intersect(second, KeyEqualityComparer.Create(keySelector, comparer));
 
 		/// <summary>
 		/// Produces the set union of two sequences by using the specified key to compare values.
@@ -197,7 +197,7 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> first,
 			[NotNull] IEnumerable<TSource> second,
 			[NotNull] Func<TSource, TKey> keySelector) =>
-				first.Union(second, new KeyEqualityComparer<TSource, TKey>(keySelector));
+				first.Union(second, KeyEqualityComparer.Create(keySelector));
 
 		/// <summary>
 		/// Produces the set union of two sequences by using the specified key and <see cref="IEqualityComparer{T}"/> to compare values.
@@ -215,7 +215,7 @@ namespace CodeJam.Collections
 			[NotNull] IEnumerable<TSource> second,
 			[NotNull] Func<TSource, TKey> keySelector,
 			IEqualityComparer<TKey> comparer) =>
-				first.Union(second, new KeyEqualityComparer<TSource, TKey>(keySelector, comparer));
+				first.Union(second, KeyEqualityComparer.Create(keySelector, comparer));
 
 		/// <summary>
 		/// Returns first element, or specified <paramref name="defaultValue"/>, if sequence is empty.
