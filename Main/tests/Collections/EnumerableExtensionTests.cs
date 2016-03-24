@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace CodeJam
 {
 	[TestFixture]
-	public class EnumerableExtensionTests
+	public partial class EnumerableExtensionTests
 	{
 		[TestCase(new[] {"1", "2"}, "3", TestName = "Concat1 1", ExpectedResult = "1, 2, 3")]
 		[TestCase(new string[0],    "3", TestName = "Concat1 2", ExpectedResult = "3")]
