@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using CodeJam.Collections;
-
 using JetBrains.Annotations;
 
-namespace CodeJam.Threading
+namespace CodeJam.Collections
 {
 	/// <summary>
 	/// Dictionary with lazy values initialization.
