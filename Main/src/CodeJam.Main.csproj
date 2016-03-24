@@ -52,6 +52,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Collections\LazyDictionary.cs" />
+    <Compile Include="Collections\LazyDictionary`2.cs" />
     <Compile Include="Collections\EnumerableExtensions.Split.cs" />
     <Compile Include="Collections\KeyEqualityComparer.cs" />
     <Compile Include="Collections\EnumerableExtensions.generated.cs">
@@ -59,7 +61,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EnumerableExtensions.tt</DependentUpon>
     </Compile>
-    <Compile Include="Threading\LazyDictionary.cs" />
+    <Compile Include="Collections\ILazyDictionary.cs" />
+    <Compile Include="Threading\ConcurrentLazyDictionary.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.TopoSort.cs" />
     <Compile Include="Disposable.cs" />

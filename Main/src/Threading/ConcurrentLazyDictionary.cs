@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
+using CodeJam.Collections;
+
 using JetBrains.Annotations;
 
 namespace CodeJam.Threading
@@ -13,7 +15,7 @@ namespace CodeJam.Threading
 	/// Thread safe.
 	/// </remarks>
 	[PublicAPI]
-	public class LazyDictionary<TKey, TValue>
+	public class ConcurrentLazyDictionary<TKey, TValue> : ILazyDictionary<TKey, TValue>
 	{
 		private readonly Func<TKey, TValue> _valueFactory;
 		private readonly IEqualityComparer<TKey> _comparer;
@@ -24,7 +26,7 @@ namespace CodeJam.Threading
 		/// </summary>
 		/// <param name="valueFactory">Function to create value on demand.</param>
 		/// <param name="comparer">Key comparer.</param>
-		public LazyDictionary([NotNull] Func<TKey, TValue> valueFactory, IEqualityComparer<TKey> comparer)
+		public ConcurrentLazyDictionary([NotNull] Func<TKey, TValue> valueFactory, IEqualityComparer<TKey> comparer)
 		{
 			if (valueFactory == null) throw new ArgumentNullException(nameof(valueFactory));
 			_valueFactory = valueFactory;
@@ -36,7 +38,7 @@ namespace CodeJam.Threading
 		/// Initiaize instance.
 		/// </summary>
 		/// <param name="valueFactory">Function to create value on demand.</param>
-		public LazyDictionary([NotNull] Func<TKey, TValue> valueFactory)
+		public ConcurrentLazyDictionary([NotNull] Func<TKey, TValue> valueFactory)
 			: this(valueFactory, EqualityComparer<TKey>.Default)
 		{ }
 

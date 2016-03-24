@@ -26,7 +26,7 @@ namespace CodeJam.Threading
 		public static Func<TArg, TResult> Memoize<TArg, TResult>(
 			[NotNull] this Func<TArg, TResult> func,
 			IEqualityComparer<TArg> comparer) =>
-				new LazyDictionary<TArg, TResult>(func, comparer).Get;
+				new ConcurrentLazyDictionary<TArg, TResult>(func, comparer).Get;
 
 		/// <summary>
 		/// Caches function value for specific argument.
@@ -38,7 +38,7 @@ namespace CodeJam.Threading
 		[NotNull]
 		[Pure]
 		public static Func<TArg, TResult> Memoize<TArg, TResult>([NotNull] this Func<TArg, TResult> func) =>
-			new LazyDictionary<TArg, TResult>(func).Get;
+			new ConcurrentLazyDictionary<TArg, TResult>(func).Get;
 
 		/// <summary>
 		/// Caches function value for specific arguments.
@@ -52,7 +52,7 @@ namespace CodeJam.Threading
 		[Pure]
 		public static Func<TArg1, TArg2, TResult> Memoize<TArg1, TArg2, TResult>(
 			[NotNull] this Func<TArg1, TArg2, TResult> func) =>
-				(arg1, arg2) => new LazyDictionary<Tuple<TArg1, TArg2>, TResult>(
+				(arg1, arg2) => new ConcurrentLazyDictionary<Tuple<TArg1, TArg2>, TResult>(
 					key => func(key.Item1, key.Item2)).Get(Tuple.Create(arg1, arg2));
 
 		/// <summary>
@@ -68,7 +68,7 @@ namespace CodeJam.Threading
 		[Pure]
 		public static Func<TArg1, TArg2, TArg3, TResult> Memoize<TArg1, TArg2, TArg3, TResult>(
 			[NotNull] this Func<TArg1, TArg2, TArg3, TResult> func) =>
-				(arg1, arg2, arg3) => new LazyDictionary<Tuple<TArg1, TArg2, TArg3>, TResult>(
+				(arg1, arg2, arg3) => new ConcurrentLazyDictionary<Tuple<TArg1, TArg2, TArg3>, TResult>(
 					key => func(key.Item1, key.Item2, key.Item3)).Get(Tuple.Create(arg1, arg2, arg3));
 
 		/// <summary>
@@ -85,7 +85,7 @@ namespace CodeJam.Threading
 		[Pure]
 		public static Func<TArg1, TArg2, TArg3, TArg4, TResult> Memoize<TArg1, TArg2, TArg3, TArg4, TResult>(
 			[NotNull] this Func<TArg1, TArg2, TArg3, TArg4, TResult> func) =>
-				(arg1, arg2, arg3, arg4) => new LazyDictionary<Tuple<TArg1, TArg2, TArg3, TArg4>, TResult>(
+				(arg1, arg2, arg3, arg4) => new ConcurrentLazyDictionary<Tuple<TArg1, TArg2, TArg3, TArg4>, TResult>(
 					key => func(key.Item1, key.Item2, key.Item3, key.Item4))
 						.Get(Tuple.Create(arg1, arg2, arg3, arg4));
 
@@ -104,7 +104,7 @@ namespace CodeJam.Threading
 		[Pure]
 		public static Func<TArg1, TArg2, TArg3, TArg4, TArg5, TResult> Memoize<TArg1, TArg2, TArg3, TArg4, TArg5, TResult>(
 			[NotNull] this Func<TArg1, TArg2, TArg3, TArg4, TArg5, TResult> func) =>
-				(arg1, arg2, arg3, arg4, arg5) => new LazyDictionary<Tuple<TArg1, TArg2, TArg3, TArg4, TArg5>, TResult>(
+				(arg1, arg2, arg3, arg4, arg5) => new ConcurrentLazyDictionary<Tuple<TArg1, TArg2, TArg3, TArg4, TArg5>, TResult>(
 					key => func(key.Item1, key.Item2, key.Item3, key.Item4, key.Item5))
 						.Get(Tuple.Create(arg1, arg2, arg3, arg4, arg5));
 		#endregion
