@@ -44,54 +44,59 @@ namespace CodeJam
 		}
 
 		[Test]
-		public void Test05EmptyRanges()
+		[TestCase(new int[0], 1, 0, 0, ExpectedResult = 0)]
+		[TestCase(new[] { 1, 5, 12, 35, 123 }, 5, 0, 0, ExpectedResult = 0)]
+		[TestCase(new[] { 1, 5, 12, 35, 123 }, 21, 3, 3, ExpectedResult = 3)]
+		[TestCase(new[] { 1, 5, 12, 35, 123 }, 101, 5, 5, ExpectedResult = 5)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 15, 0, 3, ExpectedResult = 3)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 5, 1, 4, ExpectedResult = 2)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 30000, 0, 4, ExpectedResult = 4)]
+		public int Test05WithAllParams(int[] data, int value, int from, int to)
 		{
-			var list = new List<int>();
-			Assert.That(list.UpperBound(1, 0, 0, (x, y) => x - y), Is.EqualTo(0));
-			Assert.That(list.UpperBound(11, (x, y) => x - y), Is.EqualTo(0));
-			Assert.That(list.UpperBound(4, 0), Is.EqualTo(0));
-			Assert.That(list.UpperBound(14), Is.EqualTo(0));
-
-			list = new List<int> { 1, 5, 12, 35, 123 };
-			Assert.That(list.UpperBound(5, 0, 0, (x, y) => x - y), Is.EqualTo(0));
-			Assert.That(list.UpperBound(21, 3, 3, (x, y) => x - y), Is.EqualTo(3));
-			Assert.That(list.UpperBound(101, list.Count, list.Count, (x, y) => x - y), Is.EqualTo(list.Count));
-			Assert.That(list.UpperBound(15, list.Count), Is.EqualTo(list.Count));
+			var list = (IList<int>)data;
+			return list.UpperBound(value, from, to, (x, y) => x - y);
 		}
 
 		[Test]
-		public void Test06Main()
+		[TestCase(new int[0], 11, ExpectedResult = 0)]
+		public int Test06WithComparer(int[] data, int value)
 		{
-			var list = new List<int> { 1, 5, 12, 12, 123, 512, 512, 14534 };
-			Assert.That(list.UpperBound(15, 0, 3, (x, y) => x - y), Is.EqualTo(3));
-			Assert.That(list.UpperBound(15, 0), Is.EqualTo(4));
-			Assert.That(list.UpperBound(50), Is.EqualTo(4));
+			var list = (IList<int>)data;
+			return list.UpperBound(value, (x, y) => x - y);
+		}
 
-			Assert.That(list.UpperBound(5, 1, 4, (x, y) => x - y), Is.EqualTo(2));
-			Assert.That(list.UpperBound(5, 0), Is.EqualTo(2));
-			Assert.That(list.UpperBound(5), Is.EqualTo(2));
+		[Test]
+		[TestCase(new int[0], 4, 0, ExpectedResult = 0)]
+		[TestCase(new[] { 1, 5, 12, 35, 123 }, 15, 5, ExpectedResult = 5)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 15, 0, ExpectedResult = 4)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 5, 0, ExpectedResult = 2)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, -1, 4, ExpectedResult = 4)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 1, 3, ExpectedResult = 3)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 42, 6, ExpectedResult = 6)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 1002, 3, ExpectedResult = 7)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 12, 1, ExpectedResult = 4)]
+		public int Test07WithFrom(int[] data, int value, int from)
+		{
+			var list = (IList<int>)data;
+			return list.UpperBound(value, from);
+		}
 
-			Assert.That(list.UpperBound(30000), Is.EqualTo(list.Count));
-			Assert.That(list.UpperBound(30000, 0, 4, (x, y) => x - y), Is.EqualTo(4));
-
-			Assert.That(list.UpperBound(-1), Is.EqualTo(0));
-			Assert.That(list.UpperBound(-1, 4), Is.EqualTo(4));
-
-			Assert.That(list.UpperBound(1), Is.EqualTo(1));
-			Assert.That(list.UpperBound(1, 3), Is.EqualTo(3));
-
-			Assert.That(list.UpperBound(42), Is.EqualTo(4));
-			Assert.That(list.UpperBound(42, 6), Is.EqualTo(6));
-
-			Assert.That(list.UpperBound(1002), Is.EqualTo(7));
-			Assert.That(list.UpperBound(1002, 3), Is.EqualTo(7));
-
-			Assert.That(list.UpperBound(12), Is.EqualTo(4));
-			Assert.That(list.UpperBound(12, 1), Is.EqualTo(4));
-
-			Assert.That(list.UpperBound(3), Is.EqualTo(1));
-
-			Assert.That(list.UpperBound(14534), Is.EqualTo(list.Count));
+		[Test]
+		[TestCase(new int[0], 14, ExpectedResult = 0)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 50, ExpectedResult = 4)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 5, ExpectedResult = 2)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 30000, ExpectedResult = 8)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, -1, ExpectedResult = 0)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 1, ExpectedResult = 1)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 42, ExpectedResult = 4)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 1002, ExpectedResult = 7)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 12, ExpectedResult = 4)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 3, ExpectedResult = 1)]
+		[TestCase(new[] { 1, 5, 12, 12, 123, 512, 512, 14534 }, 14534, ExpectedResult = 8)]
+		public int Test08WithoutParams(int[] data, int value)
+		{
+			var list = (IList<int>)data;
+			return list.UpperBound(value);
 		}
 	}
 }
