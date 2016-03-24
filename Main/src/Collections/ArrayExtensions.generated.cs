@@ -6,8 +6,31 @@ namespace CodeJam.Collections
 {
 	partial class ArrayExtensions
 	{
-		#region int
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static bool EqualsTo([CanBeNull] this string[] a, [CanBeNull] string[] b)
+		{
+			if (a == b)
+				return true;
 
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			for (var i = 0; i < a.Length; i++)
+				if (a[i] != b[i])
+					return false;
+
+			return true;
+		}
+
+		#region int
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -55,11 +78,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region long
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -107,11 +128,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region float
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -159,11 +178,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region double
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -211,11 +228,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region decimal
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -263,11 +278,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region short
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -315,11 +328,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region sbyte
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -367,11 +378,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region uint
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -419,11 +428,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region ulong
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -471,11 +478,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region ushort
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -523,11 +528,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region byte
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -575,11 +578,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region DateTime
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -627,11 +628,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region TimeSpan
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -679,11 +678,9 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 		#region DateTimeOffset
-
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -731,8 +728,8 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
 		#endregion
 
 	}
 }
+
