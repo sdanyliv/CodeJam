@@ -8,6 +8,7 @@ namespace CodeJam.Collections
 	/// <summary>
 	/// Provides static methods for creating <see cref="KeyEqualityComparer{T,TKey}"/>.
 	/// </summary>
+	[PublicAPI]
 	public static class KeyEqualityComparer
 	{
 		/// <summary>
