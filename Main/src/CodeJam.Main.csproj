@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\EqualRange.cs" />
+    <Compile Include="Algorithms\HashCode.cs" />
     <Compile Include="Algorithms\LowerBound.cs" />
     <Compile Include="Algorithms\Swap.cs" />
     <Compile Include="Algorithms\UpperBound.cs" />
@@ -65,6 +66,11 @@
       <DependentUpon>EnumerableExtensions.tt</DependentUpon>
     </Compile>
     <Compile Include="Collections\ILazyDictionary.cs" />
+    <Compile Include="Structures\TupleStruct.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TupleStruct.tt</DependentUpon>
+    </Compile>
     <Compile Include="Threading\ConcurrentLazyDictionary.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.TopoSort.cs" />
@@ -77,10 +83,10 @@
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Fn`1.cs" />
-    <Compile Include="ObjectPools\SharedPools.cs" />
-    <Compile Include="ObjectPools\SharedPoolExtensions.cs" />
-    <Compile Include="ObjectPools\PooledObject.cs" />
-    <Compile Include="ObjectPools\ObjectPool.cs" />
+    <Compile Include="Structures\ObjectPools\SharedPools.cs" />
+    <Compile Include="Structures\ObjectPools\SharedPoolExtensions.cs" />
+    <Compile Include="Structures\ObjectPools\PooledObject.cs" />
+    <Compile Include="Structures\ObjectPools\ObjectPool.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="OptionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -121,6 +127,10 @@
     <Content Include="Compile.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Compile.cmd</LastGenOutput>
+    </Content>
+    <Content Include="Structures\TupleStruct.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TupleStruct.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
