@@ -43,6 +43,7 @@
     <Compile Include="Algorithms\SwapTest.cs" />
     <Compile Include="Algorithms\EqualRangeTest.cs" />
     <Compile Include="Algorithms\UpperBoundTest.cs" />
+    <Compile Include="Assertions\CodeAssertionsTest.cs" />
     <Compile Include="Collections\AggregateFuncsTest.cs" />
     <Compile Include="Collections\ArrayExtensionsTest.cs" />
     <Compile Include="Collections\DictionaryExtensionsTest.cs" />

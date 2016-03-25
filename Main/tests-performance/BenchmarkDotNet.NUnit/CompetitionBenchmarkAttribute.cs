@@ -4,6 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace BenchmarkDotNet.NUnit
 {
+	// ReSharper disable once RedundantAttributeUsageProperty
 	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
 	public class CompetitionBenchmarkAttribute : BenchmarkAttribute
 	{

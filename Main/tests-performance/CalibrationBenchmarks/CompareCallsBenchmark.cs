@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace CodeJam.Tests.Performance
 {
+	[TestFixture(Category = "Performance")]
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "AccessToModifiedClosure")]
 	[SuppressMessage("ReSharper", "ClassCanBeSealed.Local")]
@@ -122,7 +123,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(0.9, 1.1)]
 		public int M_01_Call()
 		{
 			int a = 0;
@@ -134,7 +135,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(0.9, 1.1)]
 		public int M_02_GenericCall()
 		{
 			int a = 0;
@@ -146,7 +147,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(0.9, 1.1)]
 		public int M_03_InstanceCall()
 		{
 			int a = 0;
@@ -159,7 +160,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(0.9, 1.1)]
 		public int M_04_InstanceGenericCall()
 		{
 			int a = 0;
@@ -172,7 +173,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(5.5, 6.5)]
 		public int M_05_CallNoInline()
 		{
 			int a = 0;
@@ -184,7 +185,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(5.5, 6.5)]
 		public int M_06_InstanceCallNoInline()
 		{
 			int a = 0;
@@ -197,7 +198,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(6.5, 7.5)]
 		public int M_07_InstanceVirtualCall()
 		{
 			int a = 0;
@@ -210,7 +211,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(6.5, 7.5)]
 		public int M_08_DerivedVirtualCall()
 		{
 			int a = 0;
@@ -223,7 +224,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(8.5, 9.5)]
 		public int M_09_InterfaceCall()
 		{
 			int a = 0;
@@ -236,7 +237,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(8.5, 9.5)]
 		public int M_10_DerivedInterfaceCall()
 		{
 			int a = 0;
@@ -249,7 +250,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(8.5, 9.5)]
 		public int M_11_GenericInterfaceCall()
 		{
 			int a = 0;
@@ -262,7 +263,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(8.5, 9.5)]
 		public int M_12_DerivedGenericInterfaceCall()
 		{
 			int a = 0;
@@ -275,7 +276,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(34.5, 39.5)]
 		public int M_13_InterfaceGenericCall()
 		{
 			int a = 0;
@@ -288,7 +289,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(34.5, 39.5)]
 		public int M_14_DerivedInterfaceGenericCall()
 		{
 			int a = 0;
@@ -301,7 +302,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(8.5, 9.5)]
 		public int M_15_LambdaCached()
 		{
 			int a1 = 0;
@@ -314,7 +315,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(10.5, 11.5)]
 		public int M_16_LambdaNew()
 		{
 			int a1 = 0;
@@ -327,7 +328,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(10.5, 11.5)]
 		public int M_17_LambdaClosure()
 		{
 			int a1 = 0;
@@ -342,7 +343,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(36.5, 40.5)]
 		public int M_18_LambdaClosureLocal()
 		{
 			int a1 = 0;
@@ -356,7 +357,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(10.5, 11.5)]
 		public int M_19_FuncCached()
 		{
 			int a = 0;
@@ -369,7 +370,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(7.5, 9.5)]
 		public int M_20_FuncCachedInstance()
 		{
 			int a = 0;
@@ -382,7 +383,7 @@ namespace CodeJam.Tests.Performance
 			return Count;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(28.5, 33.5)]
 		public int M_21_FuncNew()
 		{
 			int a = 0;

@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace CodeJam.Tests.Performance
 {
+	[TestFixture(Category = "Performance")]
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "SuggestVarOrType_BuiltInTypes")]
 	public class ComparePlusOneBenchmark
@@ -35,7 +36,7 @@ namespace CodeJam.Tests.Performance
 			return sum;
 		}
 
-		[Benchmark]
+		[CompetitionBenchmark(1.5, 1.75)]
 		public int PlusOne()
 		{
 			int sum = 0;
