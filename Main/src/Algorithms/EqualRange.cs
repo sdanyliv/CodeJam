@@ -89,7 +89,7 @@ namespace CodeJam
 			// 5) Either upperBoundFrom == upperBoundTo or (upperBoundFrom < upperBoundTo and list[upperBoundFrom - 1] <= value)
 			for (;;)
 			{
-				var median = (to + from) / 2;
+				var median = from + (to - from) / 2;
 				if (median == from)
 				{
 					return Tuple.Create(to, UpperBoundCore(list, value, upperBoundFrom, upperBoundTo, comparer));
