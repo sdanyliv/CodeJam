@@ -51,6 +51,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Collections\EnumerableExtensions.Split.cs" />
+    <Compile Include="Collections\KeyEqualityComparer.cs" />
     <Compile Include="Collections\EnumerableExtensions.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -62,7 +64,7 @@
     <Compile Include="Fn.cs" />
     <Compile Include="Collections\Array.cs" />
     <Compile Include="Collections\ArrayExtensions.Infix.cs" />
-    <Compile Include="Collections\KeyEqualityComparer.cs" />
+    <Compile Include="Collections\KeyEqualityComparer`1.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
