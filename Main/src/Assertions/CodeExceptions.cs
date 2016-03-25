@@ -8,6 +8,7 @@ namespace CodeJam
 	/// <summary>
 	/// Exception factory class
 	/// </summary>
+	[PublicAPI]
 	public static class CodeExceptions
 	{
 		#region Behavior setup and implementation helpers

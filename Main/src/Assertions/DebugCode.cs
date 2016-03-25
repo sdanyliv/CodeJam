@@ -8,6 +8,7 @@ namespace CodeJam
 	/// <summary>
 	/// Debug-time assertions class.
 	/// </summary>
+	[PublicAPI]
 	public static class DebugCode
 	{
 		/// <summary>
@@ -22,10 +23,7 @@ namespace CodeJam
 		[AssertionMethod]
 		public static void NotNull<T>(
 			[CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] T arg,
-			[NotNull] [InvokerParameterName] string argName) where T : class
-		{
-			Code.NotNull(arg, argName);
-		}
+			[NotNull] [InvokerParameterName] string argName) where T : class => Code.NotNull(arg, argName);
 
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> != <c>null</c>
@@ -36,10 +34,8 @@ namespace CodeJam
 			// ReSharper disable once ConvertNullableToShortForm
 			// Will conflict with C# vNext nullable references
 			[CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] Nullable<T> arg,
-			[NotNull] [InvokerParameterName] string argName) where T : struct
-		{
+			[NotNull] [InvokerParameterName] string argName) where T : struct =>
 			Code.NotNull(arg, argName);
-		}
 
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> is not null nor empty
@@ -48,10 +44,8 @@ namespace CodeJam
 		[AssertionMethod]
 		public static void NotNullNorEmpty(
 			[CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] string arg,
-			[NotNull] [InvokerParameterName] string argName)
-		{
+			[NotNull] [InvokerParameterName] string argName) =>
 			Code.NotNullNorEmpty(arg, argName);
-		}
 
 		/// <summary>
 		/// Assertion for the argument value
@@ -61,10 +55,8 @@ namespace CodeJam
 		public static void AssertArgument(
 			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
 			[NotNull] [InvokerParameterName] string argName,
-			[NotNull] string message)
-		{
+			[NotNull] string message) =>
 			Code.AssertArgument(condition, argName, message);
-		}
 
 		/// <summary>
 		/// Assertion for the argument value
@@ -75,10 +67,8 @@ namespace CodeJam
 			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
 			[NotNull] [InvokerParameterName] string argName,
 			[NotNull] string messageFormat,
-			[CanBeNull] params object[] args)
-		{
+			[CanBeNull] params object[] args) =>
 			Code.AssertArgument(condition, argName, messageFormat, args);
-		}
 
 		/// <summary>
 		/// State assertion
@@ -87,10 +77,8 @@ namespace CodeJam
 		[AssertionMethod]
 		public static void AssertState(
 			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
-			[NotNull] string message)
-		{
+			[NotNull] string message) =>
 			Code.AssertState(condition, message);
-		}
 
 		/// <summary>
 		/// State assertion
@@ -100,9 +88,7 @@ namespace CodeJam
 		public static void AssertState(
 			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
 			[NotNull] string messageFormat,
-			[CanBeNull] params object[] args)
-		{
+			[CanBeNull] params object[] args) =>
 			Code.AssertState(condition, messageFormat, args);
-		}
 	}
 }
