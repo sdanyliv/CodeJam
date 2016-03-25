@@ -90,7 +90,7 @@ namespace CodeJam
 			// 3) Either "to" = initial value of "to" or list[to] > value
 			for (;;)
 			{
-				var median = (to + from) / 2;
+				var median = from + (to - from) / 2;
 				if (median == from)
 				{
 					return to;
