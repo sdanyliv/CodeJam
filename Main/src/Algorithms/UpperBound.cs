@@ -75,40 +75,20 @@ namespace CodeJam
 		/// <returns>The upper bound for the value</returns>
 		private static int UpperBoundCore<TElement, TValue>(this IList<TElement> list, TValue value, int from, int to, Func<TElement, TValue, int> comparer)
 		{
-			if (to <= from) // an empty range
-			{
-				return to;
-			}
-			if (comparer(list[from], value) > 0)
-			{
-				// the first (the smalest) value is greater than the target
-				return from;
-			}
-			// The following invariant has been verified and will be maintained in the loop:
-			// 1) the range [from, to) is not empty
-			// 2) list[from] <= value
-			// 3) Either "to" = initial value of "to" or list[to] > value
-			for (;;)
+			while (from < to)
 			{
 				var median = from + (to - from) / 2;
-				if (median == from)
-				{
-					return to;
-				}
 				var compareResult = comparer(list[median], value);
-				if (compareResult <= 0)
+				if (compareResult > 0)
 				{
-					// cuts the range since median > from
-					from = median;
+					to = median;
 				}
 				else
 				{
-					// Keeps the loop invariant since median < to, so the range is not empty
-					// and list[median] > value
-					// Also, custs the range since median > from
-					to = median;
+					from = median + 1;
 				}
 			}
+			return from;
 		}
 	}
 }

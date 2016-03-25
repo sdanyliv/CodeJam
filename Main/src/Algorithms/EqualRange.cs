@@ -62,55 +62,31 @@ namespace CodeJam
 		public static Tuple<int, int> EqualRange<TElement, TValue>(this IList<TElement> list, TValue value, int from, int to, Func<TElement, TValue, int> comparer)
 		{
 			ValidateIndicesRange(from, to, list.Count);
-			if (to <= from) // an empty range
-			{
-				return Tuple.Create(to, to);
-			}
-			var compareResult = comparer(list[from], value);
-			if (compareResult > 0)
-			{
-				// the first (the smalest) value is greater than the target
-				return Tuple.Create(from, from);
-			}
-
-			var upperBoundFrom = from + 1;
+			var upperBoundFrom = from;
 			var upperBoundTo = to;
-			if (compareResult == 0)
-			{
-				// the first (the smalest) value is equal to the target
-				return Tuple.Create(from, UpperBoundCore(list, value, upperBoundFrom, upperBoundTo, comparer));
-			}
 
-			// The following invariant has been verified and will be maintained in the loop:
-			// 1) the range [from, to) is not empty
-			// 2) list[from] < value
-			// 3) Either "to" = initial value of "to" or list[to] >= value
-			// 4) Either upperBoundTo == initial "to" or list[upperBoundLimit] > value
-			// 5) Either upperBoundFrom == upperBoundTo or (upperBoundFrom < upperBoundTo and list[upperBoundFrom - 1] <= value)
-			for (;;)
+			// the loop locates the lower bound at the same time restricting the range for upper bound search
+			while (from < to)
 			{
 				var median = from + (to - from) / 2;
-				if (median == from)
-				{
-					return Tuple.Create(to, UpperBoundCore(list, value, upperBoundFrom, upperBoundTo, comparer));
-				}
-				compareResult = comparer(list[median], value);
+				var compareResult = comparer(list[median], value);
 				if (compareResult < 0)
 				{
-					from = median;
-					upperBoundFrom = median + 1;
+					from = median + 1;
+					upperBoundFrom = from;
 				}
 				else if (compareResult == 0)
 				{
 					to = median;
-					upperBoundFrom = median + 1;
+					upperBoundFrom = to + 1;
 				}
 				else
 				{
 					to = median;
-					upperBoundTo = median;
+					upperBoundTo = to;
 				}
 			}
+			return Tuple.Create(from, UpperBoundCore(list, value, upperBoundFrom, upperBoundTo, comparer));
 		}
 	}
 }
