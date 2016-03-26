@@ -64,7 +64,7 @@ namespace CodeJam.Utilities
 				len -= 8;
 			}
 
-			if ((len & 4) != 0)
+			if (len >= 4)
 			{
 				if (*(int*)bp1 != *(int*)bp2)
 					return false;
@@ -74,7 +74,7 @@ namespace CodeJam.Utilities
 				len -= 4;
 			}
 
-			if ((len & 2) != 0)
+			if (len >= 2)
 			{
 				if (*(short*)bp1 != *(short*)bp2)
 					return false;
@@ -84,7 +84,7 @@ namespace CodeJam.Utilities
 				len -= 2;
 			}
 
-			return (len & 1) == 0 || *bp1 == *bp2;
+			return len == 0 || *bp1 == *bp2;
 		}
 	}
 }
