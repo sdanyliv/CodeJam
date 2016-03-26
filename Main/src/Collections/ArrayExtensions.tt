@@ -2,6 +2,8 @@
 <#@ output extension=".generated.cs" #>
 using System;
 
+using CodeJam.Utilities;
+
 using JetBrains.Annotations;
 
 namespace CodeJam.Collections
@@ -17,8 +19,41 @@ namespace CodeJam.Collections
 	{
 #>
 		#region <#= type #>
+<#
+		switch (type)
+		{
+			case "byte":
+				GenerateUnsafeMethod(type, size: 1);
+				break;
+			case "sbyte":
+				GenerateUnsafeMethod(type, size: 1);
+				break;
+			case "short":
+				GenerateUnsafeMethod(type, size: 2);
+				break;
+			case "ushort":
+				GenerateUnsafeMethod(type, size: 2);
+				break;
+			case "int":
+				GenerateUnsafeMethod(type, size: 4);
+				break;
+			case "uint":
+				GenerateUnsafeMethod(type, size: 4);
+				break;
+			case "long":
+				GenerateUnsafeMethod(type, size: 8);
+				break;
+			case "ulong":
+				GenerateUnsafeMethod(type, size: 8);
+				break;
+			default:
+#>
 <# GenerateMethod(type); #>
 
+<#
+				break;
+		}
+#>
 <# GenerateMethod(type + "?"); #>
 		#endregion
 
@@ -54,5 +89,40 @@ public void GenerateMethod(string type)
 
 			return true;
 		}
+<#+}
+#>
+<#+
+public void GenerateUnsafeMethod(string type, int size)
+{ #>
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static unsafe bool EqualsTo([CanBeNull] this <#= type #>[] a, [CanBeNull] <#= type #>[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
+
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * <#= size #>);
+		}
+
 <#+}
 #>

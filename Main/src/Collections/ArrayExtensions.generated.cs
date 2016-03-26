@@ -1,5 +1,7 @@
 ﻿using System;
 
+using CodeJam.Utilities;
+
 using JetBrains.Annotations;
 
 namespace CodeJam.Collections
@@ -39,7 +41,7 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo([CanBeNull] this int[] a, [CanBeNull] int[] b)
+		public static unsafe bool EqualsTo([CanBeNull] this int[] a, [CanBeNull] int[] b)
 		{
 			if (a == b)
 				return true;
@@ -50,11 +52,17 @@ namespace CodeJam.Collections
 			if (a.Length != b.Length)
 				return false;
 
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
 
-			return true;
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 4);
 		}
 
 		/// <summary>
@@ -89,7 +97,7 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo([CanBeNull] this long[] a, [CanBeNull] long[] b)
+		public static unsafe bool EqualsTo([CanBeNull] this long[] a, [CanBeNull] long[] b)
 		{
 			if (a == b)
 				return true;
@@ -100,11 +108,17 @@ namespace CodeJam.Collections
 			if (a.Length != b.Length)
 				return false;
 
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
 
-			return true;
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 8);
 		}
 
 		/// <summary>
@@ -289,7 +303,7 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo([CanBeNull] this short[] a, [CanBeNull] short[] b)
+		public static unsafe bool EqualsTo([CanBeNull] this short[] a, [CanBeNull] short[] b)
 		{
 			if (a == b)
 				return true;
@@ -300,11 +314,17 @@ namespace CodeJam.Collections
 			if (a.Length != b.Length)
 				return false;
 
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
 
-			return true;
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 2);
 		}
 
 		/// <summary>
@@ -339,7 +359,7 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo([CanBeNull] this sbyte[] a, [CanBeNull] sbyte[] b)
+		public static unsafe bool EqualsTo([CanBeNull] this sbyte[] a, [CanBeNull] sbyte[] b)
 		{
 			if (a == b)
 				return true;
@@ -350,11 +370,17 @@ namespace CodeJam.Collections
 			if (a.Length != b.Length)
 				return false;
 
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
 
-			return true;
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 1);
 		}
 
 		/// <summary>
@@ -389,7 +415,7 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo([CanBeNull] this uint[] a, [CanBeNull] uint[] b)
+		public static unsafe bool EqualsTo([CanBeNull] this uint[] a, [CanBeNull] uint[] b)
 		{
 			if (a == b)
 				return true;
@@ -400,11 +426,17 @@ namespace CodeJam.Collections
 			if (a.Length != b.Length)
 				return false;
 
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
 
-			return true;
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 4);
 		}
 
 		/// <summary>
@@ -439,7 +471,7 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo([CanBeNull] this ulong[] a, [CanBeNull] ulong[] b)
+		public static unsafe bool EqualsTo([CanBeNull] this ulong[] a, [CanBeNull] ulong[] b)
 		{
 			if (a == b)
 				return true;
@@ -450,11 +482,17 @@ namespace CodeJam.Collections
 			if (a.Length != b.Length)
 				return false;
 
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
 
-			return true;
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 8);
 		}
 
 		/// <summary>
@@ -489,7 +527,7 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo([CanBeNull] this ushort[] a, [CanBeNull] ushort[] b)
+		public static unsafe bool EqualsTo([CanBeNull] this ushort[] a, [CanBeNull] ushort[] b)
 		{
 			if (a == b)
 				return true;
@@ -500,11 +538,17 @@ namespace CodeJam.Collections
 			if (a.Length != b.Length)
 				return false;
 
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
 
-			return true;
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 2);
 		}
 
 		/// <summary>
@@ -539,7 +583,7 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo([CanBeNull] this byte[] a, [CanBeNull] byte[] b)
+		public static unsafe bool EqualsTo([CanBeNull] this byte[] a, [CanBeNull] byte[] b)
 		{
 			if (a == b)
 				return true;
@@ -550,11 +594,17 @@ namespace CodeJam.Collections
 			if (a.Length != b.Length)
 				return false;
 
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
 
-			return true;
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 1);
 		}
 
 		/// <summary>
