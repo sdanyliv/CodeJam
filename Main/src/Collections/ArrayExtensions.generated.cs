@@ -6,6 +6,7 @@ namespace CodeJam.Collections
 {
 	partial class ArrayExtensions
 	{
+		#region string
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -29,6 +30,7 @@ namespace CodeJam.Collections
 
 			return true;
 		}
+		#endregion
 
 		#region int
 		/// <summary>

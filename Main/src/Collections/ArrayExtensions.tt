@@ -8,7 +8,9 @@ namespace CodeJam.Collections
 {
 	partial class ArrayExtensions
 	{
+		#region string
 <# GenerateMethod("string"); #>
+		#endregion
 
 <#
 	foreach (var type in new[] { "int", "long", "float", "double", "decimal", "short", "sbyte", "uint", "ulong", "ushort", "byte", "DateTime", "TimeSpan", "DateTimeOffset" })
