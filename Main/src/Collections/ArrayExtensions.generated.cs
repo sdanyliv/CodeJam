@@ -83,8 +83,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -139,8 +143,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -195,8 +203,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -251,8 +263,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -307,8 +323,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -363,8 +383,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -419,8 +443,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -475,8 +503,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -525,8 +557,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -575,8 +611,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -625,8 +665,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -675,8 +719,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -725,8 +773,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
@@ -775,8 +827,12 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}

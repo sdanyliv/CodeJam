@@ -54,7 +54,7 @@ namespace CodeJam.Collections
 				break;
 		}
 #>
-<# GenerateMethod(type + "?"); #>
+<# GenerateNullableMethod(type); #>
 		#endregion
 <#
 	}
@@ -84,6 +84,38 @@ public void GenerateMethod(string type)
 			for (var i = 0; i < a.Length; i++)
 				if (a[i] != b[i])
 					return false;
+
+			return true;
+		}
+<#+}
+#>
+<#+
+public void GenerateNullableMethod(string type)
+{#>
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static bool EqualsTo([CanBeNull] this <#= type #>?[] a, [CanBeNull] <#= type #>?[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			for (var i = 0; i < a.Length; i++)
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
+					return false;
+			}
 
 			return true;
 		}
