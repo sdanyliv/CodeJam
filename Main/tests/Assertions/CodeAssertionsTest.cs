@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
+using JetBrains.Annotations;
+
 using NUnit.Framework;
 
 namespace CodeJam.Assertions
@@ -13,6 +15,7 @@ namespace CodeJam.Assertions
 		private bool? m_BreakOnException;
 
 		[OneTimeSetUp]
+		[UsedImplicitly]
 		public void SetUp()
 		{
 			m_BreakOnException = CodeExceptions.BreakOnException;
@@ -20,12 +23,12 @@ namespace CodeJam.Assertions
 		}
 
 		[OneTimeTearDown]
+		[UsedImplicitly]
 		public void TearDown()
 		{
 			Code.NotNull(m_BreakOnException, nameof(m_BreakOnException));
 			CodeExceptions.BreakOnException = m_BreakOnException.GetValueOrDefault();
 		}
-
 
 		[Test]
 		public void TestNotNull()

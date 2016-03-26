@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using NUnit.Framework;
-using CodeJam.Collections;
 
 namespace CodeJam
 {
