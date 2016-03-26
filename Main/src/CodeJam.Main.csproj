@@ -47,6 +47,7 @@
     <Compile Include="Algorithms\EqualRange.cs" />
     <Compile Include="Algorithms\HashCode.cs" />
     <Compile Include="Algorithms\LowerBound.cs" />
+    <Compile Include="Algorithms\Memoize.cs" />
     <Compile Include="Algorithms\Swap.cs" />
     <Compile Include="Algorithms\UpperBound.cs" />
     <Compile Include="Assertions\Code.cs" />
@@ -104,7 +105,6 @@
     <Compile Include="String\StringOrigin.cs" />
     <Compile Include="Threading\InterlockedOperations.cs" />
     <Compile Include="Threading\ReaderWriterLockSlimExtensions.cs" />
-    <Compile Include="Threading\ThreadingExtensions.cs" />
     <Compile Include="Utilities\Memory.cs" />
     <Compile Include="Xml\XNodeExtensions.cs" />
   </ItemGroup>

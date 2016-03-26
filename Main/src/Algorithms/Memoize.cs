@@ -5,15 +5,10 @@ using CodeJam.Collections;
 
 using JetBrains.Annotations;
 
-namespace CodeJam.Threading
+namespace CodeJam
 {
-	/// <summary>
-	/// Threading related extension methods.
-	/// </summary>
-	[PublicAPI]
-	public static class ThreadingExtensions
+	partial class Algorithms
 	{
-		#region Memoize
 		/// <summary>
 		/// Caches function value for specific argument.
 		/// </summary>
@@ -136,6 +131,5 @@ namespace CodeJam.Threading
 					threadSafe);
 			return (arg1, arg2, arg3, arg4, arg5) => map.Get(TupleStruct.Create(arg1, arg2, arg3, arg4, arg5));
 		}
-		#endregion
 	}
 }

@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace CodeJam.Threading
 {
 	[TestFixture]
-	public class ThreadingExtensionsTests
+	public class MemoizeTests
 	{
 		[TestCase(true)]
 		[TestCase(false)]
