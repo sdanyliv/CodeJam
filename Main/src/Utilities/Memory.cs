@@ -41,7 +41,7 @@ namespace CodeJam.Utilities
 				len -= 64;
 			}
 
-			while (len >= 32)
+			if (len >= 32)
 			{
 				if (((long*)bp1)[0] != ((long*)bp2)[0]
 					|| ((long*)bp1)[1] != ((long*)bp2)[1]
