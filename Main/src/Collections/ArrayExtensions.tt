@@ -13,11 +13,11 @@ namespace CodeJam.Collections
 		#region string
 <# GenerateMethod("string"); #>
 		#endregion
-
 <#
-	foreach (var type in new[] { "int", "long", "float", "double", "decimal", "short", "sbyte", "uint", "ulong", "ushort", "byte", "DateTime", "TimeSpan", "DateTimeOffset" })
+	foreach (var type in new[] { "byte", "sbyte", "short", "ushort", "int", "uint", "long", "ulong", "float", "double", "decimal", "TimeSpan", "DateTime", "DateTimeOffset" })
 	{
 #>
+
 		#region <#= type #>
 <#
 		switch (type)
@@ -56,13 +56,11 @@ namespace CodeJam.Collections
 #>
 <# GenerateMethod(type + "?"); #>
 		#endregion
-
 <#
 	}
 #>
 	}
 }
-
 <#+
 public void GenerateMethod(string type)
 {#>

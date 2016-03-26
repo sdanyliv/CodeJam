@@ -34,6 +34,230 @@ namespace CodeJam.Collections
 		}
 		#endregion
 
+		#region byte
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static unsafe bool EqualsTo([CanBeNull] this byte[] a, [CanBeNull] byte[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
+
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 1);
+		}
+
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static bool EqualsTo([CanBeNull] this byte?[] a, [CanBeNull] byte?[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			for (var i = 0; i < a.Length; i++)
+				if (a[i] != b[i])
+					return false;
+
+			return true;
+		}
+		#endregion
+
+		#region sbyte
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static unsafe bool EqualsTo([CanBeNull] this sbyte[] a, [CanBeNull] sbyte[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
+
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 1);
+		}
+
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static bool EqualsTo([CanBeNull] this sbyte?[] a, [CanBeNull] sbyte?[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			for (var i = 0; i < a.Length; i++)
+				if (a[i] != b[i])
+					return false;
+
+			return true;
+		}
+		#endregion
+
+		#region short
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static unsafe bool EqualsTo([CanBeNull] this short[] a, [CanBeNull] short[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
+
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 2);
+		}
+
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static bool EqualsTo([CanBeNull] this short?[] a, [CanBeNull] short?[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			for (var i = 0; i < a.Length; i++)
+				if (a[i] != b[i])
+					return false;
+
+			return true;
+		}
+		#endregion
+
+		#region ushort
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static unsafe bool EqualsTo([CanBeNull] this ushort[] a, [CanBeNull] ushort[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
+
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 2);
+		}
+
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static bool EqualsTo([CanBeNull] this ushort?[] a, [CanBeNull] ushort?[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			for (var i = 0; i < a.Length; i++)
+				if (a[i] != b[i])
+					return false;
+
+			return true;
+		}
+		#endregion
+
 		#region int
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
@@ -90,6 +314,62 @@ namespace CodeJam.Collections
 		}
 		#endregion
 
+		#region uint
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static unsafe bool EqualsTo([CanBeNull] this uint[] a, [CanBeNull] uint[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
+
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 4);
+		}
+
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static bool EqualsTo([CanBeNull] this uint?[] a, [CanBeNull] uint?[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			for (var i = 0; i < a.Length; i++)
+				if (a[i] != b[i])
+					return false;
+
+			return true;
+		}
+		#endregion
+
 		#region long
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
@@ -128,6 +408,62 @@ namespace CodeJam.Collections
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
 		public static bool EqualsTo([CanBeNull] this long?[] a, [CanBeNull] long?[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			for (var i = 0; i < a.Length; i++)
+				if (a[i] != b[i])
+					return false;
+
+			return true;
+		}
+		#endregion
+
+		#region ulong
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static unsafe bool EqualsTo([CanBeNull] this ulong[] a, [CanBeNull] ulong[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
+
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 8);
+		}
+
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static bool EqualsTo([CanBeNull] this ulong?[] a, [CanBeNull] ulong?[] b)
 		{
 			if (a == b)
 				return true;
@@ -296,44 +632,14 @@ namespace CodeJam.Collections
 		}
 		#endregion
 
-		#region short
+		#region TimeSpan
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static unsafe bool EqualsTo([CanBeNull] this short[] a, [CanBeNull] short[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			if (a.Length < 5)
-			{
-				for (var i = 0; i < a.Length; i++)
-					if (a[i] != b[i])
-						return false;
-
-				return true;
-			}
-
-			fixed (void* pa = a, pb = b)
-				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 2);
-		}
-
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static bool EqualsTo([CanBeNull] this short?[] a, [CanBeNull] short?[] b)
+		public static bool EqualsTo([CanBeNull] this TimeSpan[] a, [CanBeNull] TimeSpan[] b)
 		{
 			if (a == b)
 				return true;
@@ -350,38 +656,6 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-		#endregion
-
-		#region sbyte
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static unsafe bool EqualsTo([CanBeNull] this sbyte[] a, [CanBeNull] sbyte[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			if (a.Length < 5)
-			{
-				for (var i = 0; i < a.Length; i++)
-					if (a[i] != b[i])
-						return false;
-
-				return true;
-			}
-
-			fixed (void* pa = a, pb = b)
-				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 1);
-		}
 
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
@@ -389,231 +663,7 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo([CanBeNull] this sbyte?[] a, [CanBeNull] sbyte?[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
-
-			return true;
-		}
-		#endregion
-
-		#region uint
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static unsafe bool EqualsTo([CanBeNull] this uint[] a, [CanBeNull] uint[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			if (a.Length < 5)
-			{
-				for (var i = 0; i < a.Length; i++)
-					if (a[i] != b[i])
-						return false;
-
-				return true;
-			}
-
-			fixed (void* pa = a, pb = b)
-				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 4);
-		}
-
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static bool EqualsTo([CanBeNull] this uint?[] a, [CanBeNull] uint?[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
-
-			return true;
-		}
-		#endregion
-
-		#region ulong
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static unsafe bool EqualsTo([CanBeNull] this ulong[] a, [CanBeNull] ulong[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			if (a.Length < 5)
-			{
-				for (var i = 0; i < a.Length; i++)
-					if (a[i] != b[i])
-						return false;
-
-				return true;
-			}
-
-			fixed (void* pa = a, pb = b)
-				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 8);
-		}
-
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static bool EqualsTo([CanBeNull] this ulong?[] a, [CanBeNull] ulong?[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
-
-			return true;
-		}
-		#endregion
-
-		#region ushort
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static unsafe bool EqualsTo([CanBeNull] this ushort[] a, [CanBeNull] ushort[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			if (a.Length < 5)
-			{
-				for (var i = 0; i < a.Length; i++)
-					if (a[i] != b[i])
-						return false;
-
-				return true;
-			}
-
-			fixed (void* pa = a, pb = b)
-				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 2);
-		}
-
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static bool EqualsTo([CanBeNull] this ushort?[] a, [CanBeNull] ushort?[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
-
-			return true;
-		}
-		#endregion
-
-		#region byte
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static unsafe bool EqualsTo([CanBeNull] this byte[] a, [CanBeNull] byte[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			if (a.Length < 5)
-			{
-				for (var i = 0; i < a.Length; i++)
-					if (a[i] != b[i])
-						return false;
-
-				return true;
-			}
-
-			fixed (void* pa = a, pb = b)
-				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * 1);
-		}
-
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static bool EqualsTo([CanBeNull] this byte?[] a, [CanBeNull] byte?[] b)
+		public static bool EqualsTo([CanBeNull] this TimeSpan?[] a, [CanBeNull] TimeSpan?[] b)
 		{
 			if (a == b)
 				return true;
@@ -682,56 +732,6 @@ namespace CodeJam.Collections
 		}
 		#endregion
 
-		#region TimeSpan
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static bool EqualsTo([CanBeNull] this TimeSpan[] a, [CanBeNull] TimeSpan[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
-
-			return true;
-		}
-
-		/// <summary>
-		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
-		/// </summary>
-		/// <param name="a">The first array to compare.</param>
-		/// <param name="b">The second array to compare.</param>
-		[Pure]
-		public static bool EqualsTo([CanBeNull] this TimeSpan?[] a, [CanBeNull] TimeSpan?[] b)
-		{
-			if (a == b)
-				return true;
-
-			if (a == null || b == null)
-				return false;
-
-			if (a.Length != b.Length)
-				return false;
-
-			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
-					return false;
-
-			return true;
-		}
-		#endregion
-
 		#region DateTimeOffset
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
@@ -781,7 +781,5 @@ namespace CodeJam.Collections
 			return true;
 		}
 		#endregion
-
 	}
 }
-
