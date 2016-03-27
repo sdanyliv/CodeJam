@@ -48,15 +48,17 @@
     <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assertions\CodePerformanceTest.cs" />
+    <Compile Include="Assertions\CodeAssertionsPerformanceTest.cs" />
     <Compile Include="BenchmarkDotNet.NUnit.Tests\BenchmarkHelpersTests.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\CompetitionBenchmarkAttribute.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\CompetitionBenchmarkRunner.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\BenchmarkHelpers.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\BenchmarkColumns.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\Configs.cs" />
-    <Compile Include="CalibrationBenchmarks\CompareCallsBenchmark.cs" />
-    <Compile Include="CalibrationBenchmarks\ComparePlusOneBenchmark.cs" />
+    <Compile Include="CalibrationBenchmarks\BenchmarkConstants.cs" />
+    <Compile Include="CalibrationBenchmarks\CallCostsBenchmark.cs" />
+    <Compile Include="CalibrationBenchmarks\DispatchingOptimizationBenchmark.cs" />
+    <Compile Include="CalibrationBenchmarks\ProofsSensitivityBenchmark.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

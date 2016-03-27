@@ -2,10 +2,10 @@
 
 using BenchmarkDotNet.Attributes;
 // ReSharper disable CheckNamespace
+// ReSharper disable once RedundantAttributeUsageProperty
 
 namespace BenchmarkDotNet.NUnit
 {
-	// ReSharper disable once RedundantAttributeUsageProperty
 	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
 	public class CompetitionBenchmarkAttribute : BenchmarkAttribute
 	{

@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using NUnit.Framework;
 
 using BenchmarkDotNet.Helpers;
+// ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.NUnit.Tests
 {
@@ -13,8 +14,8 @@ namespace BenchmarkDotNet.NUnit.Tests
 	{
 		[Test]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		[System.ComponentModel.Description("TryGetAttributeTest")]
-		public void TryGetAttributeTest()
+		[System.ComponentModel.Description("SomeDescription")]
+		public void TestTryGetAttribute()
 		{
 			var method = (MethodInfo)MethodBase.GetCurrentMethod();
 
@@ -23,7 +24,7 @@ namespace BenchmarkDotNet.NUnit.Tests
 			Assert.AreEqual(method.MethodImplementationFlags, MethodImplAttributes.NoInlining);
 			Assert.AreEqual(
 				method.TryGetAttribute<System.ComponentModel.DescriptionAttribute>().Description,
-				"TryGetAttributeTest");
+				"SomeDescription");
 		}
 
 		#region Percentile
@@ -53,7 +54,7 @@ namespace BenchmarkDotNet.NUnit.Tests
 		private const double Delta = 1e-7;
 
 		[Test]
-		public void PercentileTest()
+		public void TestPercentile()
 		{
 			Assert.Throws<ArgumentNullException>(() => BenchmarkHelpers.Percentile(null, 0));
 			Assert.Throws<ArgumentOutOfRangeException>(() => BenchmarkHelpers.Percentile(_data, -0.1));

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
@@ -43,6 +45,37 @@ namespace BenchmarkDotNet.NUnit
 			RunCompetition(minRatio, maxRatio, null, File.ReadAllText(callerFile), config);
 		}
 #endif
+
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		private static Type GetCallingType() => 
+			new StackTrace().GetFrame(2).GetMethod().DeclaringType;
+
+		/// <summary>
+		/// Runs the competition benchmark from a type of a callee
+		/// </summary>
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		public static void Run(double maxRatio)
+		{
+			RunCompetition(0, maxRatio, GetCallingType(), null, null);
+		}
+
+		/// <summary>
+		/// Runs the competition benchmark from a type of a callee
+		/// </summary>
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		public static void Run(double minRatio, double maxRatio)
+		{
+			RunCompetition(minRatio, maxRatio, GetCallingType(), null, null);
+		}
+
+		/// <summary>
+		/// Runs the competition benchmark from a type of a callee
+		/// </summary>
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		public static void Run(double minRatio, double maxRatio, IConfig config)
+		{
+			RunCompetition(minRatio, maxRatio, GetCallingType(), null, config);
+		}
 
 		/// <summary>
 		/// Runs the competition benchmark
@@ -167,6 +200,7 @@ namespace BenchmarkDotNet.NUnit
 					StatisticColumn.Min,
 					ScaledPercentileColumn.S0Column,
 					ScaledPercentileColumn.S50Column,
+					ScaledPercentileColumn.S85Column,
 					ScaledPercentileColumn.S95Column,
 					ScaledPercentileColumn.S100Column,
 					StatisticColumn.Max);

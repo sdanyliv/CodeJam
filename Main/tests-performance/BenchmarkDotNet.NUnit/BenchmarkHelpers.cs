@@ -11,6 +11,7 @@ using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Parameters;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
+
 // ReSharper disable CheckNamespace
 // ReSharper disable ArrangeBraces_ifelse
 
@@ -99,8 +100,7 @@ namespace BenchmarkDotNet.Helpers
 		/// Groups benchmarks being run under same conditions (job+parameters)
 		/// </summary>
 		public static ILookup<KeyValuePair<IJob, ParameterInstances>, Benchmark> SameConditionBenchmarks(this Summary summary)
-			=>
-				summary.Benchmarks.ToLookup(b => new KeyValuePair<IJob, ParameterInstances>(b.Job, b.Parameters));
+			=> summary.Benchmarks.ToLookup(b => new KeyValuePair<IJob, ParameterInstances>(b.Job, b.Parameters));
 
 		/// <summary>
 		/// Calculates the Nth percentile for the benchmark

@@ -27,7 +27,9 @@ namespace BenchmarkDotNet.NUnit
 					IterationTime = 50,
 					LaunchCount = 1,
 					WarmupCount = 1,
-					TargetCount = 10,
+					TargetCount = 40,
+					Framework = Framework.V46,
+					Platform = Platform.X64,
 					Jit = Jit.RyuJit
 				});
 		}

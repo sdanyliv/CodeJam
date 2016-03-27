@@ -1,0 +1,170 @@
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.NUnit;
+
+using NUnit.Framework;
+
+namespace CodeJam
+{
+	/// <summary>
+	/// Prooftest: JIT optimizations on handwritten method dispatching
+	/// </summary>
+	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
+	[Config(typeof(FastRunConfig))]
+	[SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
+	[SuppressMessage("ReSharper", "ConvertToConstant.Local")]
+	public class DispatchingOptimizationBenchmark
+	{
+		// Use case:
+		// 1. We have multiple implementations for the same algorithm.
+		// 2. We want to choose implementation depending on process' environment: feature switches, FW version etc.
+		// 3. We want as few penalty for dispatching as it is possible;
+
+		// Here we go:
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private static int Implementation1(int i) => i * i;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private static int Implementation2(int i) => i + 1;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private static int Implementation3(int i) => i / 2;
+
+		private enum ImplementationToUse
+		{
+			Implementation1,
+			Implementation2,
+			Implementation3
+		}
+
+		#region Dispatching implementations
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		private static int DirectCall(int i) => Implementation2(i);
+
+		private static readonly ImplementationToUse _ImplementationToUse1 = ImplementationToUse.Implementation2;
+
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		private static int SwitchOverRoField(int i)
+		{
+			switch (_ImplementationToUse1)
+			{
+				case ImplementationToUse.Implementation1:
+					return Implementation1(i);
+				case ImplementationToUse.Implementation2:
+					return Implementation2(i);
+				case ImplementationToUse.Implementation3:
+					return Implementation3(i);
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+
+		private static volatile ImplementationToUse _ImplementationToUse2 = ImplementationToUse.Implementation2;
+
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		private static int SwitchOverStaticField(int i)
+		{
+			switch (_ImplementationToUse2)
+			{
+				case ImplementationToUse.Implementation1:
+					return Implementation1(i);
+				case ImplementationToUse.Implementation2:
+					return Implementation2(i);
+				case ImplementationToUse.Implementation3:
+					return Implementation3(i);
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+		#endregion
+
+		#region Assertion to proof the idea works at all
+		[Test]
+		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
+		public void AssertJitOptimizedDispatch()
+		{
+			const int SomeNum = 1024;
+			var impl2 = Implementation2(SomeNum);
+			var impl3 = Implementation3(SomeNum);
+
+			// 1. Jitting the methods. Impl2 should be used.
+			Assert.AreEqual(DirectCall(SomeNum), impl2);
+			Assert.AreEqual(SwitchOverRoField(SomeNum), impl2);
+			Assert.AreEqual(SwitchOverStaticField(SomeNum), impl2);
+
+			// 2. Update the field values:
+
+			// 2.1. Updating the readonly field.
+			// Should be ignored;
+			var bf = BindingFlags.Static | BindingFlags.NonPublic;
+			// ReSharper disable once PossibleNullReferenceException
+			typeof(DispatchingOptimizationBenchmark)
+				.GetField(nameof(_ImplementationToUse1), bf)
+				.SetValue(null, ImplementationToUse.Implementation3);
+
+			//2.2. Updating the field.
+			// Should NOT be ignored;
+			_ImplementationToUse2 = ImplementationToUse.Implementation3;
+
+			// 3. Now, the assertions:
+			// Nothing changed
+			Assert.AreEqual(DirectCall(SomeNum), impl2);
+			// Same as previous call (switch thrown away by JIT)
+			Assert.AreEqual(SwitchOverRoField(SomeNum), impl2);
+			// Uses implementation 3
+			Assert.AreEqual(SwitchOverStaticField(SomeNum), impl3);
+		}
+		#endregion
+
+		#region Competition
+		public const int Count = 10 * 1000 * 1000;
+
+		[Test]
+		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
+		public void BenchmarkJitOptimizedDispatch()
+			=> CompetitionBenchmarkRunner.Run(BenchmarkConstants.NotSlower, BenchmarkConstants.NotFaster);
+
+		[Benchmark(Baseline = true)]
+		public int Test00Baseline()
+		{
+			var sum = 0;
+			var count = Count;
+			for (var i = 0; i < count; i++)
+			{
+				sum += DirectCall(i);
+			}
+			return sum;
+		}
+
+		[CompetitionBenchmark(0.9, 1.15)]
+		public int Test01SwitchOverRoField()
+		{
+			var sum = 0;
+			var count = Count;
+			for (var i = 0; i < count; i++)
+			{
+				sum += SwitchOverRoField(i);
+			}
+
+			return sum;
+		}
+
+		[CompetitionBenchmark(1.3, 1.7)]
+		public int Test02SwitchOverStaticField()
+		{
+			var sum = 0;
+			var count = Count;
+			for (var i = 0; i < count; i++)
+			{
+				sum += SwitchOverStaticField(i);
+			}
+
+			return sum;
+		}
+		#endregion
+	}
+}
