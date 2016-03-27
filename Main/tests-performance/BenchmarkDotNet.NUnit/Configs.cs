@@ -2,6 +2,7 @@
 
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
+// ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.NUnit
 {

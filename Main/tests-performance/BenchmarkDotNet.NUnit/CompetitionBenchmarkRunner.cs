@@ -10,6 +10,9 @@ using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
 using NUnit.Framework;
+// ReSharper disable CheckNamespace
+// ReSharper disable ConvertMethodToExpressionBody
+// ReSharper disable ArrangeBraces_ifelse
 
 namespace BenchmarkDotNet.NUnit
 {

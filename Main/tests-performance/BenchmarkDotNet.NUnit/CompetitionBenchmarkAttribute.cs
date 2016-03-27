@@ -1,6 +1,7 @@
 ﻿using System;
 
 using BenchmarkDotNet.Attributes;
+// ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.NUnit
 {
