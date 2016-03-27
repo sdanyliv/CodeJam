@@ -69,7 +69,7 @@
       <DependentUpon>EnumerableExtensions.tt</DependentUpon>
     </Compile>
     <Compile Include="Collections\ILazyDictionary.cs" />
-    <Compile Include="IO\TempHelper.cs" />
+    <Compile Include="IO\TempData.cs" />
     <Compile Include="Structures\TupleStruct.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
