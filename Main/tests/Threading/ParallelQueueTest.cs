@@ -20,6 +20,9 @@ namespace CodeJam.Threading
 		[Test]
 		public void MultipleConsumerProviderTest()
 		{
+			_providerCount = 0;
+			_consumerCount = 0;
+
 			Enumerable.Range(1, 100).RunInParallel(
 				5, i =>
 				{
