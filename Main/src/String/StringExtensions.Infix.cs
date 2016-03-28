@@ -95,6 +95,18 @@ namespace CodeJam
 			string.Join(separator, values);
 
 		/// <summary>
+		/// Concatenates the members of a collection.
+		/// </summary>
+		/// <param name="values">A collection that contains the strings to concatenate.</param>
+		/// <returns>
+		/// A string that consists of the members of <paramref name="values"/>.
+		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
+		/// </returns>
+		[NotNull, Pure]
+		public static string Join<T>([NotNull, InstantHandle] this IEnumerable<T> values) =>
+			string.Join("", values);
+
+		/// <summary>
 		/// Returns length of argument, even if argument is null.
 		/// </summary>
 		[Pure]
