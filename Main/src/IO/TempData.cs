@@ -9,7 +9,7 @@ namespace CodeJam.IO
 	/// Methods to work with temporary data.
 	/// </summary>
 	[PublicAPI]
-	public class TempData
+	public static class TempData
 	{
 		#region Dir
 		/// <summary>
