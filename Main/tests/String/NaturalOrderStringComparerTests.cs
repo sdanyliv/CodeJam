@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace CodeJam
 {
 	[TestFixture]
-	public class NaturalComparerTests
+	public class NaturalOrderStringComparerTests
 	{
 		[TestCase("Dates.txt")]
 		[TestCase("Debs.txt")]
@@ -135,7 +135,7 @@ namespace CodeJam
 
 		public static List<string> LoadTestData(string resourceName)
 		{
-			var assembly = typeof(NaturalComparerTests).Assembly;
+			var assembly = typeof(NaturalOrderStringComparerTests).Assembly;
 			var list = new List<string>();
 
 			using (var stream = assembly.GetRequiredResourceStream(resourceName))
