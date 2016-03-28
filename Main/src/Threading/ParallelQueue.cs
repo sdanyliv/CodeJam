@@ -3,12 +3,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 
-using JetBrains.Annotations;
-
 namespace CodeJam.Threading
 {
-	[PublicAPI]
-	public class ParallelQueue : IDisposable
+	class ParallelQueue : IDisposable
 	{
 		readonly BlockingCollection<Action> _queue = new BlockingCollection<Action>();
 		readonly Thread[]                   _workers;
