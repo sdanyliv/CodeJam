@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace CodeJam.Threading
 {
 	[PublicAPI]
-	public sealed class ParallelQueue : IDisposable
+	internal sealed class ParallelQueue : IDisposable
 	{
 		private readonly BlockingCollection<Action> _queue = new BlockingCollection<Action>();
 		private readonly Thread[]                   _workers;
