@@ -45,8 +45,9 @@ namespace CodeJam
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
 		private static string FormatMessage([NotNull] string messageFormat, [CanBeNull] params object[] args) =>
-			// ReSharper disable once ArrangeRedundantParentheses
+			// ReSharper disable ArrangeRedundantParentheses
 			(args == null || args.Length == 0) ? messageFormat : string.Format(messageFormat, args);
+			// ReSharper restore ArrangeRedundantParentheses
 		#endregion
 
 		#region General purpose exceptions

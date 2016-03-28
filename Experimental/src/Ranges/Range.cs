@@ -5,10 +5,9 @@ using JetBrains.Annotations;
 
 namespace CodeJam.Ranges
 {
-
 	/// <summary>
-    /// A set of initialization methods for instances of <see cref="Range{TValue}"/>.
-    /// </summary>
+	/// A set of initialization methods for instances of <see cref="Range{TValue}"/>.
+	/// </summary>
 	[PublicAPI]
 	public static class Range
 	{
