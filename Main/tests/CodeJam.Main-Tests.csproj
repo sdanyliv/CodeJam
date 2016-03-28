@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,8 +30,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.2.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.2.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -41,7 +47,9 @@
   <ItemGroup>
     <Compile Include="Algorithms\LowerBoundTest.cs" />
     <Compile Include="Algorithms\SwapTest.cs" />
+    <Compile Include="Algorithms\EqualRangeTest.cs" />
     <Compile Include="Algorithms\UpperBoundTest.cs" />
+    <Compile Include="Assertions\CodeAssertionsTest.cs" />
     <Compile Include="Collections\AggregateFuncsTest.cs" />
     <Compile Include="Collections\ArrayExtensionsTest.cs" />
     <Compile Include="Collections\DictionaryExtensionsTest.cs" />
@@ -52,12 +60,16 @@
     </Compile>
     <Compile Include="Collections\EnumerableExtensionTests.Split.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.cs" />
+    <Compile Include="IO\TempDataTests.cs" />
+    <Compile Include="Threading\ParallelQueueTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\InfoOfTest.cs" />
     <Compile Include="Reflection\EnumHelperTest.cs" />
     <Compile Include="Reflection\ReflectionExtensionsTest.cs" />
     <Compile Include="String\NaturalComparerTests.cs" />
     <Compile Include="String\StringExtensionsTests.cs" />
+    <Compile Include="Algorithms\MemoizeTests.cs" />
+    <Compile Include="Utilities\MemoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\CodeJam.Main.csproj">
@@ -78,6 +90,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

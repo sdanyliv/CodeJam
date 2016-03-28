@@ -35,21 +35,37 @@ namespace CodeJam
 		[NotNull, Pure]
 		public static IDisposable Merge(params IDisposable[] disposables) => Merge((IEnumerable<IDisposable>)disposables);
 
+		/// <summary>
+		/// <see cref="IDisposable"/> implementation with no action on <see cref="Dispose"/>
+		/// </summary>
 		public struct EmptyDisposable : IDisposable
 		{
+			/// <summary>
+			/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+			/// </summary>
 			public void Dispose()
 			{}
 		}
 
+		/// <summary>
+		/// <see cref="IDisposable"/> implementation that calls supplied action on <see cref="Dispose"/>.
+		/// </summary>
 		public struct AnonymousDisposable : IDisposable
 		{
 			private readonly Action _disposeAction;
 
+			/// <summary>
+			/// Initialize instance.
+			/// </summary>
+			/// <param name="disposeAction"></param>
 			public AnonymousDisposable(Action disposeAction)
 			{
 				_disposeAction = disposeAction;
 			}
 
+			/// <summary>
+			/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+			/// </summary>
 			public void Dispose() => _disposeAction();
 		}
 	}

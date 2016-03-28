@@ -2,6 +2,8 @@
 using BenchmarkDotNet.Helpers;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Horology;
+// ReSharper disable ConvertMethodToExpressionBody
+// ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.Columns
 {

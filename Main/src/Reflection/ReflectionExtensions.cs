@@ -55,6 +55,7 @@ namespace CodeJam.Reflection
 			while (true)
 			{
 				if (check.IsInterface)
+					// ReSharper disable once LoopCanBeConvertedToQuery
 					foreach (var interfaceType in type.GetInterfaces())
 						if (interfaceType == check || interfaceType.IsSubClass(check))
 							return true;

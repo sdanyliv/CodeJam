@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
@@ -10,6 +12,9 @@ using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
 using NUnit.Framework;
+// ReSharper disable CheckNamespace
+// ReSharper disable ConvertMethodToExpressionBody
+// ReSharper disable ArrangeBraces_ifelse
 
 namespace BenchmarkDotNet.NUnit
 {
@@ -40,6 +45,37 @@ namespace BenchmarkDotNet.NUnit
 			RunCompetition(minRatio, maxRatio, null, File.ReadAllText(callerFile), config);
 		}
 #endif
+
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		private static Type GetCallingType() => 
+			new StackTrace().GetFrame(2).GetMethod().DeclaringType;
+
+		/// <summary>
+		/// Runs the competition benchmark from a type of a callee
+		/// </summary>
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		public static void Run(double maxRatio)
+		{
+			RunCompetition(0, maxRatio, GetCallingType(), null, null);
+		}
+
+		/// <summary>
+		/// Runs the competition benchmark from a type of a callee
+		/// </summary>
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		public static void Run(double minRatio, double maxRatio)
+		{
+			RunCompetition(minRatio, maxRatio, GetCallingType(), null, null);
+		}
+
+		/// <summary>
+		/// Runs the competition benchmark from a type of a callee
+		/// </summary>
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		public static void Run(double minRatio, double maxRatio, IConfig config)
+		{
+			RunCompetition(minRatio, maxRatio, GetCallingType(), null, config);
+		}
 
 		/// <summary>
 		/// Runs the competition benchmark
@@ -91,7 +127,7 @@ namespace BenchmarkDotNet.NUnit
 			double minRatio, double maxRatio, Type benchType, string benchSource, IConfig config)
 		{
 			// Based on 95th percentile
-			const double PercentileRatio = 0.95;
+			const double percentileRatio = 0.95;
 
 			var summary = RunComparisonCore(benchType, benchSource, config);
 
@@ -105,7 +141,7 @@ namespace BenchmarkDotNet.NUnit
 					throw new InvalidOperationException("There should be only one Baseline benchmark");
 
 				var baselineBenchmark = baselineBenchmarks.Single();
-				var baselineMetric = summary.GetPercentile(baselineBenchmark, PercentileRatio);
+				var baselineMetric = summary.GetPercentile(baselineBenchmark, percentileRatio);
 				// ReSharper disable once CompareOfFloatsByEqualityOperator
 				if (baselineMetric == 0)
 					throw new InvalidOperationException($"Baseline benchmark {baselineBenchmark.ShortInfo} does not compute");
@@ -115,7 +151,7 @@ namespace BenchmarkDotNet.NUnit
 					if (benchmark == baselineBenchmark)
 						continue;
 
-					var reportMetric = summary.GetPercentile(benchmark, PercentileRatio);
+					var reportMetric = summary.GetPercentile(benchmark, percentileRatio);
 					var ratio = Math.Round(reportMetric / baselineMetric, 2);
 					var benchmarkMinRatio = minRatio;
 					var benchmarkMaxRatio = maxRatio;
@@ -164,6 +200,7 @@ namespace BenchmarkDotNet.NUnit
 					StatisticColumn.Min,
 					ScaledPercentileColumn.S0Column,
 					ScaledPercentileColumn.S50Column,
+					ScaledPercentileColumn.S85Column,
 					ScaledPercentileColumn.S95Column,
 					ScaledPercentileColumn.S100Column,
 					StatisticColumn.Max);

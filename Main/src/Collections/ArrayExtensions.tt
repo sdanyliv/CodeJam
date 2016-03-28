@@ -2,18 +2,68 @@
 <#@ output extension=".generated.cs" #>
 using System;
 
+using CodeJam.Utilities;
+
 using JetBrains.Annotations;
 
 namespace CodeJam.Collections
 {
 	partial class ArrayExtensions
 	{
+		#region string
+<# GenerateMethod("string"); #>
+		#endregion
 <#
-	foreach (var type in new[] { "int", "long", "float", "double", "decimal", "short", "sbyte", "uint", "ulong", "ushort", "byte", "DateTime", "TimeSpan", "DateTimeOffset" })
+	foreach (var type in new[] { "byte", "sbyte", "short", "ushort", "int", "uint", "long", "ulong", "float", "double", "decimal", "TimeSpan", "DateTime", "DateTimeOffset" })
 	{
 #>
-		#region <#= type #>
 
+		#region <#= type #>
+<#
+		switch (type)
+		{
+			case "byte":
+				GenerateUnsafeMethod(type, size: 1);
+				break;
+			case "sbyte":
+				GenerateUnsafeMethod(type, size: 1);
+				break;
+			case "short":
+				GenerateUnsafeMethod(type, size: 2);
+				break;
+			case "ushort":
+				GenerateUnsafeMethod(type, size: 2);
+				break;
+			case "int":
+				GenerateUnsafeMethod(type, size: 4);
+				break;
+			case "uint":
+				GenerateUnsafeMethod(type, size: 4);
+				break;
+			case "long":
+				GenerateUnsafeMethod(type, size: 8);
+				break;
+			case "ulong":
+				GenerateUnsafeMethod(type, size: 8);
+				break;
+			default:
+#>
+<# GenerateMethod(type); #>
+
+<#
+				break;
+		}
+#>
+<# GenerateNullableMethod(type); #>
+		#endregion
+<#
+	}
+#>
+	}
+}
+<#+
+public void GenerateMethod(string type)
+{#>
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -37,7 +87,11 @@ namespace CodeJam.Collections
 
 			return true;
 		}
-
+<#+}
+#>
+<#+
+public void GenerateNullableMethod(string type)
+{#>
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -56,16 +110,49 @@ namespace CodeJam.Collections
 				return false;
 
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i])
+			{
+				var lhs = a[i];
+				var rhs = b[i];
+				if (lhs.GetValueOrDefault() != rhs.GetValueOrDefault() || lhs.HasValue != rhs.HasValue)
 					return false;
+			}
 
 			return true;
 		}
-
-		#endregion
-
-<#
-	}
+<#+}
 #>
-	}
-}
+<#+
+public void GenerateUnsafeMethod(string type, int size)
+{ #>
+		/// <summary>
+		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
+		/// </summary>
+		/// <param name="a">The first array to compare.</param>
+		/// <param name="b">The second array to compare.</param>
+		[Pure]
+		public static unsafe bool EqualsTo([CanBeNull] this <#= type #>[] a, [CanBeNull] <#= type #>[] b)
+		{
+			if (a == b)
+				return true;
+
+			if (a == null || b == null)
+				return false;
+
+			if (a.Length != b.Length)
+				return false;
+
+			if (a.Length < 5)
+			{
+				for (var i = 0; i < a.Length; i++)
+					if (a[i] != b[i])
+						return false;
+
+				return true;
+			}
+
+			fixed (void* pa = a, pb = b)
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * <#= size #>);
+		}
+
+<#+}
+#>

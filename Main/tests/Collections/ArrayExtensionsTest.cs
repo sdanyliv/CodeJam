@@ -20,9 +20,11 @@ namespace CodeJam
 		[Test]
 		public void EqualsTo()
 		{
-			Assert.IsTrue(new     [] { 1, 2, 3, 4 }.        EqualsTo(new     [] { 1, 2, 3, 4 }));
-			Assert.IsTrue(new int?[] { 1, null, 3, 4 }.     EqualsTo(new int?[] { 1, null, 3, 4 }));
-			Assert.IsTrue(new     [] { "1", "2", "3", "4" }.EqualsTo(new     [] { "1", "2", "3", "4" }));
+			Assert.IsTrue(new      [] { 1, 2, 3, 4 }.            EqualsTo(new      [] { 1, 2, 3, 4 }));
+			Assert.IsTrue(new      [] { 1, 2, 3, 4, 5, 6, 7, 8 }.EqualsTo(new      [] { 1, 2, 3, 4, 5, 6, 7, 8 }));
+			Assert.IsTrue(new int? [] { 1, null, 3, 4 }.         EqualsTo(new int? [] { 1, null, 3, 4 }));
+			Assert.IsTrue(new byte?[] { 1, null, 3, 4 }.         EqualsTo(new byte?[] { 1, null, 3, 4 }));
+			Assert.IsTrue(new      [] { "1", "2", "3", "4" }.    EqualsTo(new      [] { "1", "2", "3", "4" }));
 		}
 	}
 }

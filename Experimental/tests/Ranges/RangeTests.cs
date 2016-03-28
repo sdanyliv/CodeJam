@@ -137,7 +137,7 @@ namespace CodeJam.Ranges
 			var result = range1.Exclude(range2).ToArray();
 			Assert.AreEqual(representation.Length, result.Length);
 
-			for (int i = 0; i < result.Length; i++)
+			for (var i = 0; i < result.Length; i++)
 			{
 				Assert.AreEqual(representation[i], result[i].DisplayValue());
 			}
