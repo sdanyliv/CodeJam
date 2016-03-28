@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 
 using JetBrains.Annotations;
 
@@ -15,7 +15,7 @@ namespace CodeJam.Threading
 		/// <summary>
 		/// Implements Provider-Consumer pattern.
 		/// </summary>
-		/// <typeparam name="TSourse"></typeparam>
+		/// <typeparam name="TSource"></typeparam>
 		/// <typeparam name="TTarget"></typeparam>
 		/// <param name="source">Incoming data.</param>
 		/// <param name="providerCount">Number of provider threads.</param>
@@ -23,10 +23,10 @@ namespace CodeJam.Threading
 		/// <param name="consumerCount">Number of consumer threads.</param>
 		/// <param name="consumerAction">Consumer action.</param>
 		/// <param name="processName">Process name pattern.</param>
-		public static void RunInParallel<TSourse,TTarget>(
-			[NotNull] this IEnumerable<TSourse> source,
+		public static void RunInParallel<TSource,TTarget>(
+			[NotNull] this IEnumerable<TSource> source,
 			int providerCount,
-			[NotNull] Func<TSourse,TTarget> providerFunc,
+			[NotNull] Func<TSource,TTarget> providerFunc,
 			int consumerCount,
 			[NotNull] Action<TTarget> consumerAction,
 			string processName = "ParallelProcess")
@@ -46,6 +46,7 @@ namespace CodeJam.Threading
 					{
 						var data = providerFunc(pItem);
 
+						// ReSharper disable once AccessToDisposedClosure
 						consumerQueue.EnqueueItem(() => consumerAction(data));
 					});
 				}
@@ -58,60 +59,54 @@ namespace CodeJam.Threading
 		/// <summary>
 		/// Implements Provider-Consumer pattern.
 		/// </summary>
-		/// <typeparam name="TSourse"></typeparam>
+		/// <typeparam name="TSource"></typeparam>
 		/// <typeparam name="TTarget"></typeparam>
 		/// <param name="source">Incoming data.</param>
 		/// <param name="providerFunc">Provider function</param>
 		/// <param name="consumerCount">Number of consumer threads.</param>
 		/// <param name="consumerAction">Consumer action.</param>
 		/// <param name="processName">Process name pattern.</param>
-		public static void RunInParallel<TSourse,TTarget>(
-			[NotNull] this IEnumerable<TSourse> source,
-			[NotNull] Func<TSourse,TTarget> providerFunc,
+		public static void RunInParallel<TSource,TTarget>(
+			[NotNull] this IEnumerable<TSource> source,
+			[NotNull] Func<TSource,TTarget> providerFunc,
 			int consumerCount,
 			[NotNull] Action<TTarget> consumerAction,
 			string processName = "ParallelProcess")
-		{
-			RunInParallel(source, Environment.ProcessorCount, providerFunc, consumerCount, consumerAction, processName);
-		}
+			=> RunInParallel(source, Environment.ProcessorCount, providerFunc, consumerCount, consumerAction, processName);
 
 		/// <summary>
 		/// Implements Provider-Consumer pattern.
 		/// </summary>
-		/// <typeparam name="TSourse"></typeparam>
+		/// <typeparam name="TSource"></typeparam>
 		/// <typeparam name="TTarget"></typeparam>
 		/// <param name="source">Incoming data.</param>
 		/// <param name="providerCount">Number of provider threads.</param>
 		/// <param name="providerFunc">Provider function</param>
 		/// <param name="consumerAction">Consumer action.</param>
 		/// <param name="processName">Process name pattern.</param>
-		public static void RunInParallel<TSourse,TTarget>(
-			[NotNull] this IEnumerable<TSourse> source,
+		public static void RunInParallel<TSource,TTarget>(
+			[NotNull] this IEnumerable<TSource> source,
 			int providerCount,
-			[NotNull] Func<TSourse,TTarget> providerFunc,
+			[NotNull] Func<TSource,TTarget> providerFunc,
 			[NotNull] Action<TTarget> consumerAction,
 			string processName = "ParallelProcess")
-		{
-			RunInParallel(source, providerCount, providerFunc, Environment.ProcessorCount, consumerAction, processName);
-		}
+			=> RunInParallel(source, providerCount, providerFunc, Environment.ProcessorCount, consumerAction, processName);
 
 		/// <summary>
 		/// Implements Provider-Consumer pattern.
 		/// </summary>
-		/// <typeparam name="TSourse"></typeparam>
+		/// <typeparam name="TSource"></typeparam>
 		/// <typeparam name="TTarget"></typeparam>
 		/// <param name="source">Incoming data.</param>
 		/// <param name="providerFunc">Provider function</param>
 		/// <param name="consumerAction">Consumer action.</param>
 		/// <param name="processName">Process name pattern.</param>
-		public static void RunInParallel<TSourse,TTarget>(
-			[NotNull] this IEnumerable<TSourse> source,
-			[NotNull] Func<TSourse,TTarget> providerFunc,
+		public static void RunInParallel<TSource,TTarget>(
+			[NotNull] this IEnumerable<TSource> source,
+			[NotNull] Func<TSource,TTarget> providerFunc,
 			[NotNull] Action<TTarget> consumerAction,
 			string processName = "ParallelProcess")
-		{
-			RunInParallel(source, Environment.ProcessorCount / 2, providerFunc, Environment.ProcessorCount / 2, consumerAction, processName);
-		}
+			=> RunInParallel(source, Environment.ProcessorCount / 2, providerFunc, Environment.ProcessorCount / 2, consumerAction, processName);
 
 		/// <summary>
 		/// Runs in parallel provided source of actions.

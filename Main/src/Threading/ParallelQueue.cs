@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 
+using JetBrains.Annotations;
+
 namespace CodeJam.Threading
 {
 	class ParallelQueue : IDisposable
@@ -36,8 +38,8 @@ namespace CodeJam.Threading
 				_isFinished = true;
 			}
 
-			foreach (var worker in _workers)
-				EnqueueItem(null);
+			foreach (var _ in _workers)
+				_queue.Add(null);
 
 			foreach (var worker in _workers)
 				worker.Join();
@@ -48,8 +50,12 @@ namespace CodeJam.Threading
 				throw new AggregateException(_exceptions[0].Message, _exceptions);
 		}
 
-		public void EnqueueItem(Action item)
-			=> _queue.Add(item);
+		public void EnqueueItem([NotNull] Action item)
+		{
+			if (item == null) throw new ArgumentNullException(nameof(item));
+
+			_queue.Add(item);
+		}
 
 		void Work()
 		{
