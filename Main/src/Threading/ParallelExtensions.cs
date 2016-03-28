@@ -8,7 +8,7 @@ namespace CodeJam.Threading
 	[PublicAPI]
 	public static class ParallelExtensions
 	{
-		public static void RunMultipleProviderConsumers<TSourse,TTarget>(
+		public static void RunInParallel<TSourse,TTarget>(
 			this IEnumerable<TSourse> source,
 			int providerCount,
 			Func<TSourse,TTarget> providerFunc,
@@ -36,33 +36,33 @@ namespace CodeJam.Threading
 			}
 		}
 
-		public static void RunMultipleProviderConsumers<TSourse,TTarget>(
+		public static void RunInParallel<TSourse,TTarget>(
 			this IEnumerable<TSourse> source,
 			Func<TSourse,TTarget> providerFunc,
 			int consumerCount,
 			Action<TTarget> consumerAction,
 			string processName = "ParallelProcess")
 		{
-			RunMultipleProviderConsumers(source, Environment.ProcessorCount, providerFunc, consumerCount, consumerAction, processName);
+			RunInParallel(source, Environment.ProcessorCount, providerFunc, consumerCount, consumerAction, processName);
 		}
 
-		public static void RunMultipleProviderConsumers<TSourse,TTarget>(
+		public static void RunInParallel<TSourse,TTarget>(
 			this IEnumerable<TSourse> source,
 			int providerCount,
 			Func<TSourse,TTarget> providerFunc,
 			Action<TTarget> consumerAction,
 			string processName = "ParallelProcess")
 		{
-			RunMultipleProviderConsumers(source, providerCount, providerFunc, Environment.ProcessorCount, consumerAction, processName);
+			RunInParallel(source, providerCount, providerFunc, Environment.ProcessorCount, consumerAction, processName);
 		}
 
-		public static void RunMultipleProviderConsumers<TSourse,TTarget>(
+		public static void RunInParallel<TSourse,TTarget>(
 			this IEnumerable<TSourse> source,
 			Func<TSourse,TTarget> providerFunc,
 			Action<TTarget> consumerAction,
 			string processName = "ParallelProcess")
 		{
-			RunMultipleProviderConsumers(source, Environment.ProcessorCount, providerFunc, Environment.ProcessorCount, consumerAction, processName);
+			RunInParallel(source, Environment.ProcessorCount / 2, providerFunc, Environment.ProcessorCount / 2, consumerAction, processName);
 		}
 
 		public static void RunInParallel(this IEnumerable<Action> source, int parallelCount, string processName = "ParallelProcess")

@@ -61,6 +61,7 @@
     <Compile Include="Collections\EnumerableExtensionTests.Split.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.cs" />
     <Compile Include="IO\TempDataTests.cs" />
+    <Compile Include="Parallel\ParallelQueueTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\InfoOfTest.cs" />
     <Compile Include="Reflection\EnumHelperTest.cs" />
