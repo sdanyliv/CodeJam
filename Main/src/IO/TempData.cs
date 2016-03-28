@@ -86,25 +86,26 @@ namespace CodeJam.IO
 		[PublicAPI]
 		public sealed class TempDirectory : TempBase
 		{
+			private DirectoryInfo _info;
+
 			/// <summary>
 			/// Initialize instance.
 			/// </summary>
 			public TempDirectory(string path) : base(path)
 			{
-				Info = new DirectoryInfo(path);
 			}
 
 			/// <summary>
 			/// DirectoryInfo object
 			/// </summary>
-			public DirectoryInfo Info { get; private set; }
+			public DirectoryInfo Info => _info?? (_info = new DirectoryInfo(Path));
 
 			/// <summary>
 			/// Temp path disposal
 			/// </summary>
 			protected override void DisposePath(string path, bool disposing)
 			{
-				Info = null;
+				_info = null;
 
 				try
 				{
@@ -128,25 +129,26 @@ namespace CodeJam.IO
 		[PublicAPI]
 		public sealed class TempFile : TempBase
 		{
+			private FileInfo _info;
+
 			/// <summary>
 			/// Initialize instance.
 			/// </summary>
 			public TempFile(string path) : base(path)
 			{
-				Info = new FileInfo(path);
 			}
 
 			/// <summary>
 			/// DirectoryInfo object
 			/// </summary>
-			public FileInfo Info { get; private set; }
+			public FileInfo Info  => _info ?? (_info = new FileInfo(Path));
 
 			/// <summary>
 			/// Temp path disposal
 			/// </summary>
 			protected override void DisposePath(string path, bool disposing)
 			{
-				Info = null;
+				_info = null;
 
 				try
 				{
