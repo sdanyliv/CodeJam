@@ -44,3 +44,6 @@ To get the latest "preview" drop, add the `-pre` switch to the nuget commands
  - [Continiuos Integration builds](https://ci.appveyor.com/project/andrewvk/codejam)
  - [Continiuos Integration builds Nuget feed](https://ci.appveyor.com/nuget/codejam)
  - [Forum (russian)](http://rsdn.ru/forum/prj.codejam/)
+
+### Project Build Status
+[![Build status](https://ci.appveyor.com/api/projects/status/oxdyxkgwotiv64r1/branch/master?svg=true)](https://ci.appveyor.com/project/andrewvk/codejam)

@@ -2,16 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>CodeJam.Main</id>
-        <version>1.0.0</version>
+        <version>1.0.0-beta1</version>
         <title>CodeJam .NET Library</title>
         <authors>andrewvk</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>CodeJam .NET Library</description>
+        <description>A set of reusable, open source .NET components with minimal dependency</description>
         <dependencies />
     </metadata>
     <files>
-        <file src="bin\Release\CodeJam.dll" target="lib\CodeJam.dll" />
-        <file src="bin\Release\CodeJam.pdb" target="lib\CodeJam.pdb" />
-        <file src="bin\Release\CodeJam.xml" target="lib\CodeJam.xml" />
+        <file src="bin\Release\CodeJam.dll" target="lib\net40" />
+        <file src="bin\Release\CodeJam.pdb" target="lib\net40" />
+        <file src="bin\Release\CodeJam.xml" target="lib\net40" />
     </files>
 </package>
