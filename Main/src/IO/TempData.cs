@@ -104,6 +104,7 @@ namespace CodeJam.IO
 			/// Path to file.
 			/// </summary>
 			public string Path { get; }
+
 			public void Dispose()
 			{
 				try
