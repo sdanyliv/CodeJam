@@ -17,7 +17,7 @@ namespace CodeJam.Threading
 		[ThreadStatic]
 		private static bool _consumerInit;
 
-		[Ignore("Test seems to fail on a single core environment")]
+		//[Ignore("Test seems to fail on a single core environment")]
 		[Test]
 		public void MultipleConsumerProviderTest()
 		{
@@ -79,7 +79,7 @@ namespace CodeJam.Threading
 			Assert.That(_actionCount, Is.EqualTo(5));
 		}
 
-		[Ignore("Test seems to fail on a single core environment")]
+		//[Ignore("Test seems to fail on a single core environment")]
 		[Test]
 		public void RunInParallelActionTest()
 		{
