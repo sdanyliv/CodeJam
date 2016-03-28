@@ -43,27 +43,27 @@ namespace CodeJam.Ranges
 		}
 
 		[Test]
-		public void Intersects()
+		public void IntersectsWith()
 		{
 			var range1 = Range.Create(0, 3);
 
-			Assert.IsTrue(range1.Overlaps(Range.Create(1, 5)));
-			Assert.IsTrue(range1.Overlaps(Range.Create(1, 3)));
-			Assert.IsTrue(range1.Overlaps(Range.Create(3, 5)));
-			Assert.IsTrue(range1.Overlaps(Range.Create(0, 0)));
-			Assert.IsFalse(range1.Overlaps(Range.Create(-2, -1)));
+			Assert.IsTrue(range1.IntersectsWith(Range.Create(1, 5)));
+			Assert.IsTrue(range1.IntersectsWith(Range.Create(1, 3)));
+			Assert.IsTrue(range1.IntersectsWith(Range.Create(3, 5)));
+			Assert.IsTrue(range1.IntersectsWith(Range.Create(0, 0)));
+			Assert.IsFalse(range1.IntersectsWith(Range.Create(-2, -1)));
 
 
 			range1 = Range.Create(0, 3, false);
 
-			Assert.IsTrue(range1.Overlaps(Range.Create(1, 5, false)));
-			Assert.IsTrue(range1.Overlaps(Range.Create(1, 3, false)));
-			Assert.IsFalse(range1.Overlaps(Range.Create(3, 5, false)));
-			Assert.IsFalse(range1.Overlaps(Range.Create(0, 0, false)));
-			Assert.IsFalse(range1.Overlaps(Range.Create(-2, -1, false)));
+			Assert.IsTrue(range1.IntersectsWith(Range.Create(1, 5, false)));
+			Assert.IsTrue(range1.IntersectsWith(Range.Create(1, 3, false)));
+			Assert.IsFalse(range1.IntersectsWith(Range.Create(3, 5, false)));
+			Assert.IsFalse(range1.IntersectsWith(Range.Create(0, 0, false)));
+			Assert.IsFalse(range1.IntersectsWith(Range.Create(-2, -1, false)));
 
-			Assert.IsFalse(range1.Overlaps(Range.Empty<int>()));
-			Assert.IsTrue(Range.StartsWith(0, false).Overlaps(Range.StartsWith(-2, false)));
+			Assert.IsFalse(range1.IntersectsWith(Range.Empty<int>()));
+			Assert.IsTrue(Range.StartsWith(0, false).IntersectsWith(Range.StartsWith(-2, false)));
 		}
 
 		[Test]
@@ -137,7 +137,7 @@ namespace CodeJam.Ranges
 			var result = range1.Exclude(range2).ToArray();
 			Assert.AreEqual(representation.Length, result.Length);
 
-			for (var i = 0; i < result.Length; i++)
+			for (int i = 0; i < result.Length; i++)
 			{
 				Assert.AreEqual(representation[i], result[i].DisplayValue());
 			}

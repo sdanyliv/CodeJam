@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using NUnit.Framework;
 
@@ -11,6 +12,10 @@ namespace CodeJam.Ranges
 		public void Contains()
 		{
 			// TODO:
+			var zz = ImmutableRangeList<int>.Full - ImmutableRangeList<int>.Full;
+
+			Range<int>.Full.Intersect(Range<int>.Full);
+
 		}
 
 
