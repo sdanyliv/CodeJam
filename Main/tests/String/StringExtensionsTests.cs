@@ -37,5 +37,19 @@ namespace CodeJam
 		[TestCase("abc", "ac", ExpectedResult = "abc")]
 		[TestCase("abc", "abc", ExpectedResult = "")]
 		public string TrimSuffix(string str, string suffix) => str.TrimSuffix(suffix);
+
+		[TestCase(0, ExpectedResult = "0")]
+		[TestCase(1, ExpectedResult = "1 bytes")]
+		[TestCase(512, ExpectedResult = "512 bytes")]
+		[TestCase(1023, ExpectedResult = "1,0 KB")]
+		[TestCase(1024, ExpectedResult = "1,0 KB")]
+		[TestCase(1025, ExpectedResult = "1,0 KB")]
+		[TestCase(1536, ExpectedResult = "1,5 KB")]
+		[TestCase(1048576, ExpectedResult = "1,0 MB")]
+		[TestCase(1048576L << 10, ExpectedResult = "1,0 GB")]
+		[TestCase(1048576L << 20, ExpectedResult = "1,0 TB")]
+		[TestCase(1048576L << 30, ExpectedResult = "1,0 PB")]
+		[TestCase(1048576L << 40, ExpectedResult = "1,0 EB")]
+		public string ToByteSizeString(long value) => value.ToByteSizeString();
 	}
 }

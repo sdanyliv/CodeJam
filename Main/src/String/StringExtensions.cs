@@ -130,5 +130,28 @@ namespace CodeJam
 		[Pure]
 		public static string TrimSuffix([NotNull] this string str, [CanBeNull] string suffix) =>
 			TrimSuffix(str, suffix, StringComparer.CurrentCulture);
+
+		private static readonly string[] _sizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB" };
+
+		/// <summary>
+		/// Returns size in bytes string representation.
+		/// </summary>
+		public static string ToByteSizeString(this long value)
+		{
+			if (value < 0) { return "-" + (-value).ToByteSizeString(); }
+
+			if (value == 0)
+				return "0";
+
+			var i = 0;
+			var dValue = (decimal)value;
+			while (Math.Round(dValue / 1024) >= 1)
+			{
+				dValue /= 1024;
+				i++;
+			}
+
+			return $"{dValue.ToString(i == 0 ? "n0" : "n1")} {_sizeSuffixes[i]}";
+		}
 	}
 }
