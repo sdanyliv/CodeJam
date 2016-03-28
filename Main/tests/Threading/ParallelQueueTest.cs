@@ -30,6 +30,7 @@ namespace CodeJam.Threading
 					{
 						_providerInit = true;
 						Interlocked.Increment(ref _providerCount);
+						Thread.Sleep(100);
 					}
 
 					return i.ToString();
@@ -40,6 +41,7 @@ namespace CodeJam.Threading
 					{
 						_consumerInit = true;
 						Interlocked.Increment(ref _consumerCount);
+						Thread.Sleep(100);
 					}
 
 					Console.WriteLine(s);
@@ -66,6 +68,7 @@ namespace CodeJam.Threading
 					{
 						_actionInit = true;
 						Interlocked.Increment(ref _actionCount);
+						Thread.Sleep(100);
 					}
 
 					Console.WriteLine(n);
@@ -98,6 +101,7 @@ namespace CodeJam.Threading
 					{
 						_actionInit = true;
 						Interlocked.Increment(ref _actionCount);
+						Thread.Sleep(100);
 					}
 
 					a();
@@ -118,6 +122,7 @@ namespace CodeJam.Threading
 					{
 						_actionInit = true;
 						Interlocked.Increment(ref _actionCount);
+						Thread.Sleep(100);
 					}
 
 					Console.WriteLine(n);
