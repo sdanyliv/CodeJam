@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 using JetBrains.Annotations;
 
@@ -136,9 +137,9 @@ namespace CodeJam
 		/// <summary>
 		/// Returns size in bytes string representation.
 		/// </summary>
-		public static string ToByteSizeString(this long value)
+		public static string ToByteSizeString(this long value, IFormatProvider provider)
 		{
-			if (value < 0) { return "-" + (-value).ToByteSizeString(); }
+			if (value < 0) { return "-" + (-value).ToByteSizeString(provider); }
 
 			if (value == 0)
 				return "0";
@@ -151,7 +152,12 @@ namespace CodeJam
 				i++;
 			}
 
-			return $"{dValue.ToString(i == 0 ? "n0" : "n1")} {_sizeSuffixes[i]}";
+			return $"{dValue.ToString(i == 0 ? "n0" : "n1", provider)} {_sizeSuffixes[i]}";
 		}
+
+		/// <summary>
+		/// Returns size in bytes string representation.
+		/// </summary>
+		public static string ToByteSizeString(this long value) => ToByteSizeString(value, CultureInfo.CurrentCulture);
 	}
 }
