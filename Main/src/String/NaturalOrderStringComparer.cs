@@ -204,7 +204,8 @@ namespace CodeJam
 			}
 		}
 
-		private static int SkipLeadingZeroesAndWhitespaces(string text, int index) {
+		private static int SkipLeadingZeroesAndWhitespaces(string text, int index)
+		{
 			for (; index < text.Length; index++)
 			{
 				var ch = text[index];
