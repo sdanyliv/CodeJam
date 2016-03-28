@@ -22,8 +22,9 @@ namespace CodeJam
 		[Conditional(DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNull<T>(
-			[CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] T arg,
-			[NotNull] [InvokerParameterName] string argName) where T : class => Code.NotNull(arg, argName);
+			[NotNull] T arg,
+			[NotNull] [InvokerParameterName] string argName) where T : class =>
+				Code.NotNull(arg, argName);
 
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> != <c>null</c>
@@ -31,11 +32,9 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNull<T>(
-			// ReSharper disable once ConvertNullableToShortForm
-			// Will conflict with C# vNext nullable references
-			[CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] Nullable<T> arg,
+			[NotNull] T? arg,
 			[NotNull] [InvokerParameterName] string argName) where T : struct =>
-			Code.NotNull(arg, argName);
+				Code.NotNull(arg, argName);
 
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> is not null nor empty
@@ -43,9 +42,9 @@ namespace CodeJam
 		[Conditional(DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNullNorEmpty(
-			[CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] string arg,
+			[NotNull] string arg,
 			[NotNull] [InvokerParameterName] string argName) =>
-			Code.NotNullNorEmpty(arg, argName);
+				Code.NotNullNorEmpty(arg, argName);
 
 		/// <summary>
 		/// Assertion for the argument value
@@ -53,10 +52,10 @@ namespace CodeJam
 		[Conditional(DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		public static void AssertArgument(
-			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
+			bool condition,
 			[NotNull] [InvokerParameterName] string argName,
 			[NotNull] string message) =>
-			Code.AssertArgument(condition, argName, message);
+				Code.AssertArgument(condition, argName, message);
 
 		/// <summary>
 		/// Assertion for the argument value
@@ -64,11 +63,11 @@ namespace CodeJam
 		[Conditional(DebugCondition), DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		public static void AssertArgument(
-			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
+			bool condition,
 			[NotNull] [InvokerParameterName] string argName,
 			[NotNull] string messageFormat,
 			[CanBeNull] params object[] args) =>
-			Code.AssertArgument(condition, argName, messageFormat, args);
+				Code.AssertArgument(condition, argName, messageFormat, args);
 
 		/// <summary>
 		/// State assertion
@@ -76,9 +75,9 @@ namespace CodeJam
 		[Conditional(DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		public static void AssertState(
-			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
+			bool condition,
 			[NotNull] string message) =>
-			Code.AssertState(condition, message);
+				Code.AssertState(condition, message);
 
 		/// <summary>
 		/// State assertion
@@ -86,9 +85,9 @@ namespace CodeJam
 		[Conditional(DebugCondition), DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		public static void AssertState(
-			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
+			bool condition,
 			[NotNull] string messageFormat,
 			[CanBeNull] params object[] args) =>
-			Code.AssertState(condition, messageFormat, args);
+				Code.AssertState(condition, messageFormat, args);
 	}
 }

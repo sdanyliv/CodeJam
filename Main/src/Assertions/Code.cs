@@ -8,6 +8,7 @@ namespace CodeJam
 	/// <summary>
 	/// Assertions class.
 	/// </summary>
+	[PublicAPI]
 	public static class Code
 	{
 		/// <summary>
@@ -16,7 +17,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNull<T>(
-			[CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] T arg,
+			[NotNull] T arg,
 			[NotNull] [InvokerParameterName] string argName) where T : class
 		{
 			if (arg == null)
@@ -29,9 +30,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNull<T>(
-			// ReSharper disable once ConvertNullableToShortForm
-			// Will conflict with C# vNext nullable references
-			[CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] Nullable<T> arg,
+			[NotNull] T? arg,
 			[NotNull] [InvokerParameterName] string argName) where T : struct
 		{
 			if (arg == null)
@@ -44,7 +43,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNullNorEmpty(
-			[CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] string arg,
+			[NotNull] string arg,
 			[NotNull] [InvokerParameterName] string argName)
 		{
 			if (string.IsNullOrEmpty(arg))
@@ -57,7 +56,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void AssertArgument(
-			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
+			bool condition,
 			[NotNull] [InvokerParameterName] string argName,
 			[NotNull] string message)
 		{
@@ -71,7 +70,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		public static void AssertArgument(
-			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
+			bool condition,
 			[NotNull] [InvokerParameterName] string argName,
 			[NotNull] string messageFormat,
 			[CanBeNull] params object[] args)
@@ -86,7 +85,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void AssertState(
-			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
+			bool condition,
 			[NotNull] string message)
 		{
 			if (!condition)
@@ -99,7 +98,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		public static void AssertState(
-			[AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition,
+			bool condition,
 			[NotNull] string messageFormat,
 			[CanBeNull] params object[] args)
 		{
