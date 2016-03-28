@@ -12,17 +12,152 @@ namespace CodeJam
 	/// </summary>
 	[PublicAPI]
 	public class NaturalOrderStringComparer : IComparer<string>
-	{
-		[NotNull] public static readonly NaturalOrderStringComparer Comparer = new NaturalOrderStringComparer();
-		[NotNull] public static readonly Comparison<string> Comparision = Compare;
+    {
+		/// <summary>
+		/// Gets a <see cref="NaturalOrderStringComparer"/> object
+		/// that performs a string comparison using a "natural order" algorithm.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="NaturalOrderStringComparer"/> object
+		/// that performs a string comparison using a "natural order" algorithm.
+		/// </returns>
+		[NotNull]
+		public static NaturalOrderStringComparer Comparer => new NaturalOrderStringComparer(false);
 
-		/// <summary>End of line character</summary>
-		private const char _eol = char.MinValue;
+		/// <summary>
+		/// Gets a <see cref="NaturalOrderStringComparer"/> object
+		/// that performs a case-insensitive string comparison using a "natural order" algorithm.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="NaturalOrderStringComparer"/> object
+		/// that performs a case-insensitive string comparison using a "natural order" algorithm.
+		/// </returns>
+		[NotNull]
+		public static NaturalOrderStringComparer IgnoreCaseComparer => new NaturalOrderStringComparer(true);
 
-		private NaturalOrderStringComparer() { }
+		/// <summary>
+		/// Gets a <see cref="Comparison{T}"/> delegate that performs a string comparison using a "natural order" algorithm.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="Comparison{T}"/> delegate that performs a string comparison using a "natural order" algorithm.
+		/// </returns>
+		[NotNull]
+		public static Comparison<string> Comparision => (a, b) => Compare(a, b, false);
 
-		/// <summary>Compares numerical strings starting from non-zeroes</summary>
-		private static int CompareNumerical(string a, string b, ref int ia, ref int ib)
+		/// <summary>
+		/// Gets a <see cref="Comparison{T}"/> delegate that performs a case-insensitive
+		/// string comparison using a "natural order" algorithm.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="Comparison{T}"/> delegate that performs a case-insensitive
+		/// string comparison using a "natural order" algorithm.
+		/// </returns>
+		[NotNull]
+		public static Comparison<string> IgnoreCaseComparision => (a, b) => Compare(a, b, true);
+
+		/// <summary>
+		/// true to ignore case during the comparison; otherwise, false.
+		/// </summary>
+		private readonly bool _ignoreCase;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NaturalOrderStringComparer"/> class.
+		/// </summary>
+		private NaturalOrderStringComparer(bool ignoreCase)
+		{
+			_ignoreCase = ignoreCase;
+		}
+
+		/// <summary>
+		/// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+		/// </summary>
+		/// <param name="a">The first object to compare.</param>
+		/// <param name="b">The second object to compare.</param>
+		/// <returns>
+		/// A signed integer that indicates the relative values of <paramref name="a"/> and <paramref name="b"/>,
+		/// as shown in the following table.
+		/// Value Meaning Less than zero <paramref name="a"/> is less than <paramref name="b"/>.
+		/// Zero <paramref name="a"/> equals <paramref name="b"/>.
+		/// Greater than zero <paramref name="a"/> is greater than <paramref name="b"/>.
+		/// </returns>
+		[Pure]
+		public static int Compare([CanBeNull] string a, [CanBeNull] string b) => Compare(a, b, false);
+
+		/// <summary>
+		/// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+		/// </summary>
+		/// <param name="a">The first object to compare.</param>
+		/// <param name="b">The second object to compare.</param>
+		/// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
+		/// <returns>
+		/// A signed integer that indicates the relative values of <paramref name="a"/> and <paramref name="b"/>,
+		/// as shown in the following table.
+		/// Value Meaning Less than zero <paramref name="a"/> is less than <paramref name="b"/>.
+		/// Zero <paramref name="a"/> equals <paramref name="b"/>.
+		/// Greater than zero <paramref name="a"/> is greater than <paramref name="b"/>.
+		/// </returns>
+		[Pure]
+		public static int Compare([CanBeNull] string a, [CanBeNull] string b, bool ignoreCase)
+		{
+			if (ReferenceEquals(a, b))
+				return 0;
+
+			if (a == null)
+				return -1;
+
+			if (b == null)
+				return 1;
+
+			// only count the number of zeroes leading the last number compared
+			var ia = SkipLeadingZeroesAndWhitespaces(a, 0);
+			var ib = SkipLeadingZeroesAndWhitespaces(b, 0);
+
+			while (true)
+			{
+				var ca = CharAt(a, ia);
+				var cb = CharAt(b, ib);
+
+				// process run of digits
+				if (ca.IsDigit() && cb.IsDigit())
+				{
+					var result = CompareNumerical(a, b, ignoreCase, ref ia, ref ib);
+					if (result != 0)
+						return result;
+
+					ca = CharAt(a, ia);
+					cb = CharAt(b, ib);
+				}
+
+				if (ignoreCase)
+				{
+					ca = char.ToUpper(ca);
+					cb = char.ToUpper(cb);
+				}
+
+				if (ca < cb)
+					return -1;
+
+				if (ca > cb)
+					return 1;
+
+				if (ca == char.MinValue && cb == char.MinValue)
+				{
+					// for cases:
+					// 5.txt
+					// 05.txt
+					// 005.txt
+					return a.Length - b.Length;
+				}
+
+				ia = SkipLeadingZeroesAndWhitespaces(a, ia + 1);
+				ib = SkipLeadingZeroesAndWhitespaces(b, ib + 1);
+			}
+		}
+
+		/// <summary>
+		/// Compares numerical strings starting from non-zeroes
+		/// </summary>
+		private static int CompareNumerical(string a, string b, bool ignoreCase, ref int ia, ref int ib)
 		{
 			var bias = 0;
 
@@ -35,24 +170,27 @@ namespace CodeJam
 				var ca = CharAt(a, ia);
 				var cb = CharAt(b, ib);
 
-				var caIsDigit = ca.IsDigit();
-				var cbIsDigit = cb.IsDigit();
-				if (!caIsDigit)
+				if (!ca.IsDigit())
 				{
-					if (cbIsDigit) // number in a is shorter than number in b
-					{
+					// number in a is shorter than number in b
+					if (cb.IsDigit())
 						return -1;
-					}
-					return bias; // numbers have the same length
-				}
-				if (!cbIsDigit)
-				{
-					return +1; // number in b is shorter than number in a
+
+					// numbers have the same length
+					return bias;
 				}
 
+				// number in b is shorter than number in a
+				if (!cb.IsDigit())
+					return 1;
+
 				if (bias != 0)
-				{
 					continue;
+
+				if (ignoreCase)
+				{
+					ca = char.ToUpper(ca);
+					cb = char.ToUpper(cb);
 				}
 
 				if (ca < cb)
@@ -61,84 +199,37 @@ namespace CodeJam
 				}
 				else if (ca > cb)
 				{
-					bias = +1;
+					bias = 1;
 				}
 			}
 		}
 
-		public static int Compare([CanBeNull] string a, [CanBeNull] string b)
-		{
-			if (a == null && b == null) return 0;
-			if (a == null) return -1;
-			if (b == null) return 1;
-
-			var ia = 0;
-			var ib = 0;
-
-			for (;;)
+		private static int SkipLeadingZeroesAndWhitespaces(string text, int index) {
+			for (; index < text.Length; index++)
 			{
-				// only count the number of zeroes leading the last number compared
-				var leadingZeroesCountA = SkipLeadingZeroesAndWhitespaces(a, ref ia);
-				var leadingZeroesCountB = SkipLeadingZeroesAndWhitespaces(b, ref ib);
-
-				var ca = CharAt(a, ia);
-				var cb = CharAt(b, ib);
-
-				// process run of digits
-				if (ca.IsDigit() && cb.IsDigit())
-				{
-					var result = CompareNumerical(a, b, ref ia, ref ib);
-					if (result != 0)
-					{
-						return result;
-					}
-					ca = CharAt(a, ia);
-					cb = CharAt(b, ib);
-				}
-
-				if (ca < cb)
-					return -1;
-				if (ca > cb)
-					return +1;
-
-				if (ca == _eol && cb == _eol)
-				{
-					// The strings are equal. Perhaps the caller
-					// will want to call strcmp to break the tie.
-
-					// TODO: WTF??? I guess we should return 0 here!
-					return leadingZeroesCountA - leadingZeroesCountB;
-				}
-
-				++ia;
-				++ib;
+				var ch = text[index];
+				if (!ch.IsWhiteSpace() && ch != '0')
+					return index;
 			}
+			return index;
 		}
 
-		private static int SkipLeadingZeroesAndWhitespaces(string s, ref int i)
-		{
-			var leadingZeroes = 0;
-			for (; ; ++i)
-			{
-				var c = CharAt(s, i);
-				if (c.IsWhiteSpace())
-				{
-					// TODO: WTF???
-					// "000 0001" and "0001" are equal according to this logic
-					// Is it correct?
-					leadingZeroes = 0;
-					continue;
-				}
-				if (c != '0')
-				{
-					return leadingZeroes;
-				}
-				++leadingZeroes;
-			}
-		}
+		private static char CharAt(string text, int index) => index < text.Length ? text[index] : char.MinValue;
 
-		private static char CharAt(string s, int i) => i >= s.Length ? _eol : s[i];
-
-		int IComparer<string>.Compare(string x, string y) => Compare(x, y);
+		#region Implementation of the IComparer<string>
+		/// <summary>
+		/// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+		/// </summary>
+		/// <param name="x">The first object to compare.</param>
+		/// <param name="y">The second object to compare.</param>
+		/// <returns>
+		/// A signed integer that indicates the relative values of <paramref name="x"/> and <paramref name="y"/>,
+		/// as shown in the following table.
+		/// Value Meaning Less than zero <paramref name="x"/> is less than <paramref name="y"/>.
+		/// Zero <paramref name="x"/> equals <paramref name="y"/>.
+		/// Greater than zero <paramref name="x"/> is greater than <paramref name="y"/>.
+		/// </returns>
+		int IComparer<string>.Compare(string x, string y) => Compare(x, y, _ignoreCase);
+		#endregion
 	}
 }

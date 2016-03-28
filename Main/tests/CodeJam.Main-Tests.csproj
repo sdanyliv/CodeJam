@@ -85,6 +85,18 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AggregateFuncsTest.generated.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="String\Data\Dates.Expected.txt" />
+    <EmbeddedResource Include="String\Data\Dates.txt" />
+    <EmbeddedResource Include="String\Data\Debs.Expected.txt" />
+    <EmbeddedResource Include="String\Data\Debs.txt" />
+    <EmbeddedResource Include="String\Data\DebVersions.Expected.txt" />
+    <EmbeddedResource Include="String\Data\DebVersions.txt" />
+    <EmbeddedResource Include="String\Data\Fractions.Expected.txt" />
+    <EmbeddedResource Include="String\Data\Fractions.txt" />
+    <EmbeddedResource Include="String\Data\Versions.Expected.txt" />
+    <EmbeddedResource Include="String\Data\Versions.txt" />
+    <EmbeddedResource Include="String\Data\Words.Expected.txt" />
+    <EmbeddedResource Include="String\Data\Words.txt" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
