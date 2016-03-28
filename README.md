@@ -8,7 +8,7 @@ The CodeJam project is composed of two parts:
 
 ### Main
 CodeJam is dedicated to one principal goal: creating and maintaining reusable code. The CodeJam.Main is a place for
-collaboration and sharing, where developers community can work together on projects to be shared by the CodeJam.
+collaboration and sharing, where developers community can work together on code to be shared by the CodeJam.
 
 CodeJam developers will make an effort to ensure that their components have no dependencies on other third-party
 libraries, so that these components can be deployed easily. In addition, CodeJam will keep their interfaces as stable as
