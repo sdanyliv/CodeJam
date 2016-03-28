@@ -5,13 +5,30 @@ using JetBrains.Annotations;
 
 namespace CodeJam.Ranges
 {
+    /// <summary>
+    /// Extension methods for ImmutableRangeList.
+    /// </summary>
 	[PublicAPI]
 	public static class ImmutableRangeListExtensions
 	{
+		/// <summary>
+		/// Creates new range list with single range.
+		/// </summary>
+		/// <typeparam name="TValue">Type of range value</typeparam>
+		/// <param name="range"></param>
+		/// <returns>A new range list.</returns>
+		[NotNull]
 		public static ImmutableRangeList<TValue> ToRangeList<TValue>(this Range<TValue> range)
 			where TValue : IComparable<TValue> => new ImmutableRangeList<TValue>(range);
 
-		public static ImmutableRangeList<TValue> ToRangeList<TValue>(this IEnumerable<Range<TValue>> ranges)
+		/// <summary>
+		/// Creates new range list with combined overlapped ranges.
+		/// </summary>
+		/// <typeparam name="TValue">Type of range value</typeparam>
+		/// <param name="ranges">Ranges to include in new renge list.</param>
+		/// <returns>A new range list.</returns>
+		[NotNull]
+		public static ImmutableRangeList<TValue> ToRangeList<TValue>([CanBeNull] this IEnumerable<Range<TValue>> ranges)
 			where TValue : IComparable<TValue>
 		{
 			if (ranges == null)
@@ -38,7 +55,7 @@ namespace CodeJam.Ranges
 					return ImmutableRangeList<TValue>.Full;
 
 				var next = newRanges[i + 1];
-				if (current.IsAdjastent(next) || current.Overlaps(next))
+				if (current.IsAdjastent(next) || current.IntersectsWith(next))
 				{
 					current = current.Union(next);
 
@@ -57,7 +74,13 @@ namespace CodeJam.Ranges
 			return new ImmutableRangeList<TValue>(newRanges);
 		}
 
-		public static ImmutableRangeList<TValue> Invert<TValue>(this IEnumerable<Range<TValue>> ranges)
+		/// <summary>
+		/// Creates new range list with inverted ranges. Overlapped ranges are combined.
+		/// </summary>
+		/// <typeparam name="TValue">Type of range value</typeparam>
+		/// <param name="ranges">Ranges to invert and include in new renge list.</param>
+		/// <returns>A new range list.</returns>
+		public static ImmutableRangeList<TValue> Invert<TValue>([CanBeNull] this IEnumerable<Range<TValue>> ranges)
 			where TValue : IComparable<TValue> =>
 				ranges == null
 					? ToRangeList(Range.Full<TValue>())
