@@ -24,7 +24,7 @@ namespace CodeJam
 		/// Infix form of <see cref="char.IsLetterOrDigit(char)"/>.
 		/// </summary>
 		[Pure]
-		public static bool IsLetterDigit(this char chr) => char.IsLetterOrDigit(chr);
+		public static bool IsLetterOrDigit(this char chr) => char.IsLetterOrDigit(chr);
 
 		/// <summary>
 		/// Infix form of <see cref="char.IsWhiteSpace(char)"/>.
