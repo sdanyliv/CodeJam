@@ -127,7 +127,7 @@ namespace BenchmarkDotNet.NUnit
 			double minRatio, double maxRatio, Type benchType, string benchSource, IConfig config)
 		{
 			// Based on 95th percentile
-			const double PercentileRatio = 0.95;
+			const double percentileRatio = 0.95;
 
 			var summary = RunComparisonCore(benchType, benchSource, config);
 
@@ -141,7 +141,7 @@ namespace BenchmarkDotNet.NUnit
 					throw new InvalidOperationException("There should be only one Baseline benchmark");
 
 				var baselineBenchmark = baselineBenchmarks.Single();
-				var baselineMetric = summary.GetPercentile(baselineBenchmark, PercentileRatio);
+				var baselineMetric = summary.GetPercentile(baselineBenchmark, percentileRatio);
 				// ReSharper disable once CompareOfFloatsByEqualityOperator
 				if (baselineMetric == 0)
 					throw new InvalidOperationException($"Baseline benchmark {baselineBenchmark.ShortInfo} does not compute");
@@ -151,7 +151,7 @@ namespace BenchmarkDotNet.NUnit
 					if (benchmark == baselineBenchmark)
 						continue;
 
-					var reportMetric = summary.GetPercentile(benchmark, PercentileRatio);
+					var reportMetric = summary.GetPercentile(benchmark, percentileRatio);
 					var ratio = Math.Round(reportMetric / baselineMetric, 2);
 					var benchmarkMinRatio = minRatio;
 					var benchmarkMaxRatio = maxRatio;

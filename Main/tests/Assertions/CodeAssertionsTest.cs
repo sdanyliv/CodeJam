@@ -12,13 +12,13 @@ namespace CodeJam.Assertions
 	[SuppressMessage("ReSharper", "PassStringInterpolation")]
 	public class CodeAssertionsTest
 	{
-		private bool? m_BreakOnException;
+		private bool? _breakOnException;
 
 		[OneTimeSetUp]
 		[UsedImplicitly]
 		public void SetUp()
 		{
-			m_BreakOnException = CodeExceptions.BreakOnException;
+			_breakOnException = CodeExceptions.BreakOnException;
 			CodeExceptions.BreakOnException = false;
 		}
 
@@ -26,8 +26,8 @@ namespace CodeJam.Assertions
 		[UsedImplicitly]
 		public void TearDown()
 		{
-			Code.NotNull(m_BreakOnException, nameof(m_BreakOnException));
-			CodeExceptions.BreakOnException = m_BreakOnException.GetValueOrDefault();
+			Code.NotNull(_breakOnException, nameof(_breakOnException));
+			CodeExceptions.BreakOnException = _breakOnException.GetValueOrDefault();
 		}
 
 		[Test]

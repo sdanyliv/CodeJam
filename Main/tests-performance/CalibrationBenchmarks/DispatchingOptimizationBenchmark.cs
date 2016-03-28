@@ -45,12 +45,12 @@ namespace CodeJam
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		private static int DirectCall(int i) => Implementation2(i);
 
-		private static readonly ImplementationToUse _ImplementationToUse1 = ImplementationToUse.Implementation2;
+		private static readonly ImplementationToUse _implementationToUse1 = ImplementationToUse.Implementation2;
 
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		private static int SwitchOverRoField(int i)
 		{
-			switch (_ImplementationToUse1)
+			switch (_implementationToUse1)
 			{
 				case ImplementationToUse.Implementation1:
 					return Implementation1(i);
@@ -63,12 +63,12 @@ namespace CodeJam
 			}
 		}
 
-		private static volatile ImplementationToUse _ImplementationToUse2 = ImplementationToUse.Implementation2;
+		private static volatile ImplementationToUse _implementationToUse2 = ImplementationToUse.Implementation2;
 
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		private static int SwitchOverStaticField(int i)
 		{
-			switch (_ImplementationToUse2)
+			switch (_implementationToUse2)
 			{
 				case ImplementationToUse.Implementation1:
 					return Implementation1(i);
@@ -87,14 +87,14 @@ namespace CodeJam
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
 		public void AssertJitOptimizedDispatch()
 		{
-			const int SomeNum = 1024;
-			var impl2 = Implementation2(SomeNum);
-			var impl3 = Implementation3(SomeNum);
+			const int someNum = 1024;
+			var impl2 = Implementation2(someNum);
+			var impl3 = Implementation3(someNum);
 
 			// 1. Jitting the methods. Impl2 should be used.
-			Assert.AreEqual(DirectCall(SomeNum), impl2);
-			Assert.AreEqual(SwitchOverRoField(SomeNum), impl2);
-			Assert.AreEqual(SwitchOverStaticField(SomeNum), impl2);
+			Assert.AreEqual(DirectCall(someNum), impl2);
+			Assert.AreEqual(SwitchOverRoField(someNum), impl2);
+			Assert.AreEqual(SwitchOverStaticField(someNum), impl2);
 
 			// 2. Update the field values:
 
@@ -103,20 +103,20 @@ namespace CodeJam
 			var bf = BindingFlags.Static | BindingFlags.NonPublic;
 			// ReSharper disable once PossibleNullReferenceException
 			typeof(DispatchingOptimizationBenchmark)
-				.GetField(nameof(_ImplementationToUse1), bf)
+				.GetField(nameof(_implementationToUse1), bf)
 				.SetValue(null, ImplementationToUse.Implementation3);
 
 			//2.2. Updating the field.
 			// Should NOT be ignored;
-			_ImplementationToUse2 = ImplementationToUse.Implementation3;
+			_implementationToUse2 = ImplementationToUse.Implementation3;
 
 			// 3. Now, the assertions:
 			// Nothing changed
-			Assert.AreEqual(DirectCall(SomeNum), impl2);
+			Assert.AreEqual(DirectCall(someNum), impl2);
 			// Same as previous call (switch thrown away by JIT)
-			Assert.AreEqual(SwitchOverRoField(SomeNum), impl2);
+			Assert.AreEqual(SwitchOverRoField(someNum), impl2);
 			// Uses implementation 3
-			Assert.AreEqual(SwitchOverStaticField(SomeNum), impl3);
+			Assert.AreEqual(SwitchOverStaticField(someNum), impl3);
 		}
 		#endregion
 
