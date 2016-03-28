@@ -277,7 +277,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(31.0, 35.5)]
+		[CompetitionBenchmark(30.0, 35.5)]
 		public int Test13InterfaceGenericCall()
 		{
 			int a = 0;
@@ -290,7 +290,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(31.0, 47.5)]
+		[CompetitionBenchmark(30.0, 47.5)]
 		public int Test14DerivedInterfaceGenericCall()
 		{
 			int a = 0;

@@ -84,7 +84,6 @@ namespace CodeJam
 
 		#region Assertion to proof the idea works at all
 		[Test]
-		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
 		public void AssertJitOptimizedDispatch()
 		{
 			const int someNum = 1024;

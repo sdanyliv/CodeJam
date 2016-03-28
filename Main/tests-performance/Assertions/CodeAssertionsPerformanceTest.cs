@@ -93,7 +93,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(1.7, 2.5)]
+		[CompetitionBenchmark(1.7, 2.7)]
 		public string Test03HeavyAssertionFormatArgs()
 		{
 			var result = "";
