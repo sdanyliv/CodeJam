@@ -183,12 +183,7 @@ namespace CodeJam.IO
 		/// <summary>
 		/// Creates temp file and return disposable handle.
 		/// </summary>
-		public static TempFile CreateFile()
-		{
-			var filePath = Path.Combine(Path.GetTempPath(), GetTempName());
-			File.Create(filePath).Close();
-			return new TempFile(filePath);
-		}
+		public static TempFile CreateFile() => CreateFile(Path.GetTempPath());
 
 		/// <summary>
 		/// Creates temp file and return disposable handle.
@@ -209,16 +204,8 @@ namespace CodeJam.IO
 		/// <summary>
 		/// Creates stream and returns disposable handler.
 		/// </summary>
-		public static FileStream CreateFileStream(FileAccess fileAccess = FileAccess.ReadWrite)
-		{
-			const int bufferSize = 4096;
-
-			var filePath = Path.Combine(Path.GetTempPath(), GetTempName());
-			return new FileStream(
-				filePath, FileMode.CreateNew,
-				fileAccess, FileShare.Read, bufferSize,
-				FileOptions.DeleteOnClose);
-		}
+		public static FileStream CreateFileStream(FileAccess fileAccess = FileAccess.ReadWrite) =>
+			CreateFileStream(Path.GetTempPath(), null, fileAccess);
 
 		/// <summary>
 		/// Creates stream and returns disposable handler.

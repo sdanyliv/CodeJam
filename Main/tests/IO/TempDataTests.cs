@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace CodeJam.IO
 {
 	[TestFixture]
-	public class TempDataTest
+	public class TempDataTests
 	{
 		[Test]
 		public void Test01Directory()
