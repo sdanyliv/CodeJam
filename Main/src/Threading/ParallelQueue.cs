@@ -7,11 +7,12 @@ using JetBrains.Annotations;
 
 namespace CodeJam.Threading
 {
-	class ParallelQueue : IDisposable
+	[PublicAPI]
+	public sealed class ParallelQueue : IDisposable
 	{
-		readonly BlockingCollection<Action> _queue = new BlockingCollection<Action>();
-		readonly Thread[]                   _workers;
-		readonly List<Exception>            _exceptions = new List<Exception>();
+		private readonly BlockingCollection<Action> _queue = new BlockingCollection<Action>();
+		private readonly Thread[]                   _workers;
+		private readonly List<Exception>            _exceptions = new List<Exception>();
 
 		public ParallelQueue(int workerCount, string name = null)
 		{
@@ -21,9 +22,9 @@ namespace CodeJam.Threading
 				(_workers[i] = new Thread(Work) { Name = name + i }).Start();
 		}
 
-		bool _isFinished;
+		private bool _isFinished;
 
-		readonly object _syncFinished = new object();
+		private readonly object _syncFinished = new object();
 
 		public void WaitAll()
 		{
@@ -57,7 +58,7 @@ namespace CodeJam.Threading
 			_queue.Add(item);
 		}
 
-		void Work()
+		private void Work()
 		{
 			foreach (var action in _queue.GetConsumingEnumerable())
 			{
@@ -79,10 +80,11 @@ namespace CodeJam.Threading
 		{
 			WaitAll();
 			Dispose(true);
-			GC.SuppressFinalize(this);
+			// Type has no Finalize
+			// GC.SuppressFinalize(this);
 		}
 
-		protected virtual void Dispose(bool disposing)
+		private void Dispose(bool disposing)
 		{
 			if (disposing)
 				_queue?.Dispose();
