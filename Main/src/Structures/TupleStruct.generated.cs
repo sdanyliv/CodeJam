@@ -128,7 +128,7 @@ namespace CodeJam
 	}
 
 	/// <summary>
-	/// Creates a new 2-tuple.
+	/// Represents a 2-tuple.
 	/// </summary>
 	/// <typeparam name="T1">The type of the component 1 of the tuple.</typeparam>
 	/// <typeparam name="T2">The type of the component 2 of the tuple.</typeparam>
@@ -219,7 +219,7 @@ namespace CodeJam
 	}
 
 	/// <summary>
-	/// Creates a new 3-tuple.
+	/// Represents a 3-tuple.
 	/// </summary>
 	/// <typeparam name="T1">The type of the component 1 of the tuple.</typeparam>
 	/// <typeparam name="T2">The type of the component 2 of the tuple.</typeparam>
@@ -321,7 +321,7 @@ namespace CodeJam
 	}
 
 	/// <summary>
-	/// Creates a new 4-tuple.
+	/// Represents a 4-tuple.
 	/// </summary>
 	/// <typeparam name="T1">The type of the component 1 of the tuple.</typeparam>
 	/// <typeparam name="T2">The type of the component 2 of the tuple.</typeparam>
@@ -434,7 +434,7 @@ namespace CodeJam
 	}
 
 	/// <summary>
-	/// Creates a new 5-tuple.
+	/// Represents a 5-tuple.
 	/// </summary>
 	/// <typeparam name="T1">The type of the component 1 of the tuple.</typeparam>
 	/// <typeparam name="T2">The type of the component 2 of the tuple.</typeparam>
@@ -558,7 +558,7 @@ namespace CodeJam
 	}
 
 	/// <summary>
-	/// Creates a new 6-tuple.
+	/// Represents a 6-tuple.
 	/// </summary>
 	/// <typeparam name="T1">The type of the component 1 of the tuple.</typeparam>
 	/// <typeparam name="T2">The type of the component 2 of the tuple.</typeparam>
@@ -693,7 +693,7 @@ namespace CodeJam
 	}
 
 	/// <summary>
-	/// Creates a new 7-tuple.
+	/// Represents a 7-tuple.
 	/// </summary>
 	/// <typeparam name="T1">The type of the component 1 of the tuple.</typeparam>
 	/// <typeparam name="T2">The type of the component 2 of the tuple.</typeparam>
@@ -839,7 +839,7 @@ namespace CodeJam
 	}
 
 	/// <summary>
-	/// Creates a new 8-tuple.
+	/// Represents a 8-tuple.
 	/// </summary>
 	/// <typeparam name="T1">The type of the component 1 of the tuple.</typeparam>
 	/// <typeparam name="T2">The type of the component 2 of the tuple.</typeparam>
