@@ -36,5 +36,10 @@ namespace CodeJam
 		/// Gets the function that returns the same object which was passed as parameter.
 		/// </summary>
 		public static readonly Converter<T, T> IdentityConverter = o => o;
+
+		/// <summary>
+		/// Gets the function that returns true if an object is not null.
+		/// </summary>
+		public static readonly Func<T, bool> NotNull = o => o != null;
 	}
 }
