@@ -20,7 +20,7 @@ namespace CodeJam.Reflection
 		/// A value indicating whether the <paramref name="type"/> can be instantiated.
 		/// </returns>
 		[Pure]
-		public static bool IsInstantiableType([NotNull] this Type type) =>
+		public static bool IsInstantiable([NotNull] this Type type) =>
 			!(type.IsAbstract || type.IsInterface || type.IsArray || type.ContainsGenericParameters);
 
 		/// <summary>

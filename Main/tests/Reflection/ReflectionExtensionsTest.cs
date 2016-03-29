@@ -30,7 +30,7 @@ namespace CodeJam.Reflection
 		[TestCase(typeof (IList),                     ExpectedResult = false)]
 		[TestCase(typeof (ReflectionExtensions),      ExpectedResult = false)]
 		[TestCase(typeof (KeyedCollection<int, int>), ExpectedResult = false)]
-		public bool IsInstantiableTypeTest(Type type) => type.IsInstantiableType();
+		public bool IsInstantiableTypeTest(Type type) => type.IsInstantiable();
 
 		[TestCase(typeof (int),                       ExpectedResult = false)]
 		[TestCase(typeof (int?),                      ExpectedResult = true)]
