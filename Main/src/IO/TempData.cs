@@ -98,7 +98,7 @@ namespace CodeJam.IO
 			/// <summary>
 			/// DirectoryInfo object
 			/// </summary>
-			public DirectoryInfo Info => _info?? (_info = new DirectoryInfo(Path));
+			public DirectoryInfo Info => Path != null ? _info ?? (_info = new DirectoryInfo(Path)) : null;
 
 			/// <summary>
 			/// Temp path disposal
@@ -141,7 +141,7 @@ namespace CodeJam.IO
 			/// <summary>
 			/// DirectoryInfo object
 			/// </summary>
-			public FileInfo Info  => _info ?? (_info = new FileInfo(Path));
+			public FileInfo Info => Path != null ? _info ?? (_info = new FileInfo(Path)) : null;
 
 			/// <summary>
 			/// Temp path disposal
