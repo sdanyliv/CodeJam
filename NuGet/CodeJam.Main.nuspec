@@ -8,10 +8,17 @@
 		<licenseUrl>https://github.com/rsdn/CodeJam/blob/master/LICENSE</licenseUrl>
 		<projectUrl>https://github.com/rsdn/CodeJam</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>A set of reusable, open source .NET components with minimal dependency</description>
-		<dependencies />
+		<description>
+			CodeJam is a set of handy reusable .NET components that can simplify your daily work and 
+			save your time when you copy and paste your favorite helper methods and classes from one project to another.
+		</description>
+		<tags>
+			list string collection threading xml extension
+		</tags>
 	</metadata>
 	<files>
+		<file src="Readme.txt"                              target="" />
+
 		<file src="..\Main\src\bin\Release.4.0\CodeJam.dll" target="lib\net40" />
 		<file src="..\Main\src\bin\Release.4.0\CodeJam.pdb" target="lib\net40" />
 		<file src="..\Main\src\bin\Release.4.0\CodeJam.xml" target="lib\net40" />

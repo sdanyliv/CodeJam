@@ -119,7 +119,6 @@
     <Compile Include="Xml\XNodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeJam.Main.nuspec" />
     <Compile Include="Collections\EnumerableExtensions.AggregateFuncs.cs" />
     <None Include="Compile.cmd">
       <AutoGen>True</AutoGen>
