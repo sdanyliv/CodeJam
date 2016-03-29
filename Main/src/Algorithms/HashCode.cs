@@ -98,7 +98,6 @@ namespace CodeJam
 		[Pure]
 		public static int Combine(int h1, int h2, int h3, int h4, int h5, int h6, int h7, int h8) => Combine(Combine(h1, h2, h3, h4), Combine(h5, h6, h7, h8));
 
-
 		/// <summary>
 		/// Combines hash codes.
 		/// </summary>

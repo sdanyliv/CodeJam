@@ -157,7 +157,8 @@ namespace CodeJam.Threading
 				foreach (var item in source)
 				{
 					var data = item;
-					queue.EnqueueItem(() => action(data));
+					var run = action;
+					queue.EnqueueItem(() => run(data));
 				}
 
 				queue.WaitAll();
