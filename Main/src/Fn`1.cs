@@ -4,6 +4,10 @@ using JetBrains.Annotations;
 
 namespace CodeJam
 {
+	/// <summary>
+	/// Helper methods for <see cref="Func{TResult}"/>
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	[PublicAPI]
 	public static class Fn<T>
 	{
