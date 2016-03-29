@@ -133,7 +133,7 @@ namespace CodeJam
 			Assert.AreEqual(expected, actual);
 		}
 
-		public static List<string> LoadTestData(string resourceName)
+		private static List<string> LoadTestData(string resourceName)
 		{
 			var assembly = typeof(NaturalOrderStringComparerTests).Assembly;
 			var list = new List<string>();

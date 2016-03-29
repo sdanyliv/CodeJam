@@ -31,7 +31,8 @@ namespace CodeJam.Ranges
 		/// </summary>
 		/// <typeparam name="TValue">Type of range value</typeparam>
 		/// <returns>Predefined Empty range.</returns>
-		public static readonly Range<TValue> Empty = new Range<TValue>(default(TValue), default(TValue),
+		public static readonly Range<TValue> Empty = new Range<TValue>(
+			default(TValue), default(TValue),
 			RangeOptions.IsEmpty);
 
 		/// <summary>
@@ -39,7 +40,8 @@ namespace CodeJam.Ranges
 		/// </summary>
 		/// <typeparam name="TValue"></typeparam>
 		/// <returns>Predefined Full range.</returns>
-		public static readonly Range<TValue> Full = new Range<TValue>(default(TValue), default(TValue),
+		public static readonly Range<TValue> Full = new Range<TValue>(
+			default(TValue), default(TValue),
 			RangeOptions.None);
 
 		private readonly RangeOptions _options;
@@ -63,9 +65,9 @@ namespace CodeJam.Ranges
 			if (options.HasFlag(RangeOptions.IsEmpty))
 			{
 				// clear other flags
-				_options	= RangeOptions.IsEmpty;
-				Start		= default(TValue);
-				End			= default(TValue);
+				_options = RangeOptions.IsEmpty;
+				Start = default(TValue);
+				End = default(TValue);
 				return;
 			}
 
@@ -133,8 +135,8 @@ namespace CodeJam.Ranges
 			: this(start.Value, end.Value,
 				(start.HasValue ? RangeOptions.HasStart : RangeOptions.None)
 					| (end.HasValue ? RangeOptions.HasEnd : RangeOptions.None)
-					| (icludeStart  ? RangeOptions.IncludingStart : RangeOptions.None)
-					| (icludeEnd    ? RangeOptions.IncludingEnd : RangeOptions.None)
+					| (icludeStart ? RangeOptions.IncludingStart : RangeOptions.None)
+					| (icludeEnd ? RangeOptions.IncludingEnd : RangeOptions.None)
 				)
 		{
 		}
@@ -169,10 +171,11 @@ namespace CodeJam.Ranges
 		/// </summary>
 		public bool IsFull => _options == RangeOptions.None;
 
-		private RangeValue StartValue => new RangeValue(Start, !HasStart ? ValueInfo.MinValue : IncludeStart ? ValueInfo.Included : ValueInfo.Excluded);
+		private RangeValue StartValue
+			=> new RangeValue(Start, !HasStart ? ValueInfo.MinValue : IncludeStart ? ValueInfo.Included : ValueInfo.Excluded);
 
-		private RangeValue EndValue => new RangeValue(End, !HasEnd ? ValueInfo.MaxValue : IncludeEnd ? ValueInfo.Included : ValueInfo.Excluded);
-
+		private RangeValue EndValue
+			=> new RangeValue(End, !HasEnd ? ValueInfo.MaxValue : IncludeEnd ? ValueInfo.Included : ValueInfo.Excluded);
 
 		/// <summary>
 		/// Compares this instance with a specified <see cref="Range{TValue}"/> and indicates whether this instance precedes, follows, or appears in the same position in the sort order as the specified <see cref="Range{TValue}"/>.
@@ -252,7 +255,7 @@ namespace CodeJam.Ranges
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Range<TValue> && Equals((Range<TValue>) obj);
+			return obj is Range<TValue> && Equals((Range<TValue>)obj);
 		}
 
 		/// <summary>
@@ -267,9 +270,9 @@ namespace CodeJam.Ranges
 		{
 			unchecked
 			{
-				var hashCode = (int) _options;
-				hashCode = (hashCode*397) ^ EqualityComparer<TValue>.Default.GetHashCode(End);
-				hashCode = (hashCode*397) ^ EqualityComparer<TValue>.Default.GetHashCode(Start);
+				var hashCode = (int)_options;
+				hashCode = (hashCode * 397) ^ EqualityComparer<TValue>.Default.GetHashCode(End);
+				hashCode = (hashCode * 397) ^ EqualityComparer<TValue>.Default.GetHashCode(Start);
 				return hashCode;
 			}
 		}
@@ -317,11 +320,11 @@ namespace CodeJam.Ranges
 			if (other.IsEmpty)
 				return this;
 
-			var currentStart	= current.StartValue;
-			var currentEnd	= current.EndValue;
+			var currentStart = current.StartValue;
+			var currentEnd = current.EndValue;
 
-			var otherStart	= other.StartValue;
-			var otherEnd		= other.EndValue;
+			var otherStart = other.StartValue;
+			var otherEnd = other.EndValue;
 
 			var overlap = currentStart <= otherEnd && otherStart <= currentEnd;
 
@@ -337,7 +340,8 @@ namespace CodeJam.Ranges
 			else if (compareStart > 0)
 				newStart = otherStart;
 			else
-				newStart = new RangeValue(currentStart.Value,
+				newStart = new RangeValue(
+					currentStart.Value,
 					!currentStart.HasValue
 						? currentStart.ValueInfo
 						: (currentStart.Included || otherStart.Included ? ValueInfo.Included : ValueInfo.Excluded));
@@ -348,7 +352,8 @@ namespace CodeJam.Ranges
 			else if (compareEnd < 0)
 				newEnd = otherEnd;
 			else
-				newEnd = new RangeValue(currentEnd.Value,
+				newEnd = new RangeValue(
+					currentEnd.Value,
 					!currentEnd.HasValue
 						? currentEnd.ValueInfo
 						: (currentEnd.Included || otherEnd.Included ? ValueInfo.Included : ValueInfo.Excluded));
@@ -467,11 +472,11 @@ namespace CodeJam.Ranges
 				yield break;
 			}
 
-			var currentStart	= current.StartValue;
-			var currentEnd	= current.EndValue;
+			var currentStart = current.StartValue;
+			var currentEnd = current.EndValue;
 
-			var otherStart	= other.StartValue;
-			var otherEnd		= other.EndValue;
+			var otherStart = other.StartValue;
+			var otherEnd = other.EndValue;
 
 			var overlap = currentStart <= otherEnd && otherStart <= currentEnd;
 
@@ -532,6 +537,7 @@ namespace CodeJam.Ranges
 		/// <returns>
 		/// A new <see cref="Range{TValue}"/> that represents the intersection of current instance and <paramref name="other"/>.
 		/// </returns>
+		[Pure]
 		public Range<TValue> Intersect(Range<TValue> other)
 		{
 			var current = this;
@@ -551,11 +557,11 @@ namespace CodeJam.Ranges
 				return other;
 			}
 
-			var currentStart	= current.StartValue;
-			var currentEnd	= current.EndValue;
+			var currentStart = current.StartValue;
+			var currentEnd = current.EndValue;
 
-			var otherStart	= other.StartValue;
-			var otherEnd		= other.EndValue;
+			var otherStart = other.StartValue;
+			var otherEnd = other.EndValue;
 
 			var overlap = currentStart <= otherEnd && otherStart <= currentEnd;
 
@@ -571,7 +577,8 @@ namespace CodeJam.Ranges
 			else if (compareStart < 0)
 				newStart = otherStart;
 			else
-				newStart = new RangeValue(currentStart.Value,
+				newStart = new RangeValue(
+					currentStart.Value,
 					!currentStart.HasValue
 						? currentStart.ValueInfo
 						: (currentStart.Included && otherStart.Included ? ValueInfo.Included : ValueInfo.Excluded));
@@ -582,7 +589,8 @@ namespace CodeJam.Ranges
 			else if (compareEnd > 0)
 				newEnd = otherEnd;
 			else
-				newEnd = new RangeValue(currentEnd.Value,
+				newEnd = new RangeValue(
+					currentEnd.Value,
 					!currentEnd.HasValue
 						? currentEnd.ValueInfo
 						: (currentEnd.Included && otherEnd.Included ? ValueInfo.Included : ValueInfo.Excluded));
@@ -612,14 +620,16 @@ namespace CodeJam.Ranges
 					if (HasStart)
 					{
 						yield return
-							new Range<TValue>(default(TValue), Start,
+							new Range<TValue>(
+								default(TValue), Start,
 								RangeOptions.HasEnd | (IncludeStart ? RangeOptions.None : RangeOptions.IncludingEnd));
 					}
 
 					if (HasEnd)
 					{
 						yield return
-							new Range<TValue>(End, default(TValue),
+							new Range<TValue>(
+								End, default(TValue),
 								RangeOptions.HasStart | (IncludeEnd ? RangeOptions.None : RangeOptions.IncludingStart));
 					}
 				}
@@ -668,7 +678,6 @@ namespace CodeJam.Ranges
 			return startValue + ".." + endValue;
 		}
 
-
 		private enum ValueInfo
 		{
 			Excluded,
@@ -692,8 +701,8 @@ namespace CodeJam.Ranges
 
 			private bool IsMin => ValueInfo == ValueInfo.MinValue;
 			private bool IsMax => ValueInfo == ValueInfo.MaxValue;
-			public bool Included	=> ValueInfo == ValueInfo.Included;
-			public bool HasValue	=> ValueInfo == ValueInfo.Included || ValueInfo == ValueInfo.Excluded;
+			public bool Included => ValueInfo == ValueInfo.Included;
+			public bool HasValue => ValueInfo == ValueInfo.Included || ValueInfo == ValueInfo.Excluded;
 
 			public int CompareTo(RangeValue other)
 			{
@@ -739,7 +748,7 @@ namespace CodeJam.Ranges
 				}
 			}
 
-			public static bool operator < (RangeValue value1, RangeValue value2)
+			public static bool operator <(RangeValue value1, RangeValue value2)
 			{
 				var compare = value1.CompareTo(value2);
 				return compare < 0;

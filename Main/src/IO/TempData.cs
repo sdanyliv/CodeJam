@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.ConstrainedExecution;
+using System.Threading;
 
 using JetBrains.Annotations;
 
@@ -11,161 +13,218 @@ namespace CodeJam.IO
 	[PublicAPI]
 	public static class TempData
 	{
-		#region Dir
+		#region Temp file|directory holders
 		/// <summary>
-		/// Creates temp directory and returns <see cref="IDisposable"/> to free it.
-		/// </summary>
-		public static TempDir GetDir()
-		{
-			var dirName = new Guid() + ".tmp";
-			var dirPath = Path.Combine(Path.GetTempPath(), dirName);
-			Directory.CreateDirectory(dirPath);
-			return new TempDir(dirPath);
-		}
-
-		/// <summary>
-		/// Temp directory.
+		/// Base class for temp file|directory objects.
+		/// Contains logic to proof the removal will be performed even on resource leak.
 		/// </summary>
 		[PublicAPI]
-		public struct TempDir : IDisposable
+		public abstract class TempBase : CriticalFinalizerObject, IDisposable
 		{
+			private volatile string _path;
+
 			/// <summary>
 			/// Initialize instance.
 			/// </summary>
-			public TempDir(string path)
+			protected TempBase(string path)
 			{
-				Path = path;
+				Code.NotNullNorEmpty(path, nameof(path));
+
+				_path = path;
 			}
 
 			/// <summary>
-			/// Path to directory.
+			/// Temp path.
 			/// </summary>
-			public string Path { get; }
+			public string Path => _path;
 
 			/// <summary>
-			/// Delete directory and all its content.
+			/// Finalize instance
+			/// </summary>
+			~TempBase()
+			{
+				Dispose(false);
+			}
+
+			/// <summary>
+			/// Delete the temp file|directory
 			/// </summary>
 			public void Dispose()
 			{
+				if (_path != null) // Fast check
+				{
+					Dispose(true);
+
+					// it's safe to call SuppressFinalize multiple times so it's ok if check above will be inaccurate.
+					GC.SuppressFinalize(this);
+				}
+			}
+
+			/// <summary>
+			/// Dispose pattern implementation - overridable part
+			/// </summary>
+			protected void Dispose(bool disposing)
+			{
+#pragma warning disable 420
+				var path = Interlocked.Exchange(ref _path, null);
+#pragma warning restore 420
+				if (path == null)
+					return;
+
+				DisposePath(path, disposing);
+			}
+
+			/// <summary>
+			/// Temp path disposal
+			/// </summary>
+			protected abstract void DisposePath(string path, bool disposing);
+		}
+
+		/// <summary>
+		/// Wraps reference on a temp directory meant to be deleted on dispose
+		/// </summary>
+		[PublicAPI]
+		public sealed class TempDirectory : TempBase
+		{
+			private DirectoryInfo _info;
+
+			/// <summary>
+			/// Initialize instance.
+			/// </summary>
+			public TempDirectory(string path) : base(path)
+			{
+			}
+
+			/// <summary>
+			/// DirectoryInfo object
+			/// </summary>
+			public DirectoryInfo Info => _info?? (_info = new DirectoryInfo(Path));
+
+			/// <summary>
+			/// Temp path disposal
+			/// </summary>
+			protected override void DisposePath(string path, bool disposing)
+			{
+				_info = null;
+
 				try
 				{
-					Directory.Delete(Path, true);
+					Directory.Delete(path, true);
 				}
-					// ReSharper disable once EmptyGeneralCatchClause
-				catch
+				catch (ArgumentException)
+				{
+				}
+				catch (IOException)
+				{
+				}
+				catch (UnauthorizedAccessException)
+				{
+				}
+			}
+		}
+
+		/// <summary>
+		/// Wraps reference on a temp file meant to be deleted on dispose
+		/// </summary>
+		[PublicAPI]
+		public sealed class TempFile : TempBase
+		{
+			private FileInfo _info;
+
+			/// <summary>
+			/// Initialize instance.
+			/// </summary>
+			public TempFile(string path) : base(path)
+			{
+			}
+
+			/// <summary>
+			/// DirectoryInfo object
+			/// </summary>
+			public FileInfo Info  => _info ?? (_info = new FileInfo(Path));
+
+			/// <summary>
+			/// Temp path disposal
+			/// </summary>
+			protected override void DisposePath(string path, bool disposing)
+			{
+				_info = null;
+
+				try
+				{
+					File.Delete(path);
+				}
+				catch (ArgumentException)
+				{
+				}
+				catch (IOException)
+				{
+				}
+				catch (UnauthorizedAccessException)
 				{
 				}
 			}
 		}
 		#endregion
 
-		#region File
+		#region Factory methods
+		private static string GetTempName() => Guid.NewGuid() + ".tmp";
+
+		/// <summary>
+		/// Creates temp directory and returns <see cref="IDisposable"/> to free it.
+		/// </summary>
+		public static TempDirectory CreateDirectory()
+		{
+			var directoryPath = Path.Combine(Path.GetTempPath(), GetTempName());
+			Directory.CreateDirectory(directoryPath);
+			return new TempDirectory(directoryPath);
+		}
+
+		/// <summary>
+		/// Creates temp file and return disposable handle.
+		/// </summary>
+		public static TempFile CreateFile() => CreateFile(Path.GetTempPath());
+
 		/// <summary>
 		/// Creates temp file and return disposable handle.
 		/// </summary>
 		/// <exception cref="ArgumentNullException"><paramref name="dirPath"/> is null.</exception>
-		public static TempFile GetFile([NotNull] string dirPath, [CanBeNull] string fileName = null)
+		public static TempFile CreateFile([NotNull] string dirPath, [CanBeNull] string fileName = null)
 		{
-			if (dirPath == null) throw new ArgumentNullException(nameof(dirPath));
+			Code.NotNull(dirPath, nameof(dirPath));
+
 			if (fileName == null)
-				fileName = new Guid() + ".tmp";
+				fileName = GetTempName();
+
 			var filePath = Path.Combine(dirPath, fileName);
 			File.Create(filePath).Close();
 			return new TempFile(filePath);
 		}
 
-		/// <summary>
-		/// Creates temp file and return disposable handle.
-		/// </summary>
-		public static TempFile GetFile()
-		{
-			var dirPath = Path.GetTempPath();
-			var fileName = new Guid() + ".tmp";
-			var filePath = Path.Combine(dirPath, fileName);
-			File.Create(filePath).Close();
-			return new TempFile(filePath);
-		}
-
-		/// <summary>
-		/// Temp file.
-		/// </summary>
-		[PublicAPI]
-		public struct TempFile : IDisposable
-		{
-			/// <summary>
-			/// Initialize instance.
-			/// </summary>
-			public TempFile(string path)
-			{
-				Path = path;
-			}
-
-			/// <summary>
-			/// Path to file.
-			/// </summary>
-			public string Path { get; }
-
-			public void Dispose()
-			{
-				try
-				{
-					File.Delete(Path);
-				}
-				// ReSharper disable once EmptyGeneralCatchClause
-				catch {}
-			}
-		}
-		#endregion
-
-		#region Stream
 		/// <summary>
 		/// Creates stream and returns disposable handler.
 		/// </summary>
-		public static TempStream GetStream(FileAccess fileAccess = FileAccess.ReadWrite)
-		{
-			var path = Path.Combine(Path.GetTempPath(), new Guid() + ".tmp");
-			var stream = new FileStream(path, FileMode.CreateNew, fileAccess);
-			return new TempStream(path, stream);
-		}
+		public static FileStream CreateFileStream(FileAccess fileAccess = FileAccess.ReadWrite) =>
+			CreateFileStream(Path.GetTempPath(), null, fileAccess);
 
 		/// <summary>
-		/// Temp stream handle.
+		/// Creates stream and returns disposable handler.
 		/// </summary>
-		[PublicAPI]
-		public struct TempStream : IDisposable
+		public static FileStream CreateFileStream(
+			[NotNull] string dirPath, [CanBeNull] string fileName = null, FileAccess fileAccess = FileAccess.ReadWrite)
 		{
-			/// <summary>
-			/// Path to stream file.
-			/// </summary>
-			public string Path { get; }
+			const int bufferSize = 4096;
 
-			/// <summary>
-			/// Initialize instance.
-			/// </summary>
-			public TempStream(string path, FileStream stream)
-			{
-				Path = path;
-				Stream = stream;
-			}
+			Code.NotNull(dirPath, nameof(dirPath));
 
-			/// <summary>
-			/// Temp stream.
-			/// </summary>
-			public FileStream Stream { get; }
+			if (fileName == null)
+				fileName = GetTempName();
 
-			/// <summary>
-			/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-			/// </summary>
-			public void Dispose()
-			{
-				try
-				{
-					Stream.Dispose();
-					File.Delete(Path);
-				}
-					// ReSharper disable once EmptyGeneralCatchClause
-				catch {}
-			}
+			var filePath = Path.Combine(dirPath, fileName);
+			return new FileStream(
+				filePath, FileMode.CreateNew,
+				fileAccess, FileShare.Read, bufferSize,
+				FileOptions.DeleteOnClose);
 		}
 		#endregion
 	}

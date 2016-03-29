@@ -20,7 +20,7 @@ namespace CodeJam.Collections
 		#region <#= info.Method #>
 
 <#
-		foreach (var type in new[] { "int", "long", "float", "double", "decimal", "short", "sbyte", "uint", "ulong", "ushort", "byte" })
+		foreach (var type in new[] { "byte", "sbyte", "short", "ushort", "int", "uint", "long", "ulong", "float", "double", "decimal" })
 		{
 #>
 		#region <#= type #>

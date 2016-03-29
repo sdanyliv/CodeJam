@@ -22,7 +22,7 @@ namespace CodeJam
 		[Conditional(DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNull<T>(
-			[NotNull] T arg,
+			[CanBeNull] T arg,
 			[NotNull] [InvokerParameterName] string argName) where T : class =>
 				Code.NotNull(arg, argName);
 
@@ -32,8 +32,9 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNull<T>(
-			[NotNull] T? arg,
+			[CanBeNull] T? arg,
 			[NotNull] [InvokerParameterName] string argName) where T : struct =>
+				// ReSharper disable once AssignNullToNotNullAttribute
 				Code.NotNull(arg, argName);
 
 		/// <summary>
@@ -42,7 +43,7 @@ namespace CodeJam
 		[Conditional(DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNullNorEmpty(
-			[NotNull] string arg,
+			[CanBeNull] string arg,
 			[NotNull] [InvokerParameterName] string argName) =>
 				Code.NotNullNorEmpty(arg, argName);
 

@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\CodeJam.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
@@ -46,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\EqualRange.cs" />
     <Compile Include="Algorithms\HashCode.cs" />
+    <Compile Include="Algorithms\PartitionPoint.cs" />
     <Compile Include="Algorithms\LowerBound.cs" />
     <Compile Include="Algorithms\Memoize.cs" />
     <Compile Include="Algorithms\Swap.cs" />
@@ -70,6 +77,7 @@
     </Compile>
     <Compile Include="Collections\ILazyDictionary.cs" />
     <Compile Include="IO\TempData.cs" />
+    <Compile Include="Reflection\AssemblyExtensions.cs" />
     <Compile Include="Structures\TupleStruct.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -112,7 +120,6 @@
     <Compile Include="Xml\XNodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeJam.Main.nuspec" />
     <Compile Include="Collections\EnumerableExtensions.AggregateFuncs.cs" />
     <None Include="Compile.cmd">
       <AutoGen>True</AutoGen>

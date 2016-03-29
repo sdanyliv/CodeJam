@@ -12,9 +12,9 @@ namespace CodeJam.Ranges
 	/// A readonly collection of sorted <see cref="Range{TValue}"/> elements.
 	/// </summary>
 	/// <typeparam name="TValue">Type of range value</typeparam>
-    [PublicAPI]
+	[PublicAPI]
 	[DebuggerDisplay("{DisplayValue()}")]
-	public class ImmutableRangeList<TValue> : IEnumerable<Range<TValue>> 
+	public class ImmutableRangeList<TValue> : IEnumerable<Range<TValue>>
 		where TValue : IComparable<TValue>
 	{
 		/// <summary>
@@ -22,9 +22,9 @@ namespace CodeJam.Ranges
 		/// </summary>
 		public static readonly ImmutableRangeList<TValue> Empty = new ImmutableRangeList<TValue>();
 
-        /// <summary>
-        /// Full (initialized) instance of <see cref="ImmutableRangeList{TValue}"/>.
-        /// </summary>
+		/// <summary>
+		/// Full (initialized) instance of <see cref="ImmutableRangeList{TValue}"/>.
+		/// </summary>
 		public static readonly ImmutableRangeList<TValue> Full = new ImmutableRangeList<TValue>(Range<TValue>.Full);
 
 		internal readonly List<Range<TValue>> Values;
@@ -33,7 +33,7 @@ namespace CodeJam.Ranges
 
 		internal ImmutableRangeList(Range<TValue> range)
 		{
-			Values = new List<Range<TValue>> {range};
+			Values = new List<Range<TValue>> { range };
 		}
 
 		internal ImmutableRangeList()
@@ -60,10 +60,10 @@ namespace CodeJam.Ranges
 				&& Values.Count == 1
 				&& Values[0].IsFull;
 
-        /// <summary>
-        /// Returns an enumerator for the contents of the list.
-        /// </summary>
-        /// <returns>An enumerator.</returns>
+		/// <summary>
+		/// Returns an enumerator for the contents of the list.
+		/// </summary>
+		/// <returns>An enumerator.</returns>
 		public IEnumerator<Range<TValue>> GetEnumerator()
 		{
 			if (Values == null)
@@ -71,20 +71,19 @@ namespace CodeJam.Ranges
 			return Values.GetEnumerator();
 		}
 
-        /// <summary>
-        /// Returns an enumerator for the contents of the list.
-        /// </summary>
-        /// <returns>An enumerator.</returns>
+		/// <summary>
+		/// Returns an enumerator for the contents of the list.
+		/// </summary>
+		/// <returns>An enumerator.</returns>
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-
 		/// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>
-        /// <c>true</c> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <c>false</c>.
-        /// </returns>
+		/// Indicates whether the current object is equal to another object of the same type.
+		/// </summary>
+		/// <param name="other">An object to compare with this object.</param>
+		/// <returns>
+		/// <c>true</c> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <c>false</c>.
+		/// </returns>
 		protected bool Equals(ImmutableRangeList<TValue> other)
 		{
 			if (IsFull && other.IsFull)
@@ -110,25 +109,25 @@ namespace CodeJam.Ranges
 		}
 
 		/// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
-        /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-        /// </returns>
+		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
+		/// </summary>
+		/// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
+		/// <returns>
+		///   <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+		/// </returns>
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != GetType()) return false;
-			return Equals((ImmutableRangeList<TValue>) obj);
+			return Equals((ImmutableRangeList<TValue>)obj);
 		}
 
-        /// <summary>
-        /// Returns a hash code for the current instance.
-        /// </summary>
-        /// <returns>The hash code for the current instance.</returns>
-        /// <remarks>Hash code calculated once and then it has been cached</remarks>
+		/// <summary>
+		/// Returns a hash code for the current instance.
+		/// </summary>
+		/// <returns>The hash code for the current instance.</returns>
+		/// <remarks>Hash code calculated once and then it has been cached</remarks>
 		public override int GetHashCode()
 		{
 			// ReSharper disable NonReadonlyMemberInGetHashCode
@@ -145,7 +144,7 @@ namespace CodeJam.Ranges
 				return 0;
 			var res = 0x2D2816FE;
 			foreach (var t in Values)
-				res = res*31 + t.GetHashCode();
+				res = res * 31 + t.GetHashCode();
 			return res;
 		}
 
@@ -173,11 +172,11 @@ namespace CodeJam.Ranges
 			return "[" + result + "]";
 		}
 
-        /// <summary>
-        /// Returns a new list with the specified value.
-        /// </summary>
-        /// <param name="range">The range to include in list.</param>
-        /// <returns>A new list.</returns>
+		/// <summary>
+		/// Returns a new list with the specified value.
+		/// </summary>
+		/// <param name="range">The range to include in list.</param>
+		/// <returns>A new list.</returns>
 		public ImmutableRangeList<TValue> Add(Range<TValue> range)
 		{
 			if (range.IsEmpty)
@@ -186,28 +185,30 @@ namespace CodeJam.Ranges
 			if (Values == null)
 				return new ImmutableRangeList<TValue>(range);
 
-			return this.Concat(new[] {range}).ToRangeList();
+			return this.Concat(new[] { range }).ToRangeList();
 		}
 
-        /// <summary>
-        /// Adds the specified ranges to this list.	Overlapped ranges are combined.
-        /// </summary>
-        /// <param name="ranges">The ranges to add.</param>
-        /// <returns>A new list with the elements added.</returns>
+		/// <summary>
+		/// Adds the specified ranges to this list.	Overlapped ranges are combined.
+		/// </summary>
+		/// <param name="ranges">The ranges to add.</param>
+		/// <returns>A new list with the elements added.</returns>
 		public ImmutableRangeList<TValue> AddRanges(IEnumerable<Range<TValue>> ranges)
 		{
 			if (ranges == null)
 				return this;
 
-			return Values == null ? ranges.ToRangeList() : Values.Concat(ranges).ToRangeList();
+			// ReSharper disable PossibleMultipleEnumeration
+			return Values?.Concat(ranges).ToRangeList() ?? ranges.ToRangeList();
+			// ReSharper restore PossibleMultipleEnumeration
 		}
 
 		/// <summary>
-        /// Returns a list with removed specific ranges.
-        /// If no match is found, the current list is returned.
-        /// </summary>
-        /// <param name="ranges">The item to remove.</param>
-        /// <returns>A new list.</returns>
+		/// Returns a list with removed specific ranges.
+		/// If no match is found, the current list is returned.
+		/// </summary>
+		/// <param name="ranges">The item to remove.</param>
+		/// <returns>A new list.</returns>
 		public ImmutableRangeList<TValue> RemoveRanges(IList<Range<TValue>> ranges)
 		{
 			if (Values == null)
@@ -252,9 +253,9 @@ namespace CodeJam.Ranges
 		}
 
 		/// <summary>
-        /// Returns a list with inverted ranges.
-        /// </summary>
-        /// <returns>A new list.</returns>
+		/// Returns a list with inverted ranges.
+		/// </summary>
+		/// <returns>A new list.</returns>
 		public ImmutableRangeList<TValue> Invert()
 		{
 			if (IsFull)
@@ -266,10 +267,10 @@ namespace CodeJam.Ranges
 		}
 
 		/// <summary>
-        /// Returns a list with that contain inresection of overlapped ranges with current instance.
-        /// </summary>
-        /// <param name="ranges">The ranges to intersect.</param>
-        /// <returns>A new list.</returns>
+		/// Returns a list with that contain inresection of overlapped ranges with current instance.
+		/// </summary>
+		/// <param name="ranges">The ranges to intersect.</param>
+		/// <returns>A new list.</returns>
 		public ImmutableRangeList<TValue> Intersect(IEnumerable<Range<TValue>> ranges)
 		{
 			if (Values == null || ranges == null)
@@ -281,13 +282,13 @@ namespace CodeJam.Ranges
 			return intersected.ToRangeList();
 		}
 
-        /// <summary>
-        /// Determines whether the range list contains a specific value <see cref="TValue"/>.
-        /// </summary>
-        /// <param name="value">The object to locate in the range list.</param>
-        /// <returns>
-        /// <c>true</c> if the <see cref="TValue"/> is found in the range list; otherwise, <c>false</c>.
-        /// </returns>
+		/// <summary>
+		/// Determines whether the range list contains a specific value <see cref="TValue"/>.
+		/// </summary>
+		/// <param name="value">The object to locate in the range list.</param>
+		/// <returns>
+		/// <c>true</c> if the <see cref="TValue"/> is found in the range list; otherwise, <c>false</c>.
+		/// </returns>
 		public bool Contains(TValue value)
 		{
 			if (IsEmpty)
@@ -300,7 +301,6 @@ namespace CodeJam.Ranges
 		}
 
 		#region Operators
-
 		/// <summary>
 		/// Inverts ranges list
 		/// </summary>
@@ -329,8 +329,8 @@ namespace CodeJam.Ranges
 		/// <summary>
 		/// Includes ranges from both range lists and combine overlapped ranges
 		/// </summary>
-        /// <param name="left">The instance to the left of the operator.</param>
-        /// <param name="right">The instance to the right of the operator.</param>
+		/// <param name="left">The instance to the left of the operator.</param>
+		/// <param name="right">The instance to the right of the operator.</param>
 		/// <returns>A new range list.</returns>
 		public static ImmutableRangeList<TValue> operator |(
 			ImmutableRangeList<TValue> left,
@@ -340,8 +340,8 @@ namespace CodeJam.Ranges
 		/// <summary>
 		/// Removes ranges <paramref name="right"/> from <paramref name="left"/>.
 		/// </summary>
-        /// <param name="left">The instance to the left of the operator.</param>
-        /// <param name="right">The instance to the right of the operator.</param>
+		/// <param name="left">The instance to the left of the operator.</param>
+		/// <param name="right">The instance to the right of the operator.</param>
 		/// <returns>A new range list.</returns>
 		public static ImmutableRangeList<TValue> operator -(
 			ImmutableRangeList<TValue> left,
@@ -351,14 +351,13 @@ namespace CodeJam.Ranges
 		/// <summary>
 		/// Returns intersection of two range lists
 		/// </summary>
-        /// <param name="left">The instance to the left of the operator.</param>
-        /// <param name="right">The instance to the right of the operator.</param>
+		/// <param name="left">The instance to the left of the operator.</param>
+		/// <param name="right">The instance to the right of the operator.</param>
 		/// <returns>A new range list.</returns>
 		public static ImmutableRangeList<TValue> operator &(
 			ImmutableRangeList<TValue> left,
 			ImmutableRangeList<TValue> right) =>
 				left.Intersect(right);
-
 		#endregion
 	}
 }

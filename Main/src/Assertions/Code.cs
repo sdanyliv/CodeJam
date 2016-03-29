@@ -17,7 +17,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNull<T>(
-			[NotNull] T arg,
+			[CanBeNull] T arg,
 			[NotNull] [InvokerParameterName] string argName) where T : class
 		{
 			if (arg == null)
@@ -30,7 +30,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNull<T>(
-			[NotNull] T? arg,
+			[CanBeNull] T? arg,
 			[NotNull] [InvokerParameterName] string argName) where T : struct
 		{
 			if (arg == null)
@@ -43,7 +43,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNullNorEmpty(
-			[NotNull] string arg,
+			[CanBeNull] string arg,
 			[NotNull] [InvokerParameterName] string argName)
 		{
 			if (string.IsNullOrEmpty(arg))

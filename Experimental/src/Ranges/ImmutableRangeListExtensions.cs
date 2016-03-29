@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using JetBrains.Annotations;
 
 namespace CodeJam.Ranges
 {
-    /// <summary>
-    /// Extension methods for ImmutableRangeList.
-    /// </summary>
+	/// <summary>
+	/// Extension methods for ImmutableRangeList.
+	/// </summary>
 	[PublicAPI]
 	public static class ImmutableRangeListExtensions
 	{

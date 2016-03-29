@@ -53,7 +53,6 @@ namespace CodeJam.Ranges
 			Assert.IsTrue(range1.IntersectsWith(Range.Create(0, 0)));
 			Assert.IsFalse(range1.IntersectsWith(Range.Create(-2, -1)));
 
-
 			range1 = Range.Create(0, 3, false);
 
 			Assert.IsTrue(range1.IntersectsWith(Range.Create(1, 5, false)));
@@ -75,7 +74,6 @@ namespace CodeJam.Ranges
 			CheckIntersect(Range.Full<int>(), Range.StartsWith(10), Range.StartsWith(10));
 			CheckIntersect(Range.Empty<int>(), Range.Empty<int>(), Range.Empty<int>());
 
-
 			CheckIntersect(Range.EndsWith(10, true), Range.Create(0, 10, true, true), Range.Create(0, 10, true));
 			CheckIntersect(Range.EndsWith(10, false), Range.Create(0, 10, true, true), Range.Create(0, 10, true, false));
 
@@ -93,35 +91,35 @@ namespace CodeJam.Ranges
 		[Test]
 		public void Exclude()
 		{
-			CheckExclude(Range.EndsWith(5, true),	Range.Create(2, 3, true, true),		"..(2)", "(3)..5"	);
-			CheckExclude(Range.EndsWith(5, true),	Range.Create(2, 5, true, false),	"..(2)", "5"		);
-			CheckExclude(Range.EndsWith(5, true),	Range.Create(2, 5, true, true),		"..(2)"				);
-			CheckExclude(Range.EndsWith(5, false),	Range.Create(2, 5, true, true),		"..(2)"				);
-			CheckExclude(Range.EndsWith(5, false),	Range.Create(2, 5, true, false),	"..(2)"				);
+			CheckExclude(Range.EndsWith(5, true), Range.Create(2, 3, true, true), "..(2)", "(3)..5");
+			CheckExclude(Range.EndsWith(5, true), Range.Create(2, 5, true, false), "..(2)", "5");
+			CheckExclude(Range.EndsWith(5, true), Range.Create(2, 5, true, true), "..(2)");
+			CheckExclude(Range.EndsWith(5, false), Range.Create(2, 5, true, true), "..(2)");
+			CheckExclude(Range.EndsWith(5, false), Range.Create(2, 5, true, false), "..(2)");
 
-			CheckExclude(Range.Create(0, 5, true, true), Range.Create(2, 5, true, true),	"0..(2)"		);
-			CheckExclude(Range.Create(0, 5, true, true), Range.Create(2, 10, true, true),	"0..(2)"		);
-			CheckExclude(Range.Create(0, 5, true, true), Range.StartsWith(2, true),			"0..(2)"		);
-			CheckExclude(Range.Create(0, 5, true, true), Range.StartsWith(5, false),		"0..5"			);
-			CheckExclude(Range.Create(0, 5, true, true), Range.StartsWith(5, true),			"0..(5)"		);
+			CheckExclude(Range.Create(0, 5, true, true), Range.Create(2, 5, true, true), "0..(2)");
+			CheckExclude(Range.Create(0, 5, true, true), Range.Create(2, 10, true, true), "0..(2)");
+			CheckExclude(Range.Create(0, 5, true, true), Range.StartsWith(2, true), "0..(2)");
+			CheckExclude(Range.Create(0, 5, true, true), Range.StartsWith(5, false), "0..5");
+			CheckExclude(Range.Create(0, 5, true, true), Range.StartsWith(5, true), "0..(5)");
 		}
 
 		[Test]
 		public void Union()
 		{
-			CheckUnion(Range<int>.Empty,	Range<int>.Full,	"...");
+			CheckUnion(Range<int>.Empty, Range<int>.Full, "...");
 
-			CheckUnion(Range<int>.Empty,	Range.StartsWith(5, true),		"5..");
-			CheckUnion(Range<int>.Empty,	Range.StartsWith(5, false),		"(5)..");
+			CheckUnion(Range<int>.Empty, Range.StartsWith(5, true), "5..");
+			CheckUnion(Range<int>.Empty, Range.StartsWith(5, false), "(5)..");
 
-			CheckUnion(Range.StartsWith(5, false),	Range.EndsWith(10, true),	"...");
-			CheckUnion(Range.StartsWith(5, false),	Range.EndsWith(10, false),	"...");
+			CheckUnion(Range.StartsWith(5, false), Range.EndsWith(10, true), "...");
+			CheckUnion(Range.StartsWith(5, false), Range.EndsWith(10, false), "...");
 
-			CheckUnion(Range.StartsWith(5, true),	Range.StartsWith(10, true),	"5..");
-			CheckUnion(Range.StartsWith(5, false),	Range.StartsWith(10, true),	"(5)..");
+			CheckUnion(Range.StartsWith(5, true), Range.StartsWith(10, true), "5..");
+			CheckUnion(Range.StartsWith(5, false), Range.StartsWith(10, true), "(5)..");
 
-			CheckUnion(Range.EndsWith(5, true),		Range.EndsWith(10, true),	"..10");
-			CheckUnion(Range.EndsWith(5, false),	Range.EndsWith(10, false),	"..(10)");
+			CheckUnion(Range.EndsWith(5, true), Range.EndsWith(10, true), "..10");
+			CheckUnion(Range.EndsWith(5, false), Range.EndsWith(10, false), "..(10)");
 		}
 
 		private static void CheckUnion<TValue>(Range<TValue> range1, Range<TValue> range2, string representation)
@@ -137,10 +135,8 @@ namespace CodeJam.Ranges
 			var result = range1.Exclude(range2).ToArray();
 			Assert.AreEqual(representation.Length, result.Length);
 
-			for (int i = 0; i < result.Length; i++)
-			{
+			for (var i = 0; i < result.Length; i++)
 				Assert.AreEqual(representation[i], result[i].DisplayValue());
-			}
 		}
 
 		private static void CheckIntersect<TValue>(Range<TValue> range1, Range<TValue> range2, Range<TValue> expected)

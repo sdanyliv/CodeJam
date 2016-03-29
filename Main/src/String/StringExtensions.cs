@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 using JetBrains.Annotations;
 
@@ -130,5 +131,44 @@ namespace CodeJam
 		[Pure]
 		public static string TrimSuffix([NotNull] this string str, [CanBeNull] string suffix) =>
 			TrimSuffix(str, suffix, StringComparer.CurrentCulture);
+
+		private static readonly string[] _sizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB" };
+
+		/// <summary>
+		/// Returns size in bytes string representation.
+		/// </summary>
+		public static string ToByteSizeString(this int value) => ToByteSizeString((long)value, CultureInfo.CurrentCulture);
+
+		/// <summary>
+		/// Returns size in bytes string representation.
+		/// </summary>
+		public static string ToByteSizeString(this int value, IFormatProvider provider) => ToByteSizeString((long)value, provider);
+
+		/// <summary>
+		/// Returns size in bytes string representation.
+		/// </summary>
+		public static string ToByteSizeString(this long value) => ToByteSizeString(value, CultureInfo.CurrentCulture);
+
+		/// <summary>
+		/// Returns size in bytes string representation.
+		/// </summary>
+		public static string ToByteSizeString(this long value, IFormatProvider provider)
+		{
+			if (value < 0)
+				return "-" + (-value).ToByteSizeString(provider);
+
+			if (value == 0)
+				return "0";
+
+			var i = 0;
+			var d = (decimal)value;
+			while (Math.Round(d / 1024) >= 1)
+			{
+				d /= 1024;
+				i++;
+			}
+
+			return string.Format(provider, "{0:#.##} {1}", d, _sizeSuffixes[i]);
+		}
 	}
 }

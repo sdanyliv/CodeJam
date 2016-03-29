@@ -7,11 +7,11 @@
 
 	var projects = new[]
 	{
-		new ProjectInfo("4.0",   "v4.0",   "FW40"),
-		new ProjectInfo("4.5",   "v4.5",   "FW45"),
-		new ProjectInfo("4.5.1", "v4.5.1", "FW451"),
-		new ProjectInfo("4.5.2", "v4.5.2", "FW452"),
-		new ProjectInfo("4.6",   "v4.6",   "FW6"),
+		new ProjectInfo("4.0",   "v4.0",   "FW61;FW6;FW452;FW451;FW45;FW40"),
+		new ProjectInfo("4.5",   "v4.5",   "FW61;FW6;FW452;FW451;FW45"),
+		new ProjectInfo("4.5.1", "v4.5.1", "FW61;FW6;FW452;FW451"),
+		new ProjectInfo("4.5.2", "v4.5.2", "FW61;FW6;FW452"),
+		new ProjectInfo("4.6",   "v4.6",   "FW61;FW6"),
 		new ProjectInfo("4.6.1", "v4.6.1", "FW61"),
 	};
 
@@ -22,8 +22,8 @@
 #>
 "<#= msBuildExe #>" <#= projectName #>.csproj /target:Clean   /property:Configuration=Debug   /property:OutputPath=bin\Debug.<#= p.OutputPath #>\
 "<#= msBuildExe #>" <#= projectName #>.csproj /target:Clean   /property:Configuration=Release /property:OutputPath=bin\Release.<#= p.OutputPath #>\
-"<#= msBuildExe #>" <#= projectName #>.csproj /target:ReBuild /property:Configuration=Debug   /property:OutputPath=bin\Debug.<#= p.OutputPath #>\   /property:TargetFrameworkVersion=<#= p.TargetFramework #> /p:DefineConstants=<#= p.DefineConstants #>
-"<#= msBuildExe #>" <#= projectName #>.csproj /target:ReBuild /property:Configuration=Release /property:OutputPath=bin\Release.<#= p.OutputPath #>\ /property:TargetFrameworkVersion=<#= p.TargetFramework #> /p:DefineConstants=<#= p.DefineConstants #>
+"<#= msBuildExe #>" <#= projectName #>.csproj /target:ReBuild /property:Configuration=Debug   /property:OutputPath=bin\Debug.<#= p.OutputPath #>\   /property:TargetFrameworkVersion=<#= p.TargetFramework #> /p:DefineConstants="<#= p.DefineConstants #>"
+"<#= msBuildExe #>" <#= projectName #>.csproj /target:ReBuild /property:Configuration=Release /property:OutputPath=bin\Release.<#= p.OutputPath #>\ /property:TargetFrameworkVersion=<#= p.TargetFramework #> /p:DefineConstants="<#= p.DefineConstants #>"
 
 <#
 	}

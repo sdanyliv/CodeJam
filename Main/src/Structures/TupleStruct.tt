@@ -39,7 +39,7 @@ namespace CodeJam
 
 <#for (var i = 2; i <= count; i++) {#>
 	/// <summary>
-	/// Creates a new <#=i#>-tuple.
+	/// Represents a <#=i#>-tuple.
 	/// </summary>
 <#
 	var range = Enumerable.Range(1, i);

@@ -33,14 +33,57 @@ namespace CodeJam
 		public static bool NotNullNorWhiteSpace([CanBeNull] this string str) => !string.IsNullOrWhiteSpace(str);
 
 		/// <summary>
+		/// Replaces one or more format items in a specified string with the string representation of a specified object.
+		/// </summary>
+		/// <param name="format">A composite format string.</param>
+		/// <param name="arg">The object to format.</param>
+		/// <returns>
+		/// A copy of <paramref name="format"/> in which any format items are replaced by the string representation of <paramref name="arg"/>.
+		/// </returns>
+		[NotNull, Pure]
+		[StringFormatMethod("format")]
+		public static string FormatWith([NotNull] this string format, object arg) => string.Format(format, arg);
+
+		/// <summary>
+		/// Replaces the format items in a specified string with the string representation of two specified objects.
+		/// </summary>
+		/// <param name="format">A composite format string.</param>
+		/// <param name="arg0">The first object to format.</param>
+		/// <param name="arg1">The second object to format.</param>
+		/// <returns>
+		/// A copy of <paramref name="format"/> in which format items are replaced by the string representations
+		/// of <paramref name="arg0"/> and <paramref name="arg1"/>.
+		/// </returns>
+		[NotNull, Pure]
+		[StringFormatMethod("format")]
+		public static string FormatWith([NotNull] this string format, object arg0, object arg1) =>
+			string.Format(format, arg0, arg1);
+
+		/// <summary>
+		/// Replaces the format items in a specified string with the string representation of three specified objects.
+		/// </summary>
+		/// <param name="format">A composite format string.</param>
+		/// <param name="arg0">The first object to format.</param>
+		/// <param name="arg1">The second object to format.</param>
+		/// <param name="arg2">The third object to format.</param>
+		/// <returns>
+		/// A copy of <paramref name="format"/> in which the format items have been replaced by the string representations
+		/// of <paramref name="arg0"/>, <paramref name="arg1"/>, and <paramref name="arg2"/>.
+		/// </returns>
+		[NotNull, Pure]
+		[StringFormatMethod("format")]
+		public static string FormatWith([NotNull] this string format, object arg0, object arg1, object arg2) =>
+			string.Format(format, arg0, arg1, arg2);
+
+		/// <summary>
 		/// Replaces the format items in a specified string with the string representations 
 		/// of corresponding objects in a specified array.
 		/// </summary>
 		/// <param name="format">A composite format string.</param>
 		/// <param name="args">An object array that contains zero or more objects to format.</param>
 		/// <returns>A copy of format in which the format items have been replaced by the string representation of the corresponding objects in args</returns>
-		[StringFormatMethod("format")]
 		[NotNull, Pure]
+		[StringFormatMethod("format")]
 		public static string FormatWith([NotNull] this string format, params object[] args) => string.Format(format, args);
 
 		/// <summary>
@@ -93,6 +136,18 @@ namespace CodeJam
 		[NotNull, Pure]
 		public static string Join<T>([NotNull, InstantHandle] this IEnumerable<T> values, [CanBeNull] string separator) =>
 			string.Join(separator, values);
+
+		/// <summary>
+		/// Concatenates the members of a collection.
+		/// </summary>
+		/// <param name="values">A collection that contains the strings to concatenate.</param>
+		/// <returns>
+		/// A string that consists of the members of <paramref name="values"/>.
+		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
+		/// </returns>
+		[NotNull, Pure]
+		public static string Join<T>([NotNull, InstantHandle] this IEnumerable<T> values) =>
+			string.Join("", values);
 
 		/// <summary>
 		/// Returns length of argument, even if argument is null.

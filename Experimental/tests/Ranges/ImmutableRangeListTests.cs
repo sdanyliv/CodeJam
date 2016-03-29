@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 using NUnit.Framework;
 
@@ -12,10 +11,10 @@ namespace CodeJam.Ranges
 		public void Contains()
 		{
 			// TODO:
+			// ReSharper disable UnusedVariable
 			var zz = ImmutableRangeList<int>.Full - ImmutableRangeList<int>.Full;
-
-			Range<int>.Full.Intersect(Range<int>.Full);
-
+			var res = Range<int>.Full.Intersect(Range<int>.Full);
+			// ReSharper restore UnusedVariable
 		}
 
 
