@@ -22,22 +22,12 @@ namespace CodeJam.Threading
 				(_workers[i] = new Thread(Work) { Name = name + i }).Start();
 		}
 
-		private bool _isFinished;
-
-		private readonly object _syncFinished = new object();
+		private int _isFinished;
 
 		public void WaitAll()
 		{
-			if (_isFinished)
+			if (Interlocked.Exchange(ref _isFinished, 1) != 0)
 				return;
-
-			lock (_syncFinished)
-			{
-				if (_isFinished)
-					return;
-
-				_isFinished = true;
-			}
 
 			foreach (var _ in _workers)
 				_queue.Add(null);
