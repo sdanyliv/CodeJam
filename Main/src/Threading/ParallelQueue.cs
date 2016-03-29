@@ -87,7 +87,7 @@ namespace CodeJam.Threading
 		private void Dispose(bool disposing)
 		{
 			if (disposing)
-				_queue?.Dispose();
+				_queue.Dispose();
 		}
 	}
 }
