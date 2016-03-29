@@ -86,6 +86,30 @@ namespace CodeJam.Collections
 				new HashSet<T>(source, comparer);
 
 		/// <summary>
+		/// Sorts the elements of a sequence in ascending order.
+		/// </summary>
+		/// <typeparam name="TSource">The type of the elements of source.</typeparam>
+		/// <param name="source">A sequence of values to order.</param>
+		/// <returns>
+		/// An <see cref="IOrderedEnumerable{TElement}"/> whose elements are sorted.
+		/// </returns>
+		[NotNull, Pure]
+		public static IOrderedEnumerable<TSource> OrderBy<TSource>([NotNull] this IEnumerable<TSource> source) =>
+			source.OrderBy(Fn<TSource>.Identity);
+
+		/// <summary>
+		/// Sorts the elements of a sequence in descending order.
+		/// </summary>
+		/// <typeparam name="TSource">The type of the elements of source.</typeparam>
+		/// <param name="source">A sequence of values to order.</param>
+		/// <returns>
+		/// An <see cref="IOrderedEnumerable{TElement}"/> whose elements are sorted.
+		/// </returns>
+		[NotNull, Pure]
+		public static IOrderedEnumerable<TSource> OrderByDescending<TSource>([NotNull] this IEnumerable<TSource> source) =>
+			source.OrderByDescending(Fn<TSource>.Identity);
+
+		/// <summary>
 		/// Returns a sequence with distinct elements from the input sequence based on the specified key.
 		/// </summary>
 		/// <param name="source">The sequence to return distinct elements from.</param>
