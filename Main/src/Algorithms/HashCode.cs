@@ -19,7 +19,7 @@ namespace CodeJam
 		/// <param name="h2">Hash code 2</param>
 		/// <returns>Combined hash code</returns>
 		[Pure]
-		public static int Combine(int h1, int h2) => ((h1 << 5) + h1) ^ h2;
+		public static int Combine(int h1, int h2) => unchecked (((h1 << 5) + h1) ^ h2);
 
 		/// <summary>
 		/// Combines hash codes.
