@@ -152,7 +152,7 @@ namespace CodeJam
 				i++;
 			}
 
-			return $"{dValue.ToString(i == 0 ? "n0" : "n1", provider)} {_sizeSuffixes[i]}";
+			return string.Format(provider, "{0:#.##} {1}", dValue, _sizeSuffixes[i]);
 		}
 
 		/// <summary>
