@@ -10,7 +10,7 @@ cache:
 init:
 - cmd: git config --global core.autocrlf true
 - ps: $env:buildVersion = "$env:packageVersion.$env:appveyor_build_number"
-- ps: $env:nugetVersion = "$env:packageVersion-alpha.$env:appveyor_build_number"
+- ps: $env:nugetVersion = "$env:packageVersion-alpha$env:appveyor_build_number"
 - ps: Update-AppveyorBuild -Version $env:buildVersion
 
 assembly_info:
