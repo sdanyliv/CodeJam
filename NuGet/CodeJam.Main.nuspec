@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>CodeJam</id>
+		<version>1.0.0-beta2</version>
+		<title>CodeJam .NET Library</title>
+		<authors>andrewvk</authors>
+		<licenseUrl>https://github.com/rsdn/CodeJam/blob/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/rsdn/CodeJam</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>A set of reusable, open source .NET components with minimal dependency</description>
+		<dependencies />
+	</metadata>
+	<files>
+		<file src="..\Main\src\bin\Release.4.0\CodeJam.dll" target="lib\net40" />
+		<file src="..\Main\src\bin\Release.4.0\CodeJam.pdb" target="lib\net40" />
+		<file src="..\Main\src\bin\Release.4.0\CodeJam.xml" target="lib\net40" />
+		
+		<file src="..\Main\src\bin\Release.4.5\CodeJam.dll" target="lib\net45" />
+		<file src="..\Main\src\bin\Release.4.5\CodeJam.pdb" target="lib\net45" />
+		<file src="..\Main\src\bin\Release.4.5\CodeJam.xml" target="lib\net45" />
+	</files>
+</package>

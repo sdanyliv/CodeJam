@@ -37,6 +37,8 @@ namespace CodeJam.Collections
 		public static TValue GetValueOrDefault<TKey, TValue>([NotNull] this Dictionary<TKey, TValue> dictionary, TKey key) =>
 			GetValueOrDefault((IDictionary<TKey, TValue>) dictionary, key);
 
+#if !FW40
+
 		/// <summary>
 		/// Returns value associated with <paramref name="key"/>, or default(TValue) if key does not exists in
 		/// <paramref name="dictionary"/>
@@ -54,9 +56,12 @@ namespace CodeJam.Collections
 					? result
 					: default(TValue);
 		}
-		#endregion
 
-		#region GetOrAdd, AddOrUpdate
+#endif
+
+#endregion
+
+#region GetOrAdd, AddOrUpdate
 		/// <summary>
 		///   Adds a key/value pair to the <see cref="IDictionary{TKey,TValue}"/> if the key does not already exist.
 		/// </summary>
@@ -166,6 +171,6 @@ namespace CodeJam.Collections
 			dictionary.Add(key, newAddValue);
 			return newAddValue;
 		}
-		#endregion
+#endregion
 	}
 }
