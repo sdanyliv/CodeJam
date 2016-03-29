@@ -98,6 +98,7 @@ namespace CodeJam.IO
 			/// <summary>
 			/// DirectoryInfo object
 			/// </summary>
+			[CanBeNull]
 			public DirectoryInfo Info => Path != null ? _info ?? (_info = new DirectoryInfo(Path)) : null;
 
 			/// <summary>
@@ -111,15 +112,9 @@ namespace CodeJam.IO
 				{
 					Directory.Delete(path, true);
 				}
-				catch (ArgumentException)
-				{
-				}
-				catch (IOException)
-				{
-				}
-				catch (UnauthorizedAccessException)
-				{
-				}
+				catch (ArgumentException) {}
+				catch (IOException) {}
+				catch (UnauthorizedAccessException) {}
 			}
 		}
 
@@ -141,6 +136,7 @@ namespace CodeJam.IO
 			/// <summary>
 			/// DirectoryInfo object
 			/// </summary>
+			[CanBeNull]
 			public FileInfo Info => Path != null ? _info ?? (_info = new FileInfo(Path)) : null;
 
 			/// <summary>
