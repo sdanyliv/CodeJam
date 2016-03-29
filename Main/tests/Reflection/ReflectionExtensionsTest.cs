@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 
 using NUnit.Framework;
 
@@ -11,10 +10,6 @@ namespace CodeJam.Reflection
 	[TestFixture]
 	public class ReflectionExtensionsTest
 	{
-		[Test]
-		public void GetAsmPath() =>
-			Assert.AreEqual("CodeJam-Tests.DLL", Path.GetFileName(GetType().Assembly.GetAssemblyPath()));
-
 		[TestCase(typeof (List<int>),     typeof (IList<int>),       ExpectedResult = true)]
 		[TestCase(typeof (List<int>),     typeof (IList),            ExpectedResult = true)]
 		[TestCase(typeof (List<int>),     typeof (IList<>),          ExpectedResult = true)]
