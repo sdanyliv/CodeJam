@@ -31,5 +31,12 @@ namespace CodeJam.Reflection
 		[TestCase(typeof (ReflectionExtensions),      ExpectedResult = false)]
 		[TestCase(typeof (KeyedCollection<int, int>), ExpectedResult = false)]
 		public bool IsInstantiableTypeTest(Type type) => type.IsInstantiableType();
+
+		[TestCase(typeof (int),                       ExpectedResult = false)]
+		[TestCase(typeof (int?),                      ExpectedResult = true)]
+		[TestCase(typeof (string),                    ExpectedResult = false)]
+		[TestCase(typeof (double),                    ExpectedResult = false)]
+		[TestCase(typeof (double?),                   ExpectedResult = true)]
+		public bool IsIsNullableTypeTest(Type type) => type.IsNullableType();
 	}
 }
