@@ -76,7 +76,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeJam.Experimental.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@ namespace CodeJam.Reflection
 	/// <summary>
 	/// The <see cref="Assembly"/> extensions.
 	/// </summary>
+	[PublicAPI]
 	public static class AssemblyExtensions
 	{
 		/// <summary>

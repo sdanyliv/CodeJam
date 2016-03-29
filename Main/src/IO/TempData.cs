@@ -63,7 +63,7 @@ namespace CodeJam.IO
 			/// <summary>
 			/// Dispose pattern implementation - overridable part
 			/// </summary>
-			protected virtual void Dispose(bool disposing)
+			protected void Dispose(bool disposing)
 			{
 #pragma warning disable 420
 				var path = Interlocked.Exchange(ref _path, null);
