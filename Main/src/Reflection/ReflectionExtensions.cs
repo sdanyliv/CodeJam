@@ -180,53 +180,5 @@ namespace CodeJam.Reflection
 			if (predicate == null) throw new ArgumentNullException(nameof(predicate));
 			return member.GetCustomAttributes<T>(inherit).Any(predicate);
 		}
-
-		/// <summary>
-		/// Loads the specified manifest resource from this assembly, and checks if it exists.
-		/// </summary>
-		/// <param name="assembly">Resource assembly.</param>
-		/// <param name="name">The case-sensitive name of the manifest resource being requested.</param>
-		/// <returns>The manifest resource.</returns>
-		/// <exception cref="ArgumentNullException">The name parameter is null.</exception>
-		/// <exception cref="ArgumentException">Resource with specified name not found</exception>
-		[NotNull]
-		[Pure]
-		public static Stream GetRequiredResourceStream([NotNull] this Assembly assembly, [NotNull] string name)
-		{
-			if (assembly == null) throw new ArgumentNullException(nameof(assembly));
-			if (name.IsNullOrWhiteSpace()) throw new ArgumentNullException(nameof(name));
-
-			var result = assembly.GetManifestResourceStream(name);
-			if (result == null)
-				throw new ArgumentException("Resource with specified name not found");
-			return result;
-		}
-
-		/// <summary>
-		/// Returns path to assembly <paramref name="asm"/> file.
-		/// </summary>
-		/// <param name="asm">Assembly.</param>
-		[NotNull]
-		[Pure]
-		public static string GetAssemblyPath([NotNull] this Assembly asm)
-		{
-			if (asm == null) throw new ArgumentNullException(nameof(asm));
-			var codeBase = asm.CodeBase;
-			if (codeBase == null)
-				throw new ArgumentException("Specified assembly has no physical code base.");
-			var uri = new Uri(codeBase);
-			if (!uri.IsFile)
-				throw new ArgumentException("Specified assembly placed not on local disk.");
-			return uri.AbsolutePath;
-		}
-
-		/// <summary>
-		/// Returns directory part of path to assembly <paramref name="asm"/> file.
-		/// </summary>
-		/// <param name="asm">Assembly.</param>
-		[NotNull]
-		[Pure]
-		public static string GetAssemblyDirectory([NotNull] this Assembly asm) =>
-			Path.GetDirectoryName(GetAssemblyPath(asm)) ?? "";
 	}
 }
