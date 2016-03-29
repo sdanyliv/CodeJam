@@ -37,6 +37,6 @@ namespace CodeJam.Reflection
 		[TestCase(typeof (string),                    ExpectedResult = false)]
 		[TestCase(typeof (double),                    ExpectedResult = false)]
 		[TestCase(typeof (double?),                   ExpectedResult = true)]
-		public bool IsIsNullableTypeTest(Type type) => type.IsNullableType();
+		public bool IsIsNullableTypeTest(Type type) => type.IsNullable();
 	}
 }

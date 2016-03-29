@@ -42,8 +42,7 @@ namespace CodeJam.Reflection
 		/// A value indicating whether the <paramref name="type"/> is Nullable&#60;&#62;.
 		/// </returns>
 		[Pure]
-		public static bool IsNullableType([NotNull] this Type type) =>
-			type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Nullable<>);
+		public static bool IsNullable([NotNull] this Type type) => Nullable.GetUnderlyingType(type) != null;
 
 		/// <summary>
 		/// Determines whether the <paramref name="type"/> derives from the specified <paramref name="check"/>.
