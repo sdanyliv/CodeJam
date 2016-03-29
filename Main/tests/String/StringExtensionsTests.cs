@@ -14,14 +14,14 @@ namespace CodeJam
 		[TestCase("abc", ExpectedResult = 3)]
 		public int Length(string source) => source.Length();
 
-		[TestCase("", StringOrigin.Begin, 1, ExpectedResult = "")]
-		[TestCase("", StringOrigin.End, 1, ExpectedResult = "")]
+		[TestCase("",    StringOrigin.Begin, 1, ExpectedResult = "")]
+		[TestCase("",    StringOrigin.End,   1, ExpectedResult = "")]
 		[TestCase("abc", StringOrigin.Begin, 0, ExpectedResult = "")]
-		[TestCase("abc", StringOrigin.End, 0, ExpectedResult = "")]
+		[TestCase("abc", StringOrigin.End,   0, ExpectedResult = "")]
 		[TestCase("abc", StringOrigin.Begin, 2, ExpectedResult = "ab")]
-		[TestCase("abc", StringOrigin.End, 2, ExpectedResult = "bc")]
+		[TestCase("abc", StringOrigin.End,   2, ExpectedResult = "bc")]
 		[TestCase("abc", StringOrigin.Begin, 4, ExpectedResult = "abc")]
-		[TestCase("abc", StringOrigin.End, 4, ExpectedResult = "abc")]
+		[TestCase("abc", StringOrigin.End,   4, ExpectedResult = "abc")]
 		public string SubstringOrg(string str, StringOrigin origin, int length) => str.Substring(origin, length);
 
 		[TestCase("abc", null, ExpectedResult = "abc")]
