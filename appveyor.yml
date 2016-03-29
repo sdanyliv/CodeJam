@@ -33,8 +33,10 @@ build:
   verbosity: minimal
 
 after_build:
-- cmd: Main\src\Compile.cmd
+- cmd: cd Main\src
+- cmd: Compile.cmd
+- cmd: cd ..\..
 - ps: nuget pack Nuget\CodeJam.Main.nuspec -version "$env:nugetVersion"
 - ps: nuget pack Nuget\CodeJam.Experimental.nuspec -version "$env:nugetVersion"
-- ps: Push-AppveyorArtifact CodeJam.Main.$env:nugetVersion.nupkg
+- ps: Push-AppveyorArtifact CodeJam.$env:nugetVersion.nupkg
 - ps: Push-AppveyorArtifact CodeJam.Experimental.$env:nugetVersion.nupkg
