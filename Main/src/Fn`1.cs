@@ -38,6 +38,11 @@ namespace CodeJam
 		public static readonly Converter<T, T> IdentityConverter = o => o;
 
 		/// <summary>
+		/// The function that returns true if an object is null.
+		/// </summary>
+		public static readonly Func<T, bool> IsNull = o => o == null;
+
+		/// <summary>
 		/// The function that returns true if an object is not null.
 		/// </summary>
 		public static readonly Func<T, bool> IsNotNull = o => o != null;
