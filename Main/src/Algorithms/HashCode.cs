@@ -1,4 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
+
+using CodeJam.Collections;
+
+using JetBrains.Annotations;
 
 namespace CodeJam
 {
@@ -93,5 +97,62 @@ namespace CodeJam
 		/// <returns>Combined hash code</returns>
 		[Pure]
 		public static int Combine(int h1, int h2, int h3, int h4, int h5, int h6, int h7, int h8) => Combine(Combine(h1, h2, h3, h4), Combine(h5, h6, h7, h8));
+
+
+		/// <summary>
+		/// Combines hash codes.
+		/// </summary>
+		/// <param name="values">The collection to combine hash codes.</param>
+		/// <returns>
+		/// Combined hash code.
+		/// </returns>
+		[Pure]
+		public static int CombineValues<T>([CanBeNull] T[] values)
+		{
+			if (values.IsNullOrEmpty())
+				return 0;
+
+			var hashCode = 0;
+			foreach (var value in values)
+				if (value != null)
+					hashCode = Combine(value.GetHashCode(), hashCode);
+
+			return hashCode;
+		}
+
+		/// <summary>
+		/// Combines hash codes.
+		/// </summary>
+		/// <param name="values">The sequence to combine hash codes.</param>
+		/// <returns>
+		/// Combined hash code.
+		/// </returns>
+		[Pure]
+		public static int CombineValues<T>([CanBeNull] IEnumerable<T> values)
+		{
+			if (values == null)
+				return 0;
+
+			var hashCode = 0;
+
+			var list = values as IList<T>;
+			if (list != null)
+			{
+				for (int i = 0, count = list.Count; i < count; i++)
+				{
+					var value = list[i];
+					if (value != null)
+						hashCode = Combine(value.GetHashCode(), hashCode);
+				}
+			}
+			else
+			{
+				foreach (var value in values)
+					if (value != null)
+						hashCode = Combine(value.GetHashCode(), hashCode);
+			}
+
+			return hashCode;
+		}
 	}
 }
