@@ -40,6 +40,6 @@ namespace CodeJam
 		/// <summary>
 		/// Gets the function that returns true if an object is not null.
 		/// </summary>
-		public static readonly Func<T, bool> NotNull = o => o != null;
+		public static readonly Func<T, bool> IsNotNull = o => o != null;
 	}
 }
