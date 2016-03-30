@@ -22,7 +22,7 @@ namespace CodeJam
 		[Conditional(DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		public static void NotNull<T>(
-			[CanBeNull] T arg,
+			[CanBeNull, NoEnumeration] T arg,
 			[NotNull] [InvokerParameterName] string argName) where T : class =>
 				Code.NotNull(arg, argName);
 

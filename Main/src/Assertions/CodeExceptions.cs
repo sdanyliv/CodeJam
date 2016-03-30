@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
 
@@ -44,10 +46,9 @@ namespace CodeJam
 		/// </summary>
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
+		[SuppressMessage("ReSharper", "ArrangeRedundantParentheses")]
 		private static string FormatMessage([NotNull] string messageFormat, [CanBeNull] params object[] args) =>
-			// ReSharper disable ArrangeRedundantParentheses
 			(args == null || args.Length == 0) ? messageFormat : string.Format(messageFormat, args);
-			// ReSharper restore ArrangeRedundantParentheses
 		#endregion
 
 		#region General purpose exceptions
@@ -94,7 +95,8 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
-		public static InvalidOperationException InvalidOperation([NotNull] string messageFormat, [CanBeNull] params object[] args)
+		public static InvalidOperationException InvalidOperation(
+			[NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
 			BreakIfAttached();
 			return new InvalidOperationException(FormatMessage(messageFormat, args));
@@ -108,11 +110,11 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[NotNull]
-		public static InvalidOperationException UnexpectedValue([CanBeNull] object value)
+		public static InvalidOperationException UnexpectedValue<T>([CanBeNull] T value)
 		{
 			BreakIfAttached();
-			return
-				new InvalidOperationException($"Unexpected value '{value}' of type '{value?.GetType().FullName ?? "<unknown>"}'");
+			var valueType = value?.GetType() ?? typeof(T);
+			return new InvalidOperationException($"Unexpected value '{value}' of type '{valueType.FullName}'");
 		}
 
 		/// <summary>
@@ -122,10 +124,37 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
-		public static InvalidOperationException UnexpectedValue([NotNull] string messageFormat, [CanBeNull] params object[] args)
+		public static InvalidOperationException UnexpectedValue(
+			[NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
 			BreakIfAttached();
 			return new InvalidOperationException(FormatMessage(messageFormat, args));
+		}
+
+		/// <summary>
+		/// Throw this if the object is disposed.
+		/// </summary>
+		[DebuggerHidden]
+		[StringFormatMethod("messageFormat")]
+		[NotNull]
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		public static ObjectDisposedException ObjectDisposed([CanBeNull] Type typeofDisposedObject)
+		{
+			BreakIfAttached();
+			return new ObjectDisposedException(typeofDisposedObject?.FullName);
+		}
+
+		/// <summary>
+		/// Throw this if the object is disposed.
+		/// </summary>
+		[DebuggerHidden]
+		[StringFormatMethod("messageFormat")]
+		[NotNull]
+		public static ObjectDisposedException ObjectDisposed(
+			[CanBeNull] Type typeofDisposedObject, [NotNull] string messageFormat, [CanBeNull] params object[] args)
+		{
+			BreakIfAttached();
+			return new ObjectDisposedException(typeofDisposedObject?.FullName, FormatMessage(messageFormat, args));
 		}
 
 		/// <summary>

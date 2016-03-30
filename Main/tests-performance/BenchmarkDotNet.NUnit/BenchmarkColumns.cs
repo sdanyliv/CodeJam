@@ -1,7 +1,10 @@
-﻿using BenchmarkDotNet.Reports;
+﻿using System;
+
 using BenchmarkDotNet.Helpers;
-using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Horology;
+using BenchmarkDotNet.Reports;
+using BenchmarkDotNet.Running;
+
 // ReSharper disable ConvertMethodToExpressionBody
 // ReSharper disable CheckNamespace
 

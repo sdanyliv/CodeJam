@@ -20,7 +20,7 @@ namespace CodeJam.Reflection
 		/// A value indicating whether the <paramref name="type"/> can be instantiated.
 		/// </returns>
 		[Pure]
-		public static bool IsInstantiableType([NotNull] this Type type) =>
+		public static bool IsInstantiable([NotNull] this Type type) =>
 			!(type.IsAbstract || type.IsInterface || type.IsArray || type.ContainsGenericParameters);
 
 		/// <summary>
@@ -42,8 +42,8 @@ namespace CodeJam.Reflection
 		/// A value indicating whether the <paramref name="type"/> is Nullable&#60;&#62;.
 		/// </returns>
 		[Pure]
-		public static bool IsNullableType([NotNull] this Type type) =>
-			type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Nullable<>);
+		public static bool IsNullable([CanBeNull] this Type type) =>
+			type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
 		/// <summary>
 		/// Determines whether the <paramref name="type"/> derives from the specified <paramref name="check"/>.
