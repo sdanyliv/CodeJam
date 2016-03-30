@@ -2,6 +2,7 @@
 
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
+
 // ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.NUnit
@@ -24,7 +25,7 @@ namespace BenchmarkDotNet.NUnit
 			Add(
 				new Job
 				{
-					IterationTime = 50,
+					IterationTime = 100,
 					LaunchCount = 1,
 					WarmupCount = 1,
 					TargetCount = 10,

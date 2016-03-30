@@ -277,7 +277,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(30.0, 35.5)]
+		[CompetitionBenchmark(30.0, 38.5)]
 		public int Test13InterfaceGenericCall()
 		{
 			int a = 0;
@@ -344,7 +344,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(34.5, 42.0)]
+		[CompetitionBenchmark(34.5, 49.5)]
 		public int Test18LambdaClosureLocal()
 		{
 			int a1 = 0;

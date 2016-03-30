@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace CodeJam.Assertions
 {
-	[TestFixture(Category =BenchmarkConstants.BenchmarkCategory)]
+	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "PassStringInterpolation")]
 	public class CodeAssertionsPerformanceTest

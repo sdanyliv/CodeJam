@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace CodeJam.IO
 {
-	[TestFixture(Category="Temp data")]
+	[TestFixture(Category = "Temp data")]
 	[SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
 	public class TempDataTests
 	{
@@ -156,7 +156,6 @@ namespace CodeJam.IO
 				filePath = file.Name;
 				Assert.IsTrue(File.Exists(filePath), "FileStream should exist");
 				Assert.That(tempPath, Does.StartWith(tempPath));
-
 
 				var file2 = TempData.CreateFileStream();
 				Assert.AreNotEqual(file.Name, file2.Name, "Path should not match");

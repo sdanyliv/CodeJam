@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
+using BenchmarkDotNet.Helpers;
+
 using NUnit.Framework;
 
-using BenchmarkDotNet.Helpers;
 // ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.NUnit.Tests

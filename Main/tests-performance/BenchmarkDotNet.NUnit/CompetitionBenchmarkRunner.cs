@@ -12,6 +12,7 @@ using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
 using NUnit.Framework;
+
 // ReSharper disable CheckNamespace
 // ReSharper disable ConvertMethodToExpressionBody
 // ReSharper disable ArrangeBraces_ifelse
@@ -47,7 +48,7 @@ namespace BenchmarkDotNet.NUnit
 #endif
 
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		private static Type GetCallingType() => 
+		private static Type GetCallingType() =>
 			new StackTrace().GetFrame(2).GetMethod().DeclaringType;
 
 		/// <summary>
