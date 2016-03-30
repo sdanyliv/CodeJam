@@ -67,6 +67,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Collections\EnumerableExtensions.Flatten.cs" />
+    <Compile Include="Collections\EnumerableExtensions.TakeLast.cs" />
     <Compile Include="Collections\LazyDictionary.cs" />
     <Compile Include="Collections\LazyDictionary`2.cs" />
     <Compile Include="Collections\EnumerableExtensions.Split.cs" />
