@@ -85,6 +85,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TupleStruct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Threading\AsyncOperationHelper.cs" />
     <Compile Include="Threading\ConcurrentLazyDictionary.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.TopoSort.cs" />
