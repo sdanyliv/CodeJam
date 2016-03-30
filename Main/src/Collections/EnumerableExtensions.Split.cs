@@ -34,6 +34,18 @@ namespace CodeJam.Collections
 					yield return SplitSequence(enumerator, size);
 		}
 
+		// IT: This method should return Enumerable<T>:
+		//
+		// private static Enumerable[] SplitSequence<T>(IEnumerator<T> source, int size)
+		// {
+		// 	yield return source.Current;
+		//
+		//	for (var i = 1; i < batchSize && source.MoveNext(); i++)
+		//		yield return source.Current;
+		// }
+		//
+		// If we need overload that returns T[] we can call it SplitArray.
+		//
 		private static T[] SplitSequence<T>(IEnumerator<T> enumerator, int size)
 		{
 			var count = 0;
