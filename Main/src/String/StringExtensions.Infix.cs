@@ -12,24 +12,28 @@ namespace CodeJam
 		/// Infix form of <see cref="string.IsNullOrEmpty"/>.
 		/// </summary>
 		[Pure]
+		[ContractAnnotation("str:null => true")]
 		public static bool IsNullOrEmpty([CanBeNull] this string str) => string.IsNullOrEmpty(str);
 
 		/// <summary>
 		/// Returns true if argument is not null nor empty.
 		/// </summary>
 		[Pure]
+		[ContractAnnotation("str:null => false")]
 		public static bool NotNullNorEmpty([CanBeNull] this string str) => !string.IsNullOrEmpty(str);
 
 		/// <summary>
 		/// Infix form of <see cref="string.IsNullOrWhiteSpace"/>.
 		/// </summary>
 		[Pure]
+		[ContractAnnotation("str:null => true")]
 		public static bool IsNullOrWhiteSpace([CanBeNull] this string str) => string.IsNullOrWhiteSpace(str);
 
 		/// <summary>
 		/// Returns true if argument is not null nor whitespace.
 		/// </summary>
 		[Pure]
+		[ContractAnnotation("str:null => false")]
 		public static bool NotNullNorWhiteSpace([CanBeNull] this string str) => !string.IsNullOrWhiteSpace(str);
 
 		/// <summary>
@@ -40,7 +44,8 @@ namespace CodeJam
 		/// <returns>
 		/// A copy of <paramref name="format"/> in which any format items are replaced by the string representation of <paramref name="arg"/>.
 		/// </returns>
-		[NotNull, Pure]
+		[NotNull]
+		[Pure]
 		[StringFormatMethod("format")]
 		public static string FormatWith([NotNull] this string format, object arg) => string.Format(format, arg);
 
