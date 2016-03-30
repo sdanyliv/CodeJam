@@ -11,6 +11,7 @@ namespace CodeJam
 	[PublicAPI]
 	public static class Code
 	{
+		#region Argument validation
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> != <c>null</c>
 		/// </summary>
@@ -78,7 +79,9 @@ namespace CodeJam
 			if (!condition)
 				throw CodeExceptions.Argument(argName, messageFormat, args);
 		}
+		#endregion
 
+		#region State validation
 		/// <summary>
 		/// State assertion
 		/// </summary>
@@ -105,5 +108,127 @@ namespace CodeJam
 			if (!condition)
 				throw CodeExceptions.InvalidOperation(messageFormat, args);
 		}
+		#endregion
+
+		#region DisposedIf assertions (DO NOT copy into DebugCode)
+		// NB: ObjectDisposedException should be thrown from all builds or not thrown at all.
+		// There's no point in pairing these assertions with a debug-time-only ones
+
+		/// <summary>
+		/// Assertion for object disposal
+		/// </summary>
+		[DebuggerHidden]
+		[AssertionMethod]
+		public static void DisposedIf(bool disposed)
+		{
+			if (disposed)
+				throw CodeExceptions.ObjectDisposed();
+		}
+
+		/// <summary>
+		/// Assertion for object disposal
+		/// </summary>
+		[DebuggerHidden]
+		[AssertionMethod]
+		public static void DisposedIf<TDisposable>(
+			bool disposed,
+			[NotNull] TDisposable thisReference)
+			where TDisposable : IDisposable
+		{
+			if (disposed)
+				throw CodeExceptions.ObjectDisposed(thisReference.GetType());
+		}
+
+		/// <summary>
+		/// Assertion for object disposal
+		/// </summary>
+		[DebuggerHidden]
+		[AssertionMethod]
+		public static void DisposedIf<TDisposable>(
+			bool disposed,
+			[NotNull] TDisposable thisReference,
+			[NotNull] string message)
+			where TDisposable : IDisposable
+		{
+			if (disposed)
+				throw CodeExceptions.ObjectDisposed(thisReference.GetType(), message);
+		}
+
+		/// <summary>
+		/// Assertion for object disposal
+		/// </summary>
+		[DebuggerHidden]
+		[AssertionMethod, StringFormatMethod("messageFormat")]
+		public static void DisposedIf<TDisposable>(
+			bool disposed,
+			[NotNull] TDisposable thisReference,
+			[NotNull] string messageFormat,
+			[CanBeNull] params object[] args)
+			where TDisposable : IDisposable
+		{
+			if (disposed)
+				throw CodeExceptions.ObjectDisposed(thisReference.GetType(), messageFormat, args);
+		}
+
+		/// <summary>
+		/// Assertion for object disposal
+		/// </summary>
+		[DebuggerHidden]
+		[AssertionMethod]
+		public static void DisposedIfNull<TResource>(TResource resource)
+			where TResource : class
+		{
+			if (resource == null)
+				throw CodeExceptions.ObjectDisposed();
+		}
+
+		/// <summary>
+		/// Assertion for object disposal
+		/// </summary>
+		[DebuggerHidden]
+		[AssertionMethod]
+		public static void DisposedIfNull<TResource, TDisposable>(
+			TResource resource,
+			[NotNull] TDisposable thisReference)
+			where TResource : class
+			where TDisposable : IDisposable
+		{
+			if (resource == null)
+				throw CodeExceptions.ObjectDisposed(thisReference.GetType());
+		}
+
+		/// <summary>
+		/// Assertion for object disposal
+		/// </summary>
+		[DebuggerHidden]
+		[AssertionMethod]
+		public static void DisposedIfNull<TResource, TDisposable>(
+			TResource resource,
+			[NotNull] TDisposable thisReference,
+			[NotNull] string message)
+			where TResource : class
+			where TDisposable : IDisposable
+		{
+			if (resource == null)
+				throw CodeExceptions.ObjectDisposed(thisReference.GetType(), message);
+		}
+
+		/// <summary>
+		/// Assertion for object disposal
+		/// </summary>
+		[DebuggerHidden]
+		[AssertionMethod, StringFormatMethod("messageFormat")]
+		public static void DisposedIfNull<TResource, TDisposable>(
+			TResource resource,
+			[NotNull] TDisposable thisReference,
+			[NotNull] string messageFormat,
+			[CanBeNull] params object[] args)
+			where TResource : class
+			where TDisposable : IDisposable
+		{
+			if (resource == null)
+				throw CodeExceptions.ObjectDisposed(thisReference.GetType(), messageFormat, args);
+		}
+		#endregion
 	}
 }

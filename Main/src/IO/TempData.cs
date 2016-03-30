@@ -24,6 +24,11 @@ namespace CodeJam.IO
 			private volatile string _path;
 
 			/// <summary>
+			/// Assertion on object dispose
+			/// </summary>
+			protected void AssertNotDisposed() => Code.DisposedIfNull(_path);
+
+			/// <summary>
 			/// Initialize instance.
 			/// </summary>
 			protected TempBase(string path)
@@ -36,7 +41,15 @@ namespace CodeJam.IO
 			/// <summary>
 			/// Temp path.
 			/// </summary>
-			public string Path => _path;
+			[NotNull]
+			public string Path
+			{
+				get
+				{
+					AssertNotDisposed();
+					return _path;
+				}
+			}
 
 			/// <summary>
 			/// Finalize instance
@@ -98,8 +111,15 @@ namespace CodeJam.IO
 			/// <summary>
 			/// DirectoryInfo object
 			/// </summary>
-			[CanBeNull]
-			public DirectoryInfo Info => Path != null ? _info ?? (_info = new DirectoryInfo(Path)) : null;
+			[NotNull]
+			public DirectoryInfo Info
+			{
+				get
+				{
+					AssertNotDisposed();
+					return _info ?? (_info = new DirectoryInfo(Path));
+				}
+			}
 
 			/// <summary>
 			/// Temp path disposal
@@ -112,9 +132,9 @@ namespace CodeJam.IO
 				{
 					Directory.Delete(path, true);
 				}
-				catch (ArgumentException) {}
-				catch (IOException) {}
-				catch (UnauthorizedAccessException) {}
+				catch (ArgumentException) { }
+				catch (IOException) { }
+				catch (UnauthorizedAccessException) { }
 			}
 		}
 
@@ -136,8 +156,15 @@ namespace CodeJam.IO
 			/// <summary>
 			/// DirectoryInfo object
 			/// </summary>
-			[CanBeNull]
-			public FileInfo Info => Path != null ? _info ?? (_info = new FileInfo(Path)) : null;
+			[NotNull]
+			public FileInfo Info
+			{
+				get
+				{
+					AssertNotDisposed();
+					return _info ?? (_info = new FileInfo(Path));
+				}
+			}
 
 			/// <summary>
 			/// Temp path disposal
@@ -150,15 +177,9 @@ namespace CodeJam.IO
 				{
 					File.Delete(path);
 				}
-				catch (ArgumentException)
-				{
-				}
-				catch (IOException)
-				{
-				}
-				catch (UnauthorizedAccessException)
-				{
-				}
+				catch (ArgumentException) { }
+				catch (IOException) { }
+				catch (UnauthorizedAccessException) { }
 			}
 		}
 		#endregion

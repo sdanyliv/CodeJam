@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
@@ -6,7 +7,8 @@ using NUnit.Framework;
 
 namespace CodeJam.IO
 {
-	[TestFixture]
+	[TestFixture(Category="Temp data")]
+	[SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
 	public class TempDataTests
 	{
 		[Test]
@@ -20,10 +22,11 @@ namespace CodeJam.IO
 				Assert.IsTrue(Directory.Exists(dirPath), "Directory should exist");
 				Assert.That(dirPath, Does.StartWith(tempPath));
 
-				using (var dir2 = TempData.CreateDirectory())
-				{
-					Assert.AreNotEqual(dir.Path, dir2.Path, "Path should not match");
-				}
+				var dir2 = TempData.CreateDirectory();
+				Assert.AreNotEqual(dir.Path, dir2.Path, "Path should not match");
+				Assert.IsTrue(dir2.Info.Exists, "Directory should exist");
+				dir2.Dispose();
+				Assert.Throws<ObjectDisposedException>(() => dir2.Info.Exists.ToString());
 			}
 			Assert.IsFalse(Directory.Exists(dirPath), "Directory should NOT exist");
 
@@ -80,10 +83,11 @@ namespace CodeJam.IO
 				Assert.IsTrue(File.Exists(filePath), "File should exist");
 				Assert.That(tempPath, Does.StartWith(tempPath));
 
-				using (var file2 = TempData.CreateFile())
-				{
-					Assert.AreNotEqual(file.Path, file2.Path, "Path should not match");
-				}
+				var file2 = TempData.CreateFile();
+				Assert.AreNotEqual(file.Path, file2.Path, "Path should not match");
+				Assert.IsTrue(file2.Info.Exists, "File should exist");
+				file2.Dispose();
+				Assert.Throws<ObjectDisposedException>(() => file2.Info.Exists.ToString());
 			}
 			Assert.IsFalse(File.Exists(filePath), "File should NOT exist");
 
@@ -153,10 +157,12 @@ namespace CodeJam.IO
 				Assert.IsTrue(File.Exists(filePath), "FileStream should exist");
 				Assert.That(tempPath, Does.StartWith(tempPath));
 
-				using (var file2 = TempData.CreateFileStream())
-				{
-					Assert.AreNotEqual(file.Name, file2.Name, "Path should not match");
-				}
+
+				var file2 = TempData.CreateFileStream();
+				Assert.AreNotEqual(file.Name, file2.Name, "Path should not match");
+				Assert.IsTrue(File.Exists(file2.Name), "File should exist");
+				file2.Dispose();
+				Assert.Throws<ObjectDisposedException>(() => file2.Length.ToString());
 			}
 			Assert.IsFalse(File.Exists(filePath), "FileStream should NOT exist");
 
