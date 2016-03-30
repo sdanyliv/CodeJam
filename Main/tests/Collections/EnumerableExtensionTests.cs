@@ -37,15 +37,6 @@ namespace CodeJam
 		[TestCase(new int[0],            ExpectedResult = "")]
 		public string TakeLastTest(int[] source) => source.TakeLast(2).Join(", ");
 
-		[TestCase(5)]
-		[TestCase(1)]
-		[TestCase(0)]
-		public void PipeTest(int size) {
-			var n = 0;
-			var count = new int[size].Pipe(v => n++).Count();
-			Assert.AreEqual(count, n);
-		}
-
 		[TestCase(arg: new[] { "a:b", "b:c", "c" }, ExpectedResult = "c, b, a")]
 		[TestCase(arg: new[] { "a:c", "b:c", "c" }, ExpectedResult = "c, a, b")]
 		[TestCase(arg: new[] { "a", "b", "c: a, b" }, ExpectedResult = "a, b, c")]
