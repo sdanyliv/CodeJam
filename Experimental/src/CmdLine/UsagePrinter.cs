@@ -86,6 +86,7 @@ namespace CodeJam.CmdLine
 			}
 			if (hasOpts)
 				writer.Write(
+					// ReSharper disable once PassStringInterpolation
 					" [{0}...]",
 					settings.RealOptionsInHeadLine
 						? rules.Options.Select(opt => GetOptionString(opt, false, optPrefix)).Join("|")
@@ -104,7 +105,7 @@ namespace CodeJam.CmdLine
 						.ToList();
 				var maxLen = cmdDescs.Max(desc => desc.Name.Length);
 				foreach (var desc in cmdDescs)
-					writer.WriteLine(" {0} - {1}", desc.Name.PadRight(maxLen), desc.Description);
+					writer.WriteLine($" {desc.Name.PadRight(maxLen)} - {desc.Description}");
 			}
 
 			if (hasOpts)
@@ -117,7 +118,7 @@ namespace CodeJam.CmdLine
 						.ToList();
 				var maxLen = optDescs.Max(desc => desc.Name.Length);
 				foreach (var desc in optDescs)
-					writer.WriteLine(" {0} - {1}", desc.Name.PadRight(maxLen), desc.Description);
+					writer.WriteLine($" {desc.Name.PadRight(maxLen)} - {desc.Description}");
 			}
 		}
 
@@ -127,7 +128,7 @@ namespace CodeJam.CmdLine
 			if (opt.Required)
 				sb.Append(" Required.");
 			if (opt.DependOnCommands.Length > 0)
-				sb.AppendFormat(" Valid with commands: {0}." , opt.DependOnCommands.Join(", "));
+				sb.Append($" Valid with commands: {opt.DependOnCommands.Join(", ")}.");
 			return sb.ToString();
 		}
 
@@ -160,14 +161,14 @@ namespace CodeJam.CmdLine
 					.Select(opt => GetOptionString(opt, false, optPrefix))
 					.Join(", ");
 			if (reqOpts.Length > 0)
-				sb.AppendFormat(" Required: {0}.", reqOpts);
+				sb.Append($" Required: {reqOpts}.");
 			var optOpts =
 				cmdOpts
 					.Where(opt => !opt.Required)
 					.Select(opt => GetOptionString(opt, false, optPrefix))
 					.Join(", ");
 			if (optOpts.Length > 0)
-				sb.AppendFormat(" Optional: {0}.", optOpts);
+				sb.Append($" Optional: {optOpts}.");
 			return sb.ToString();
 		}
 
