@@ -105,10 +105,6 @@ namespace CodeJam.Assertions
 			Assert.That(ex.Message, Does.Contain(checkingObjectName));
 			Assert.That(ex.Message, Does.Contain("someUniqueMessage someUniqueFormatArg"));
 
-			ex = Assert.Throws<ObjectDisposedException>(
-				() => Code.DisposedIf(true));
-			Assert.That(ex.Message, Does.Contain(GetType().FullName));
-
 			Assert.DoesNotThrow(() => Code.DisposedIf(false, checkingObject, "someUniqueMessage"));
 		}
 
@@ -134,10 +130,6 @@ namespace CodeJam.Assertions
 				() => Code.DisposedIfNull(nullValue, checkingObject, "someUniqueMessage {0}", "someUniqueFormatArg"));
 			Assert.That(ex.Message, Does.Contain(checkingObjectName));
 			Assert.That(ex.Message, Does.Contain("someUniqueMessage someUniqueFormatArg"));
-
-			ex = Assert.Throws<ObjectDisposedException>(
-				() => Code.DisposedIfNull(nullValue));
-			Assert.That(ex.Message, Does.Contain(GetType().FullName));
 
 			Assert.DoesNotThrow(() => Code.DisposedIfNull(notNullValue, checkingObject, "someUniqueMessage"));
 		}

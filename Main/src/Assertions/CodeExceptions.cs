@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reflection;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
@@ -46,23 +46,9 @@ namespace CodeJam
 		/// </summary>
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
+		[SuppressMessage("ReSharper", "ArrangeRedundantParentheses")]
 		private static string FormatMessage([NotNull] string messageFormat, [CanBeNull] params object[] args) =>
-			// ReSharper disable ArrangeRedundantParentheses
 			(args == null || args.Length == 0) ? messageFormat : string.Format(messageFormat, args);
-			// ReSharper restore ArrangeRedundantParentheses
-
-		[CanBeNull]
-		private static MethodBase GetCallee()
-		{
-			var stackTrace = new StackTrace(2, false);
-			for (var i = 0; i < stackTrace.FrameCount; i++)
-			{
-				var frameMethod = stackTrace.GetFrame(i).GetMethod();
-				if (!Attribute.IsDefined(frameMethod, typeof(DebuggerHiddenAttribute)))
-					return frameMethod;
-			}
-			return null;
-		}
 		#endregion
 
 		#region General purpose exceptions
@@ -146,21 +132,7 @@ namespace CodeJam
 		}
 
 		/// <summary>
-		/// Throw this if obect is disposed.
-		/// </summary>
-		[DebuggerHidden]
-		[StringFormatMethod("messageFormat")]
-		[NotNull]
-		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static ObjectDisposedException ObjectDisposed()
-		{
-			BreakIfAttached();
-			var typeofDisposedObject = GetCallee()?.DeclaringType;
-			return new ObjectDisposedException(typeofDisposedObject?.FullName);
-		}
-
-		/// <summary>
-		/// Throw this if obect is disposed.
+		/// Throw this if the object is disposed.
 		/// </summary>
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
@@ -173,7 +145,7 @@ namespace CodeJam
 		}
 
 		/// <summary>
-		/// Throw this if obect is disposed.
+		/// Throw this if the object is disposed.
 		/// </summary>
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]

@@ -26,7 +26,7 @@ namespace CodeJam.IO
 			/// <summary>
 			/// Assertion on object dispose
 			/// </summary>
-			protected void AssertNotDisposed() => Code.DisposedIfNull(_path);
+			protected void AssertNotDisposed() => Code.DisposedIfNull(_path, this);
 
 			/// <summary>
 			/// Initialize instance.

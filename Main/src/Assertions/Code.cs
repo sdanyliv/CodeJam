@@ -119,17 +119,6 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
-		public static void DisposedIf(bool disposed)
-		{
-			if (disposed)
-				throw CodeExceptions.ObjectDisposed();
-		}
-
-		/// <summary>
-		/// Assertion for object disposal
-		/// </summary>
-		[DebuggerHidden]
-		[AssertionMethod]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
 			[NotNull] TDisposable thisReference)
@@ -168,18 +157,6 @@ namespace CodeJam
 		{
 			if (disposed)
 				throw CodeExceptions.ObjectDisposed(thisReference.GetType(), messageFormat, args);
-		}
-
-		/// <summary>
-		/// Assertion for object disposal
-		/// </summary>
-		[DebuggerHidden]
-		[AssertionMethod]
-		public static void DisposedIfNull<TResource>(TResource resource)
-			where TResource : class
-		{
-			if (resource == null)
-				throw CodeExceptions.ObjectDisposed();
 		}
 
 		/// <summary>
