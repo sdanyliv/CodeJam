@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace CodeJam.Threading
 {
 	/// <summary>
-	/// Extension and utility methods for <see cref="AsyncOperationManager"/> ans <see cref="AsyncOperation"/>
+	/// Extension and utility methods for <see cref="AsyncOperationManager"/> and <see cref="AsyncOperation"/>
 	/// </summary>
 	[PublicAPI]
 	public static class AsyncOperationHelper
