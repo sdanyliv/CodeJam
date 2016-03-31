@@ -34,16 +34,6 @@ namespace CodeJam.Collections
 					yield return SplitSequence(enumerator, size);
 		}
 
-		// IT: We need an additional method that returns Enumerable<T>:
-		//
-		// private static Enumerable<T> SplitSequence<T>(IEnumerator<T> source, int size)
-		// {
-		// 	yield return source.Current;
-		//
-		//	for (var i = 1; i < batchSize && source.MoveNext(); i++)
-		//		yield return source.Current;
-		// }
-		//
 		private static T[] SplitSequence<T>(IEnumerator<T> enumerator, int size)
 		{
 			var count = 0;
