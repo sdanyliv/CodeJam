@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
@@ -10,16 +10,11 @@ namespace CodeJam.Collections
 	/// <typeparam name="TKey">Type of key</typeparam>
 	/// <typeparam name="TValue">Type of value</typeparam>
 	[PublicAPI]
-	public interface ILazyDictionary<in TKey, out TValue>
+	public interface ILazyDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>
 	{
 		/// <summary>
 		/// Clears all created values
 		/// </summary>
 		void Clear();
-
-		/// <summary>
-		/// Returns existing value associated to a key, or creates new.
-		/// </summary>
-		TValue Get(TKey key);
 	}
 }

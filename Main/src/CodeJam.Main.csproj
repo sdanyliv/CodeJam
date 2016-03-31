@@ -78,6 +78,8 @@
       <DependentUpon>EnumerableExtensions.tt</DependentUpon>
     </Compile>
     <Compile Include="Collections\ILazyDictionary.cs" />
+    <Compile Include="FW40\IReadOnlyCollection.cs" />
+    <Compile Include="FW40\IReadOnlyDictionary.cs" />
     <Compile Include="IO\TempData.cs" />
     <Compile Include="Reflection\AssemblyExtensions.cs" />
     <Compile Include="Structures\TupleStruct.generated.cs">
