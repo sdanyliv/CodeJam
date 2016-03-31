@@ -13,7 +13,6 @@ using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
 // ReSharper disable CheckNamespace
-// ReSharper disable ArrangeBraces_ifelse
 
 namespace BenchmarkDotNet.Helpers
 {

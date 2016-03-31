@@ -10,14 +10,16 @@ using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
+using JetBrains.Annotations;
+
 using NUnit.Framework;
 
 // ReSharper disable CheckNamespace
 // ReSharper disable ConvertMethodToExpressionBody
-// ReSharper disable ArrangeBraces_ifelse
 
 namespace BenchmarkDotNet.NUnit
 {
+	[PublicAPI]
 	public static class CompetitionBenchmarkRunner
 	{
 		#region Public API overloads

@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
+using JetBrains.Annotations;
+
 using NUnit.Framework;
 
 namespace CodeJam.Assertions
@@ -11,6 +13,7 @@ namespace CodeJam.Assertions
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "PassStringInterpolation")]
+	[PublicAPI]
 	public class CodeAssertionsPerformanceTest
 	{
 		[Test]

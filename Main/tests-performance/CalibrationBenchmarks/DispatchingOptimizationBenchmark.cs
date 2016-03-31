@@ -6,6 +6,8 @@ using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
+using JetBrains.Annotations;
+
 using NUnit.Framework;
 
 namespace CodeJam
@@ -17,7 +19,7 @@ namespace CodeJam
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
 	[SuppressMessage("ReSharper", "ConvertToConstant.Local")]
-	[SuppressMessage("ReSharper", "ArrangeBraces_for")]
+	[PublicAPI]
 	public class DispatchingOptimizationBenchmark
 	{
 		// Use case:

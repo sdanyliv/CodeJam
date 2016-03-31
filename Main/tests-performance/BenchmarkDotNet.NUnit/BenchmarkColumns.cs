@@ -5,11 +5,14 @@ using BenchmarkDotNet.Horology;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
+using JetBrains.Annotations;
+
 // ReSharper disable ConvertMethodToExpressionBody
 // ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.Columns
 {
+	[PublicAPI]
 	public class PercentileColumn : IColumn
 	{
 		public static readonly IColumn P0Column = new PercentileColumn(0.00);

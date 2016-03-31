@@ -1,8 +1,7 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
+
+using JetBrains.Annotations;
 
 using NUnit.Framework;
 
@@ -13,7 +12,7 @@ namespace CodeJam
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
 	[Config(typeof(FastRunConfig))]
-	[SuppressMessage("ReSharper", "ArrangeBraces_for")]
+	[PublicAPI]
 	public class ProofsSensitivityBenchmark
 	{
 		[Test]

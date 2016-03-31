@@ -5,6 +5,8 @@ using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
+using JetBrains.Annotations;
+
 using NUnit.Framework;
 
 namespace CodeJam
@@ -22,7 +24,7 @@ namespace CodeJam
 	[SuppressMessage("ReSharper", "SuggestVarOrType_BuiltInTypes")]
 	[SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]
 	[SuppressMessage("ReSharper", "UnusedTypeParameter")]
-	[SuppressMessage("ReSharper", "ArrangeBraces_for")]
+	[PublicAPI]
 	public class CallCostsBenchmark : CallCostsBenchmark.ICompareCalls, CallCostsBenchmark.ICompareCalls<int>
 	{
 		[Test]
