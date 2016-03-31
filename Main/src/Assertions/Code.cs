@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
 
@@ -17,6 +18,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void NotNull<T>(
 			[CanBeNull, NoEnumeration] T arg,
 			[NotNull] [InvokerParameterName] string argName) where T : class
@@ -30,6 +32,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void NotNull<T>(
 			[CanBeNull] T? arg,
 			[NotNull] [InvokerParameterName] string argName) where T : struct
@@ -43,6 +46,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void NotNullNorEmpty(
 			[CanBeNull] string arg,
 			[NotNull] [InvokerParameterName] string argName)
@@ -56,6 +60,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void AssertArgument(
 			bool condition,
 			[NotNull] [InvokerParameterName] string argName,
@@ -70,6 +75,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void AssertArgument(
 			bool condition,
 			[NotNull] [InvokerParameterName] string argName,
@@ -87,6 +93,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void AssertState(
 			bool condition,
 			[NotNull] string message)
@@ -100,6 +107,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void AssertState(
 			bool condition,
 			[NotNull] string messageFormat,
@@ -119,6 +127,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
 			[NotNull] TDisposable thisReference)
@@ -133,6 +142,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
 			[NotNull] TDisposable thisReference,
@@ -148,6 +158,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
 			[NotNull] TDisposable thisReference,
@@ -164,6 +175,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void DisposedIfNull<TResource, TDisposable>(
 			TResource resource,
 			[NotNull] TDisposable thisReference)
@@ -179,6 +191,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void DisposedIfNull<TResource, TDisposable>(
 			TResource resource,
 			[NotNull] TDisposable thisReference,
@@ -195,6 +208,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void DisposedIfNull<TResource, TDisposable>(
 			TResource resource,
 			[NotNull] TDisposable thisReference,

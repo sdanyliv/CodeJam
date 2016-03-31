@@ -22,14 +22,15 @@ namespace CodeJam
 	[SuppressMessage("ReSharper", "SuggestVarOrType_BuiltInTypes")]
 	[SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]
 	[SuppressMessage("ReSharper", "UnusedTypeParameter")]
+	[SuppressMessage("ReSharper", "ArrangeBraces_for")]
 	public class CallCostsBenchmark : CallCostsBenchmark.ICompareCalls, CallCostsBenchmark.ICompareCalls<int>
 	{
 		[Test]
 		// WAITINGFOR: https://github.com/PerfDotNet/BenchmarkDotNet/issues/126.
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public static void BenchmarkCallCosts()
+		public void BenchmarkCallCosts()
 		{
-			CompetitionBenchmarkRunner.Run(0.9, 50.0);
+			CompetitionBenchmarkRunner.Run(this, 0.9, 50.0);
 		}
 
 		#region CompetitionMethods

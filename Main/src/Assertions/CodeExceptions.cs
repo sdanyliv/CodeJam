@@ -15,26 +15,16 @@ namespace CodeJam
 	{
 		#region Behavior setup and implementation helpers
 		/// <summary>
-		/// Init the default assertion handling behavior
+		/// If true, breaks execution on assertion failure.
+		/// Enabled by default.
 		/// </summary>
-		// ReSharper disable once EmptyConstructor
-		static CodeExceptions()
-		{
-			// Break on exceptions: debug builds only
-#if DEBUG
-			BreakOnException = true;
-#endif
-		}
-
-		/// <summary>
-		/// Enables Break execution on assertion failure feature
-		/// </summary>
-		public static bool BreakOnException { get; set; }
+		public static bool BreakOnException { get; set; } = true;
 
 		/// <summary>
 		/// BreaksExecution if debugger attached
 		/// </summary>
 		[DebuggerHidden]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void BreakIfAttached()
 		{
 			if (BreakOnException && Debugger.IsAttached)
@@ -42,11 +32,12 @@ namespace CodeJam
 		}
 
 		/// <summary>
-		/// Formats message or returs <paramref name="messageFormat"/> as it is if <paramref name="args"/> are null or empty
+		/// Formats message or returns <paramref name="messageFormat"/> as it is if <paramref name="args"/> are null or empty
 		/// </summary>
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
 		[SuppressMessage("ReSharper", "ArrangeRedundantParentheses")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static string FormatMessage([NotNull] string messageFormat, [CanBeNull] params object[] args) =>
 			(args == null || args.Length == 0) ? messageFormat : string.Format(messageFormat, args);
 		#endregion
@@ -57,6 +48,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static ArgumentNullException ArgumentNull([NotNull] [InvokerParameterName] string argumentName)
 		{
 			BreakIfAttached();
@@ -68,6 +60,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static ArgumentException ArgumentNullOrEmpty([NotNull] [InvokerParameterName] string argumentName)
 		{
 			BreakIfAttached();
@@ -80,6 +73,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static ArgumentException Argument(
 			[NotNull] [InvokerParameterName] string argumentName,
 			[NotNull] string messageFormat,
@@ -95,6 +89,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static InvalidOperationException InvalidOperation(
 			[NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
@@ -110,6 +105,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static InvalidOperationException UnexpectedValue<T>([CanBeNull] T value)
 		{
 			BreakIfAttached();
@@ -124,6 +120,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static InvalidOperationException UnexpectedValue(
 			[NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
@@ -137,7 +134,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
-		[MethodImpl(MethodImplOptions.NoInlining)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static ObjectDisposedException ObjectDisposed([CanBeNull] Type typeofDisposedObject)
 		{
 			BreakIfAttached();
@@ -150,6 +147,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static ObjectDisposedException ObjectDisposed(
 			[CanBeNull] Type typeofDisposedObject, [NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
@@ -163,6 +161,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static NotSupportedException Unreachable([NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
 			BreakIfAttached();

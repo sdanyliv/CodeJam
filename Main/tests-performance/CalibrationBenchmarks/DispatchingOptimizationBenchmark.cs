@@ -17,6 +17,7 @@ namespace CodeJam
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
 	[SuppressMessage("ReSharper", "ConvertToConstant.Local")]
+	[SuppressMessage("ReSharper", "ArrangeBraces_for")]
 	public class DispatchingOptimizationBenchmark
 	{
 		// Use case:
@@ -125,7 +126,7 @@ namespace CodeJam
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
 		public void BenchmarkJitOptimizedDispatch()
-			=> CompetitionBenchmarkRunner.Run(BenchmarkConstants.NotSlower, BenchmarkConstants.NotFaster);
+			=> CompetitionBenchmarkRunner.Run(this, 1, 1);
 
 		[Benchmark(Baseline = true)]
 		public int Test00Baseline()

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -47,41 +46,37 @@ namespace BenchmarkDotNet.NUnit
 		}
 #endif
 
-		[MethodImpl(MethodImplOptions.NoInlining)]
-		private static Type GetCallingType() =>
-			new StackTrace().GetFrame(2).GetMethod().DeclaringType;
-
 		/// <summary>
 		/// Runs the competition benchmark from a type of a callee
 		/// </summary>
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void Run(double maxRatio)
+		public static void Run<T>(T thisReference, double maxRatio) where T: class 
 		{
-			RunCompetition(0, maxRatio, GetCallingType(), null, null);
+			RunCompetition(0, maxRatio, thisReference.GetType(), null, null);
 		}
 
 		/// <summary>
 		/// Runs the competition benchmark from a type of a callee
 		/// </summary>
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void Run(double minRatio, double maxRatio)
+		public static void Run<T>(T thisReference, double minRatio, double maxRatio) where T : class
 		{
-			RunCompetition(minRatio, maxRatio, GetCallingType(), null, null);
+			RunCompetition(minRatio, maxRatio, thisReference.GetType(), null, null);
 		}
 
 		/// <summary>
 		/// Runs the competition benchmark from a type of a callee
 		/// </summary>
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void Run(double minRatio, double maxRatio, IConfig config)
+		public static void Run<T>(T thisReference, double minRatio, double maxRatio, IConfig config) where T : class
 		{
-			RunCompetition(minRatio, maxRatio, GetCallingType(), null, config);
+			RunCompetition(minRatio, maxRatio, thisReference.GetType(), null, config);
 		}
 
 		/// <summary>
 		/// Runs the competition benchmark
 		/// </summary>
-		public static void Run<T>(double maxRatio)
+		public static void Run<T>(double maxRatio) where T : class
 		{
 			RunCompetition(0, maxRatio, typeof(T), null, null);
 		}
@@ -89,7 +84,7 @@ namespace BenchmarkDotNet.NUnit
 		/// <summary>
 		/// Runs the competition benchmark 
 		/// </summary>
-		public static void Run<T>(double minRatio, double maxRatio)
+		public static void Run<T>(double minRatio, double maxRatio) where T : class
 		{
 			RunCompetition(minRatio, maxRatio, typeof(T), null, null);
 		}
@@ -97,7 +92,7 @@ namespace BenchmarkDotNet.NUnit
 		/// <summary>
 		/// Runs the competition benchmark
 		/// </summary>
-		public static void Run<T>(double minRatio, double maxRatio, IConfig config)
+		public static void Run<T>(double minRatio, double maxRatio, IConfig config) where T : class
 		{
 			RunCompetition(minRatio, maxRatio, typeof(T), null, config);
 		}
