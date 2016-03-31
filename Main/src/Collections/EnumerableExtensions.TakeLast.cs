@@ -40,9 +40,8 @@ namespace CodeJam.Collections
                 queue.Enqueue(item);
             }
 
-            if (queue.Count != 0)
-                foreach (var item in queue)
-                    yield return item;
+            foreach (var item in queue)
+                yield return item;
         }
     }
 }
