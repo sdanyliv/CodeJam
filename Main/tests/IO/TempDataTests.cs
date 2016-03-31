@@ -120,9 +120,7 @@ namespace CodeJam.IO
 
 				Assert.IsNotNull(file.Info, "Info is null");
 				using (var textWriter = file.Info.AppendText())
-				{
 					textWriter.Write("O La La");
-				}
 
 				var content = File.ReadAllText(filePath);
 				Assert.AreEqual(content, "O La La");
@@ -192,16 +190,12 @@ namespace CodeJam.IO
 				filePath = fileStream.Name;
 
 				using (var textWriter = new StreamWriter(fileStream, Encoding.UTF8, 4096, true))
-				{
 					textWriter.Write("O La La");
-				}
 
 				string content;
 				fileStream.Position = 0;
 				using (var textReader = new StreamReader(fileStream, Encoding.UTF8, true, 4096, true))
-				{
 					content = textReader.ReadToEnd();
-				}
 				Assert.AreEqual(content, "O La La");
 			}
 			Assert.IsFalse(File.Exists(filePath), "File should NOT exist");

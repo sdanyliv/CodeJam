@@ -4,6 +4,9 @@ using JetBrains.Annotations;
 
 namespace CodeJam
 {
+	/// <summary>
+	/// Helper methods for <see cref="Func{TResult}"/> delegate.
+	/// </summary>
 	[PublicAPI]
 	public static class Fn
 	{
