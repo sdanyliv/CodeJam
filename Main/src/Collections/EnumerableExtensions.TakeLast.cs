@@ -14,21 +14,21 @@ namespace CodeJam.Collections
 		/// <remarks>
 		/// This operator uses deferred execution and streams its results.
 		/// </remarks>
-		/// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
+		/// <typeparam name="T">The type of the elements of <paramref name="source"/>.</typeparam>
 		/// <param name="source">The sequence to return the last element of.</param>
 		/// <param name="count">The number of elements to return.</param>
 		/// <returns>
 		/// An <see cref="IEnumerable{T}"/> that contains the specified number of elements from the end of the input sequence.
 		/// </returns>
 		[NotNull, Pure]
-		public static IEnumerable<TSource> TakeLast<TSource>([NotNull] this IEnumerable<TSource> source, int count)
+		public static IEnumerable<T> TakeLast<T>([NotNull] this IEnumerable<T> source, int count)
 		{
 			Code.NotNull(source, nameof (source));
 
 			if (count <= 0)
-				return Enumerable.Empty<TSource>();
+				return Enumerable.Empty<T>();
 
-			var list = source as IList<TSource>;
+			var list = source as IList<T>;
 			if (list == null)
 				return TakeLastImpl(source, count);
 
