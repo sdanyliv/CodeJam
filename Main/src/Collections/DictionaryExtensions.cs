@@ -54,6 +54,44 @@ namespace CodeJam.Collections
 					? result
 					: default(TValue);
 		}
+
+		/// <summary>
+		/// Returns value associated with <paramref name="key"/>, or <paramref name="defaultValue"/> if key does not exists
+		/// in <paramref name="dictionary"/>
+		/// </summary>
+		[Pure]
+		public static TValue GetValueOrDefault<TKey, TValue>(
+			[NotNull] this IDictionary<TKey, TValue> dictionary,
+			TKey key,
+			TValue defaultValue)
+		{
+			if (dictionary == null)
+				throw new ArgumentNullException(nameof(dictionary));
+			TValue result;
+			return
+				dictionary.TryGetValue(key, out result)
+					? result
+					: defaultValue;
+		}
+
+		/// <summary>
+		/// Returns value associated with <paramref name="key"/>, or value returned by <paramref name="defaultValueFactory"/>
+		/// if key does not exists in <paramref name="dictionary"/>
+		/// </summary>
+		[Pure]
+		public static TValue GetValueOrDefault<TKey, TValue>(
+			[NotNull] this IDictionary<TKey, TValue> dictionary,
+			TKey key,
+			Func<TKey, TValue> defaultValueFactory)
+		{
+			if (dictionary == null)
+				throw new ArgumentNullException(nameof(dictionary));
+			TValue result;
+			return
+				dictionary.TryGetValue(key, out result)
+					? result
+					: defaultValueFactory(key);
+		}
 		#endregion
 
 		#region GetOrAdd, AddOrUpdate

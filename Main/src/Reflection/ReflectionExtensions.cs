@@ -10,7 +10,7 @@ namespace CodeJam.Reflection
 	/// Reflection extension methods.
 	/// </summary>
 	[PublicAPI]
-	public static class ReflectionExtensions
+	public static partial class ReflectionExtensions
 	{
 		/// <summary>
 		/// Gets a value indicating whether the <paramref name="type"/> can be instantiated.

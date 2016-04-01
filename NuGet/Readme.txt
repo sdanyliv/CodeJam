@@ -1,5 +1,11 @@
-CodeJam 1.0.0-beta3 Release Notes
+CodeJam 1.0.0-beta4 Release Notes
 ---------------------------------------
+
+What's new in 1.0.0-beta4
+-------------------------
+* Platform dependent changes for .NET Framework 4.0
+* preformance optimization
+* fixes and code cleanup&annotation
 
 What's new in 1.0.0-beta3
 -------------------------
