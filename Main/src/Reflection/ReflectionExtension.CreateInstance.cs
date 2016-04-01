@@ -35,7 +35,7 @@ namespace CodeJam.Reflection
 			var argMap = parameters.Select(p => p.Name).ToHashSet();
 			foreach (var prm in ctorPrms)
 			{
-				if (prm.IsOptional)
+				if (prm.IsOptional())
 					continue;
 				if (!argMap.Contains(prm.Name))
 					return false;
