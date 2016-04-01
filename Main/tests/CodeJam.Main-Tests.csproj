@@ -60,6 +60,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Collections\EnumerableExtensionTests.Split.cs" />
+    <Compile Include="Collections\EnumerableExtensionTests.TakeLast.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.cs" />
     <Compile Include="IO\TempDataTests.cs" />
     <Compile Include="Reflection\AssemblyExtensionsTest.cs" />

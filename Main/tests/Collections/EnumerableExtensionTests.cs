@@ -32,11 +32,6 @@ namespace CodeJam
 		public string Prepend(string[] input, string[] prepend)
 			=> input.Prepend(prepend).Join(", ");
 
-		[TestCase(new[] {3, 1, 8, 0, 6}, ExpectedResult = "0, 6")]
-		[TestCase(new[] {1},             ExpectedResult = "1")]
-		[TestCase(new int[0],            ExpectedResult = "")]
-		public string TakeLastTest(int[] source) => source.TakeLast(2).Join(", ");
-
 		[TestCase(arg: new[] { "a:b", "b:c", "c" }, ExpectedResult = "c, b, a")]
 		[TestCase(arg: new[] { "a:c", "b:c", "c" }, ExpectedResult = "c, a, b")]
 		[TestCase(arg: new[] { "a", "b", "c: a, b" }, ExpectedResult = "a, b, c")]
