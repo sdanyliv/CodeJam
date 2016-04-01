@@ -20,7 +20,7 @@ namespace CodeJam.Assertions
 
 		//[Params(10 * 1000, 100 * 1000, 1000 * 1000)]
 		public int Count { get; set; } = 100 * 1000;
-		
+
 		[Benchmark(Baseline = true)]
 		public string Test00RunWithoutAssertion()
 		{
