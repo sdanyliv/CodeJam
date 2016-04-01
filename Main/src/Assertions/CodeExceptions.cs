@@ -24,9 +24,7 @@ namespace CodeJam
 		/// BreaksExecution if debugger attached
 		/// </summary>
 		[DebuggerHidden]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void BreakIfAttached()
 		{
 			if (BreakOnException && Debugger.IsAttached)
@@ -39,9 +37,7 @@ namespace CodeJam
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
 		[SuppressMessage("ReSharper", "ArrangeRedundantParentheses")]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		private static string FormatMessage([NotNull] string messageFormat, [CanBeNull] params object[] args) =>
 			(args == null || args.Length == 0) ? messageFormat : string.Format(messageFormat, args);
 		#endregion
@@ -52,9 +48,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[NotNull]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static ArgumentNullException ArgumentNull([NotNull] [InvokerParameterName] string argumentName)
 		{
 			BreakIfAttached();
@@ -66,9 +60,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[NotNull]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static ArgumentException ArgumentNullOrEmpty([NotNull] [InvokerParameterName] string argumentName)
 		{
 			BreakIfAttached();
@@ -81,9 +73,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static ArgumentException Argument(
 			[NotNull] [InvokerParameterName] string argumentName,
 			[NotNull] string messageFormat,
@@ -99,9 +89,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static InvalidOperationException InvalidOperation(
 			[NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
@@ -117,9 +105,7 @@ namespace CodeJam
 		/// </summary>
 		[DebuggerHidden]
 		[NotNull]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static InvalidOperationException UnexpectedValue<T>([CanBeNull] T value)
 		{
 			BreakIfAttached();
@@ -134,9 +120,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static InvalidOperationException UnexpectedValue(
 			[NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
@@ -150,9 +134,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static ObjectDisposedException ObjectDisposed([CanBeNull] Type typeofDisposedObject)
 		{
 			BreakIfAttached();
@@ -165,9 +147,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static ObjectDisposedException ObjectDisposed(
 			[CanBeNull] Type typeofDisposedObject, [NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
@@ -181,9 +161,7 @@ namespace CodeJam
 		[DebuggerHidden]
 		[StringFormatMethod("messageFormat")]
 		[NotNull]
-#if !FW40
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static NotSupportedException Unreachable([NotNull] string messageFormat, [CanBeNull] params object[] args)
 		{
 			BreakIfAttached();
