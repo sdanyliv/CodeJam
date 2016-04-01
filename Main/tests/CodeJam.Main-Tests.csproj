@@ -59,6 +59,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Collections\EnumerableExtensionTests.Page.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.Split.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.Slice.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.TakeLast.cs" />
