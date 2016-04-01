@@ -3,9 +3,10 @@ CodeJam 1.0.0-beta4 Release Notes
 
 What's new in 1.0.0-beta4
 -------------------------
-* Platform dependent changes for .NET Framework 4.0
-* EnumerableExtension.Slice/Page methods
-* QueryableExtension.Slice/Page methods
+* EnumerableExtensions.Slice/Page methods
+* QueryableExtensions.Slice/Page methods
+* ReflectionExtensions.CreateInstance method
+* Platform targeting for .NET Framework 4.0
 * Performance optimization
 * Fixes, code cleanup and annotations
 
