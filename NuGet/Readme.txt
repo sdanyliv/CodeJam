@@ -4,15 +4,17 @@ CodeJam 1.0.0-beta4 Release Notes
 What's new in 1.0.0-beta4
 -------------------------
 * Platform dependent changes for .NET Framework 4.0
-* preformance optimization
-* fixes and code cleanup&annotation
+* EnumerableExtension.Slice/Page methods
+* QueryableExtension.Slice/Page methods
+* Performance optimization
+* Fixes, code cleanup and annotations
 
 What's new in 1.0.0-beta3
 -------------------------
 * Code.DisposeIf assertion
 * EnumerableExtensions.TakeLast method
 * AsyncOperationHelper class
-* fixes and code cleanup&annotation
+* Fixes, code cleanup and annotations
 
 What's new in 1.0.0-beta2
 -------------------------
@@ -26,4 +28,4 @@ What's new in 1.0.0-beta2
 * Fn'1.IsNull/NotNull functions
 * EnumerableExtensions.Flatten method
 * EnumerableExtensions.OrderBy/OrderByDescending parameterless overloads
-* fixes and code cleanup
+* Fixes and code cleanup
