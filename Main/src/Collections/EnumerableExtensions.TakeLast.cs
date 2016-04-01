@@ -24,9 +24,26 @@ namespace CodeJam.Collections
 		public static IEnumerable<TSource> TakeLast<TSource>([NotNull] this IEnumerable<TSource> source, int count)
 		{
 			Code.NotNull(source, nameof (source));
-			return count > 0
-				? TakeLastImpl(source, count)
-				: Enumerable.Empty<TSource>();
+
+			if (count <= 0)
+				return Enumerable.Empty<TSource>();
+
+			var list = source as IList<TSource>;
+			if (list == null)
+				return TakeLastImpl(source, count);
+
+			return count < list.Count
+				? TakeLastImpl(list, count)
+				: list;
+		}
+
+		private static IEnumerable<T> TakeLastImpl<T>(IList<T> source, int count)
+		{
+			var total = source.Count;
+			count = Math.Min(total, count);
+
+			for (var i = total - count; i < total; i++)
+				yield return source[i];
 		}
 
 		private static IEnumerable<T> TakeLastImpl<T>(IEnumerable<T> source, int count)
