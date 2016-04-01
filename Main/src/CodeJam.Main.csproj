@@ -60,6 +60,8 @@
     <Compile Include="Assertions\Code.cs" />
     <Compile Include="Assertions\CodeExceptions.cs" />
     <Compile Include="Assertions\DebugCode.cs" />
+    <Compile Include="Collections\EnumerableExtensions.Index.cs" />
+    <Compile Include="Collections\IndexedItem.cs" />
     <Compile Include="Collections\EnumerableExtensions.Page.cs" />
     <Compile Include="Collections\EnumerableExtensions.Slice.cs" />
     <Compile Include="Collections\QueryableExtensions.cs" />
