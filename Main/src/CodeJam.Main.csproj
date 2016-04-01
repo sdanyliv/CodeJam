@@ -62,6 +62,7 @@
     <Compile Include="Assertions\DebugCode.cs" />
     <Compile Include="Collections\EnumerableExtensions.Page.cs" />
     <Compile Include="Collections\EnumerableExtensions.Slice.cs" />
+    <Compile Include="Collections\QueryableExtensions.cs" />
     <Compile Include="Reflection\ParamInfo.cs" />
     <Compile Include="Targeting\PlatformDependent.cs" />
     <Compile Include="Collections\ArrayExtensions.cs" />
