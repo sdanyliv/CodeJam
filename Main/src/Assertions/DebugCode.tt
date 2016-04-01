@@ -1,4 +1,4 @@
-﻿<#@ include file="..\..\..\T4.Reusable\DebugCodeGenerator.include.tt"#><##>
-<#
+﻿<#@ include file="..\..\..\T4.Reusable\DebugCodeGenerator.ttinclude"
+#><#
 	Run();
 #>

@@ -1,8 +1,8 @@
-﻿<#@ template debug="true" hostspecific="true" language="C#" #>
-<#@ output extension=".generated.cs" #>
-<#@ import namespace="System.IO" #>
-<#@ import namespace="System.Text.RegularExpressions" #>
-<#+
+﻿<#@ template debug="true" hostspecific="true" language="C#"
+#><#@ output extension=".generated.cs"
+#><#@ import namespace="System.IO"
+#><#@ import namespace="System.Text.RegularExpressions"
+#><#+
 		public void Run()
 		{
 			const string message =
