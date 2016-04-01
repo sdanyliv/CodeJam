@@ -49,6 +49,19 @@ namespace CodeJam.Assertions
 		}
 
 		[Test]
+		public void TestDebugNotNull()
+		{
+#if DEBUG
+			var ex = Assert.Throws<ArgumentNullException>(() => DebugCode.NotNull<object>(null, "someUniqueArgName"));
+			Assert.That(ex.Message.Contains("someUniqueArgName"));
+#else
+			Assert.DoesNotThrow(() => DebugCode.NotNull<object>(null, "someUniqueArgName"));
+#endif
+
+			Assert.DoesNotThrow(() => DebugCode.NotNull<object>("Hello!", "someUniqueArgName"));
+		}
+
+		[Test]
 		public void TestNotNullNorEmpty()
 		{
 			Assert.Throws<ArgumentException>(() => Code.NotNullNorEmpty(null, "someUniqueArgName"));

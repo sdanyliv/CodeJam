@@ -10,13 +10,13 @@ namespace CodeJam
 	/// Assertions class.
 	/// </summary>
 	[PublicAPI]
-	public static partial class Code
+	public static partial class DebugCode
 	{
 		#region Argument validation
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> != <c>null</c>
 		/// </summary>
-		[DebuggerHidden]
+		[Conditional(DebugCode.DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void NotNull<T>(
@@ -30,7 +30,7 @@ namespace CodeJam
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> != <c>null</c>
 		/// </summary>
-		[DebuggerHidden]
+		[Conditional(DebugCode.DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void NotNull<T>(
@@ -44,7 +44,7 @@ namespace CodeJam
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> is not null nor empty
 		/// </summary>
-		[DebuggerHidden]
+		[Conditional(DebugCode.DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void NotNullNorEmpty(
@@ -58,7 +58,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for the argument value
 		/// </summary>
-		[DebuggerHidden]
+		[Conditional(DebugCode.DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void AssertArgument(
@@ -73,7 +73,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for the argument value
 		/// </summary>
-		[DebuggerHidden]
+		[Conditional(DebugCode.DebugCondition), DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void AssertArgument(
@@ -91,7 +91,7 @@ namespace CodeJam
 		/// <summary>
 		/// State assertion
 		/// </summary>
-		[DebuggerHidden]
+		[Conditional(DebugCode.DebugCondition), DebuggerHidden]
 		[AssertionMethod]
 		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void AssertState(
@@ -105,7 +105,7 @@ namespace CodeJam
 		/// <summary>
 		/// State assertion
 		/// </summary>
-		[DebuggerHidden]
+		[Conditional(DebugCode.DebugCondition), DebuggerHidden]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void AssertState(

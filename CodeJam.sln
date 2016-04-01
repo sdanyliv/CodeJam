@@ -34,6 +34,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{F859936D
 		NuGet\Readme.txt = NuGet\Readme.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "T4.Reusable", "T4.Reusable", "{A0978533-5077-4843-8315-B856003453AF}"
+	ProjectSection(SolutionItems) = preProject
+		T4.Reusable\DebugCodeGenerator.include.tt = T4.Reusable\DebugCodeGenerator.include.tt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

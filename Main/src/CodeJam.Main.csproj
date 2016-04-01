@@ -57,9 +57,15 @@
     <Compile Include="Algorithms\Memoize.cs" />
     <Compile Include="Algorithms\Swap.cs" />
     <Compile Include="Algorithms\UpperBound.cs" />
+    <Compile Include="Assertions\Code.NonDebug.cs" />
     <Compile Include="Assertions\Code.cs" />
     <Compile Include="Assertions\CodeExceptions.cs" />
     <Compile Include="Assertions\DebugCode.cs" />
+    <Compile Include="Assertions\DebugCode.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DebugCode.tt</DependentUpon>
+    </Compile>
     <Compile Include="Collections\EnumerableExtensions.Index.cs" />
     <Compile Include="Collections\IndexedItem.cs" />
     <Compile Include="Collections\EnumerableExtensions.Page.cs" />
@@ -142,6 +148,10 @@
     <Compile Include="Reflection\ReflectionExtension.CreateInstance.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assertions\DebugCode.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DebugCode.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Collections\ArrayExtensions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ArrayExtensions.generated.cs</LastGenOutput>

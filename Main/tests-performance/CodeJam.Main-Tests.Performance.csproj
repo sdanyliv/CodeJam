@@ -52,6 +52,7 @@
     <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assertions\DebugCodeAssertionsPerformanceTest.cs" />
     <Compile Include="Assertions\CodeAssertionsPerformanceTest.cs" />
     <Compile Include="BenchmarkDotNet.NUnit.Tests\BenchmarkHelpersTests.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\CompetitionBenchmarkAttribute.cs" />
