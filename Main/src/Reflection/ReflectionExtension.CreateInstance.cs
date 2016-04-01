@@ -10,6 +10,14 @@ namespace CodeJam.Reflection
 {
 	public partial class ReflectionExtensions
 	{
+		private static bool IsOptional(this ParameterInfo prm) =>
+#if FW40
+			(prm.Attributes & ParameterAttributes.HasDefault) == ParameterAttributes.HasDefault
+#else
+			prm.HasDefaultValue
+#endif
+			;
+
 		private static bool IsCtorSuitable(ConstructorInfo ctor, ParamInfo[] parameters)
 		{
 			var ctorPrms = ctor.GetParameters();
@@ -27,7 +35,7 @@ namespace CodeJam.Reflection
 			var argMap = parameters.Select(p => p.Name).ToHashSet();
 			foreach (var prm in ctorPrms)
 			{
-				if (prm.HasDefaultValue)
+				if (prm.IsOptional)
 					continue;
 				if (!argMap.Contains(prm.Name))
 					return false;
