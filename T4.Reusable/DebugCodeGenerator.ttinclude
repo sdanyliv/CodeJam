@@ -7,15 +7,15 @@
 		{
 			const string message =
 				"The name of the template should follow the pattern 'Debug' + AssertionFile + '.tt'. " +
-				"The name of the assertion class should be suffixed with 'Code'" +
+				"The name of the assertion class should be suffixed with 'Code'. " +
 				"For example, for Code.cs the template should be named DebugCode.tt " +
-				"and for EnumerableCode.cs the template should be named DebugEnumerableCode.tt. ";
+				"and for EnumerableCode.cs the template should be named DebugEnumerableCode.tt.";
 
 			var newClassName = Path.GetFileNameWithoutExtension(Host.TemplateFile);
 			if (!newClassName.StartsWith("Debug", StringComparison.Ordinal) ||
 				!newClassName.EndsWith("Code", StringComparison.Ordinal))
 			{
-				throw new ArgumentException(newClassName, message);
+				throw new InvalidCastException("File " + newClassName + ": " + message);
 			}
 
 			var oldClassName = newClassName.Substring("Debug".Length);
