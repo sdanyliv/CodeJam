@@ -13,9 +13,7 @@ namespace BenchmarkDotNet.NUnit
 	[PublicAPI]
 	public class CompetitionBenchmarkAttribute : BenchmarkAttribute
 	{
-		public CompetitionBenchmarkAttribute()
-		{
-		}
+		public CompetitionBenchmarkAttribute() { }
 
 		public CompetitionBenchmarkAttribute(double minRatio, double maxRatio)
 		{

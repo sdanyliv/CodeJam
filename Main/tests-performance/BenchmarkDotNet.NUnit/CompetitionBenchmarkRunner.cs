@@ -52,7 +52,7 @@ namespace BenchmarkDotNet.NUnit
 		/// Runs the competition benchmark from a type of a callee
 		/// </summary>
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void Run<T>(T thisReference, double maxRatio) where T: class 
+		public static void Run<T>(T thisReference, double maxRatio) where T : class
 		{
 			RunCompetition(0, maxRatio, thisReference.GetType(), null, null);
 		}
