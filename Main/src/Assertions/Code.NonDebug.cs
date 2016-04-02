@@ -18,9 +18,8 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden]
+		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
 		[AssertionMethod]
-		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
 			[NotNull] TDisposable thisReference)
@@ -33,9 +32,8 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden]
+		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
 		[AssertionMethod]
-		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
 			[NotNull] TDisposable thisReference,
@@ -49,9 +47,8 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden]
+		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
-		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
 			[NotNull] TDisposable thisReference,
@@ -66,11 +63,10 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden]
+		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
 		[AssertionMethod]
-		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void DisposedIfNull<TResource, TDisposable>(
-			TResource resource,
+			[CanBeNull] TResource resource,
 			[NotNull] TDisposable thisReference)
 			where TResource : class
 			where TDisposable : IDisposable
@@ -82,11 +78,10 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden]
+		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
 		[AssertionMethod]
-		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void DisposedIfNull<TResource, TDisposable>(
-			TResource resource,
+			[CanBeNull] TResource resource,
 			[NotNull] TDisposable thisReference,
 			[NotNull] string message)
 			where TResource : class
@@ -99,11 +94,10 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden]
+		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
-		[MethodImpl(PlatformDependent.AggressiveInlining)]
 		public static void DisposedIfNull<TResource, TDisposable>(
-			TResource resource,
+			[CanBeNull] TResource resource,
 			[NotNull] TDisposable thisReference,
 			[NotNull] string messageFormat,
 			[CanBeNull] params object[] args)

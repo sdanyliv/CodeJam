@@ -26,14 +26,17 @@
 			}
 			var resultText = File.ReadAllText(oldClassPath);
 
+			resultText = @"using static CodeJam.DebugCode;" +
+				Environment.NewLine + Environment.NewLine + resultText;
+
 			RegexReplace(
 				ref resultText,
 				"class " + Regex.Escape(oldClassName),
 				"class " + newClassName);
 			RegexReplace(
 				ref resultText,
-				Regex.Escape("[DebuggerHidden]"),
-				"[Conditional(DebugCode.DebugCondition), DebuggerHidden]");
+				Regex.Escape("[DebuggerHidden"),
+				"[Conditional(DebugCondition), DebuggerHidden");
 
 			Write(resultText);
 		}
