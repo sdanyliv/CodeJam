@@ -1,5 +1,18 @@
-CodeJam 1.0.0-beta4 Release Notes
+CodeJam 1.0.0-beta5 Release Notes
 ---------------------------------------
+
+What's new in 1.0.0-beta5
+-------------------------
+* New assertions - Code.InRange, ValidIndex, ValidIndexPair, ValidIndexAndCount, Code.NotNullNorWhiteSpace
+* StringExtensions.SplitWithTrim method
+* ReflectionExtensions.GetDelegateParams method
+* Fast Any() method for arrays
+* StringExtensions.FromBase64/ToBase64 methods
+* StringExtensions.GetBytes method
+* StringExtensions.ToHexString method
+* Additional methods in ExpressionHelper and InfoOf classes
+* Platform targeting for .NET Framework 4.0 and 4.6
+* Fixes, code cleanup and annotations
 
 What's new in 1.0.0-beta4
 -------------------------
