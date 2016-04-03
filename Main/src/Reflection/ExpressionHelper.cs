@@ -59,7 +59,7 @@ namespace CodeJam.Reflection
 			(FieldInfo)GetMemberExpression(expression).Member;
 
 		/// <summary>
-		/// Returns the contsructor.
+		/// Returns the constructor.
 		/// </summary>
 		/// <param name="expression">The expression to analyze.</param>
 		/// <returns>
@@ -80,9 +80,10 @@ namespace CodeJam.Reflection
 		public static MethodInfo GetMethod([NotNull] LambdaExpression expression)
 		{
 			var info = GetMemberInfo(expression);
-			return info is PropertyInfo
-				? ((PropertyInfo)info).GetMethod
-				: (MethodInfo)info;
+			return
+				info is PropertyInfo
+					? ((PropertyInfo)info).GetGetMethod(true)
+					: (MethodInfo)info;
 		}
 
 		/// <summary>
