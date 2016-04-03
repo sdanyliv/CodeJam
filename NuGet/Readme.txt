@@ -13,6 +13,7 @@ What's new in 1.0.0-beta5
 * Additional methods in ExpressionHelper and InfoOf classes
 * Platform targeting for .NET Framework 4.0 and 4.6
 * Fixes, code cleanup and annotations
+* Jetbrains annotations now visible in binary
 
 What's new in 1.0.0-beta4
 -------------------------
