@@ -126,7 +126,6 @@
     <Compile Include="Reflection\EnumHelper.cs" />
     <Compile Include="Reflection\ExpressionHelper.cs" />
     <Compile Include="Reflection\InfoOf.cs" />
-    <Compile Include="Reflection\InfoOf`1.cs" />
     <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="String\CharExtensions.cs" />
     <Compile Include="String\NaturalOrderStringComparer.cs" />
