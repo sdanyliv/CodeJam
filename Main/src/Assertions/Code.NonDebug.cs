@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
 
+using static CodeJam.PlatformDependent;
+
 namespace CodeJam
 {
 	/// <summary>
@@ -18,7 +20,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
@@ -32,7 +34,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
@@ -47,7 +49,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		public static void DisposedIf<TDisposable>(
 			bool disposed,
@@ -63,7 +65,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void DisposedIfNull<TResource, TDisposable>(
 			[CanBeNull] TResource resource,
@@ -78,7 +80,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void DisposedIfNull<TResource, TDisposable>(
 			[CanBeNull] TResource resource,
@@ -94,7 +96,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for object disposal
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		public static void DisposedIfNull<TResource, TDisposable>(
 			[CanBeNull] TResource resource,

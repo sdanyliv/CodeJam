@@ -13,7 +13,7 @@ public void Run()
 	if (!newClassName.StartsWith("Debug", StringComparison.Ordinal) ||
 		!newClassName.EndsWith("Code", StringComparison.Ordinal))
 	{
-		throw new InvalidCastException("File " + newClassName + ": " + message);
+		throw new InvalidOperationException("File " + newClassName + ": " + message);
 	}
 
 	var oldClassName = newClassName.Substring("Debug".Length);

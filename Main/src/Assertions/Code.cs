@@ -6,6 +6,8 @@ using CodeJam.Arithmetic;
 
 using JetBrains.Annotations;
 
+using static CodeJam.PlatformDependent;
+
 namespace CodeJam
 {
 	/// <summary>
@@ -18,7 +20,7 @@ namespace CodeJam
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> != <c>null</c>
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void NotNull<T>(
 			[CanBeNull, NoEnumeration] T arg,
@@ -31,7 +33,7 @@ namespace CodeJam
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> != <c>null</c>
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void NotNull<T>(
 			[CanBeNull] T? arg,
@@ -44,7 +46,7 @@ namespace CodeJam
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> is not null nor empty
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void NotNullNorEmpty(
 			[CanBeNull] string arg,
@@ -57,7 +59,7 @@ namespace CodeJam
 		/// <summary>
 		/// Ensures that <paramref name="arg" /> is not null nor white space
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void NotNullNorWhiteSpace(
 			[CanBeNull] string arg,
@@ -70,7 +72,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for the argument value
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void AssertArgument(
 			bool condition,
@@ -84,7 +86,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for the argument value
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		public static void AssertArgument(
 			bool condition,
@@ -101,7 +103,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for the argument in range
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void InRange(
 			int value,
@@ -115,7 +117,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for the argument in range
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void InRange<T>(
 			T value,
@@ -131,7 +133,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for index in range
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void ValidIndex(
 			int index,
@@ -144,7 +146,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for index in range
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void ValidIndex(
 			int index,
@@ -158,7 +160,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for from-to index pair
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void ValidIndexPair(
 			int fromIndex,
@@ -176,7 +178,7 @@ namespace CodeJam
 		/// <summary>
 		/// Assertion for startIndex-count pair
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void ValidIndexAndCount(
 			int startIndex,
@@ -195,7 +197,7 @@ namespace CodeJam
 		/// <summary>
 		/// State assertion
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod]
 		public static void AssertState(
 			bool condition,
@@ -208,7 +210,7 @@ namespace CodeJam
 		/// <summary>
 		/// State assertion
 		/// </summary>
-		[DebuggerHidden, MethodImpl(PlatformDependent.AggressiveInlining)]
+		[DebuggerHidden, MethodImpl(AggressiveInlining)]
 		[AssertionMethod, StringFormatMethod("messageFormat")]
 		public static void AssertState(
 			bool condition,
