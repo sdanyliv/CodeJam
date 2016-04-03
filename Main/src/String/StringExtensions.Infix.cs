@@ -173,5 +173,31 @@ namespace CodeJam
 		[NotNull, Pure]
 		public static string ToInvariantString<T>([NotNull] this T s, string format) where T : IFormattable =>
 			s.ToString(format, CultureInfo.InvariantCulture);
+
+		/// <summary>
+		/// Converts the specified string, which encodes binary data as base-64 digits, to an equivalent byte array.
+		/// </summary>
+		/// <param name="str">The string to convert.</param>
+		/// <returns>An array of bytes that is equivalent to <paramref name="str"/>.</returns>
+		[NotNull]
+		[Pure]
+		public static byte[] FromBase64([NotNull] this string str) => Convert.FromBase64String(str);
+
+		/// <summary>
+		/// Converts an array of bytes to its equivalent string representation that is encoded with base-64 digits.
+		/// A parameter specifies whether to insert line breaks in the return value.
+		/// </summary>
+		/// <param name="data">an array of bytes.</param>
+		/// <param name="options">
+		/// <see cref="Base64FormattingOptions.InsertLineBreaks"/> to insert a line break every 76 characters,
+		/// or <see cref="Base64FormattingOptions.None"/> to not insert line breaks.
+		/// </param>
+		/// <returns>The string representation in base 64 of the elements in <paramref name="data"/>.</returns>
+		[NotNull]
+		[Pure]
+		public static string ToBase64(
+				[NotNull] this byte[] data,
+				Base64FormattingOptions options = Base64FormattingOptions.None) =>
+			Convert.ToBase64String(data, options);
 	}
 }
