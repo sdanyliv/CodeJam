@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 
 using JetBrains.Annotations;
 
@@ -199,5 +200,20 @@ namespace CodeJam
 				[NotNull] this byte[] data,
 				Base64FormattingOptions options = Base64FormattingOptions.None) =>
 			Convert.ToBase64String(data, options);
+
+		/// <summary>
+		/// Encodes all the characters in the specified string into a sequence of bytes.
+		/// </summary>
+		/// <param name="str">The string containing the characters to encode.</param>
+		/// <param name="encoding">Encoding to convert.</param>
+		/// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
+		public static byte[] ToBytes(this string str, Encoding encoding) => encoding.GetBytes(str);
+
+		/// <summary>
+		/// Encodes all the characters in the specified string into a sequence of bytes using UTF-8 encoding.
+		/// </summary>
+		/// <param name="str">The string containing the characters to encode.</param>
+		/// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
+		public static byte[] ToBytes(this string str) => ToBytes(str, Encoding.UTF8);
 	}
 }
