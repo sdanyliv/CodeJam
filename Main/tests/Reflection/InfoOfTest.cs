@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 using NUnit.Framework;
 
 namespace CodeJam.Reflection
@@ -78,6 +80,7 @@ namespace CodeJam.Reflection
 		}
 
 		#region Inner types
+		[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 		public class User
 		{
 			public string Name { get; set; }
