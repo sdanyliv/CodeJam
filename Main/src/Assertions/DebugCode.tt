@@ -1,4 +1,9 @@
-﻿<#@ include file="..\..\..\T4.Reusable\DebugCodeGenerator.ttinclude"
-#><#
-	Run();
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".generated.cs" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ include file="$(SolutionDir)T4.Reusable\DebugCodeGenerator.ttinclude" #>
+<#
+	Transform(Host.ResolvePath("Code.cs"),
+		new ReplaceInfo { Pattern = "class Code",                    Replacement = "class DebugCode" },
+		new ReplaceInfo { Pattern = Regex.Escape("[DebuggerHidden"), Replacement = "[Conditional(DebugCondition), DebuggerHidden" });
 #>

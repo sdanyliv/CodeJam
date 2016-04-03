@@ -1,58 +1,24 @@
-﻿<#@ template debug="true" hostspecific="true" language="C#"
-#><#@ output extension=".generated.cs"
-#><#@ import namespace="System.IO"
-#><#@ import namespace="System.Text.RegularExpressions"
-#><#+
-		public void Run()
-		{
-			const string message =
-				"The name of the template should follow the pattern 'Debug' + AssertionFile + '.tt'. " +
-				"The name of the assertion class should be suffixed with 'Code'. " +
-				"For example, for Code.cs the template should be named DebugCode.tt " +
-				"and for EnumerableCode.cs the template should be named DebugEnumerableCode.tt.";
+﻿<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#+
+void Transform(string source, params ReplaceInfo[] info)
+{
+	while (GenerationEnvironment.Length > 0 && char.IsWhiteSpace(GenerationEnvironment[GenerationEnvironment.Length - 1]))
+		GenerationEnvironment.Length--;
 
-			var newClassName = Path.GetFileNameWithoutExtension(Host.TemplateFile);
-			if (!newClassName.StartsWith("Debug", StringComparison.Ordinal) ||
-				!newClassName.EndsWith("Code", StringComparison.Ordinal))
-			{
-				throw new InvalidCastException("File " + newClassName + ": " + message);
-			}
+	var sourceText = File.ReadAllText(source);
 
-			var oldClassName = newClassName.Substring("Debug".Length);
-			var oldClassPath = Host.ResolvePath(oldClassName + ".cs");
-			if (!File.Exists(oldClassPath))
-			{
-				throw new FileNotFoundException("File '" + oldClassPath + "' does not exist");
-			}
-			var resultText = File.ReadAllText(oldClassPath);
+	foreach (var item in info)
+	{
+		sourceText = Regex.Replace(sourceText, item.Pattern, item.Replacement);
+	}
 
-			resultText = @"using static CodeJam.DebugCode;" +
-				Environment.NewLine + Environment.NewLine + resultText;
+	Write(sourceText);
+}
 
-			RegexReplace(
-				ref resultText,
-				"class " + Regex.Escape(oldClassName),
-				"class " + newClassName);
-			RegexReplace(
-				ref resultText,
-				Regex.Escape("[DebuggerHidden"),
-				"[Conditional(DebugCondition), DebuggerHidden");
-
-			Write(resultText);
-		}
-
-		public static void RegexReplace(ref string input, string pattern, string replacement)
-		{
-			var result = Regex.Replace(input, pattern, replacement);
-			if (input == result)
-			{
-				throw new ArgumentException("The match for " + pattern + " not found");
-			}
-			input = result;
-		}
-
-		public static void RegexReplaceOptional(ref string input, string pattern, string replacement)
-		{
-			input = Regex.Replace(input, pattern, replacement);
-		}
+class ReplaceInfo
+{
+	public string Pattern;
+	public string Replacement;
+}
 #>

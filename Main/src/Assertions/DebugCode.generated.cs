@@ -1,6 +1,4 @@
-﻿using static CodeJam.DebugCode;
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
