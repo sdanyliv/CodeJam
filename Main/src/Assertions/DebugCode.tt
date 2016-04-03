@@ -3,7 +3,5 @@
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ include file="$(SolutionDir)T4.Reusable\DebugCodeGenerator.ttinclude" #>
 <#
-	Transform(Host.ResolvePath("Code.cs"),
-		new ReplaceInfo { Pattern = "class Code",                    Replacement = "class DebugCode" },
-		new ReplaceInfo { Pattern = Regex.Escape("[DebuggerHidden"), Replacement = "[Conditional(DebugCondition), DebuggerHidden" });
+	Run();
 #>
