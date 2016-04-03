@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 
 using JetBrains.Annotations;
 
@@ -186,6 +187,37 @@ namespace CodeJam
 				if (!part.IsNullOrWhiteSpace())
 					yield return part;
 			}
+		}
+
+		/// <summary>
+		/// Creates hex representation of byte array.
+		/// </summary>
+		/// <param name="data">Byte array</param>
+		/// <param name="byteSeparator">Separator between bytes. If null - no separator used.</param>
+		/// <returns>
+		/// <paramref name="data"/> represented as a series of hexadecimal representations divided by separator
+		/// </returns>
+		/// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+		[NotNull]
+		[Pure]
+		public static string ToHexString([NotNull] this byte[] data, [CanBeNull] string byteSeparator = null)
+		{
+			if (data == null) throw new ArgumentNullException(nameof(data));
+			var noSep = byteSeparator.IsNullOrEmpty();
+			var result = new StringBuilder(data.Length * (2 + (noSep ? 0 : byteSeparator.Length)));
+			var first = true;
+			foreach (var b in data)
+			{
+				if (!first && !noSep)
+					result.Append(byteSeparator);
+				else
+					first = false;
+				var high = (b & 0xF0) >> 4;
+				result.Append((char)(high < 10 ? '0' + high : 'A' + high - 10));
+				var low = b & 0x0F;
+				result.Append((char)(low < 10 ? '0' + low : 'A' + low - 10));
+			}
+			return result.ToString();
 		}
 	}
 }

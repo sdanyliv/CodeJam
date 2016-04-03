@@ -43,7 +43,8 @@ namespace CodeJam
 		/// <param name="format">A composite format string.</param>
 		/// <param name="arg">The object to format.</param>
 		/// <returns>
-		/// A copy of <paramref name="format"/> in which any format items are replaced by the string representation of <paramref name="arg"/>.
+		/// A copy of <paramref name="format"/> in which any format items are replaced by the string representation of
+		/// <paramref name="arg"/>.
 		/// </returns>
 		[NotNull]
 		[Pure]
@@ -87,7 +88,10 @@ namespace CodeJam
 		/// </summary>
 		/// <param name="format">A composite format string.</param>
 		/// <param name="args">An object array that contains zero or more objects to format.</param>
-		/// <returns>A copy of format in which the format items have been replaced by the string representation of the corresponding objects in args</returns>
+		/// <returns>
+		/// A copy of format in which the format items have been replaced by the string representation of the corresponding
+		/// objects in args
+		/// </returns>
 		[NotNull, Pure]
 		[StringFormatMethod("format")]
 		public static string FormatWith([NotNull] this string format, params object[] args) => string.Format(format, args);
@@ -99,10 +103,13 @@ namespace CodeJam
 		/// Infix form of <see cref="string.Join(string,string[])"/>.
 		/// </remarks>
 		/// <param name="values">An array that contains the elements to concatenate.</param>
-		/// <param name="separator">The string to use as a separator. <paramref name="separator"/> is included in the returned string only
-		/// if <paramref name="values"/> has more than one element.</param>
+		/// <param name="separator">
+		/// The string to use as a separator. <paramref name="separator"/> is included in the returned string only
+		/// if <paramref name="values"/> has more than one element.
+		/// </param>
 		/// <returns>
-		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/> string.
+		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/>
+		/// string.
 		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
 		/// </returns>
 		[NotNull, Pure]
@@ -116,10 +123,13 @@ namespace CodeJam
 		/// Infix form of <see cref="string.Join(string,IEnumerable{string})"/>.
 		/// </remarks>
 		/// <param name="values">A collection that contains the strings to concatenate.</param>
-		/// <param name="separator">The string to use as a separator. <paramref name="separator"/> is included in the returned string only
-		/// if <paramref name="values"/> has more than one element.</param>
+		/// <param name="separator">
+		/// The string to use as a separator. <paramref name="separator"/> is included in the returned string only
+		/// if <paramref name="values"/> has more than one element.
+		/// </param>
 		/// <returns>
-		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/> string.
+		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/>
+		/// string.
 		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
 		/// </returns>
 		[NotNull, Pure]
@@ -136,7 +146,8 @@ namespace CodeJam
 		/// <param name="separator">The string to use as a separator. <paramref name="separator"/> is included in the returned string only
 		/// if <paramref name="values"/> has more than one element.</param>
 		/// <returns>
-		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/> string.
+		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/>
+		/// string.
 		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
 		/// </returns>
 		[NotNull, Pure]

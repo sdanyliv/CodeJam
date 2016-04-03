@@ -54,5 +54,15 @@ namespace CodeJam
 		[TestCase(1048576L << 30, ExpectedResult = "1 PB")]
 		[TestCase(1048576L << 40, ExpectedResult = "1 EB")]
 		public string ToByteSizeString(long value) => value.ToByteSizeString(CultureInfo.InvariantCulture);
+
+		[TestCase(new byte[] {}, null, ExpectedResult = "")]
+		[TestCase(new byte[] { 0 }, null, ExpectedResult = "00")]
+		[TestCase(new byte[] { 0x12 }, null, ExpectedResult = "12")]
+		[TestCase(new byte[] { 0xAB }, null, ExpectedResult = "AB")]
+		[TestCase(new byte[] { 0x9F }, null, ExpectedResult = "9F")]
+		[TestCase(new byte[] { 0x9F }, "-", ExpectedResult = "9F")]
+		[TestCase(new byte[] { 0xAB, 0x9F }, null, ExpectedResult = "AB9F")]
+		[TestCase(new byte[] { 0xAB, 0x9F }, "-", ExpectedResult = "AB-9F")]
+		public string ToHexString(byte[] data, string sep) => data.ToHexString(sep);
 	}
 }
