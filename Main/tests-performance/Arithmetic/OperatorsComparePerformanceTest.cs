@@ -24,15 +24,23 @@ namespace CodeJam.Arithmetic
 
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkIntComparison() => CompetitionBenchmarkRunner.Run<IntCase>(1, 1);
+		public void BenchmarkIntComparison() =>
+			CompetitionBenchmarkRunner.Run<IntCase>(1, 1);
 
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkNullableIntComparison() => CompetitionBenchmarkRunner.Run<NullableIntCase>(1, 1);
+		public void BenchmarkNullableIntComparison() =>
+			CompetitionBenchmarkRunner.Run<NullableIntCase>(1, 1);
 
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkNullableDateTimeComparison() => CompetitionBenchmarkRunner.Run<NullableDateTimeCase>(1, 1);
+		public void BenchmarkNullableDateTimeComparison() =>
+			CompetitionBenchmarkRunner.Run<NullableDateTimeCase>(1, 1);
+
+		[Test]
+		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
+		public void BenchmarkStringComparison()
+			=> CompetitionBenchmarkRunner.Run<StringCase>(1, 1);
 
 		[PublicAPI]
 		public class IntCase
@@ -58,7 +66,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(1.2, 1.5)]
+			[CompetitionBenchmark(1.2, 1.3)]
 			public int Test01Operators()
 			{
 				var result = 0;
@@ -70,7 +78,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(1.4, 1.95)]
+			[CompetitionBenchmark(1.2, 1.95)]
 			public int Test02Comparer()
 			{
 				var result = 0;
@@ -82,7 +90,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(1.4, 1.9)]
+			[CompetitionBenchmark(1.2, 1.9)]
 			public int Test02ExpressionFunc()
 			{
 				var result = 0;
@@ -115,7 +123,7 @@ namespace CodeJam.Arithmetic
 				{
 					int? a = i;
 					int? b = i % 5;
-					if (a == 0)
+					if (b == 0)
 						b = null;
 					result = a == b ? 0 : (a > b ? 1 : -1);
 				}
@@ -123,7 +131,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(0.95, 1.15)]
+			[CompetitionBenchmark(0.95, 1.3)]
 			public int Test01Operators()
 			{
 				var result = 0;
@@ -131,7 +139,7 @@ namespace CodeJam.Arithmetic
 				{
 					int? a = i;
 					int? b = i % 5;
-					if (a == 0)
+					if (b == 0)
 						b = null;
 					result = Operators<int?>.Compare(a, b);
 				}
@@ -147,7 +155,7 @@ namespace CodeJam.Arithmetic
 				{
 					int? a = i;
 					int? b = i % 5;
-					if (a == 0)
+					if (b == 0)
 						b = null;
 					result = _comparer.Compare(a, b);
 				}
@@ -155,7 +163,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(1.2, 1.6)]
+			[CompetitionBenchmark(1.2, 1.9)]
 			public int Test03ExpressionFunc()
 			{
 				var result = 0;
@@ -163,7 +171,7 @@ namespace CodeJam.Arithmetic
 				{
 					int? a = i;
 					int? b = i % 5;
-					if (a == 0)
+					if (b == 0)
 						b = null;
 					result = _expressionFunc(a, b);
 				}
@@ -235,7 +243,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(0.9, 1.4)]
+			[CompetitionBenchmark(0.9, 1.3)]
 			public int Test03ExpressionFunc()
 			{
 				var result = 0;
@@ -247,6 +255,63 @@ namespace CodeJam.Arithmetic
 					var b = i2 == 0 ? (DateTime?)null : dt.AddDays(i2);
 
 					result = _expressionFunc(a, b);
+				}
+
+				return result;
+			}
+		}
+
+		[PublicAPI]
+		public class StringCase
+		{
+			private static readonly Comparer<string> _comparer = Comparer<string>.Default;
+
+			[Benchmark(Baseline = true)]
+			public int Test00DirectCompare()
+			{
+				var result = 0;
+				for (var i = 0; i < Count; i++)
+				{
+					string a = i.ToString();
+					string b = (i % 5).ToString();
+					if (a == "0")
+						b = null;
+
+					result = string.Compare(a, b, StringComparison.Ordinal);
+				}
+
+				return result;
+			}
+
+			[CompetitionBenchmark(0.95, 1.15)]
+			public int Test01Operators()
+			{
+				var result = 0;
+				for (var i = 0; i < Count; i++)
+				{
+					string a = i.ToString();
+					string b = (i % 5).ToString();
+					if (a == "0")
+						b = null;
+
+					result = Operators<string>.Compare(a, b);
+				}
+
+				return result;
+			}
+
+			[CompetitionBenchmark(1.4, 1.7)]
+			public int Test02Comparer()
+			{
+				var result = 0;
+				for (var i = 0; i < Count; i++)
+				{
+					string a = i.ToString();
+					string b = (i % 5).ToString();
+					if (a == "0")
+						b = null;
+
+					result = _comparer.Compare(a, b);
 				}
 
 				return result;

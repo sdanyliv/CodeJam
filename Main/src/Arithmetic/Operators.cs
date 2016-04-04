@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 using JetBrains.Annotations;
@@ -16,12 +15,6 @@ namespace CodeJam.Arithmetic
 	[PublicAPI]
 	public static class Operators<T>
 	{
-		// TODO: catch for T where Comparer<T> does not applies to.
-
-		private static readonly Comparer<T> _comparer = Comparer<T>.Default;
-
-		private static readonly EqualityComparer<T> _equalityComparer = EqualityComparer<T>.Default;
-
 		/// <summary>
 		/// Comparison callback
 		/// </summary>
@@ -30,36 +23,35 @@ namespace CodeJam.Arithmetic
 		/// <summary>
 		/// Equality comparison callback
 		/// </summary>
-		public static readonly Func<T, T, bool> AreEqual = _equalityComparer.Equals;
+		public static readonly Func<T, T, bool> AreEqual = GetComparisonCallback<T>(ExpressionType.Equal);
 
 		/// <summary>
 		/// Inequality comparison callback
 		/// </summary>
-		public static readonly Func<T, T, bool> AreNotEqual = (a, b) => !_equalityComparer.Equals(a, b);
+		public static readonly Func<T, T, bool> AreNotEqual = GetComparisonCallback<T>(ExpressionType.NotEqual);
 
 		/// <summary>
 		/// Equality comparison callback
 		/// </summary>
-		public static readonly Func<T, T, bool> GreaterThan = (a, b) => _comparer.Compare(a, b) > 0;
+		public static readonly Func<T, T, bool> GreaterThan = GetComparisonCallback<T>(ExpressionType.GreaterThan);
 
 		/// <summary>
 		/// Equality comparison callback
 		/// </summary>
-		public static readonly Func<T, T, bool> GreaterThanOrEqual =
-			GetComparisonCallback<T>(ExpressionType.GreaterThanOrEqual);
+		public static readonly Func<T, T, bool> GreaterThanOrEqual = GetComparisonCallback<T>(ExpressionType.GreaterThanOrEqual);
 
 		/// <summary>
 		/// Equality comparison callback
 		/// </summary>
-		public static readonly Func<T, T, bool> LessThan = (a, b) => _comparer.Compare(a, b) < 0;
+		public static readonly Func<T, T, bool> LessThan = GetComparisonCallback<T>(ExpressionType.LessThan);
 
 		/// <summary>
 		/// Equality comparison callback
 		/// </summary>
-		public static readonly Func<T, T, bool> LessThanOrEqual = (a, b) => _comparer.Compare(a, b) <= 0;
+		public static readonly Func<T, T, bool> LessThanOrEqual = GetComparisonCallback<T>(ExpressionType.LessThanOrEqual);
 
 		// TODO: emit (or compile from expression trees) callbacks
-		// for all operators (+, -, >, < etc).
+		// for all operators (+, -, *, |, & etc).
 		// Proof the efficiency with perftests.
 	}
 }
