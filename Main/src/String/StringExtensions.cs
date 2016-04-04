@@ -137,22 +137,16 @@ namespace CodeJam
 		/// <summary>
 		/// Returns size in bytes string representation.
 		/// </summary>
-		public static string ToByteSizeString(this int value) => ToByteSizeString((long)value, CultureInfo.CurrentCulture);
-
-		/// <summary>
-		/// Returns size in bytes string representation.
-		/// </summary>
-		public static string ToByteSizeString(this int value, IFormatProvider provider) => ToByteSizeString((long)value, provider);
-
-		/// <summary>
-		/// Returns size in bytes string representation.
-		/// </summary>
+		[NotNull]
+		[Pure]
 		public static string ToByteSizeString(this long value) => ToByteSizeString(value, CultureInfo.CurrentCulture);
 
 		/// <summary>
 		/// Returns size in bytes string representation.
 		/// </summary>
-		public static string ToByteSizeString(this long value, IFormatProvider provider)
+		[NotNull]
+		[Pure]
+		public static string ToByteSizeString(this long value, [CanBeNull] IFormatProvider provider)
 		{
 			if (value < 0)
 				return "-" + (-value).ToByteSizeString(provider);
