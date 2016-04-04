@@ -20,9 +20,5 @@ namespace CodeJam
 		public const string ExplicitExcludeReason = @"Autorun disabled as it takes too long to run.
 Also, running this on debug builds may produce inaccurate results.
 Please, run it manually from the Test Explorer window. Remember to use release builds. Thanks and have a nice day:)";
-
-		// TODO: Check that these are useful. Remove if not.
-		public const double NotSlower = 0.95;
-		public const double NotFaster = 1.05;
 	}
 }

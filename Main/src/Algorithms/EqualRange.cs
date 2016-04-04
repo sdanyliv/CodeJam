@@ -30,7 +30,7 @@ namespace CodeJam
 		/// <param name="from">The minimum index</param>
 		/// <returns>The tuple of lower bound and upper bound for the value</returns>
 		public static Tuple<int, int> EqualRange<TElement>(this IList<TElement> list, TElement value, int from)
-			=> list.EqualRange(value, @from, list.Count, Comparer<TElement>.Default.Compare);
+			=> list.EqualRange(value, from, list.Count, Comparer<TElement>.Default.Compare);
 
 		/// <summary>
 		/// Returns the tuple of [i, j] where

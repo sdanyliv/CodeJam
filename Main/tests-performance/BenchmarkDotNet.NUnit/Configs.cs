@@ -3,6 +3,8 @@
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
 
+using JetBrains.Annotations;
+
 // ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.NUnit
@@ -10,6 +12,7 @@ namespace BenchmarkDotNet.NUnit
 	/// <summary>
 	/// Use this to run fast but inaccurate measures
 	/// </summary>
+	[PublicAPI]
 	public class FastRunConfig : ManualConfig
 	{
 		/// <summary>
@@ -37,6 +40,7 @@ namespace BenchmarkDotNet.NUnit
 	/// <summary>
 	/// Use this to run slower but proven-to-be-accurate perf tests
 	/// </summary>
+	[PublicAPI]
 	public class TestProofConfig : ManualConfig
 	{
 		/// <summary>

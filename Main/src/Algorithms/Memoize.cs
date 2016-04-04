@@ -23,8 +23,11 @@ namespace CodeJam
 		public static Func<TArg, TResult> Memoize<TArg, TResult>(
 			[NotNull] this Func<TArg, TResult> func,
 			IEqualityComparer<TArg> comparer,
-			bool threadSafe = false) =>
-				LazyDictionary.Create(func, comparer, threadSafe).Get;
+			bool threadSafe = false)
+		{
+			var map = LazyDictionary.Create(func, comparer, threadSafe);
+			return arg => map[arg];
+		}
 
 		/// <summary>
 		/// Caches function value for specific argument.
@@ -38,8 +41,11 @@ namespace CodeJam
 		[Pure]
 		public static Func<TArg, TResult> Memoize<TArg, TResult>(
 				[NotNull] this Func<TArg, TResult> func,
-				bool threadSafe = false) =>
-			LazyDictionary.Create(func, threadSafe).Get;
+				bool threadSafe = false)
+		{
+			var map = LazyDictionary.Create(func, threadSafe);
+			return arg => map[arg];
+		}
 
 		/// <summary>
 		/// Caches function value for specific arguments.
@@ -57,7 +63,7 @@ namespace CodeJam
 			bool threadSafe = false)
 		{
 			var map = LazyDictionary.Create<TupleStruct<TArg1, TArg2>, TResult>(key => func(key.Item1, key.Item2), threadSafe);
-			return (arg1, arg2) => map.Get(TupleStruct.Create(arg1, arg2));
+			return (arg1, arg2) => map[TupleStruct.Create(arg1, arg2)];
 		}
 
 		/// <summary>
@@ -80,7 +86,7 @@ namespace CodeJam
 				LazyDictionary.Create<TupleStruct<TArg1, TArg2, TArg3>, TResult>(
 					key => func(key.Item1, key.Item2, key.Item3),
 					threadSafe);
-			return (arg1, arg2, arg3) => map.Get(TupleStruct.Create(arg1, arg2, arg3));
+			return (arg1, arg2, arg3) => map[TupleStruct.Create(arg1, arg2, arg3)];
 		}
 
 		/// <summary>
@@ -104,7 +110,7 @@ namespace CodeJam
 				LazyDictionary.Create<TupleStruct<TArg1, TArg2, TArg3, TArg4>, TResult>(
 					key => func(key.Item1, key.Item2, key.Item3, key.Item4),
 					threadSafe);
-			return (arg1, arg2, arg3, arg4) => map.Get(TupleStruct.Create(arg1, arg2, arg3, arg4));
+			return (arg1, arg2, arg3, arg4) => map[TupleStruct.Create(arg1, arg2, arg3, arg4)];
 		}
 
 		/// <summary>
@@ -129,7 +135,7 @@ namespace CodeJam
 				LazyDictionary.Create<TupleStruct<TArg1, TArg2, TArg3, TArg4, TArg5>, TResult>(
 					key => func(key.Item1, key.Item2, key.Item3, key.Item4, key.Item5),
 					threadSafe);
-			return (arg1, arg2, arg3, arg4, arg5) => map.Get(TupleStruct.Create(arg1, arg2, arg3, arg4, arg5));
+			return (arg1, arg2, arg3, arg4, arg5) => map[TupleStruct.Create(arg1, arg2, arg3, arg4, arg5)];
 		}
 	}
 }

@@ -13,6 +13,30 @@ namespace CodeJam.Reflection
 	public static class ExpressionHelper
 	{
 		/// <summary>
+		/// Gets the <see cref="MemberInfo"/>.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="MemberInfo"/> instance.
+		/// </returns>
+		[NotNull, Pure]
+		public static MemberInfo GetMemberInfo([NotNull] LambdaExpression expression)
+		{
+			var body = expression.Body;
+			var unary = body as UnaryExpression;
+			if (unary != null)
+				body = unary.Operand;
+
+			switch (body.NodeType)
+			{
+				case ExpressionType.MemberAccess: return ((MemberExpression)body).Member;
+				case ExpressionType.Call: return ((MethodCallExpression)body).Method;
+				default:
+					return ((NewExpression)body).Constructor;
+			}
+		}
+
+		/// <summary>
 		/// Returns the property.
 		/// </summary>
 		/// <param name="expression">The expression to analyze.</param>
@@ -35,18 +59,7 @@ namespace CodeJam.Reflection
 			(FieldInfo)GetMemberExpression(expression).Member;
 
 		/// <summary>
-		/// Returns the property or field.
-		/// </summary>
-		/// <param name="expression">The expression to analyze.</param>
-		/// <returns>
-		/// The <see cref="MemberInfo"/> instance.
-		/// </returns>
-		[NotNull, Pure]
-		public static MemberInfo GetPropertyOrField([NotNull] LambdaExpression expression) =>
-			GetMemberExpression(expression).Member;
-
-		/// <summary>
-		/// Returns the contsructor.
+		/// Returns the constructor.
 		/// </summary>
 		/// <param name="expression">The expression to analyze.</param>
 		/// <returns>
@@ -64,8 +77,14 @@ namespace CodeJam.Reflection
 		/// The <see cref="MethodInfo"/> instance.
 		/// </returns>
 		[NotNull, Pure]
-		public static MethodInfo GetMethod([NotNull] LambdaExpression expression) =>
-			((MethodCallExpression)expression.Body).Method;
+		public static MethodInfo GetMethod([NotNull] LambdaExpression expression)
+		{
+			var info = GetMemberInfo(expression);
+			return
+				info is PropertyInfo
+					? ((PropertyInfo)info).GetGetMethod(true)
+					: (MethodInfo)info;
+		}
 
 		/// <summary>
 		/// Returns a name of the property.
@@ -98,7 +117,7 @@ namespace CodeJam.Reflection
 		/// </returns>
 		[NotNull, Pure]
 		public static string GetMethodName([NotNull] LambdaExpression expression) =>
-			((MethodCallExpression)expression.Body).Method.Name;
+			GetMethod(expression).Name;
 
 		private static string GetFullPropertyNameImpl(MemberExpression expression)
 		{

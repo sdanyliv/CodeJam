@@ -137,22 +137,16 @@ namespace CodeJam
 		/// <summary>
 		/// Returns size in bytes string representation.
 		/// </summary>
-		public static string ToByteSizeString(this int value) => ToByteSizeString((long)value, CultureInfo.CurrentCulture);
-
-		/// <summary>
-		/// Returns size in bytes string representation.
-		/// </summary>
-		public static string ToByteSizeString(this int value, IFormatProvider provider) => ToByteSizeString((long)value, provider);
-
-		/// <summary>
-		/// Returns size in bytes string representation.
-		/// </summary>
+		[NotNull]
+		[Pure]
 		public static string ToByteSizeString(this long value) => ToByteSizeString(value, CultureInfo.CurrentCulture);
 
 		/// <summary>
 		/// Returns size in bytes string representation.
 		/// </summary>
-		public static string ToByteSizeString(this long value, IFormatProvider provider)
+		[NotNull]
+		[Pure]
+		public static string ToByteSizeString(this long value, [CanBeNull] IFormatProvider provider)
 		{
 			if (value < 0)
 				return "-" + (-value).ToByteSizeString(provider);
@@ -169,6 +163,110 @@ namespace CodeJam
 			}
 
 			return string.Format(provider, "{0:#.##} {1}", d, _sizeSuffixes[i]);
+		}
+
+		/// <summary>
+		/// Splits <paramref name="source"/> and returns whitespace trimmed parts.
+		/// </summary>
+		/// <param name="source">Source string.</param>
+		/// <param name="separators">Separator chars</param>
+		/// <returns>Enumeration of parts.</returns>
+		[NotNull]
+		[Pure]
+		public static IEnumerable<string> SplitWithTrim([NotNull] this string source, params char[] separators)
+		{
+			Code.NotNull(source, nameof(source));
+
+			// TODO: For performance reasons must be reimplemented using FSM parser.
+			var parts = source.Split(separators);
+			foreach (var part in parts)
+			{
+				if (!part.IsNullOrWhiteSpace())
+					yield return part.Trim();
+			}
+		}
+
+		/// <summary>
+		/// Creates hex representation of byte array.
+		/// </summary>
+		/// <param name="data">Byte array.</param>
+		/// <returns>
+		/// <paramref name="data"/> represented as a series of hexadecimal representations.
+		/// </returns>
+		/// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+		[NotNull]
+		[Pure]
+		public static unsafe string ToHexString([NotNull] this byte[] data)
+		{
+			Code.NotNull(data, nameof(data));
+			if (data.Length == 0)
+				return string.Empty;
+
+			var length = data.Length << 1;
+			var result = new string('\0', length);
+
+			fixed (char* res = result)
+			fixed (byte* buf = data)
+			{
+				var pres = res;
+
+				for (var i = 0; i < data.Length; pres += 2, i++)
+				{
+					var b = buf[i];
+					var n = b >> 4;
+					pres[0] = (char)(55 + n + (((n - 10) >> 31) & -7));
+
+					n = b & 0xF;
+					pres[1] = (char)(55 + n + (((n - 10) >> 31) & -7));
+				}
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Creates hex representation of byte array.
+		/// </summary>
+		/// <param name="data">Byte array.</param>
+		/// <param name="byteSeparator">Separator between bytes. If null - no separator used.</param>
+		/// <returns>
+		/// <paramref name="data"/> represented as a series of hexadecimal representations divided by separator.
+		/// </returns>
+		/// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+		[NotNull]
+		[Pure]
+		public static unsafe string ToHexString([NotNull] this byte[] data, [CanBeNull] string byteSeparator)
+		{
+			Code.NotNull(data, nameof(data));
+
+			if (data.Length == 0)
+				return string.Empty;
+
+			var hasSeparator = byteSeparator.NotNullNorEmpty();
+			var length = data.Length * 2 + (hasSeparator ? (data.Length - 1) * byteSeparator.Length : 0);
+			var result = new string('\0', length);
+
+			fixed (char* res = result, sep = byteSeparator)
+			fixed (byte* buf = data)
+			{
+				var pres = res;
+
+				for (var i = 0; i < data.Length; pres += 2, i++)
+				{
+					if (hasSeparator & (i != 0))
+						for (var j = 0; j < byteSeparator.Length; pres++, j++)
+							pres[0] = sep[j];
+
+					var b = buf[i];
+					var n = b >> 4;
+					pres[0] = (char)(55 + n + (((n - 10) >> 31) & -7));
+
+					n = b & 0xF;
+					pres[1] = (char)(55 + n + (((n - 10) >> 31) & -7));
+				}
+			}
+
+			return result;
 		}
 	}
 }

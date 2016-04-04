@@ -60,6 +60,7 @@ namespace CodeJam.Reflection
 		/// <typeparam name="T">An enumeration type.</typeparam>
 		/// <returns>An object of type enumType whose value is represented by value.</returns>
 		[Pure]
-		public static T Parse<T>([NotNull] string value, bool ignoreCase = true) => (T)Enum.Parse(typeof (T), value);
+		public static T Parse<T>([NotNull] string value, bool ignoreCase = true) =>
+			(T)Enum.Parse(typeof (T), value, ignoreCase);
 	}
 }

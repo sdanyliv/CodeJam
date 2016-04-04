@@ -14,47 +14,28 @@ namespace CodeJam.Collections
 <# GenerateMethod("string"); #>
 		#endregion
 <#
-	foreach (var type in new[] { "byte", "sbyte", "short", "ushort", "int", "uint", "long", "ulong", "float", "double", "decimal", "TimeSpan", "DateTime", "DateTimeOffset" })
+	foreach (var type in new[] { "byte", "sbyte", "short", "ushort", "int", "uint", "long", "ulong" })
 	{
 #>
 
 		#region <#= type #>
 <#
-		switch (type)
-		{
-			case "byte":
-				GenerateUnsafeMethod(type, size: 1);
-				break;
-			case "sbyte":
-				GenerateUnsafeMethod(type, size: 1);
-				break;
-			case "short":
-				GenerateUnsafeMethod(type, size: 2);
-				break;
-			case "ushort":
-				GenerateUnsafeMethod(type, size: 2);
-				break;
-			case "int":
-				GenerateUnsafeMethod(type, size: 4);
-				break;
-			case "uint":
-				GenerateUnsafeMethod(type, size: 4);
-				break;
-			case "long":
-				GenerateUnsafeMethod(type, size: 8);
-				break;
-			case "ulong":
-				GenerateUnsafeMethod(type, size: 8);
-				break;
-			default:
+		GenerateUnsafeMethod(type);
+		GenerateNullableMethod(type);
 #>
-<# GenerateMethod(type); #>
-
+		#endregion
 <#
-				break;
-		}
+	}
+
+	foreach (var type in new[] { "float", "double", "decimal", "TimeSpan", "DateTime", "DateTimeOffset" })
+	{
 #>
-<# GenerateNullableMethod(type); #>
+
+		#region <#= type #>
+<#
+		GenerateMethod(type);
+		GenerateNullableMethod(type);
+#>
 		#endregion
 <#
 	}
@@ -63,7 +44,8 @@ namespace CodeJam.Collections
 }
 <#+
 public void GenerateMethod(string type)
-{#>
+{
+#>
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -87,11 +69,14 @@ public void GenerateMethod(string type)
 
 			return true;
 		}
-<#+}
+<#+
+}
 #>
 <#+
 public void GenerateNullableMethod(string type)
-{#>
+{
+#>
+
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -119,11 +104,13 @@ public void GenerateNullableMethod(string type)
 
 			return true;
 		}
-<#+}
+<#+
+}
 #>
 <#+
-public void GenerateUnsafeMethod(string type, int size)
-{ #>
+public void GenerateUnsafeMethod(string type)
+{
+#>
 		/// <summary>
 		/// Returns true, if length and content of <paramref name="a"/> equals <paramref name="b"/>.
 		/// </summary>
@@ -151,8 +138,8 @@ public void GenerateUnsafeMethod(string type, int size)
 			}
 
 			fixed (void* pa = a, pb = b)
-				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * <#= size #>);
+				return Memory.Compare((byte*)pa, (byte*)pb, a.Length * sizeof(<#= type #>));
 		}
-
-<#+}
+<#+
+}
 #>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 
 using JetBrains.Annotations;
 
@@ -42,7 +43,8 @@ namespace CodeJam
 		/// <param name="format">A composite format string.</param>
 		/// <param name="arg">The object to format.</param>
 		/// <returns>
-		/// A copy of <paramref name="format"/> in which any format items are replaced by the string representation of <paramref name="arg"/>.
+		/// A copy of <paramref name="format"/> in which any format items are replaced by the string representation of
+		/// <paramref name="arg"/>.
 		/// </returns>
 		[NotNull]
 		[Pure]
@@ -86,7 +88,10 @@ namespace CodeJam
 		/// </summary>
 		/// <param name="format">A composite format string.</param>
 		/// <param name="args">An object array that contains zero or more objects to format.</param>
-		/// <returns>A copy of format in which the format items have been replaced by the string representation of the corresponding objects in args</returns>
+		/// <returns>
+		/// A copy of format in which the format items have been replaced by the string representation of the corresponding
+		/// objects in args
+		/// </returns>
 		[NotNull, Pure]
 		[StringFormatMethod("format")]
 		public static string FormatWith([NotNull] this string format, params object[] args) => string.Format(format, args);
@@ -98,10 +103,13 @@ namespace CodeJam
 		/// Infix form of <see cref="string.Join(string,string[])"/>.
 		/// </remarks>
 		/// <param name="values">An array that contains the elements to concatenate.</param>
-		/// <param name="separator">The string to use as a separator. <paramref name="separator"/> is included in the returned string only
-		/// if <paramref name="values"/> has more than one element.</param>
+		/// <param name="separator">
+		/// The string to use as a separator. <paramref name="separator"/> is included in the returned string only
+		/// if <paramref name="values"/> has more than one element.
+		/// </param>
 		/// <returns>
-		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/> string.
+		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/>
+		/// string.
 		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
 		/// </returns>
 		[NotNull, Pure]
@@ -115,10 +123,13 @@ namespace CodeJam
 		/// Infix form of <see cref="string.Join(string,IEnumerable{string})"/>.
 		/// </remarks>
 		/// <param name="values">A collection that contains the strings to concatenate.</param>
-		/// <param name="separator">The string to use as a separator. <paramref name="separator"/> is included in the returned string only
-		/// if <paramref name="values"/> has more than one element.</param>
+		/// <param name="separator">
+		/// The string to use as a separator. <paramref name="separator"/> is included in the returned string only
+		/// if <paramref name="values"/> has more than one element.
+		/// </param>
 		/// <returns>
-		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/> string.
+		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/>
+		/// string.
 		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
 		/// </returns>
 		[NotNull, Pure]
@@ -135,7 +146,8 @@ namespace CodeJam
 		/// <param name="separator">The string to use as a separator. <paramref name="separator"/> is included in the returned string only
 		/// if <paramref name="values"/> has more than one element.</param>
 		/// <returns>
-		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/> string.
+		/// A string that consists of the members of <paramref name="values"/> delimited by the <paramref name="separator"/>
+		/// string.
 		/// If <paramref name="values"/> has no members, the method returns <see cref="string.Empty"/>.
 		/// </returns>
 		[NotNull, Pure]
@@ -173,5 +185,46 @@ namespace CodeJam
 		[NotNull, Pure]
 		public static string ToInvariantString<T>([NotNull] this T s, string format) where T : IFormattable =>
 			s.ToString(format, CultureInfo.InvariantCulture);
+
+		/// <summary>
+		/// Converts the specified string, which encodes binary data as base-64 digits, to an equivalent byte array.
+		/// </summary>
+		/// <param name="str">The string to convert.</param>
+		/// <returns>An array of bytes that is equivalent to <paramref name="str"/>.</returns>
+		[NotNull]
+		[Pure]
+		public static byte[] FromBase64([NotNull] this string str) => Convert.FromBase64String(str);
+
+		/// <summary>
+		/// Converts an array of bytes to its equivalent string representation that is encoded with base-64 digits.
+		/// A parameter specifies whether to insert line breaks in the return value.
+		/// </summary>
+		/// <param name="data">an array of bytes.</param>
+		/// <param name="options">
+		/// <see cref="Base64FormattingOptions.InsertLineBreaks"/> to insert a line break every 76 characters,
+		/// or <see cref="Base64FormattingOptions.None"/> to not insert line breaks.
+		/// </param>
+		/// <returns>The string representation in base 64 of the elements in <paramref name="data"/>.</returns>
+		[NotNull]
+		[Pure]
+		public static string ToBase64(
+				[NotNull] this byte[] data,
+				Base64FormattingOptions options = Base64FormattingOptions.None) =>
+			Convert.ToBase64String(data, options);
+
+		/// <summary>
+		/// Encodes all the characters in the specified string into a sequence of bytes.
+		/// </summary>
+		/// <param name="str">The string containing the characters to encode.</param>
+		/// <param name="encoding">Encoding to convert.</param>
+		/// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
+		public static byte[] ToBytes(this string str, Encoding encoding) => encoding.GetBytes(str);
+
+		/// <summary>
+		/// Encodes all the characters in the specified string into a sequence of bytes using UTF-8 encoding.
+		/// </summary>
+		/// <param name="str">The string containing the characters to encode.</param>
+		/// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
+		public static byte[] ToBytes(this string str) => ToBytes(str, Encoding.UTF8);
 	}
 }

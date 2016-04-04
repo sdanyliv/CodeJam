@@ -28,7 +28,7 @@ namespace CodeJam
 		/// <param name="from">The minimum index</param>
 		/// <returns>The lower bound for the value</returns>
 		public static int LowerBound<TElement>(this IList<TElement> list, TElement value, int from)
-			=> list.LowerBound(value, @from, list.Count, Comparer<TElement>.Default.Compare);
+			=> list.LowerBound(value, from, list.Count, Comparer<TElement>.Default.Compare);
 
 		/// <summary>
 		/// Returns the minimum index i in the range [0, list.Count - 1] such that list[i] >= value

@@ -37,14 +37,13 @@
     <AssemblyOriginatorKeyFile>..\..\CodeJam.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Jetbrains.Annotations.cs">
+      <Link>Jetbrains.Annotations.cs</Link>
+    </Compile>
     <Compile Include="CmdLine\CommandLineChecker.cs" />
     <Compile Include="CmdLine\CommandLineHelper.cs" />
     <Compile Include="CmdLine\Model\Checking\CmdLineRules.cs" />
@@ -74,9 +73,6 @@
     <Compile Include="Ranges\Range%271.cs" />
     <Compile Include="Ranges\Range.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Main\src\CodeJam.Main.csproj">

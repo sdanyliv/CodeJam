@@ -1,0 +1,20 @@
+﻿<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text.RegularExpressions" #><#+
+void Transform(string source, params ReplaceInfo[] info)
+{
+	var sourceText = File.ReadAllText(source);
+
+	foreach (var item in info)
+	{
+		sourceText = Regex.Replace(sourceText, item.Pattern, item.Replacement);
+	}
+
+	Write(sourceText);
+}
+
+class ReplaceInfo
+{
+	public string Pattern;
+	public string Replacement;
+}
+#>

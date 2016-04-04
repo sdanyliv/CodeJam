@@ -45,6 +45,13 @@ namespace CodeJam.Collections
 		/// <param name="a">The first array to compare.</param>
 		/// <param name="b">The second array to compare.</param>
 		[Pure]
-		public static bool EqualsTo<T>([CanBeNull] this T[] a, [CanBeNull] T[] b) => EqualsTo(a, b, EqualityComparer<T>.Default);
+		public static bool EqualsTo<T>([CanBeNull] this T[] a, [CanBeNull] T[] b) =>
+			EqualsTo(a, b, EqualityComparer<T>.Default);
+
+		/// <summary>
+		/// Checks if any element in array exists.
+		/// </summary>
+		/// <remarks>This method performs fast check instead of creating enumerator</remarks>
+		public static bool Any<T>(this T[] array) => array.Length != 0;
 	}
 }

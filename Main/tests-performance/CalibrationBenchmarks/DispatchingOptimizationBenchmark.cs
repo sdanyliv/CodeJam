@@ -6,6 +6,8 @@ using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
+using JetBrains.Annotations;
+
 using NUnit.Framework;
 
 namespace CodeJam
@@ -17,6 +19,7 @@ namespace CodeJam
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
 	[SuppressMessage("ReSharper", "ConvertToConstant.Local")]
+	[PublicAPI]
 	public class DispatchingOptimizationBenchmark
 	{
 		// Use case:
@@ -125,7 +128,7 @@ namespace CodeJam
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
 		public void BenchmarkJitOptimizedDispatch()
-			=> CompetitionBenchmarkRunner.Run(BenchmarkConstants.NotSlower, BenchmarkConstants.NotFaster);
+			=> CompetitionBenchmarkRunner.Run(this, 1, 1);
 
 		[Benchmark(Baseline = true)]
 		public int Test00Baseline()
@@ -139,7 +142,7 @@ namespace CodeJam
 			return sum;
 		}
 
-		[CompetitionBenchmark(0.9, 1.15)]
+		[CompetitionBenchmark(0.9, 1.1)]
 		public int Test01SwitchOverRoField()
 		{
 			var sum = 0;
@@ -152,7 +155,7 @@ namespace CodeJam
 			return sum;
 		}
 
-		[CompetitionBenchmark(1.3, 1.7)]
+		[CompetitionBenchmark(1.25, 1.7)]
 		public int Test02SwitchOverStaticField()
 		{
 			var sum = 0;

@@ -2,7 +2,7 @@
 
 using NUnit.Framework;
 
-namespace CodeJam.Threading
+namespace CodeJam
 {
 	[TestFixture]
 	public class MemoizeTests

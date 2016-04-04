@@ -50,6 +50,7 @@
     <Compile Include="Algorithms\SwapTest.cs" />
     <Compile Include="Algorithms\EqualRangeTest.cs" />
     <Compile Include="Algorithms\UpperBoundTest.cs" />
+    <Compile Include="Arithmetic\OperatorsTest.cs" />
     <Compile Include="Assertions\CodeAssertionsTest.cs" />
     <Compile Include="Collections\AggregateFuncsTest.cs" />
     <Compile Include="Collections\ArrayExtensionsTest.cs" />
@@ -59,10 +60,14 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Collections\EnumerableExtensionTests.Page.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.Split.cs" />
+    <Compile Include="Collections\EnumerableExtensionTests.Slice.cs" />
+    <Compile Include="Collections\EnumerableExtensionTests.TakeLast.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.cs" />
     <Compile Include="IO\TempDataTests.cs" />
     <Compile Include="Reflection\AssemblyExtensionsTest.cs" />
+    <Compile Include="Reflection\CreateInstanceTests.cs" />
     <Compile Include="Threading\ParallelQueueTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\InfoOfTest.cs" />

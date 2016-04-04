@@ -5,11 +5,14 @@ using BenchmarkDotNet.Horology;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
+using JetBrains.Annotations;
+
 // ReSharper disable ConvertMethodToExpressionBody
 // ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.Columns
 {
+	[PublicAPI]
 	public class PercentileColumn : IColumn
 	{
 		public static readonly IColumn P0Column = new PercentileColumn(0.00);
@@ -54,9 +57,7 @@ namespace BenchmarkDotNet.Columns
 		public static readonly IColumn S95Column = new ScaledPercentileColumn(0.95);
 		public static readonly IColumn S100Column = new ScaledPercentileColumn(1);
 
-		public ScaledPercentileColumn(double percentileRatio) : base(percentileRatio)
-		{
-		}
+		public ScaledPercentileColumn(double percentileRatio) : base(percentileRatio) { }
 
 		public override string ColumnName => "S" + PercentileRatio * 100;
 		protected override bool IsTimeColumn => false;

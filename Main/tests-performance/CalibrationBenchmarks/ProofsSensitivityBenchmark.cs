@@ -3,6 +3,8 @@
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
+using JetBrains.Annotations;
+
 using NUnit.Framework;
 
 namespace CodeJam
@@ -12,11 +14,12 @@ namespace CodeJam
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
 	[Config(typeof(FastRunConfig))]
+	[PublicAPI]
 	public class ProofsSensitivityBenchmark
 	{
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkSensitivity() => CompetitionBenchmarkRunner.Run(1.5, 1.75);
+		public void BenchmarkSensitivity() => CompetitionBenchmarkRunner.Run(this, 1.5, 1.75);
 
 		[Params(1000, 10 * 1000, 100 * 1000, 1000 * 1000)]
 		public int Count { get; set; }

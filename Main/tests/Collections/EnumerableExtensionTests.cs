@@ -11,6 +11,20 @@ namespace CodeJam
 	[TestFixture]
 	public partial class EnumerableExtensionTests
 	{
+		[Test]
+		public void IndexTest()
+		{
+			for (var n = 1; n < 10; n++)
+			{
+				var list = Enumerable.Range(0, n).Index().ToArray();
+				foreach (var value in list)
+					Assert.AreEqual(value.Item, value.Index, "#Index");
+
+				Assert.IsTrue(list[0].IsFirst, "#IsFirst");
+				Assert.IsTrue(list.Last().IsLast, "#IsLast");
+			}
+		}
+
 		[TestCase(new[] {"1", "2"}, "3", TestName = "Concat1 1", ExpectedResult = "1, 2, 3")]
 		[TestCase(new string[0],    "3", TestName = "Concat1 2", ExpectedResult = "3")]
 		public string Concat1(string[] input, string concat)
@@ -31,11 +45,6 @@ namespace CodeJam
 		[TestCase(new[] {"1", "2"}, new[] {"-1", "0"}, TestName = "Prepend2 2", ExpectedResult = "-1, 0, 1, 2")]
 		public string Prepend(string[] input, string[] prepend)
 			=> input.Prepend(prepend).Join(", ");
-
-		[TestCase(new[] {3, 1, 8, 0, 6}, ExpectedResult = "0, 6")]
-		[TestCase(new[] {1},             ExpectedResult = "1")]
-		[TestCase(new int[0],            ExpectedResult = "")]
-		public string TakeLastTest(int[] source) => source.TakeLast(2).Join(", ");
 
 		[TestCase(arg: new[] { "a:b", "b:c", "c" }, ExpectedResult = "c, b, a")]
 		[TestCase(arg: new[] { "a:c", "b:c", "c" }, ExpectedResult = "c, a, b")]
