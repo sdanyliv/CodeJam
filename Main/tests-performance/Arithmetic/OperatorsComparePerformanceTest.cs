@@ -272,8 +272,8 @@ namespace CodeJam.Arithmetic
 				var result = 0;
 				for (var i = 0; i < Count; i++)
 				{
-					string a = i.ToString();
-					string b = (i % 5).ToString();
+					var a = i.ToString();
+					var b = (i % 5).ToString();
 					if (a == "0")
 						b = null;
 
@@ -289,8 +289,8 @@ namespace CodeJam.Arithmetic
 				var result = 0;
 				for (var i = 0; i < Count; i++)
 				{
-					string a = i.ToString();
-					string b = (i % 5).ToString();
+					var a = i.ToString();
+					var b = (i % 5).ToString();
 					if (a == "0")
 						b = null;
 
@@ -306,8 +306,8 @@ namespace CodeJam.Arithmetic
 				var result = 0;
 				for (var i = 0; i < Count; i++)
 				{
-					string a = i.ToString();
-					string b = (i % 5).ToString();
+					var a = i.ToString();
+					var b = (i % 5).ToString();
 					if (a == "0")
 						b = null;
 
