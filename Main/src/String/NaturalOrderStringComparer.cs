@@ -99,7 +99,7 @@ namespace CodeJam
 		[Pure]
 		public static int Compare([CanBeNull] string a, [CanBeNull] string b, bool ignoreCase)
 		{
-			if (ReferenceEquals(a, b))
+			if (a == b)
 				return 0;
 
 			if (a == null)
