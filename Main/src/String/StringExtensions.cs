@@ -178,7 +178,7 @@ namespace CodeJam
 			foreach (var part in parts)
 			{
 				if (!part.IsNullOrWhiteSpace())
-					yield return part;
+					yield return part.Trim();
 			}
 		}
 
