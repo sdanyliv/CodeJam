@@ -1,5 +1,10 @@
-CodeJam 1.0.0-beta5 Release Notes
+CodeJam 1.0.0-beta6 Release Notes
 ---------------------------------------
+
+What's new in 1.0.0-beta6
+-------------------------
+* Performance optimization
+* Fixes, code cleanup and annotations
 
 What's new in 1.0.0-beta5
 -------------------------
