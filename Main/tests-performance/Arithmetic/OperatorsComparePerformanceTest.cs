@@ -11,10 +11,14 @@ using NUnit.Framework;
 
 namespace CodeJam.Arithmetic
 {
+	/// <summary>
+	/// Checks:
+	/// 1. Proofs that there's no way to make Operators (of T).Compare faster.
+	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Operators")]
 	[Config(typeof(FastRunConfig))]
 	[PublicAPI]
-	public class OperatorsPerformanceTest
+	public class OperatorsComparePerformanceTest
 	{
 		private const int Count = 10 * 1000;
 
@@ -54,7 +58,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(1.4, 1.7)]
+			[CompetitionBenchmark(1.2, 1.5)]
 			public int Test01Operators()
 			{
 				var result = 0;
@@ -66,7 +70,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(1.4, 1.8)]
+			[CompetitionBenchmark(1.4, 1.95)]
 			public int Test02Comparer()
 			{
 				var result = 0;
@@ -78,7 +82,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(1.4, 1.7)]
+			[CompetitionBenchmark(1.4, 1.9)]
 			public int Test02ExpressionFunc()
 			{
 				var result = 0;
@@ -119,46 +123,49 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(1, 1.15)]
+			[CompetitionBenchmark(0.95, 1.15)]
 			public int Test01Operators()
 			{
 				var result = 0;
 				for (var i = 0; i < Count; i++)
 				{
-					int? i2 = i % 5;
-					if (i2 == 0)
-						i2 = null;
-					result = Operators<int?>.Compare(i, i2);
+					int? a = i;
+					int? b = i % 5;
+					if (a == 0)
+						b = null;
+					result = Operators<int?>.Compare(a, b);
 				}
 
 				return result;
 			}
 
-			[CompetitionBenchmark(1, 1.3)]
+			[CompetitionBenchmark(0.95, 1.3)]
 			public int Test02Comparer()
 			{
 				var result = 0;
 				for (var i = 0; i < Count; i++)
 				{
-					int? i2 = i % 5;
-					if (i2 == 0)
-						i2 = null;
-					result = _comparer.Compare(i, i2);
+					int? a = i;
+					int? b = i % 5;
+					if (a == 0)
+						b = null;
+					result = _comparer.Compare(a, b);
 				}
 
 				return result;
 			}
 
-			[CompetitionBenchmark(1.2, 1.7)]
+			[CompetitionBenchmark(1.2, 1.6)]
 			public int Test03ExpressionFunc()
 			{
 				var result = 0;
 				for (var i = 0; i < Count; i++)
 				{
-					int? i2 = i % 5;
-					if (i2 == 0)
-						i2 = null;
-					result = _expressionFunc(i, i2);
+					int? a = i;
+					int? b = i % 5;
+					if (a == 0)
+						b = null;
+					result = _expressionFunc(a, b);
 				}
 
 				return result;
@@ -194,7 +201,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(0.7, 1)]
+			[CompetitionBenchmark(0.7, 1.1)]
 			public int Test01Operators()
 			{
 				var result = 0;
@@ -211,7 +218,7 @@ namespace CodeJam.Arithmetic
 				return result;
 			}
 
-			[CompetitionBenchmark(0.7, 1)]
+			[CompetitionBenchmark(0.7, 1.1)]
 			public int Test02Comparer()
 			{
 				var result = 0;

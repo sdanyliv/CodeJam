@@ -25,7 +25,7 @@ namespace CodeJam
 	[SuppressMessage("ReSharper", "SuggestVarOrType_SimpleTypes")]
 	[SuppressMessage("ReSharper", "UnusedTypeParameter")]
 	[PublicAPI]
-	public class CallCostsBenchmark : CallCostsBenchmark.ICompareCalls, CallCostsBenchmark.ICompareCalls<int>
+	public class CallCostsBenchmark
 	{
 		[Test]
 		// WAITINGFOR: https://github.com/PerfDotNet/BenchmarkDotNet/issues/126.
@@ -47,7 +47,57 @@ namespace CodeJam
 			T CallInterface(T a);
 		}
 
-		private class CompareCallsDerived : CallCostsBenchmark
+		private class CompareCalls: ICompareCalls<int>, ICompareCalls
+		{
+			public static int Call(int a)
+			{
+				return a + 1;
+			}
+
+			[MethodImpl(MethodImplOptions.NoInlining)]
+			public static int CallNoInline(int a)
+			{
+				return a + 1;
+			}
+
+			public static int Call<T>(int a)
+			{
+				return a + 1;
+			}
+
+			public int CallInst(int a)
+			{
+				return a + 1;
+			}
+
+			[MethodImpl(MethodImplOptions.NoInlining)]
+			public int CallInstNoInline(int a)
+			{
+				return a + 1;
+			}
+
+			public int CallInst<T>(int a)
+			{
+				return a + 1;
+			}
+
+			public virtual int CallVirtual(int a)
+			{
+				return a + 1;
+			}
+
+			public virtual int CallInterface(int a)
+			{
+				return a + 1;
+			}
+
+			public virtual int CallInterface<T>(int a)
+			{
+				return a + 1;
+			}
+		}
+
+		private class CompareCallsDerived : CompareCalls
 		{
 			public override int CallVirtual(int a)
 			{
@@ -63,53 +113,6 @@ namespace CodeJam
 			{
 				return a + 1;
 			}
-		}
-
-		private static int Call(int a)
-		{
-			return a + 1;
-		}
-
-		[MethodImpl(MethodImplOptions.NoInlining)]
-		private static int CallNoInline(int a)
-		{
-			return a + 1;
-		}
-
-		private static int Call<T>(int a)
-		{
-			return a + 1;
-		}
-
-		private int CallInst(int a)
-		{
-			return a + 1;
-		}
-
-		[MethodImpl(MethodImplOptions.NoInlining)]
-		private int CallInstNoInline(int a)
-		{
-			return a + 1;
-		}
-
-		private int CallInst<T>(int a)
-		{
-			return a + 1;
-		}
-
-		public virtual int CallVirtual(int a)
-		{
-			return a + 1;
-		}
-
-		public virtual int CallInterface(int a)
-		{
-			return a + 1;
-		}
-
-		public virtual int CallInterface<T>(int a)
-		{
-			return a + 1;
 		}
 		#endregion
 
@@ -133,7 +136,7 @@ namespace CodeJam
 			int a = 0;
 			for (int i = 0; i < Count; i++)
 			{
-				a = Call(a);
+				a = CompareCalls.Call(a);
 			}
 
 			return Count;
@@ -145,7 +148,7 @@ namespace CodeJam
 			int a = 0;
 			for (int i = 0; i < Count; i++)
 			{
-				a = Call<object>(a);
+				a = CompareCalls.Call<object>(a);
 			}
 
 			return Count;
@@ -155,7 +158,7 @@ namespace CodeJam
 		public int Test03InstanceCall()
 		{
 			int a = 0;
-			CallCostsBenchmark p = new CallCostsBenchmark();
+			CompareCalls p = new CompareCalls();
 			for (int i = 0; i < Count; i++)
 			{
 				a = p.CallInst(a);
@@ -168,7 +171,7 @@ namespace CodeJam
 		public int Test04InstanceGenericCall()
 		{
 			int a = 0;
-			CallCostsBenchmark p = new CallCostsBenchmark();
+			CompareCalls p = new CompareCalls();
 			for (int i = 0; i < Count; i++)
 			{
 				a = p.CallInst<object>(a);
@@ -183,7 +186,7 @@ namespace CodeJam
 			int a = 0;
 			for (int i = 0; i < Count; i++)
 			{
-				a = CallNoInline(a);
+				a = CompareCalls.CallNoInline(a);
 			}
 
 			return Count;
@@ -193,7 +196,7 @@ namespace CodeJam
 		public int Test06InstanceCallNoInline()
 		{
 			int a = 0;
-			CallCostsBenchmark p = new CallCostsBenchmark();
+			CompareCalls p = new CompareCalls();
 			for (int i = 0; i < Count; i++)
 			{
 				a = p.CallInstNoInline(a);
@@ -202,11 +205,11 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(6.0, 7.5)]
+		[CompetitionBenchmark(6.0, 8.0)]
 		public int Test07InstanceVirtualCall()
 		{
 			int a = 0;
-			CallCostsBenchmark p = new CallCostsBenchmark();
+			CompareCalls p = new CompareCalls();
 			for (int i = 0; i < Count; i++)
 			{
 				a = p.CallVirtual(a);
@@ -215,7 +218,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(6.0, 7.5)]
+		[CompetitionBenchmark(6.0, 8.0)]
 		public int Test08DerivedVirtualCall()
 		{
 			int a = 0;
@@ -232,7 +235,7 @@ namespace CodeJam
 		public int Test09InterfaceCall()
 		{
 			int a = 0;
-			ICompareCalls p = new CallCostsBenchmark();
+			ICompareCalls p = new CompareCalls();
 			for (int i = 0; i < Count; i++)
 			{
 				a = p.CallInterface(a);
@@ -258,7 +261,7 @@ namespace CodeJam
 		public int Test11GenericInterfaceCall()
 		{
 			int a = 0;
-			ICompareCalls<int> p = new CallCostsBenchmark();
+			ICompareCalls<int> p = new CompareCalls();
 			for (int i = 0; i < Count; i++)
 			{
 				a = p.CallInterface(a);
@@ -280,11 +283,11 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(30.0, 38.5)]
+		[CompetitionBenchmark(30.0, 47.5)]
 		public int Test13InterfaceGenericCall()
 		{
 			int a = 0;
-			ICompareCalls p = new CallCostsBenchmark();
+			ICompareCalls p = new CompareCalls();
 			for (int i = 0; i < Count; i++)
 			{
 				a = p.CallInterface<object>(a);
@@ -365,7 +368,7 @@ namespace CodeJam
 		public int Test19FuncCached()
 		{
 			int a = 0;
-			Func<int, int> x = Call;
+			Func<int, int> x = CompareCalls.Call;
 			for (int i = 0; i < Count; i++)
 			{
 				a = x(a);
@@ -378,7 +381,7 @@ namespace CodeJam
 		public int Test20FuncCachedInstance()
 		{
 			int a = 0;
-			Func<int, int> x = new CallCostsBenchmark().CallInst;
+			Func<int, int> x = new CompareCalls().CallInst;
 			for (int i = 0; i < Count; i++)
 			{
 				a = x(a);
@@ -393,7 +396,7 @@ namespace CodeJam
 			int a = 0;
 			for (int i = 0; i < Count; i++)
 			{
-				Func<int, int> x = Call;
+				Func<int, int> x = CompareCalls.Call;
 				a = x(a);
 			}
 

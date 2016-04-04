@@ -9,6 +9,10 @@ using NUnit.Framework;
 
 namespace CodeJam.Assertions
 {
+	/// <summary>
+	/// Checks:
+	/// 1. Heavy DebugCode assertions has no impact on release build
+	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
 	[Config(typeof(FastRunConfig))]
 	[PublicAPI]
@@ -34,7 +38,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(0.95, 1.05)]
+		[CompetitionBenchmark(0.92, 1.05)]
 		public string Test02CodeNotNullExcluded()
 		{
 			var result = "";

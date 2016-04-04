@@ -22,7 +22,7 @@ namespace CodeJam.Arithmetic
 		/// <summary>
 		/// Comparison callback
 		/// </summary>
-		public static readonly Func<T, T, int> Compare = _comparer.Compare;
+		public static readonly Func<T, T, int> Compare = OperatorsFactory.GetComparisonCallback<T>();
 
 		/// <summary>
 		/// Equality comparison callback

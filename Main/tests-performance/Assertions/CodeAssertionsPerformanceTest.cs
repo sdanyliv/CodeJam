@@ -10,6 +10,11 @@ using NUnit.Framework;
 
 namespace CodeJam.Assertions
 {
+	/// <summary>
+	/// Checks:
+	/// 1. Assertion implementation methods should be NOT SLOWER then usual if-then-throw approach
+	/// 2. Assertion should add no more than 20% penalty on tight loop use-case.
+	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "PassStringInterpolation")]

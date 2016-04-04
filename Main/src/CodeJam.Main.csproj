@@ -58,6 +58,7 @@
     <Compile Include="Algorithms\Memoize.cs" />
     <Compile Include="Algorithms\Swap.cs" />
     <Compile Include="Algorithms\UpperBound.cs" />
+    <Compile Include="Arithmetic\OperatorsFactory.cs" />
     <Compile Include="Arithmetic\Operators.cs" />
     <Compile Include="Assertions\Code.NonDebug.cs" />
     <Compile Include="Assertions\Code.cs" />
