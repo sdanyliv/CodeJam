@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 using NUnit.Framework;
 
@@ -63,6 +64,17 @@ namespace CodeJam
 		[TestCase(new byte[] { 0x9F }, "-", ExpectedResult = "9F")]
 		[TestCase(new byte[] { 0xAB, 0x9F }, null, ExpectedResult = "AB9F")]
 		[TestCase(new byte[] { 0xAB, 0x9F }, "-", ExpectedResult = "AB-9F")]
+		[TestCase(new byte[] { 0xAB, 0x9F }, "..", ExpectedResult = "AB..9F")]
+		[TestCase(new byte[] { 0xAB, 0x9F, 0xA }, "..", ExpectedResult = "AB..9F..0A")]
 		public string ToHexString(byte[] data, string sep) => data.ToHexString(sep);
+
+		[TestCase(new byte[] {}, ExpectedResult = "")]
+		[TestCase(new byte[] { 0 }, ExpectedResult = "00")]
+		[TestCase(new byte[] { 0x12 }, ExpectedResult = "12")]
+		[TestCase(new byte[] { 0xAB }, ExpectedResult = "AB")]
+		[TestCase(new byte[] { 0x9F }, ExpectedResult = "9F")]
+		[TestCase(new byte[] { 0xAB, 0x9F }, ExpectedResult = "AB9F")]
+		[TestCase(new byte[] { 0xAB, 0x9F, 0xA }, ExpectedResult = "AB9F0A")]
+		public string ToHexString(byte[] data) => data.ToHexString();
 	}
 }
