@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 using JetBrains.Annotations;
+
+using static CodeJam.Arithmetic.OperatorsFactory;
 
 namespace CodeJam.Arithmetic
 {
@@ -22,7 +25,7 @@ namespace CodeJam.Arithmetic
 		/// <summary>
 		/// Comparison callback
 		/// </summary>
-		public static readonly Func<T, T, int> Compare = OperatorsFactory.GetComparisonCallback<T>();
+		public static readonly Func<T, T, int> Compare = GetComparisonCallback<T>();
 
 		/// <summary>
 		/// Equality comparison callback
@@ -42,7 +45,8 @@ namespace CodeJam.Arithmetic
 		/// <summary>
 		/// Equality comparison callback
 		/// </summary>
-		public static readonly Func<T, T, bool> GreaterThanOrEqual = (a, b) => _comparer.Compare(a, b) >= 0;
+		public static readonly Func<T, T, bool> GreaterThanOrEqual =
+			GetComparisonCallback<T>(ExpressionType.GreaterThanOrEqual);
 
 		/// <summary>
 		/// Equality comparison callback

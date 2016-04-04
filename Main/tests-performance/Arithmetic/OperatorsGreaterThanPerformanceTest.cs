@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 using BenchmarkDotNet.Attributes;
@@ -18,6 +19,7 @@ namespace CodeJam.Arithmetic
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Operators")]
 	[Config(typeof(FastRunConfig))]
 	[PublicAPI]
+	[SuppressMessage("ReSharper", "ArrangeRedundantParentheses")]
 	public class OperatorsGreaterThanOrEqualTest
 	{
 		private const int Count = 10 * 1000;
