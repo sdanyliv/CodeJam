@@ -171,8 +171,12 @@ namespace CodeJam
 		/// <param name="source">Source string.</param>
 		/// <param name="separators">Separator chars</param>
 		/// <returns>Enumeration of parts.</returns>
-		public static IEnumerable<string> SplitWithTrim(this string source, params char[] separators)
+		[NotNull]
+		[Pure]
+		public static IEnumerable<string> SplitWithTrim([NotNull] this string source, params char[] separators)
 		{
+			Code.NotNull(source, nameof(source));
+
 			// TODO: For performance reasons must be reimplemented using FSM parser.
 			var parts = source.Split(separators);
 			foreach (var part in parts)
