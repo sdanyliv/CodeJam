@@ -31,7 +31,29 @@ namespace CodeJam.Reflection
 		/// The <see cref="MemberInfo" /> instance.
 		/// </returns>
 		[NotNull, Pure]
+		public static MemberInfo Member<TValue>([NotNull] Expression<Func<TValue>> expression) =>
+			ExpressionHelper.GetMemberInfo(expression);
+
+		/// <summary>
+		/// Returns the <see cref="MemberInfo" />.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="MemberInfo" /> instance.
+		/// </returns>
+		[NotNull, Pure]
 		public static MemberInfo Member<T>([NotNull] Expression<Func<T, object>> expression) =>
+			ExpressionHelper.GetMemberInfo(expression);
+
+		/// <summary>
+		/// Returns the <see cref="MemberInfo" />.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="MemberInfo" /> instance.
+		/// </returns>
+		[NotNull, Pure]
+		public static MemberInfo Member<T, TValue>([NotNull] Expression<Func<T, TValue>> expression) =>
 			ExpressionHelper.GetMemberInfo(expression);
 		#endregion
 
@@ -55,7 +77,29 @@ namespace CodeJam.Reflection
 		/// The <see cref="PropertyInfo" /> instance.
 		/// </returns>
 		[NotNull, Pure]
+		public static PropertyInfo Property<TValue>([NotNull] Expression<Func<TValue>> expression) =>
+			ExpressionHelper.GetProperty(expression);
+
+		/// <summary>
+		/// Returns the property.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="PropertyInfo" /> instance.
+		/// </returns>
+		[NotNull, Pure]
 		public static PropertyInfo Property<T>([NotNull] Expression<Func<T, object>> expression) =>
+			ExpressionHelper.GetProperty(expression);
+
+		/// <summary>
+		/// Returns the property.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="PropertyInfo" /> instance.
+		/// </returns>
+		[NotNull, Pure]
+		public static PropertyInfo Property<T, TValue>([NotNull] Expression<Func<T, TValue>> expression) =>
 			ExpressionHelper.GetProperty(expression);
 		#endregion
 
@@ -79,7 +123,29 @@ namespace CodeJam.Reflection
 		/// The <see cref="FieldInfo" /> instance.
 		/// </returns>
 		[NotNull, Pure]
+		public static FieldInfo Field<TValue>([NotNull] Expression<Func<TValue>> expression) =>
+			ExpressionHelper.GetField(expression);
+
+		/// <summary>
+		/// Returns the field.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="FieldInfo" /> instance.
+		/// </returns>
+		[NotNull, Pure]
 		public static FieldInfo Field<T>([NotNull] Expression<Func<T, object>> expression) =>
+			ExpressionHelper.GetField(expression);
+
+		/// <summary>
+		/// Returns the field.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="FieldInfo" /> instance.
+		/// </returns>
+		[NotNull, Pure]
+		public static FieldInfo Field<T, TValue>([NotNull] Expression<Func<T, TValue>> expression) =>
 			ExpressionHelper.GetField(expression);
 		#endregion
 
@@ -100,10 +166,10 @@ namespace CodeJam.Reflection
 		/// </summary>
 		/// <param name="expression">The expression to analyze.</param>
 		/// <returns>
-		///     The <see cref="ConstructorInfo" /> instance.
+		/// The <see cref="ConstructorInfo" /> instance.
 		/// </returns>
 		[NotNull, Pure]
-		public static ConstructorInfo Constructor<T>([NotNull] Expression<Func<T, object>> expression) =>
+		public static ConstructorInfo Constructor<T>([NotNull] Expression<Func<T>> expression) =>
 			ExpressionHelper.GetConstructor(expression);
 		#endregion
 
@@ -127,7 +193,29 @@ namespace CodeJam.Reflection
 		/// The <see cref="MethodInfo" /> instance.
 		/// </returns>
 		[NotNull, Pure]
+		public static MethodInfo Method<T>([NotNull] Expression<Func<T>> expression) =>
+			ExpressionHelper.GetMethod(expression);
+
+		/// <summary>
+		/// Returns the method.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="MethodInfo" /> instance.
+		/// </returns>
+		[NotNull, Pure]
 		public static MethodInfo Method<T>([NotNull] Expression<Func<T, object>> expression) =>
+			ExpressionHelper.GetMethod(expression);
+
+		/// <summary>
+		/// Returns the method.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="MethodInfo" /> instance.
+		/// </returns>
+		[NotNull, Pure]
+		public static MethodInfo Method<T, TResult>([NotNull] Expression<Func<T, TResult>> expression) =>
 			ExpressionHelper.GetMethod(expression);
 
 		/// <summary>
