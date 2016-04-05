@@ -19,7 +19,7 @@ namespace CodeJam.Arithmetic
 			// Recommendation from https://msdn.microsoft.com/en-us/library/azhsac5f.aspx
 			// For string comparisons, the StringComparer class is recommended over Comparer<String>
 			if (t == typeof(string))
-				return (Func<T, T, int>)(object)(Func<string, string, int>)StringComparer.Ordinal.Compare;
+				return (Func<T, T, int>)(object)(Func<string, string, int>)string.CompareOrdinal;
 
 			if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
 				t = t.GetGenericArguments()[0];
