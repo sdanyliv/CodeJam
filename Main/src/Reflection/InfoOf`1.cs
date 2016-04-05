@@ -64,6 +64,17 @@ namespace CodeJam.Reflection
 		/// The <see cref="MethodInfo"/> instance.
 		/// </returns>
 		[NotNull, Pure]
+		public static MethodInfo Method<TResult>([NotNull] Expression<Func<T, TResult>> expression) =>
+			ExpressionHelper.GetMethod(expression);
+
+		/// <summary>
+		/// Returns the method.
+		/// </summary>
+		/// <param name="expression">The expression to analyze.</param>
+		/// <returns>
+		/// The <see cref="MethodInfo"/> instance.
+		/// </returns>
+		[NotNull, Pure]
 		public static MethodInfo Method([NotNull] Expression<Action<T>> expression) =>
 			ExpressionHelper.GetMethod(expression);
 	}
