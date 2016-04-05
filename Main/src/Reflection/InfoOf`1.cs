@@ -4,7 +4,8 @@ using System.Reflection;
 
 using JetBrains.Annotations;
 
-namespace CodeJam.Reflection {
+namespace CodeJam.Reflection
+{
 	/// <summary>
 	/// Provides a helper class to get the property, field, ctor or method from an expression.
 	/// </summary>
