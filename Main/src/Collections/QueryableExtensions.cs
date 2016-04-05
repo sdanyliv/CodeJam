@@ -8,7 +8,7 @@ namespace CodeJam.Collections {
 	/// Extensions for <see cref="IQueryable{T}"/>
 	/// </summary>
 	[PublicAPI]
-	public static class QueryableExtensions
+	public static partial class QueryableExtensions
 	{
 		/// <summary>
 		/// Extracts <paramref name="count"/> elements from a sequence at a particular zero-based starting index.

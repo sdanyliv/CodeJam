@@ -54,6 +54,7 @@
     <Compile Include="Assertions\CodeAssertionsTest.cs" />
     <Compile Include="Collections\AggregateFuncsTest.cs" />
     <Compile Include="Collections\ArrayExtensionsTest.cs" />
+    <Compile Include="Collections\QueryableExtensionsTests.ApplyOrder.cs" />
     <Compile Include="Collections\DictionaryExtensionsTest.cs" />
     <Compile Include="Collections\AggregateFuncsTest.generated.cs">
       <DependentUpon>AggregateFuncsTest.tt</DependentUpon>
@@ -66,6 +67,7 @@
     <Compile Include="Collections\EnumerableExtensionTests.TakeLast.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.cs" />
     <Compile Include="IO\TempDataTests.cs" />
+    <Compile Include="QueryableExtensionsTests.cs" />
     <Compile Include="Reflection\AssemblyExtensionsTest.cs" />
     <Compile Include="Reflection\CreateInstanceTests.cs" />
     <Compile Include="Threading\ParallelQueueTest.cs" />
