@@ -67,7 +67,7 @@ namespace CodeJam.Reflection
 		/// </returns>
 		[NotNull, Pure]
 		public static ConstructorInfo GetConstructor([NotNull] LambdaExpression expression) =>
-			((NewExpression)expression.Body).Constructor;
+			(ConstructorInfo)GetMemberInfo(expression);
 
 		/// <summary>
 		/// Returns the method.
