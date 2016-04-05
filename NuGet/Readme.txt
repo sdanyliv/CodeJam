@@ -3,6 +3,8 @@ CodeJam 1.0.0-beta6 Release Notes
 
 What's new in 1.0.0-beta6
 -------------------------
+* ReflectionExtensions.ToUnderlying method
+* ReflectionExtensions.GetMemberType method
 * Performance optimization
 * Fixes, code cleanup and annotations
 

@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
+using CodeJam.Collections;
+
 using JetBrains.Annotations;
 
-namespace CodeJam.Csv
+namespace CodeJam.TabData
 {
 	/// <summary>
 	/// RFC4180 compliant CSV parser.
@@ -18,7 +20,7 @@ namespace CodeJam.Csv
 		/// Parses CSV.
 		/// </summary>
 		[NotNull]
-		public static IEnumerable<string[]> Parse([NotNull] string text)
+		public static IEnumerable<DataLine> Parse([NotNull] string text)
 		{
 			if (text == null) throw new ArgumentNullException(nameof(text));
 			return Parse(new StringReader(text));
@@ -28,29 +30,46 @@ namespace CodeJam.Csv
 		/// Parses CSV.
 		/// </summary>
 		[NotNull]
-		public static IEnumerable<string[]> Parse([NotNull] TextReader reader, bool allowEscaping = true)
+		public static IEnumerable<DataLine> Parse([NotNull] TextReader reader, bool allowEscaping = true)
 		{
 			if (reader == null) throw new ArgumentNullException(nameof(reader));
 
+			var lineNum = 1;
 			while (true)
 			{
-				var line = allowEscaping ? ParseLineWithEscaping(reader) : ParseLineNoEscaping(reader);
-				if (line == null)
+				var lastLineNum = lineNum;
+				var values =
+					allowEscaping
+						? ParseLineWithEscaping(reader, ref lineNum)
+						: ParseLineNoEscaping(reader, ref lineNum);
+				if (values == null)
 					yield break;
-				if (line.Length > 0) // Skip empty lines
-					yield return line;
+				if (values.Length > 0) // Skip empty lines
+					yield return new DataLine(lastLineNum, values);
 			}
 		}
 
 		[CanBeNull]
-		private static string[] ParseLineNoEscaping(TextReader reader) => reader.ReadLine()?.Split(',');
+		private static string[] ParseLineNoEscaping(TextReader reader, ref int lineNum)
+		{
+			var line = reader.ReadLine();
+			if (line == null)
+				return null;
+			lineNum++;
+			return line.Split(',');
+		}
 
 		[CanBeNull]
-		private static string[] ParseLineWithEscaping(TextReader reader)
+		private static string[] ParseLineWithEscaping(TextReader reader, ref int lineNum)
 		{
 			var curChar = CharReader.Create(reader);
 			if (curChar.IsEof)
 				return null; // EOF reached
+			if (curChar.IsEol)
+			{
+				lineNum++;
+				return Array<string>.Empty;
+			}
 
 			var result = new List<string>();
 			StringBuilder curField = null;
@@ -146,13 +165,15 @@ namespace CodeJam.Csv
 								state = ParserState.ExpectField;
 								break;
 							}
-							throw new FormatException($"Unexpected char '{curChar.Char}'");
+							throw new FormatException($"Unexpected char '{curChar.Char}' at line {lineNum}");
 
 						default:
 							throw new ArgumentOutOfRangeException();
 					}
 
 				curChar = curChar.Next();
+				if (curChar.IsEol)
+					lineNum++;
 			}
 		}
 
