@@ -127,13 +127,11 @@ namespace CodeJam.Reflection
 		/// <param name="memberInfo">A <see cref="System.Reflection.MemberInfo"/> instance. </param>
 		/// <returns>
 		/// <list>
-		/// <item>
-		/// If the member is a property, returns <see cref="System.Reflection.PropertyInfo.PropertyType"/>.
-		/// If the member is a field, returns <see cref="System.Reflection.FieldInfo.FieldType"/>.
-		/// If the member is a method, returns <see cref="System.Reflection.MethodInfo.ReturnType"/>.
-		/// If the member is a constructor, returns <see cref="System.Reflection.MemberInfo.DeclaringType"/>.
-		/// If the member is an event, returns <see cref="System.Reflection.EventInfo.EventHandlerType"/>.
-		/// </item>
+		/// <item>If the member is a property, returns <see cref="PropertyInfo.PropertyType"/>.</item>
+		/// <item>If the member is a field, returns <see cref="FieldInfo.FieldType"/>.</item>
+		/// <item>If the member is a method, returns <see cref="MethodInfo.ReturnType"/>.</item>
+		/// <item>If the member is a constructor, returns <see cref="MemberInfo.DeclaringType"/>.</item>
+		/// <item>If the member is an event, returns <see cref="EventInfo.EventHandlerType"/>.</item>
 		/// </list>
 		/// </returns>
 		public static Type GetMemberType([NotNull] this MemberInfo memberInfo)
