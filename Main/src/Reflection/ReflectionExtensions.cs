@@ -98,5 +98,58 @@ namespace CodeJam.Reflection
 				throw new ArgumentNullException(nameof(delegateType));
 			return delegateType.GetMethod("Invoke").GetParameters();
 		}
+
+		/// <summary>
+		/// Returns the underlying type argument of the specified type.
+		/// </summary>
+		/// <param name="type">A <see cref="System.Type"/> instance. </param>
+		/// <returns><list>
+		/// <item>The type argument of the type parameter,
+		/// if the type parameter is a closed generic nullable type.</item>
+		/// <item>The underlying Type if the type parameter is an enum type.</item>
+		/// <item>Otherwise, the type itself.</item>
+		/// </list>
+		/// </returns>
+		[Pure]
+		public static Type ToUnderlying([NotNull] this Type type)
+		{
+			if (type == null) throw new ArgumentNullException(nameof(type));
+
+			if (type.IsNullable()) type = type.GetGenericArguments()[0];
+			if (type.IsEnum)       type = Enum.GetUnderlyingType(type);
+
+			return type;
+		}
+
+		/// <summary>
+		/// Gets the type of this member.
+		/// </summary>
+		/// <param name="memberInfo">A <see cref="System.Reflection.MemberInfo"/> instance. </param>
+		/// <returns>
+		/// <list>
+		/// <item>
+		/// If the member is a property, returns <see cref="System.Reflection.PropertyInfo.PropertyType"/>.
+		/// If the member is a field, returns <see cref="System.Reflection.FieldInfo.FieldType"/>.
+		/// If the member is a method, returns <see cref="System.Reflection.MethodInfo.ReturnType"/>.
+		/// If the member is a constructor, returns <see cref="System.Reflection.MemberInfo.DeclaringType"/>.
+		/// If the member is an event, returns <see cref="System.Reflection.EventInfo.EventHandlerType"/>.
+		/// </item>
+		/// </list>
+		/// </returns>
+		public static Type GetMemberType([NotNull] this MemberInfo memberInfo)
+		{
+			if (memberInfo == null) throw new ArgumentNullException(nameof(memberInfo));
+
+			switch (memberInfo.MemberType)
+			{
+				case MemberTypes.Property    : return ((PropertyInfo)memberInfo).PropertyType;
+				case MemberTypes.Field       : return ((FieldInfo)   memberInfo).FieldType;
+				case MemberTypes.Method      : return ((MethodInfo)  memberInfo).ReturnType;
+				case MemberTypes.Constructor : return                memberInfo. DeclaringType;
+				case MemberTypes.Event       : return ((EventInfo)   memberInfo).EventHandlerType;
+			}
+
+			throw new InvalidOperationException();
+		}
 	}
 }
