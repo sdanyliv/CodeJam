@@ -5,6 +5,7 @@ What's new in 1.0.0-beta6
 -------------------------
 * ReflectionExtensions.ToUnderlying method
 * ReflectionExtensions.GetMemberType method
+* QueryableExtensions.ApplyOrder method
 * Performance optimization
 * Fixes, code cleanup and annotations
 

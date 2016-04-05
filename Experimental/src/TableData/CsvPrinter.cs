@@ -4,7 +4,7 @@ using System.Text;
 
 using JetBrains.Annotations;
 
-namespace CodeJam.TabData
+namespace CodeJam.TableData
 {
 	/// <summary>
 	/// Prints tab data in CSV format
