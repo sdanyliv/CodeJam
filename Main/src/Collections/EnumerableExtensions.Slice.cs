@@ -58,13 +58,8 @@ namespace CodeJam.Collections
 					index--;
 
 				if (index == 0)
-				{
-					while (count > 0 && e.MoveNext())
-					{
+					while (count-- > 0 && e.MoveNext())
 						yield return e.Current;
-						count--;
-					}
-				}
 			}
 		}
 	}
