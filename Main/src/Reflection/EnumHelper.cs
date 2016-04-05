@@ -19,7 +19,7 @@ namespace CodeJam.Reflection
 		/// <returns>A string array of the names of the constants in enumType.</returns>
 		[NotNull]
 		[Pure]
-		public static string[] GetNames<T>() => Enum.GetNames(typeof(T));
+		public static string[] GetNames<T>() where T : struct => Enum.GetNames(typeof(T));
 
 		/// <summary>
 		/// Retrieves the name of the constant in the specified enumeration that has the specified value.
@@ -32,7 +32,7 @@ namespace CodeJam.Reflection
 		/// </returns>
 		[CanBeNull]
 		[Pure]
-		public static string GetName<T>(T value) => Enum.GetName(typeof(T), value);
+		public static string GetName<T>(T value) where T : struct => Enum.GetName(typeof(T), value);
 
 		/// <summary>
 		/// Retrieves an array of the values of the constants in a specified enumeration.
@@ -41,7 +41,7 @@ namespace CodeJam.Reflection
 		/// <returns>An array that contains the values of the constants in enumType.</returns>
 		[NotNull]
 		[Pure]
-		public static T[] GetValues<T>() => (T[])Enum.GetValues(typeof (T));
+		public static T[] GetValues<T>() where T : struct => (T[])Enum.GetValues(typeof (T));
 
 		/// <summary>
 		/// Returns an indication whether a constant with a specified value exists in a specified enumeration.
@@ -50,7 +50,7 @@ namespace CodeJam.Reflection
 		/// <typeparam name="T">An enumeration type.</typeparam>
 		/// <returns>true if a constant in enumType has a value equal to value; otherwise, false.</returns>
 		[Pure]
-		public static bool IsDefined<T>(T value) => Enum.IsDefined(typeof (T), value);
+		public static bool IsDefined<T>(T value) where T : struct => Enum.IsDefined(typeof (T), value);
 
 		/// <summary>
 		/// Converts the string representation of the name or numeric <paramref name="value"/> of one or more
@@ -62,7 +62,7 @@ namespace CodeJam.Reflection
 		/// <typeparam name="T">An enumeration type.</typeparam>
 		/// <returns>An object of type enumType whose value is represented by value.</returns>
 		[Pure]
-		public static T Parse<T>([NotNull] string value, bool ignoreCase = true) =>
+		public static T Parse<T>([NotNull] string value, bool ignoreCase = true) where T : struct =>
 			(T)Enum.Parse(typeof (T), value, ignoreCase);
 
 		/// <summary>
