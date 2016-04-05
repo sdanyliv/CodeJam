@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 
 using NUnit.Framework;
 
-namespace CodeJam.Csv
+namespace CodeJam.TabData
 {
 	// TODO: replace to dump comparision
 	[TestFixture]
@@ -19,7 +20,7 @@ namespace CodeJam.Csv
 
 			for (var line = 0; line < 3; line++)
 				for (var i = 0; i < 3; i++)
-					Assert.AreEqual(expected[line][i], result[line][i], "#A01");
+					Assert.AreEqual(expected[line][i], result[line].Values[i], "#A01");
 		}
 
 		[Test]
@@ -35,7 +36,7 @@ namespace CodeJam.Csv
 
 			for (var line = 0; line < 3; line++)
 				for (var i = 0; i < 3; i++)
-					Assert.AreEqual(expected[line][i], result[line][i], "#A01");
+					Assert.AreEqual(expected[line][i], result[line].Values[i], "#A01");
 		}
 
 		[Test]
@@ -62,13 +63,13 @@ ne""",
 		public void NoValues()
 		{
 			const string csv = "a,b,c\r\nd,,f\r\n,h,";
-			var values = CsvParser.Parse(csv).ToArray();
-			Assert.AreEqual(3, values.Length, "#A01");
-			Assert.AreEqual(3, values[0].Length, "#A02");
-			Assert.AreEqual(3, values[1].Length, "#A03");
-			Assert.AreEqual(3, values[2].Length, "#A04");
+			var lines = CsvParser.Parse(csv).ToArray();
+			Assert.AreEqual(3, lines.Length, "#A01");
+			Assert.AreEqual(3, lines[0].Values.Length, "#A02");
+			Assert.AreEqual(3, lines[1].Values.Length, "#A03");
+			Assert.AreEqual(3, lines[2].Values.Length, "#A04");
 
-			var output = CsvPrinter.Print(values, "   ");
+			var output = CsvPrinter.Print(lines.Select(l => l.Values).ToArray(), "   ");
 			Assert.AreEqual(
 @"   a, b, c
    d,  , f
@@ -87,9 +88,22 @@ ne""",
 			Assert.AreEqual(4, result.Length, "#A01");
 			for (var line = 0; line < result.Length; line++)
 			{
-				Assert.AreEqual(1, result[line].Length);
-				Assert.AreEqual(expected[line][0], result[line][0], "#A02");
+				Assert.AreEqual(1, result[line].Values.Length);
+				Assert.AreEqual(expected[line][0], result[line].Values[0], "#A02");
 			}
+		}
+
+		[TestCase("", ExpectedResult = "")]
+		[TestCase("a", ExpectedResult = "(1) a")]
+		[TestCase("a,b", ExpectedResult = "(1) a, b")]
+		[TestCase("a,b\r\nc,d", ExpectedResult = "(1) a, b; (2) c, d")]
+		[TestCase("a,b\r\nc,d\r\ne,f", ExpectedResult = "(1) a, b; (2) c, d; (3) e, f")]
+		[TestCase("a,b\r\n\r\nc,d\r\n   \r\ne,f", ExpectedResult = "(1) a, b; (3) c, d; (5) e, f")]
+		[TestCase("a,\"\r\nb\"\r\nc,d", ExpectedResult = "(1) a, \r\nb; (3) c, d")]
+		public string Dump(string src)
+		{
+			var parsed = CsvParser.Parse(src);
+			return parsed.Select(l => l.ToString()).Join("; ");
 		}
 	}
 }
