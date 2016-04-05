@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 using JetBrains.Annotations;
 
@@ -62,5 +64,48 @@ namespace CodeJam.Reflection
 		[Pure]
 		public static T Parse<T>([NotNull] string value, bool ignoreCase = true) =>
 			(T)Enum.Parse(typeof (T), value, ignoreCase);
+
+		/// <summary>
+		/// Retrievies an array of name/value pairs in a specified enumeration.
+		/// </summary>
+		/// <typeparam name="T">An enumeration type.</typeparam>
+		/// <returns>
+		/// An array of the names of the constants in a specified enumeration.
+		/// </returns>
+		[NotNull]
+		[Pure]
+		public static KeyValuePair<string, T>[] GetPairs<T>() where T : struct
+		{
+			var fields = typeof (T).GetFields(BindingFlags.Static | BindingFlags.Public);
+			var collection = new KeyValuePair<string, T>[fields.Length];
+
+			for (var i = 0; i < fields.Length; i++)
+			{
+				var field = fields[i];
+				collection[i] = new KeyValuePair<string, T>(field.Name, (T)field.GetValue(null));
+			}
+
+			return collection;
+		}
+
+		/// <summary>
+		/// Searches for the public field with the specified enumeration value.
+		/// </summary>
+		/// <typeparam name="T">An enumeration type.</typeparam>
+		/// <param name="value">An enumeration value.</param>
+		/// <returns>
+		/// An object representing the public field with the specified enumeration value, if found;
+		/// otherwise, null.
+		/// </returns>
+		[CanBeNull]
+		public static FieldInfo GetField<T>(T value) where T : struct
+		{
+			var type = typeof (T);
+			var name = Enum.GetName(type, value);
+			if (name == null)
+				return null;
+
+			return type.GetField(name, BindingFlags.Static | BindingFlags.Public);
+		}
 	}
 }
