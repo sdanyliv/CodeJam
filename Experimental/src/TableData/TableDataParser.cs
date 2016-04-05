@@ -68,26 +68,15 @@ namespace CodeJam.TableData
 		/// Creates RFC4180 compliant CSV parser.
 		/// </summary>
 		/// <param name="allowEscaping">If true, allows values escaping.</param>
+		/// <param name="columnSeparator">Char to use as column separator</param>
 		/// <returns>Parser to use with <see cref="Parse(TableDataParser.Parser,string)"/></returns>
-		public static Parser CreateCsvParser(bool allowEscaping = true) =>
-			allowEscaping ? ParseCsv : (Parser)ParseCsvNoEscaping;
+		public static Parser CreateCsvParser(bool allowEscaping = true, char columnSeparator = ',') =>
+			allowEscaping
+				? (Parser)((TextReader rdr, ref int ln) => ParseCsv(rdr, ref ln, columnSeparator))
+				: ((TextReader rdr, ref int ln) => ParseCsvNoEscape(rdr, ref ln, columnSeparator));
 
 		[CanBeNull]
-		private static string[] ParseCsvNoEscaping(TextReader reader, ref int lineNum)
-		{
-			var line = reader.ReadLine();
-			if (line == null)
-				return null;
-			lineNum++;
-			var parts = line.Split(',');
-			// Special case - whitespace lines are ignored
-			if (parts.Length == 1 && parts[0].IsNullOrWhiteSpace())
-				return Array<string>.Empty;
-			return parts;
-		}
-
-		[CanBeNull]
-		private static string[] ParseCsv(TextReader reader, ref int lineNum)
+		private static string[] ParseCsv(TextReader reader, ref int lineNum, char separator)
 		{
 			var curChar = CharReader.Create(reader);
 			if (curChar.IsEof)
@@ -116,7 +105,7 @@ namespace CodeJam.TableData
 								return result.ToArray();
 							}
 
-							if (curChar.IsComma)
+							if (curChar.Char == separator)
 							{
 								result.Add("");
 								state = ParserState.AfterField;
@@ -141,7 +130,7 @@ namespace CodeJam.TableData
 
 						case ParserState.Field:
 							Debug.Assert(curField != null, "curField != null");
-							if (curChar.IsEof || curChar.IsEol || curChar.IsComma)
+							if (curChar.IsEof || curChar.IsEol || curChar.Char == separator)
 							{
 								result.Add(curField.ToString().Trim());
 								state = ParserState.AfterField;
@@ -187,7 +176,7 @@ namespace CodeJam.TableData
 							skip = true;
 							if (curChar.IsWhitespace)
 								continue;
-							if (curChar.IsComma)
+							if (curChar.Char == separator)
 							{
 								state = ParserState.ExpectField;
 								break;
@@ -202,6 +191,20 @@ namespace CodeJam.TableData
 				if (curChar.IsEol)
 					lineNum++;
 			}
+		}
+
+		[CanBeNull]
+		private static string[] ParseCsvNoEscape(TextReader reader, ref int lineNum, char separator)
+		{
+			var line = reader.ReadLine();
+			if (line == null)
+				return null;
+			lineNum++;
+			var parts = line.Split(separator);
+			// Special case - whitespace lines are ignored
+			if (parts.Length == 1 && parts[0].IsNullOrWhiteSpace())
+				return Array<string>.Empty;
+			return parts;
 		}
 
 		#region CharReader struct
@@ -226,8 +229,6 @@ namespace CodeJam.TableData
 			public bool IsEol => m_Code == s_Eol;
 
 			public bool IsWhitespace => char.IsWhiteSpace(Char);
-
-			public bool IsComma => m_Code == ',';
 
 			public bool IsDoubleQuota => m_Code == '"';
 
