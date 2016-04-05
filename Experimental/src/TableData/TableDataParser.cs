@@ -5,7 +5,6 @@ using System.IO;
 using System.Text;
 
 using CodeJam.Collections;
-using CodeJam.TabData;
 
 using JetBrains.Annotations;
 

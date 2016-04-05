@@ -1,6 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿using System;
 
-namespace CodeJam.TabData
+using JetBrains.Annotations;
+
+namespace CodeJam.TableData
 {
 	[PublicAPI]
 	public struct DataLine
