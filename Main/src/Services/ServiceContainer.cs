@@ -14,6 +14,13 @@ namespace CodeJam.Services
 		private static readonly ConcurrentDictionary<Type, Func<IServicePublisher, object>> _services =
 			new ConcurrentDictionary<Type, Func<IServicePublisher, object>>();
 
+		/// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+		public ServiceContainer(bool publishSelf = true)
+		{
+			if (publishSelf)
+				this.Publish<IServicePublisher>(this);
+		}
+
 		private void ConcealService(Type serviceType)
 		{
 			Func<IServicePublisher, object> func;

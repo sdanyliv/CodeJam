@@ -11,8 +11,9 @@ namespace CodeJam.Services
 		public void ServiceContainer()
 		{
 			var container = new ServiceContainer();
-
 			Assert.IsNull(container.GetService<ISampleSvc>(), "#A01");
+			Assert.AreEqual(container, container.GetService<IServicePublisher>(), "#A08");
+
 			var sampleSvc = new SampleSvc();
 
 			using (container.Publish<ISampleSvc>(sampleSvc))
