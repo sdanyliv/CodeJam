@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 
 using NUnit.Framework;
@@ -21,8 +22,8 @@ namespace CodeJam.TableData
 			ExpectedResult = "(1) abc, def, ghi; (2) o_p_r, stu, vwx; (3) 123,  4 5 6 , 78 \r\n9")]
 		[TestCase("a\r\nb\r\nc\r\n\r\n\"\"", ExpectedResult = "(1) a; (2) b; (3) c; (5) ")]
 		public string ParseCsv(string src) =>
-			TableDataParser
-				.CreateCsvParser()
+			CsvFormat
+				.CreateParser()
 				.Parse(src)
 				.Select(l => l.ToString())
 				.Join("; ");
@@ -37,30 +38,26 @@ namespace CodeJam.TableData
 			"abc ,def, ghi\r\n o_p_r,stu,vwx\r\n\"123\", \" 4 5 6 \",\"78 9\"",
 			ExpectedResult = "(1) abc , def,  ghi; (2)  o_p_r, stu, vwx; (3) \"123\",  \" 4 5 6 \", \"78 9\"")]
 		public string ParseCsvNoEscape(string src) =>
-			TableDataParser
-				.CreateCsvParser(false)
+			CsvFormat
+				.CreateParser(false)
 				.Parse(src)
 				.Select(l => l.ToString())
 				.Join("; ");
 
-		[Test]
-		public void Print()
+		[TestCase("", ExpectedResult = "")]
+		[TestCase("a", ExpectedResult = "  a")]
+		[TestCase("a,b", ExpectedResult = "  a, b")]
+		[TestCase("a,b\r\nc,d", ExpectedResult = "  a, b\r\n  c, d")]
+		[TestCase("a,b\r\ncc,dd", ExpectedResult = "  a, b\r\n  cc, dd")]
+		[TestCase("a,b\r\ncc,dd\r\ne,f", ExpectedResult = "  a, b\r\n  cc, dd\r\n   e,  f")]
+		public string PrintCsv(string source)
 		{
-			var values =
-				new[]
-				{
-					new []{"One", "Two", "Three"},
-					new []{"Four ", " Five", " Six "},
-					new []{"Se\"ven", "Eig,ht", "Ni\r\nne"}
-				};
-			var output = CsvPrinter.Print(values, "   ");
-			Assert.AreEqual(
-				@"   One      , Two     , Three
-   ""Four ""  , "" Five"" , "" Six ""
-   ""Se""""ven"", ""Eig,ht"", ""Ni
-ne""",
-				output,
-				"#A01");
+			var data = CsvFormat.CreateParser(true).Parse(source);
+			var result = new StringWriter();
+			CsvFormat
+				.CreateFormatter()
+				.Print(result, data.Select(l => l.Values), "  ");
+			return result.ToString();
 		}
 	}
 }

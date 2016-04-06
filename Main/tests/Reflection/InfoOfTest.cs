@@ -82,6 +82,7 @@ namespace CodeJam.Reflection
 			Assert.AreEqual(expected, method3, "#3");
 		}
 
+		[Test]
 		public void ExtarctingMethod2()
 		{
 			var expected = typeof(User).GetMethod(nameof(User.GetAge));
