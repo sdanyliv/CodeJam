@@ -44,6 +44,7 @@ namespace CodeJam.TableData
 			var result = new List<string>();
 			StringBuilder curField = null;
 			var state = ParserState.ExpectField;
+			var column = 1;
 			while (true)
 			{
 				var skip = false;
@@ -98,7 +99,7 @@ namespace CodeJam.TableData
 						case ParserState.QuotedField:
 							Debug.Assert(curField != null, "curField != null");
 							if (curChar.IsEof)
-								throw new FormatException("Unexpected EOF");
+								throw new FormatException($"Unexpected EOF at line {lineNum} column {column}");
 
 							skip = true;
 							if (curChar.IsEol)
@@ -135,15 +136,19 @@ namespace CodeJam.TableData
 								state = ParserState.ExpectField;
 								break;
 							}
-							throw new FormatException($"Unexpected char '{curChar.Char}' at line {lineNum}");
+							throw new FormatException($"Unexpected char '{curChar.Char}' at line {lineNum} column {column}");
 
 						default:
 							throw new ArgumentOutOfRangeException();
 					}
 
 				curChar = curChar.Next();
+				column++;
 				if (curChar.IsEol)
+				{
 					lineNum++;
+					column = 1;
+				}
 			}
 		}
 
