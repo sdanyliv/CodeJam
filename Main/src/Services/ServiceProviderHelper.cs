@@ -29,7 +29,7 @@ namespace CodeJam.Services
 
 			var svc = provider.GetService(serviceType);
 			if (svc == null)
-				throw new ArgumentException($"Service '{serviceType}' not registered in provider.");
+				throw new ArgumentException($"Service '{serviceType}' is not registered in provider.");
 			return svc;
 		}
 
@@ -57,15 +57,8 @@ namespace CodeJam.Services
 		/// </returns>
 		[NotNull]
 		[Pure]
-		public static object GetRequiredService<T>([NotNull] this IServiceProvider provider)
-		{
-			Code.NotNull(provider, nameof(provider));
-
-			var svc = provider.GetService(typeof(T));
-			if (svc == null)
-				throw new ArgumentException($"Service '{typeof(T)}' not registered in provider.");
-			return svc;
-		}
+		public static object GetRequiredService<T>([NotNull] this IServiceProvider provider) =>
+			provider.GetRequiredService(typeof(T));
 
 		/// <summary>
 		/// Publish service.

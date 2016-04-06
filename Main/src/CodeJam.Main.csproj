@@ -77,6 +77,8 @@
     <Compile Include="Collections\QueryableExtensions.cs" />
     <Compile Include="Reflection\InfoOf`1.cs" />
     <Compile Include="Reflection\ParamInfo.cs" />
+    <Compile Include="Services\IServicePublisher.cs" />
+    <Compile Include="Services\ServiceProviderHelper.cs" />
     <Compile Include="Targeting\CustomAttributeExtensions.cs" />
     <Compile Include="Targeting\PlatformDependent.cs" />
     <Compile Include="Collections\ArrayExtensions.cs" />
