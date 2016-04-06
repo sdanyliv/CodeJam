@@ -11,6 +11,7 @@ What's new in 1.0.0-beta6
 * IServicePublisher interface
 * System.IServiceProvider and IServicePublisher helper methods
 * ServiceContainer class (IServicePublisher implementation)
+* CSV and fixed width parsers
 * Performance optimization
 * Refactoring
 * Fixes, code cleanup and annotations
