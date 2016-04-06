@@ -6,7 +6,13 @@ What's new in 1.0.0-beta6
 * ReflectionExtensions.ToUnderlying method
 * ReflectionExtensions.GetMemberType method
 * QueryableExtensions.ApplyOrder method
+* EnumHelper.GetField and GetPairs methods
+* Additional methods in InfoOf classes
+* IServicePublisher interface
+* System.IServiceProvider and IServicePublisher helper methods
+* ServiceContainer class (IServicePublisher implementation)
 * Performance optimization
+* Refactoring
 * Fixes, code cleanup and annotations
 
 What's new in 1.0.0-beta5
