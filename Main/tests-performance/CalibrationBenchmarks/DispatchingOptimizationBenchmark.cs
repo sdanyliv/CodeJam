@@ -15,7 +15,7 @@ namespace CodeJam
 	/// <summary>
 	/// Prooftest: JIT optimizations on handwritten method dispatching
 	/// </summary>
-	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
+	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Self-testing")]
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
 	[SuppressMessage("ReSharper", "ConvertToConstant.Local")]

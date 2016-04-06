@@ -13,6 +13,34 @@ namespace BenchmarkDotNet.NUnit
 	/// Use this to run fast but inaccurate measures
 	/// </summary>
 	[PublicAPI]
+	public class SingleRunConfig : ManualConfig
+	{
+		/// <summary>
+		/// Instance of the config
+		/// </summary>
+		public static readonly IConfig Instance = new SingleRunConfig();
+
+		/// <summary> 
+		/// Constructor
+		/// </summary>
+		public SingleRunConfig()
+		{
+			Add(
+				new Job
+				{
+					Mode = Mode.SingleRun,
+					LaunchCount = 1,
+					WarmupCount = 1,
+					TargetCount = 10,
+					Jit = Jit.RyuJit
+				});
+		}
+	}
+
+	/// <summary>
+	/// Use this to run fast but inaccurate measures
+	/// </summary>
+	[PublicAPI]
 	public class FastRunConfig : ManualConfig
 	{
 		/// <summary>
@@ -28,7 +56,7 @@ namespace BenchmarkDotNet.NUnit
 			Add(
 				new Job
 				{
-					IterationTime = 100,
+					IterationTime = 50,
 					LaunchCount = 1,
 					WarmupCount = 1,
 					TargetCount = 10,

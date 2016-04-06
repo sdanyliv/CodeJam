@@ -14,7 +14,7 @@ namespace CodeJam
 	/// <summary>
 	/// Estimates average cost of calls
 	/// </summary>
-	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
+	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Self-testing")]
 	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "AccessToModifiedClosure")]
 	[SuppressMessage("ReSharper", "ClassCanBeSealed.Local")]

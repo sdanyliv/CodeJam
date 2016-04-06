@@ -23,30 +23,14 @@ namespace BenchmarkDotNet.NUnit
 	public static class CompetitionBenchmarkRunner
 	{
 		#region Public API overloads
-		// Benchmarks do not compile, disabled for now
-#if DISABLED_FEATURES
-	/// <summary>
-	/// Runs the competition benchmark from source
-	/// </summary>
-		public static void RunFromSource(double maxRatio, [CallerFilePath]string callerFile = null)
-		{
-			RunCompetition(0, maxRatio, null, File.ReadAllText(callerFile), null);
-		}
 		/// <summary>
-		/// Runs the competition benchmark from source
+		/// Runs the competition benchmark from a type of a callee
 		/// </summary>
-		public static void RunFromSource(double minRatio, double maxRatio, [CallerFilePath]string callerFile = null)
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		public static void Run<T>(T thisReference) where T : class
 		{
-			RunCompetition(minRatio, maxRatio, null, File.ReadAllText(callerFile), null);
+			RunCompetition(0, 0, thisReference.GetType(), null);
 		}
-		/// <summary>
-		/// Runs the competition benchmark from source
-		/// </summary>
-		public static void RunFromSource(double minRatio, double maxRatio, IConfig config, [CallerFilePath]string callerFile = null)
-		{
-			RunCompetition(minRatio, maxRatio, null, File.ReadAllText(callerFile), config);
-		}
-#endif
 
 		/// <summary>
 		/// Runs the competition benchmark from a type of a callee
@@ -54,7 +38,7 @@ namespace BenchmarkDotNet.NUnit
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		public static void Run<T>(T thisReference, double maxRatio) where T : class
 		{
-			RunCompetition(0, maxRatio, thisReference.GetType(), null, null);
+			RunCompetition(0, maxRatio, thisReference.GetType(), null);
 		}
 
 		/// <summary>
@@ -63,7 +47,7 @@ namespace BenchmarkDotNet.NUnit
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		public static void Run<T>(T thisReference, double minRatio, double maxRatio) where T : class
 		{
-			RunCompetition(minRatio, maxRatio, thisReference.GetType(), null, null);
+			RunCompetition(minRatio, maxRatio, thisReference.GetType(), null);
 		}
 
 		/// <summary>
@@ -72,7 +56,15 @@ namespace BenchmarkDotNet.NUnit
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		public static void Run<T>(T thisReference, double minRatio, double maxRatio, IConfig config) where T : class
 		{
-			RunCompetition(minRatio, maxRatio, thisReference.GetType(), null, config);
+			RunCompetition(minRatio, maxRatio, thisReference.GetType(), config);
+		}
+
+		/// <summary>
+		/// Runs the competition benchmark
+		/// </summary>
+		public static void Run<T>() where T : class
+		{
+			RunCompetition(0, 0, typeof(T), null);
 		}
 
 		/// <summary>
@@ -80,7 +72,7 @@ namespace BenchmarkDotNet.NUnit
 		/// </summary>
 		public static void Run<T>(double maxRatio) where T : class
 		{
-			RunCompetition(0, maxRatio, typeof(T), null, null);
+			RunCompetition(0, maxRatio, typeof(T), null);
 		}
 
 		/// <summary>
@@ -88,7 +80,7 @@ namespace BenchmarkDotNet.NUnit
 		/// </summary>
 		public static void Run<T>(double minRatio, double maxRatio) where T : class
 		{
-			RunCompetition(minRatio, maxRatio, typeof(T), null, null);
+			RunCompetition(minRatio, maxRatio, typeof(T), null);
 		}
 
 		/// <summary>
@@ -96,7 +88,7 @@ namespace BenchmarkDotNet.NUnit
 		/// </summary>
 		public static void Run<T>(double minRatio, double maxRatio, IConfig config) where T : class
 		{
-			RunCompetition(minRatio, maxRatio, typeof(T), null, config);
+			RunCompetition(minRatio, maxRatio, typeof(T), config);
 		}
 		#endregion
 
@@ -105,7 +97,7 @@ namespace BenchmarkDotNet.NUnit
 		/// </summary>
 		// BASEDON: https://github.com/PerfDotNet/BenchmarkDotNet/blob/master/BenchmarkDotNet.IntegrationTests/PerformanceUnitTest.cs
 		public static void RunCompetition(
-			double minRatio, double maxRatio, Type benchType, string benchSource, IConfig config)
+			double minRatio, double maxRatio, Type benchType, IConfig config)
 		{
 			var currentDirectory = Environment.CurrentDirectory;
 			try
@@ -113,7 +105,7 @@ namespace BenchmarkDotNet.NUnit
 				// WORKAROUND: fixing the https://github.com/nunit/nunit3-vs-adapter/issues/96
 				Environment.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
 
-				RunCompetitionUnderSetup(minRatio, maxRatio, benchType, benchSource, config);
+				RunCompetitionUnderSetup(minRatio, maxRatio, benchType, config);
 			}
 			finally
 			{
@@ -122,12 +114,12 @@ namespace BenchmarkDotNet.NUnit
 		}
 
 		private static void RunCompetitionUnderSetup(
-			double minRatio, double maxRatio, Type benchType, string benchSource, IConfig config)
+			double minRatio, double maxRatio, Type benchType, IConfig config)
 		{
 			// Based on 95th percentile
 			const double percentileRatio = 0.95;
 
-			var summary = RunComparisonCore(benchType, benchSource, config);
+			var summary = RunComparisonCore(benchType, config);
 
 			var benchmarkGroups = summary.SameConditionBenchmarks();
 			foreach (var benchmarkGroup in benchmarkGroups)
@@ -175,6 +167,12 @@ namespace BenchmarkDotNet.NUnit
 					Assert.That(
 						ratio >= benchmarkMinRatio,
 						$"Bench {benchmark.ShortInfo} runs faster than {benchmarkMinRatio}x baseline. Actual ratio: {ratio}x");
+
+					// ReSharper disable once CompareOfFloatsByEqualityOperator
+					Assert.That(
+						benchmarkMaxRatio != 0,
+						$"Bench {benchmark.ShortInfo}: max ratio not set. Actual ratio: {ratio}x");
+
 					Assert.That(
 						ratio <= benchmarkMaxRatio,
 						$"Bench {benchmark.ShortInfo} runs slower than {benchmarkMaxRatio}x baseline. Actual ratio: {ratio}x");
@@ -182,7 +180,7 @@ namespace BenchmarkDotNet.NUnit
 			}
 		}
 
-		private static Summary RunComparisonCore(Type benchType, string benchSource, IConfig config)
+		private static Summary RunComparisonCore(Type benchType, IConfig config)
 		{
 			// Capturing the output
 			var logger = new AccumulationLogger();
@@ -204,9 +202,7 @@ namespace BenchmarkDotNet.NUnit
 					StatisticColumn.Max);
 
 			// Running the benchmark
-			var summary = benchSource == null
-				? BenchmarkRunner.Run(benchType, config)
-				: BenchmarkRunner.RunSource(benchSource, config);
+			var summary = BenchmarkRunner.Run(benchType, config);
 
 			// Dumping the benchmark results to console
 			MarkdownExporter.Default.ExportToLog(summary, ConsoleLogger.Default);

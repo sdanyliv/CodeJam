@@ -52,8 +52,10 @@
     <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arithmetic\OperatorsGreaterThanPerformanceTest.cs" />
     <Compile Include="Arithmetic\OperatorsComparePerformanceTest.cs" />
+    <Compile Include="Arithmetic\OperatorsBenchmarkBase.cs" />
+    <Compile Include="Arithmetic\OperatorsLessThanPerformanceTest.cs" />
+    <Compile Include="Arithmetic\OperatorsGreaterThanOrEqualPerformanceTest.cs" />
     <Compile Include="Assertions\DebugCodeAssertionsPerformanceTest.cs" />
     <Compile Include="Assertions\CodeAssertionsPerformanceTest.cs" />
     <Compile Include="BenchmarkDotNet.NUnit.Tests\BenchmarkHelpersTests.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="CalibrationBenchmarks\BenchmarkConstants.cs" />
     <Compile Include="CalibrationBenchmarks\CallCostsBenchmark.cs" />
     <Compile Include="CalibrationBenchmarks\DispatchingOptimizationBenchmark.cs" />
+    <Compile Include="CalibrationBenchmarks\ProofsOpsCountNotSensitiveBenchmark .cs" />
     <Compile Include="CalibrationBenchmarks\ProofsSensitivityBenchmark.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
