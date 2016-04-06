@@ -252,15 +252,17 @@ namespace CodeJam.TableData
 			public string FormatLine(string[] values, int[] columnWidths)
 			{
 				Code.NotNull(values, nameof(values));
+				Code.NotNull(columnWidths, nameof(columnWidths));
 				Code.AssertArgument(
-					columnWidths!= null && values.Length <= columnWidths.Length,
+					values.Length <= columnWidths.Length,
 					nameof(columnWidths),
 					"columnWidth array to short");
 
-				var result = values.Select(EscapeValue);
-				if (columnWidths != null)
-					result = result.Zip(columnWidths, (s, w) => s.PadLeft(w));
-				return result.Join(", ");
+				return
+					values
+						.Select(EscapeValue)
+						.Zip(columnWidths, (s, w) => s.PadLeft(w))
+						.Join(", ");
 			}
 		}
 
@@ -280,13 +282,10 @@ namespace CodeJam.TableData
 			/// <param name="values">Line values.</param>
 			/// <param name="columnWidths">Array of column widths. If null - value is ignored.</param>
 			/// <returns>String representatiopn of values</returns>
-			public string FormatLine(string[] values, int[] columnWidths = null)
-			{
-				IEnumerable<string> result = values;
-				if (columnWidths != null)
-					result = result.Zip(columnWidths, (s, w) => s.PadLeft(w));
-				return result.Join(", ");
-			}
+			public string FormatLine(string[] values, int[] columnWidths) =>
+				values
+					.Zip(columnWidths, (s, w) => s.PadLeft(w))
+					.Join(", ");
 			#endregion
 		}
 		#endregion

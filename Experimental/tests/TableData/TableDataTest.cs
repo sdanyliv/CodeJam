@@ -8,7 +8,7 @@ namespace CodeJam.TableData
 {
 	// TODO: replace to dump comparision
 	[TestFixture]
-	public class CsvParserTest
+	public class TableDataTest
 	{
 		[TestCase("", ExpectedResult = "")]
 		[TestCase("a", ExpectedResult = "(1) a")]
@@ -59,5 +59,18 @@ namespace CodeJam.TableData
 				.Print(result, data.Select(l => l.Values), "  ");
 			return result.ToString();
 		}
+
+		[TestCase("a", new[] {1}, ExpectedResult = "(1) a")]
+		[TestCase("ab", new[] { 1 }, ExpectedResult = "(1) a")]
+		[TestCase("ab", new[] { 2 }, ExpectedResult = "(1) ab")]
+		[TestCase("ab\r\ncd", new[] { 2 }, ExpectedResult = "(1) ab; (2) cd")]
+		[TestCase("ab\r\ncd", new[] { 1, 1 }, ExpectedResult = "(1) a, b; (2) c, d")]
+		[TestCase(" abc", new[] { 2, 2 }, ExpectedResult = "(1) a, bc")]
+		public string ParseFixedWidth(string source, int[] widths) =>
+			FixedWidthFormat
+				.CreateParser(widths)
+				.Parse(source)
+				.Select(l => l.ToString())
+				.Join("; ");
 	}
 }
