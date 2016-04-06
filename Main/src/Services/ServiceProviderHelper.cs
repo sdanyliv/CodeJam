@@ -68,7 +68,7 @@ namespace CodeJam.Services
 		/// <param name="serviceInstance">Instance of service of type <typeparamref name="T"/></param>
 		/// <returns>Disposable cookie to conceal published service</returns>
 		[NotNull]
-		public static IDisposable PublishService<T>(
+		public static IDisposable Publish<T>(
 			[NotNull] this IServicePublisher publisher,
 			[NotNull] T serviceInstance) where T : class
 		{
@@ -85,7 +85,7 @@ namespace CodeJam.Services
 		/// <param name="instanceFactory">Factory to create service instance</param>
 		/// <returns>Disposable cookie to conceal published service</returns>
 		[NotNull]
-		public static IDisposable PublishService<T>(
+		public static IDisposable Publish<T>(
 			[NotNull] this IServicePublisher publisher,
 			[NotNull] Func<IServicePublisher, T> instanceFactory) where T : class
 		{
