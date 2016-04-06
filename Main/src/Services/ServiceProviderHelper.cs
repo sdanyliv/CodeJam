@@ -57,8 +57,8 @@ namespace CodeJam.Services
 		/// </returns>
 		[NotNull]
 		[Pure]
-		public static object GetRequiredService<T>([NotNull] this IServiceProvider provider) =>
-			provider.GetRequiredService(typeof(T));
+		public static T GetRequiredService<T>([NotNull] this IServiceProvider provider) =>
+			(T)provider.GetRequiredService(typeof(T));
 
 		/// <summary>
 		/// Publish service.
