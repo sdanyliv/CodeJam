@@ -13,6 +13,18 @@ namespace CodeJam.Collections
 	public static partial class EnumerableExtensions
 	{
 		/// <summary>
+		/// Produces the set union of two sequences by using the default equality comparer.
+		/// </summary>
+		/// <param name="source">An <see cref="IEnumerable{T}"/> whose distinct elements form the first set for the union.</param>
+		/// <param name="elements">An <see cref="IEnumerable{T}"/> whose distinct elements form the second set for the union.</param>
+		/// <returns>
+		/// An <see cref="IEnumerable{T}"/> that contains the elements from both input sequences, excluding duplicates.
+		/// </returns>
+		[Pure, NotNull]
+		public static IEnumerable<T> Union<T>([NotNull] this IEnumerable<T> source, params T[] elements) =>
+			source.Union(elements.AsEnumerable());
+
+		/// <summary>
 		/// Appends specified <paramref name="element"/> to end of the collection.
 		/// </summary>
 		[Pure, NotNull]
