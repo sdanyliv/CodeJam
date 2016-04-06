@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace CodeJam.Services
 {
 	/// <summary>
-	/// <see cref="IServiceProvider"/> helper methods.
+	/// <see cref="IServiceProvider"/> and <see cref="IServicePublisher"/> helper methods.
 	/// </summary>
 	[PublicAPI]
 	public static class ServiceProviderHelper
@@ -19,6 +19,7 @@ namespace CodeJam.Services
 		/// A service object of type <paramref name="serviceType"/>.
 		/// </returns>
 		[NotNull]
+		[Pure]
 		public static object GetRequiredService(
 			[NotNull] this IServiceProvider provider,
 			[NotNull] Type serviceType)
@@ -39,6 +40,7 @@ namespace CodeJam.Services
 		/// <param name="provider">Instance of <see cref="IServiceProvider"/>.</param>
 		/// <returns>A service object of type serviceType.</returns>
 		[CanBeNull]
+		[Pure]
 		public static T GetService<T> ([NotNull] this IServiceProvider provider)
 		{
 			Code.NotNull(provider, nameof(provider));
@@ -54,6 +56,7 @@ namespace CodeJam.Services
 		/// A service object of type <typeparamref name="T"/>.
 		/// </returns>
 		[NotNull]
+		[Pure]
 		public static object GetRequiredService<T>([NotNull] this IServiceProvider provider)
 		{
 			Code.NotNull(provider, nameof(provider));
@@ -62,6 +65,40 @@ namespace CodeJam.Services
 			if (svc == null)
 				throw new ArgumentException($"Service '{typeof(T)}' not registered in provider.");
 			return svc;
+		}
+
+		/// <summary>
+		/// Publish service.
+		/// </summary>
+		/// <typeparam name="T">Type of service object to publish.</typeparam>
+		/// <param name="publisher">Service publisher.</param>
+		/// <param name="serviceInstance">Instance of service of type <typeparamref name="T"/></param>
+		/// <returns>Disposable cookie to conceal published service</returns>
+		[NotNull]
+		public static IDisposable PublishService<T>(
+			[NotNull] this IServicePublisher publisher,
+			[NotNull] T serviceInstance) where T : class
+		{
+			Code.NotNull(publisher, nameof(publisher));
+			Code.NotNull(serviceInstance, nameof(serviceInstance));
+			return publisher.Publish(typeof(T), serviceInstance);
+		}
+
+		/// <summary>
+		/// Publish service.
+		/// </summary>
+		/// <typeparam name="T">Type of service object to publish.</typeparam>
+		/// <param name="publisher">Service publisher.</param>
+		/// <param name="instanceFactory">Factory to create service instance</param>
+		/// <returns>Disposable cookie to conceal published service</returns>
+		[NotNull]
+		public static IDisposable PublishService<T>(
+			[NotNull] this IServicePublisher publisher,
+			[NotNull] Func<IServicePublisher, T> instanceFactory) where T : class
+		{
+			Code.NotNull(publisher, nameof(publisher));
+			Code.NotNull(instanceFactory, nameof(instanceFactory));
+			return publisher.Publish(typeof(T), instanceFactory);
 		}
 	}
 }
