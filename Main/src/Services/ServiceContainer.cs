@@ -12,15 +12,22 @@ namespace CodeJam.Services
 	[PublicAPI]
 	public class ServiceContainer : IServicePublisher, IDisposable
 	{
-		private static readonly ConcurrentDictionary<Type, IServiceBag> _services =
+		[CanBeNull]
+		private readonly IServiceProvider _parentProvider;
+
+		private readonly ConcurrentDictionary<Type, IServiceBag> _services =
 			new ConcurrentDictionary<Type, IServiceBag>();
 
 		/// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
-		public ServiceContainer(bool publishSelf = true)
+		public ServiceContainer([CanBeNull] IServiceProvider parentProvider, bool publishSelf = true)
 		{
+			_parentProvider = parentProvider;
 			if (publishSelf)
 				this.Publish<IServicePublisher>(this);
 		}
+
+		/// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+		public ServiceContainer(bool publishSelf = true) : this(null, publishSelf) { }
 
 		private void ConcealService(Type serviceType)
 		{
@@ -34,12 +41,14 @@ namespace CodeJam.Services
 		/// <summary>Gets the service object of the specified type.</summary>
 		/// <returns>A service object of type <paramref name="serviceType" />.-or- null if there is no service object of type <paramref name="serviceType" />.</returns>
 		/// <param name="serviceType">An object that specifies the type of service object to get. </param>
+		[CanBeNull]
 		public object GetService(Type serviceType)
 		{
 			IServiceBag bag;
-			if (_services.TryGetValue(serviceType, out bag))
-				return bag.GetInstance(this, serviceType);
-			return null;
+			return
+				_services.TryGetValue(serviceType, out bag)
+					? bag.GetInstance(this, serviceType)
+					: _parentProvider?.GetService(serviceType);
 		}
 		#endregion
 
