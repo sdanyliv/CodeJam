@@ -223,6 +223,11 @@ namespace CodeJam.TableData
 		#endregion
 
 		#region Formatter
+		/// <summary>
+		/// Creates formatter for CSV.
+		/// </summary>
+		/// <param name="allowEscaping">If true, use escaping.</param>
+		/// <returns>Formatter instance</returns>
 		public static ITableDataFormatter CreateFormatter(bool allowEscaping = true) =>
 			allowEscaping
 				? (ITableDataFormatter)new CsvFormatter()

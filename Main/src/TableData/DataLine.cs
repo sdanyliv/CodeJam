@@ -4,6 +4,9 @@ using JetBrains.Annotations;
 
 namespace CodeJam.TableData
 {
+	/// <summary>
+	/// Line of data.
+	/// </summary>
 	[PublicAPI]
 	public struct DataLine
 	{
@@ -14,8 +17,16 @@ namespace CodeJam.TableData
 			Values = values;
 		}
 
+		/// <summary>
+		/// Line number.
+		/// </summary>
 		public int LineNum { get; }
 
+		/// <summary>
+		/// Line values.
+		/// </summary>
+		[NotNull]
+		[ItemNotNull]
 		public string[] Values { get; }
 
 		#region Overrides of ValueType

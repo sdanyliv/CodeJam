@@ -2,6 +2,9 @@
 
 namespace CodeJam.TableData
 {
+	/// <summary>
+	/// Formatter interface.
+	/// </summary>
 	[PublicAPI]
 	public interface ITableDataFormatter
 	{
