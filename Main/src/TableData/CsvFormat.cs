@@ -38,7 +38,11 @@ namespace CodeJam.TableData
 			if (curChar.IsEol)
 			{
 				lineNum++;
+#if !FW452
+				return Array.Empty<string>();
+#else
 				return Array<string>.Empty;
+#endif
 			}
 
 			var result = new List<string>();
@@ -162,11 +166,15 @@ namespace CodeJam.TableData
 			var parts = line.Split(separator);
 			// Special case - whitespace lines are ignored
 			if (parts.Length == 1 && parts[0].IsNullOrWhiteSpace())
+#if !FW452
+				return Array.Empty<string>();
+#else
 				return Array<string>.Empty;
+#endif
 			return parts;
 		}
 
-		#region CharReader struct
+#region CharReader struct
 		private struct CharReader
 		{
 			private const int s_Eof = -1;
@@ -209,9 +217,9 @@ namespace CodeJam.TableData
 
 			public CharReader Peek() => new CharReader(m_Reader, m_Reader.Peek());
 		}
-		#endregion
+#endregion
 
-		#region ParserState enum
+#region ParserState enum
 		private enum ParserState
 		{
 			ExpectField,
@@ -219,10 +227,10 @@ namespace CodeJam.TableData
 			QuotedField,
 			AfterField
 		}
-		#endregion
-		#endregion
+#endregion
+#endregion
 
-		#region Formatter
+#region Formatter
 		/// <summary>
 		/// Creates formatter for CSV.
 		/// </summary>
@@ -278,7 +286,7 @@ namespace CodeJam.TableData
 
 		private class CsvNoEscapeFormatter : ITableDataFormatter
 		{
-			#region Implementation of ITableDataFormatter
+#region Implementation of ITableDataFormatter
 			/// <summary>
 			/// Returns length of formatted value.
 			/// </summary>
@@ -296,8 +304,8 @@ namespace CodeJam.TableData
 				values
 					.Zip(columnWidths, (s, w) => s.PadLeft(w))
 					.Join(", ");
-			#endregion
+#endregion
 		}
-		#endregion
+#endregion
 	}
 }
