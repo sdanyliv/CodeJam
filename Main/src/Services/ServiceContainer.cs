@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Linq;
 
 using JetBrains.Annotations;
 
@@ -9,10 +10,10 @@ namespace CodeJam.Services
 	/// Service container.
 	/// </summary>
 	[PublicAPI]
-	public class ServiceContainer : IServicePublisher
+	public class ServiceContainer : IServicePublisher, IDisposable
 	{
-		private static readonly ConcurrentDictionary<Type, Func<IServicePublisher, object>> _services =
-			new ConcurrentDictionary<Type, Func<IServicePublisher, object>>();
+		private static readonly ConcurrentDictionary<Type, IServiceBag> _services =
+			new ConcurrentDictionary<Type, IServiceBag>();
 
 		/// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
 		public ServiceContainer(bool publishSelf = true)
@@ -23,9 +24,10 @@ namespace CodeJam.Services
 
 		private void ConcealService(Type serviceType)
 		{
-			Func<IServicePublisher, object> func;
-			if (!_services.TryRemove(serviceType, out func))
+			IServiceBag bag;
+			if (!_services.TryRemove(serviceType, out bag))
 				throw new ArgumentException($"Service with type '{serviceType}' not registered.");
+			bag.Dispose();
 		}
 
 		#region Implementation of IServiceProvider
@@ -34,9 +36,9 @@ namespace CodeJam.Services
 		/// <param name="serviceType">An object that specifies the type of service object to get. </param>
 		public object GetService(Type serviceType)
 		{
-			Func<IServicePublisher, object> func;
-			if (_services.TryGetValue(serviceType, out func))
-				return func(this);
+			IServiceBag bag;
+			if (_services.TryGetValue(serviceType, out bag))
+				return bag.GetInstance(this, serviceType);
 			return null;
 		}
 		#endregion
@@ -50,7 +52,7 @@ namespace CodeJam.Services
 		/// <returns>Disposable cookie to conceal published service</returns>
 		public IDisposable Publish(Type serviceType, object serviceInstance)
 		{
-			if (!_services.TryAdd(serviceType, sp => serviceInstance))
+			if (!_services.TryAdd(serviceType, new InstanceBag(serviceInstance)))
 				throw new ArgumentException("Service with the same type already published.");
 			// All code below is always run in no more than one thread for specific type
 			var removed = false;
@@ -74,18 +76,7 @@ namespace CodeJam.Services
 		/// <returns>Disposable cookie to conceal published service</returns>
 		public IDisposable Publish(Type serviceType, Func<IServicePublisher, object> instanceFactory)
 		{
-			var createLock = new object();
-			object instance = null;
-			if (!_services.TryAdd(
-				serviceType,
-				sp =>
-				{
-					if (instance == null)
-						lock (createLock)
-							if (instance == null)
-								instance = instanceFactory(sp);
-					return instance;
-				}))
+			if (!_services.TryAdd(serviceType, new FactoryBag(instanceFactory)))
 				throw new ArgumentException("Service with the same type already published.");
 			// All code below is always run in no more than one thread for specific type
 			var removed = false;
@@ -99,6 +90,84 @@ namespace CodeJam.Services
 							removed = true;
 						}
 					});
+		}
+		#endregion
+
+		#region ServiceBag classes
+		private interface IServiceBag
+		{
+			object GetInstance(IServicePublisher publisher, Type serviceType);
+			void Dispose();
+		}
+
+		private class InstanceBag : IServiceBag
+		{
+			private readonly object _instance;
+			public InstanceBag(object instance)
+			{
+				_instance = instance;
+			}
+
+			#region Overrides of ServiceBag
+			public object GetInstance(IServicePublisher publisher, Type serviceType) => _instance;
+
+			// Do not dispose services created outside.
+			public void Dispose() { }
+			#endregion
+		}
+
+		private class FactoryBag : IServiceBag
+		{
+			private readonly Func<IServicePublisher, object> _factory;
+			private object _instance;
+
+			/// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+			public FactoryBag(Func<IServicePublisher, object> factory)
+			{
+				_factory = factory;
+			}
+
+			#region Overrides of ServiceBag
+			public object GetInstance(IServicePublisher publisher, Type serviceType)
+			{
+				if (_instance == null)
+					lock (this)
+						if (_instance == null)
+						{
+							_instance = _factory(publisher);
+							if (_instance == null)
+								throw new InvalidOperationException($"Factory for service of type '{serviceType}' returns null");
+						}
+				return _instance;
+			}
+
+			public void Dispose()
+			{
+				if (_instance != null)
+					lock (this)
+						(_instance as IDisposable)?.Dispose();
+			}
+			#endregion
+		}
+		#endregion
+
+		#region Implementation of IDisposable
+		/// <summary>
+		/// Calls <see cref="IDisposable.Dispose"/> methods in all created service instances, that implements
+		/// <see cref="IDisposable"/>.
+		/// </summary>
+		public void Dispose()
+		{
+			while (_services.Count > 0)
+			{
+				var type = _services.Keys.FirstOrDefault();
+				if (type != null)
+				{
+					IServiceBag bag;
+					if (_services.TryRemove(type, out bag))
+						bag.Dispose();
+				}
+			}
 		}
 		#endregion
 	}
