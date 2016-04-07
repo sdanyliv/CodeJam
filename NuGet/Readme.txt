@@ -1,5 +1,12 @@
-CodeJam 1.0.0-beta6 Release Notes
----------------------------------------
+CodeJam 1.0.0-beta7 Release Notes
+---------------------------------
+
+What's new in 1.0.0-beta7
+------------------------
+* ServiceContainer disposes created by factory instances
+* Service provider chaining in ServiceContainer
+* Refactoring
+* Fixes, code cleanup and annotations
 
 What's new in 1.0.0-beta6
 -------------------------

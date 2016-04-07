@@ -45,6 +45,71 @@ namespace CodeJam.Reflection
 			type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
 		/// <summary>
+		/// Checks if <paramref name="type"/> is numeric type.
+		/// </summary>
+		/// <param name="type">Type to check.</param>
+		/// <returns>True, if <paramref name="type"/> is numeric.</returns>
+		public static bool IsNumeric(this Type type)
+		{
+			if (type == null)
+				throw new ArgumentNullException(nameof(type));
+			while (true) // tail recursion expanded
+				switch (Type.GetTypeCode(type))
+				{
+					case TypeCode.SByte:
+					case TypeCode.Byte:
+					case TypeCode.Int16:
+					case TypeCode.UInt16:
+					case TypeCode.Int32:
+					case TypeCode.UInt32:
+					case TypeCode.Int64:
+					case TypeCode.UInt64:
+					case TypeCode.Decimal:
+					case TypeCode.Single:
+					case TypeCode.Double:
+						return true;
+					case TypeCode.Object:
+						type = Nullable.GetUnderlyingType(type);
+						if (type != null)
+							continue;
+						return false;
+					default:
+						return false;
+				}
+		}
+
+		/// <summary>
+		/// Checks if <paramref name="type"/> is integer type.
+		/// </summary>
+		/// <param name="type">Type to check.</param>
+		/// <returns>True, if <paramref name="type"/> is integer type.</returns>
+		public static bool IsInteger(this Type type)
+		{
+			if (type == null)
+				throw new ArgumentNullException(nameof(type));
+			while (true) // tail recursion expanded
+				switch (Type.GetTypeCode(type))
+				{
+					case TypeCode.Byte:
+					case TypeCode.Int16:
+					case TypeCode.Int32:
+					case TypeCode.Int64:
+					case TypeCode.SByte:
+					case TypeCode.UInt16:
+					case TypeCode.UInt32:
+					case TypeCode.UInt64:
+						return true;
+					case TypeCode.Object:
+						type = Nullable.GetUnderlyingType(type);
+						if (type != null)
+							continue;
+						return false;
+					default:
+						return false;
+				}
+		}
+
+		/// <summary>
 		/// Determines whether the <paramref name="type"/> derives from the specified <paramref name="check"/>.
 		/// </summary>
 		/// <remarks>
