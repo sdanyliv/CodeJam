@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -9,13 +9,14 @@ using JetBrains.Annotations;
 
 using NUnit.Framework;
 
+using static CodeJam.AssemblyWideConfig;
+
 namespace CodeJam
 {
 	/// <summary>
 	/// Estimates average cost of calls
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Self-testing")]
-	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "AccessToModifiedClosure")]
 	[SuppressMessage("ReSharper", "ClassCanBeSealed.Local")]
 	[SuppressMessage("ReSharper", "ConvertMethodToExpressionBody")]
@@ -30,10 +31,8 @@ namespace CodeJam
 		[Test]
 		// WAITINGFOR: https://github.com/PerfDotNet/BenchmarkDotNet/issues/126.
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkCallCosts()
-		{
-			CompetitionBenchmarkRunner.Run(this, 0.9, 50.0);
-		}
+		public void BenchmarkCallCosts() => 
+			CompetitionBenchmarkRunner.Run(this, RunConfig);
 
 		#region CompetitionMethods
 		private interface ICompareCalls
@@ -47,7 +46,7 @@ namespace CodeJam
 			T CallInterface(T a);
 		}
 
-		private class CompareCalls: ICompareCalls<int>, ICompareCalls
+		private class CompareCalls : ICompareCalls<int>, ICompareCalls
 		{
 			public static int Call(int a)
 			{
@@ -130,7 +129,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(0.9, 1.15)]
+		[CompetitionBenchmark(0.82, 1.21)]
 		public int Test01Call()
 		{
 			int a = 0;
@@ -142,7 +141,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(0.9, 1.15)]
+		[CompetitionBenchmark(0.76, 1.15)]
 		public int Test02GenericCall()
 		{
 			int a = 0;
@@ -154,7 +153,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(0.9, 1.15)]
+		[CompetitionBenchmark(0.91, 1.18)]
 		public int Test03InstanceCall()
 		{
 			int a = 0;
@@ -167,7 +166,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(0.9, 1.15)]
+		[CompetitionBenchmark(0.71, 1.27)]
 		public int Test04InstanceGenericCall()
 		{
 			int a = 0;
@@ -180,7 +179,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(5.5, 7.5)]
+		[CompetitionBenchmark(4.39, 6.80)]
 		public int Test05CallNoInline()
 		{
 			int a = 0;
@@ -192,7 +191,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(5.5, 7.5)]
+		[CompetitionBenchmark(4.96, 6.91)]
 		public int Test06InstanceCallNoInline()
 		{
 			int a = 0;
@@ -205,7 +204,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(6.0, 8.0)]
+		[CompetitionBenchmark(4.88, 7.27)]
 		public int Test07InstanceVirtualCall()
 		{
 			int a = 0;
@@ -218,7 +217,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(6.0, 8.0)]
+		[CompetitionBenchmark(4.71, 7.23)]
 		public int Test08DerivedVirtualCall()
 		{
 			int a = 0;
@@ -231,7 +230,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(8.0, 10.0)]
+		[CompetitionBenchmark(6.51, 10.07)]
 		public int Test09InterfaceCall()
 		{
 			int a = 0;
@@ -244,7 +243,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(8.0, 10.0)]
+		[CompetitionBenchmark(6.66, 10.12)]
 		public int Test10DerivedInterfaceCall()
 		{
 			int a = 0;
@@ -257,7 +256,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(8.0, 10.0)]
+		[CompetitionBenchmark(6.31, 9.65)]
 		public int Test11GenericInterfaceCall()
 		{
 			int a = 0;
@@ -270,7 +269,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(8.0, 10.0)]
+		[CompetitionBenchmark(6.01, 10.01)]
 		public int Test12DerivedGenericInterfaceCall()
 		{
 			int a = 0;
@@ -283,7 +282,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(30.0, 47.5)]
+		[CompetitionBenchmark(26.54, 42.01)]
 		public int Test13InterfaceGenericCall()
 		{
 			int a = 0;
@@ -296,7 +295,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(30.0, 47.5)]
+		[CompetitionBenchmark(26.00, 44.43)]
 		public int Test14DerivedInterfaceGenericCall()
 		{
 			int a = 0;
@@ -309,7 +308,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(8.0, 10.0)]
+		[CompetitionBenchmark(6.14, 9.70)]
 		public int Test15LambdaCached()
 		{
 			int a1 = 0;
@@ -322,7 +321,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(9.0, 12.5)]
+		[CompetitionBenchmark(7.36, 11.68)]
 		public int Test16LambdaNew()
 		{
 			int a1 = 0;
@@ -335,7 +334,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(9.0, 12.5)]
+		[CompetitionBenchmark(7.39, 12.04)]
 		public int Test17LambdaClosure()
 		{
 			int a1 = 0;
@@ -350,7 +349,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(34.5, 49.5)]
+		[CompetitionBenchmark(28.29, 44.75)]
 		public int Test18LambdaClosureLocal()
 		{
 			int a1 = 0;
@@ -364,7 +363,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(9.0, 12.5)]
+		[CompetitionBenchmark(7.99, 11.92)]
 		public int Test19FuncCached()
 		{
 			int a = 0;
@@ -377,7 +376,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(7.0, 9.5)]
+		[CompetitionBenchmark(5.34, 8.39)]
 		public int Test20FuncCachedInstance()
 		{
 			int a = 0;
@@ -390,7 +389,7 @@ namespace CodeJam
 			return Count;
 		}
 
-		[CompetitionBenchmark(26.0, 33.5)]
+		[CompetitionBenchmark(22.59, 31.95)]
 		public int Test21FuncNew()
 		{
 			int a = 0;

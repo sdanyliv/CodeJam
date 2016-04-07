@@ -1,6 +1,9 @@
 ﻿using System;
-using System.Linq;
+using System.Diagnostics;
+using System.Globalization;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
@@ -36,62 +39,21 @@ namespace BenchmarkDotNet.NUnit
 		/// Runs the competition benchmark from a type of a callee
 		/// </summary>
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void Run<T>(T thisReference, double maxRatio) where T : class
+		public static void Run<T>(T thisReference, IConfig config) where T : class
 		{
-			RunCompetition(0, maxRatio, thisReference.GetType(), null);
-		}
-
-		/// <summary>
-		/// Runs the competition benchmark from a type of a callee
-		/// </summary>
-		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void Run<T>(T thisReference, double minRatio, double maxRatio) where T : class
-		{
-			RunCompetition(minRatio, maxRatio, thisReference.GetType(), null);
-		}
-
-		/// <summary>
-		/// Runs the competition benchmark from a type of a callee
-		/// </summary>
-		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void Run<T>(T thisReference, double minRatio, double maxRatio, IConfig config) where T : class
-		{
-			RunCompetition(minRatio, maxRatio, thisReference.GetType(), config);
+			RunCompetition(0, 0, thisReference.GetType(), config);
 		}
 
 		/// <summary>
 		/// Runs the competition benchmark
 		/// </summary>
-		public static void Run<T>() where T : class
+		public static void Run<T>(IConfig config) where T : class
 		{
-			RunCompetition(0, 0, typeof(T), null);
-		}
-
-		/// <summary>
-		/// Runs the competition benchmark
-		/// </summary>
-		public static void Run<T>(double maxRatio) where T : class
-		{
-			RunCompetition(0, maxRatio, typeof(T), null);
-		}
-
-		/// <summary>
-		/// Runs the competition benchmark 
-		/// </summary>
-		public static void Run<T>(double minRatio, double maxRatio) where T : class
-		{
-			RunCompetition(minRatio, maxRatio, typeof(T), null);
-		}
-
-		/// <summary>
-		/// Runs the competition benchmark
-		/// </summary>
-		public static void Run<T>(double minRatio, double maxRatio, IConfig config) where T : class
-		{
-			RunCompetition(minRatio, maxRatio, typeof(T), config);
+			RunCompetition(0, 0, typeof(T), config);
 		}
 		#endregion
 
+		#region Core logic
 		/// <summary>
 		/// Runs the competition benchmark
 		/// </summary>
@@ -116,100 +78,113 @@ namespace BenchmarkDotNet.NUnit
 		private static void RunCompetitionUnderSetup(
 			double minRatio, double maxRatio, Type benchType, IConfig config)
 		{
-			// Based on 95th percentile
-			const double percentileRatio = 0.95;
+			ValidateCompetition(benchType);
 
-			var summary = RunComparisonCore(benchType, config);
-
-			var benchmarkGroups = summary.SameConditionBenchmarks();
-			foreach (var benchmarkGroup in benchmarkGroups)
+			// Capturing the output
+			var logger = InitAccumulationLogger();
+			// Shared state
+			var runState = new FinalRunAnalyser();
+			// Final config
+			var runConfig = CreateRunConfig(config, runState, logger);
+			Summary summary = null;
+			try
 			{
-				var baselineBenchmarks = benchmarkGroup.Where(b => b.Target.Baseline).ToArray();
-				if (baselineBenchmarks.Length == 0)
-					throw new InvalidOperationException("Define Baseline benchmark");
-				if (baselineBenchmarks.Length != 1)
-					throw new InvalidOperationException("There should be only one Baseline benchmark");
+				summary = RunCore(benchType, runConfig, runState);
+			}
+			finally
+			{
+				DumpOutputSummaryAtTop(summary, logger);
+			}
 
-				var baselineBenchmark = baselineBenchmarks.Single();
-				var baselineMetric = summary.GetPercentile(baselineBenchmark, percentileRatio);
-				// ReSharper disable once CompareOfFloatsByEqualityOperator
-				if (baselineMetric == 0)
-					throw new InvalidOperationException($"Baseline benchmark {baselineBenchmark.ShortInfo} does not compute");
+			var culture = Thread.CurrentThread.CurrentCulture;
+			try
+			{
+				Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+				runState.ProcessSummary(summary, minRatio, maxRatio);
+			}
+			finally
+			{
+				Thread.CurrentThread.CurrentCulture = culture;
+			}
+		}
 
-				foreach (var benchmark in benchmarkGroup)
+		private static void ValidateCompetition(Type benchType)
+		{
+			if (!Debugger.IsAttached)
+			{
+				var assembly = benchType.Assembly;
+				if (assembly.IsDebugAssembly())
+					throw new InvalidOperationException(
+						$"Set the solution configuration into Release mode. Assembly {assembly.GetName().Name} was build as debug.");
+
+				foreach (var referencedAssemblyName in assembly.GetReferencedAssemblies())
 				{
-					if (benchmark == baselineBenchmark)
-						continue;
-
-					var reportMetric = summary.GetPercentile(benchmark, percentileRatio);
-					var ratio = Math.Round(reportMetric / baselineMetric, 2);
-					var benchmarkMinRatio = minRatio;
-					var benchmarkMaxRatio = maxRatio;
-
-					var benchOptions = benchmark.Target.Method.TryGetAttribute<CompetitionBenchmarkAttribute>();
-					if (benchOptions != null)
-					{
-						if (benchOptions.DoesNotCompete)
-							continue;
-
-						// ReSharper disable once CompareOfFloatsByEqualityOperator
-						if (benchOptions.MinRatio != 0)
-						{
-							benchmarkMinRatio = benchOptions.MinRatio;
-						}
-						// ReSharper disable once CompareOfFloatsByEqualityOperator
-						if (benchOptions.MaxRatio != 0)
-						{
-							benchmarkMaxRatio = benchOptions.MaxRatio;
-						}
-					}
-
-					Assert.That(
-						ratio >= benchmarkMinRatio,
-						$"Bench {benchmark.ShortInfo} runs faster than {benchmarkMinRatio}x baseline. Actual ratio: {ratio}x");
-
-					// ReSharper disable once CompareOfFloatsByEqualityOperator
-					Assert.That(
-						benchmarkMaxRatio != 0,
-						$"Bench {benchmark.ShortInfo}: max ratio not set. Actual ratio: {ratio}x");
-
-					Assert.That(
-						ratio <= benchmarkMaxRatio,
-						$"Bench {benchmark.ShortInfo} runs slower than {benchmarkMaxRatio}x baseline. Actual ratio: {ratio}x");
+					var refAssembly = Assembly.Load(referencedAssemblyName);
+					if (refAssembly.IsDebugAssembly())
+						throw new InvalidOperationException(
+							$"Set the solution configuration into Release mode. Assembly {refAssembly.GetName().Name} was build as debug.");
 				}
 			}
 		}
 
-		private static Summary RunComparisonCore(Type benchType, IConfig config)
+		private static AccumulationLogger InitAccumulationLogger()
 		{
-			// Capturing the output
 			var logger = new AccumulationLogger();
 			logger.WriteLine();
 			logger.WriteLine();
 			logger.WriteLine(new string('=', 40));
 			logger.WriteLine();
+			return logger;
+		}
 
+		private static IConfig CreateRunConfig(IConfig config, FinalRunAnalyser runState, AccumulationLogger logger)
+		{
 			// TODO: better setup?
-			config = BenchmarkHelpers.CreateUnitTestConfig(config ?? DefaultConfig.Instance)
-				.With(logger)
-				.With(
-					StatisticColumn.Min,
-					ScaledPercentileColumn.S0Column,
-					ScaledPercentileColumn.S50Column,
-					ScaledPercentileColumn.S85Column,
-					ScaledPercentileColumn.S95Column,
-					ScaledPercentileColumn.S100Column,
-					StatisticColumn.Max);
+			var result = BenchmarkHelpers.CreateUnitTestConfig(config ?? DefaultConfig.Instance);
+			result.Add(runState);
+			result.Add(logger);
+			result.Add(
+				StatisticColumn.Min,
+				ScaledPercentileColumn.S0Column,
+				ScaledPercentileColumn.S50Column,
+				ScaledPercentileColumn.S85Column,
+				ScaledPercentileColumn.S95Column,
+				ScaledPercentileColumn.S100Column,
+				StatisticColumn.Max);
+			return result;
+		}
 
-			// Running the benchmark
-			var summary = BenchmarkRunner.Run(benchType, config);
+		private static Summary RunCore(Type benchType, IConfig runConfig, FinalRunAnalyser runState)
+		{
+			const int rerunCount = 10;
+			Summary summary = null;
+			for (var i = 0; i < rerunCount; i++)
+			{
+				runState.LastRun = i == rerunCount - 1;
+				runState.RerunRequested = false;
 
-			// Dumping the benchmark results to console
-			MarkdownExporter.Default.ExportToLog(summary, ConsoleLogger.Default);
-			// Dumping all captured output below the benchmark results
-			ConsoleLogger.Default.WriteLine(logger.GetLog());
+				// Running the benchmark
+				summary = BenchmarkRunner.Run(benchType, runConfig);
 
+				// Rerun if annotated
+				if (!runState.RerunRequested)
+				{
+					break;
+				}
+			}
 			return summary;
 		}
+
+		private static void DumpOutputSummaryAtTop(Summary summary, AccumulationLogger logger)
+		{
+			if (summary != null)
+			{
+				// Dumping the benchmark results to console
+				MarkdownExporter.Default.ExportToLog(summary, ConsoleLogger.Default);
+			}
+			// Dumping all captured output below the benchmark results
+			ConsoleLogger.Default.WriteLine(logger.GetLog());
+		}
+		#endregion
 	}
 }

@@ -35,6 +35,7 @@
       <HintPath>..\..\packages\BenchmarkDotNet.0.9.3\lib\net45\BenchmarkDotNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ISymWrapper" />
     <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
@@ -59,16 +60,20 @@
     <Compile Include="Assertions\DebugCodeAssertionsPerformanceTest.cs" />
     <Compile Include="Assertions\CodeAssertionsPerformanceTest.cs" />
     <Compile Include="BenchmarkDotNet.NUnit.Tests\BenchmarkHelpersTests.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\FinalRunAnalyser.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\AnnotateSourceAnalyser.SymbolHelpers.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\CompetitionBenchmarkAttribute.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\AnnotateSourceAnalyser.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\CompetitionBenchmarkRunner.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\BenchmarkHelpers.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\BenchmarkColumns.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\Configs.cs" />
-    <Compile Include="CalibrationBenchmarks\BenchmarkConstants.cs" />
+    <Compile Include="BenchmarkConstants.cs" />
     <Compile Include="CalibrationBenchmarks\CallCostsBenchmark.cs" />
     <Compile Include="CalibrationBenchmarks\DispatchingOptimizationBenchmark.cs" />
     <Compile Include="CalibrationBenchmarks\ProofsOpsCountNotSensitiveBenchmark .cs" />
     <Compile Include="CalibrationBenchmarks\ProofsSensitivityBenchmark.cs" />
+    <Compile Include="AssemblyWideConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,19 +7,20 @@ using JetBrains.Annotations;
 
 using NUnit.Framework;
 
+using static CodeJam.AssemblyWideConfig;
+
 namespace CodeJam
 {
 	/// <summary>
 	/// Prooftest: benchmark is sensitive enough to spot a minimal method change
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Self-testing")]
-	[Config(typeof(FastRunConfig))]
 	[PublicAPI]
 	public class ProofsSensitivityBenchmark
 	{
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkSensitivity() => CompetitionBenchmarkRunner.Run(this, 1.5, 1.75);
+		public void BenchmarkSensitivity() => CompetitionBenchmarkRunner.Run(this, RunConfig);
 
 		[Params(1000, 10 * 1000, 100 * 1000, 1000 * 1000)]
 		public int Count { get; set; }
@@ -37,7 +38,7 @@ namespace CodeJam
 			return sum;
 		}
 
-		[CompetitionBenchmark(1.5, 1.75)]
+		[CompetitionBenchmark]
 		public int Test01PlusOne()
 		{
 			var sum = 0;
