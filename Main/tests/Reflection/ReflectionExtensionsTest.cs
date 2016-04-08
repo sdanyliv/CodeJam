@@ -55,6 +55,8 @@ namespace CodeJam.Reflection
 		[TestCase(typeof(string), ExpectedResult = false)]
 		[TestCase(typeof(object), ExpectedResult = false)]
 		[TestCase(typeof(AttributeTargets), ExpectedResult = true)]
+		[TestCase(typeof(int?), ExpectedResult = true)]
+		[TestCase(typeof(DateTime?), ExpectedResult = false)]
 		public bool IsInteger(Type type) => type.IsInteger();
 
 		[TestCase(typeof(sbyte), ExpectedResult = true)]
@@ -73,6 +75,8 @@ namespace CodeJam.Reflection
 		[TestCase(typeof(string), ExpectedResult = false)]
 		[TestCase(typeof(object), ExpectedResult = false)]
 		[TestCase(typeof(AttributeTargets), ExpectedResult = true)]
+		[TestCase(typeof(int?), ExpectedResult = true)]
+		[TestCase(typeof(DateTime?), ExpectedResult = false)]
 		public bool IsNumeric(Type type) => type.IsNumeric();
 	}
 }
