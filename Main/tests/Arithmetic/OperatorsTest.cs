@@ -14,7 +14,7 @@ namespace CodeJam.Arithmetic
 	[SuppressMessage("ReSharper", "ClassNeverInstantiated.Local")]
 	[SuppressMessage("ReSharper", "PossibleNullReferenceException")]
 	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
-	public class OperatorsTest
+	public partial class OperatorsTest
 	{
 		#region Helper types
 		private class ClassNoComparable { }
@@ -236,5 +236,8 @@ namespace CodeJam.Arithmetic
 			Assert.That(StringOp.LessThan("2", "2"), Is.EqualTo(false));
 			Assert.That(StringOp.LessThan("2", "1"), Is.EqualTo(false));
 		}
+
+		//[Test]
+		//public void StrPlus() => Assert.AreEqual("3", StringOp.Plus("1", "2"));
 	}
 }

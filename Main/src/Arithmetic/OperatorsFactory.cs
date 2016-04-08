@@ -33,11 +33,11 @@ namespace CodeJam.Arithmetic
 
 		[CanBeNull]
 		public static Func<T, T, bool> GetComparisonCallback<T>(ExpressionType comparisonType) =>
-			CompareUsingOperators<T>(comparisonType) ??
-				CompareUsingComparer<T>(comparisonType);
+			CompareUsingOperators<T>(comparisonType)
+				?? CompareUsingComparer<T>(comparisonType);
 
 		[CanBeNull]
-		public static Func<T, T, bool> CompareUsingOperators<T>(ExpressionType comparisonType)
+		private static Func<T, T, bool> CompareUsingOperators<T>(ExpressionType comparisonType)
 		{
 			switch (comparisonType)
 			{
@@ -81,7 +81,7 @@ namespace CodeJam.Arithmetic
 		}
 
 		[CanBeNull]
-		public static Func<T, T, bool> CompareUsingComparer<T>(ExpressionType comparisonType)
+		private static Func<T, T, bool> CompareUsingComparer<T>(ExpressionType comparisonType)
 		{
 			switch (comparisonType)
 			{
@@ -111,6 +111,17 @@ namespace CodeJam.Arithmetic
 					throw CodeExceptions.UnexpectedArgumentValue(
 						nameof(comparisonType), comparisonType);
 			}
+		}
+
+		public static Func<T, T, T> CreateNumOperFunc<T>(ExpressionType operatorType)
+		{
+			var arg1 = Expression.Parameter(typeof(T));
+			var arg2 = Expression.Parameter(typeof(T));
+			var expr = Expression.MakeBinary(operatorType, arg1, arg2);
+			return
+				Expression
+					.Lambda<Func<T, T, T>>(expr, "plus", new[] { arg1, arg2 })
+					.Compile();
 		}
 	}
 }

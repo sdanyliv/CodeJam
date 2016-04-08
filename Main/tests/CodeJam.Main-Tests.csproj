@@ -51,6 +51,11 @@
     <Compile Include="Algorithms\EqualRangeTest.cs" />
     <Compile Include="Algorithms\UpperBoundTest.cs" />
     <Compile Include="Arithmetic\OperatorsTest.cs" />
+    <Compile Include="Arithmetic\OperatorsTest.Numeric.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OperatorsTest.Numeric.tt</DependentUpon>
+    </Compile>
     <Compile Include="Assertions\CodeAssertionsTest.cs" />
     <Compile Include="Collections\AggregateFuncsTest.cs" />
     <Compile Include="Collections\ArrayExtensionsTest.cs" />
@@ -92,6 +97,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Arithmetic\OperatorsTest.Numeric.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OperatorsTest.Numeric.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Collections\AggregateFuncsTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AggregateFuncsTest.generated.cs</LastGenOutput>

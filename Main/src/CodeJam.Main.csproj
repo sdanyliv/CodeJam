@@ -58,6 +58,11 @@
     <Compile Include="Algorithms\Memoize.cs" />
     <Compile Include="Algorithms\Swap.cs" />
     <Compile Include="Algorithms\UpperBound.cs" />
+    <Compile Include="Arithmetic\Operators.Numeric.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Operators.Numeric.tt</DependentUpon>
+    </Compile>
     <Compile Include="Arithmetic\OperatorsFactory.cs" />
     <Compile Include="Arithmetic\Operators.cs" />
     <Compile Include="Assertions\Code.NonDebug.cs" />
@@ -161,6 +166,11 @@
     <Compile Include="Reflection\ReflectionExtension.CreateInstance.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Arithmetic\Operators.Numeric.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Operators.Numeric.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Arithmetic\Operators.ttinclude" />
     <Content Include="Assertions\DebugCode.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DebugCode.generated.cs</LastGenOutput>

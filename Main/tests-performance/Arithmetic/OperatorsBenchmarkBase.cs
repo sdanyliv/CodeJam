@@ -2,6 +2,8 @@
 
 using BenchmarkDotNet.Attributes;
 
+using JetBrains.Annotations;
+
 namespace CodeJam.Arithmetic
 {
 	/// <summary>
@@ -9,17 +11,22 @@ namespace CodeJam.Arithmetic
 	/// </summary>
 	public abstract class OperatorsBenchmarkBase<T, TStorage>
 	{
+		// ReSharper disable once MemberCanBePrivate.Global
+		// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 		protected int Count { get; set; } = 1000 * 1000;
 		protected int ValueBRepeats { get; set; } = 5;
+		// ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
 
 		protected T[] ValuesA;
 		protected T[] ValuesB;
+		// ReSharper disable once NotAccessedField.Global
 		protected TStorage Storage;
 
 		protected abstract T GetValueA(int i);
 		protected abstract T GetValueB(int i);
 
 		[Setup]
+		[UsedImplicitly]
 		public void Setup()
 		{
 			var count = Count;
