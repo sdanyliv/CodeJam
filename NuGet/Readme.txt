@@ -5,6 +5,8 @@ What's new in 1.0.0-beta7
 ------------------------
 * ServiceContainer disposes created by factory instances
 * Service provider chaining in ServiceContainer
+* ReflectionExtensions.IsNumeric and IsInteger methods
+* Generic operators for numeric types (+, -, *, /, %, ^, &, |, >>, <<)
 * Refactoring
 * Fixes, code cleanup and annotations
 
