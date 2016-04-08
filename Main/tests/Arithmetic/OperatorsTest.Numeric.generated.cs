@@ -17,6 +17,15 @@ namespace CodeJam.Arithmetic
 	partial class OperatorsTest
 	{
 		[Test]
+		public void IntUnaryMinus() => Assert.AreEqual(-42, IntOp.UnaryMinus(42));
+
+		[Test]
+		public void NullableDoubleUnaryMinus() => Assert.AreEqual(-42f, NullableDoubleOp.UnaryMinus(42f));
+
+		[Test]
+		public void IntOnesComplement() => Assert.AreEqual(~42, IntOp.OnesComplement(42));
+
+		[Test]
 		public void IntPlus() => Assert.AreEqual(1 + 2, IntOp.Plus(1, 2));
 
 		[Test]

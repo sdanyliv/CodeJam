@@ -113,7 +113,7 @@ namespace CodeJam.Arithmetic
 			}
 		}
 
-		public static Func<T, T, T> CreateNumOperFunc<T>(ExpressionType operatorType)
+		public static Func<T, T, T> CreateNumBinOperFunc<T>(ExpressionType operatorType)
 		{
 			var arg1 = Expression.Parameter(typeof(T));
 			var arg2 = Expression.Parameter(typeof(T));
@@ -121,6 +121,17 @@ namespace CodeJam.Arithmetic
 			return
 				Expression
 					.Lambda<Func<T, T, T>>(expr, "plus", new[] { arg1, arg2 })
+					.Compile();
+		}
+
+		public static Func<T, T> CreateNumUnOperFunc<T>(ExpressionType operatorType)
+		{
+			var arg = Expression.Parameter(typeof(T));
+			// ReSharper disable once AssignNullToNotNullAttribute
+			var expr = Expression.MakeUnary(operatorType, arg, null);
+			return
+				Expression
+					.Lambda<Func<T, T>>(expr, "plus", new[] { arg })
 					.Compile();
 		}
 	}

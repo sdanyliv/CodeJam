@@ -23,14 +23,26 @@ namespace CodeJam.Arithmetic
 {
 	partial class OperatorsTest
 	{
-<#foreach (var op in ops) {#>
+<#foreach (var op in ops) {
+	if (op.Unary) {#>
+		[Test]
+		public void Int<#=op.Name#>() => Assert.AreEqual(<#=op.Sign#>42, IntOp.<#=op.Name#>(42));
+
+<#		if (!op.IntOnly) {#>
+		[Test]
+		public void NullableDouble<#=op.Name#>() => Assert.AreEqual(<#=op.Sign#>42f, NullableDoubleOp.<#=op.Name#>(42f));
+
+<#		}#>
+<#	}#>
+<#	else {#>
 		[Test]
 		public void Int<#=op.Name#>() => Assert.AreEqual(1 <#=op.Sign#> 2, IntOp.<#=op.Name#>(1, 2));
 
-<#	if (!op.IntOnly) {#>
+<#		if (!op.IntOnly) {#>
 		[Test]
 		public void NullableDouble<#=op.Name#>() => Assert.AreEqual(1f <#=op.Sign#> 2f, NullableDoubleOp.<#=op.Name#>(1, 2));
 
+<#		}#>
 <#	}#>
 <#}#>
 	}

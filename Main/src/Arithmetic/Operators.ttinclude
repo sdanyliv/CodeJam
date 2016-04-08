@@ -8,31 +8,37 @@
 var ops =
 	new []
 	{
-		new OpInfo("Plus", "+", ExpressionType.Add, false),
-		new OpInfo("Minus", "-", ExpressionType.Subtract, false),
-		new OpInfo("Mul", "*", ExpressionType.Multiply, false),
-		new OpInfo("Div", "/", ExpressionType.Divide, false),
-		new OpInfo("Modulo", "%", ExpressionType.Modulo, true),
-		new OpInfo("Xor", "^", ExpressionType.ExclusiveOr, true),
-		new OpInfo("BitwiseAnd", "&", ExpressionType.And, true),
-		new OpInfo("BitwiseOr", "|", ExpressionType.Or, true),
-		new OpInfo("LeftShift", "<<", ExpressionType.LeftShift, true),
-		new OpInfo("RightShift", ">>", ExpressionType.RightShift, true),
+		new OpInfo(true, "UnaryMinus", "-", ExpressionType.Negate, false),
+		new OpInfo(true, "OnesComplement", "~", ExpressionType.OnesComplement, true),
+
+		new OpInfo(false, "Plus", "+", ExpressionType.Add, false),
+		new OpInfo(false, "Minus", "-", ExpressionType.Subtract, false),
+		new OpInfo(false, "Mul", "*", ExpressionType.Multiply, false),
+		new OpInfo(false, "Div", "/", ExpressionType.Divide, false),
+		new OpInfo(false, "Modulo", "%", ExpressionType.Modulo, true),
+		new OpInfo(false, "Xor", "^", ExpressionType.ExclusiveOr, true),
+		new OpInfo(false, "BitwiseAnd", "&", ExpressionType.And, true),
+		new OpInfo(false, "BitwiseOr", "|", ExpressionType.Or, true),
+		new OpInfo(false, "LeftShift", "<<", ExpressionType.LeftShift, true),
+		new OpInfo(false, "RightShift", ">>", ExpressionType.RightShift, true),
 	};
 #>
 <#+
 private class OpInfo
 {
+	public bool Unary { get; }
 	public string Name { get; }
 	public string Sign { get; }
 	public ExpressionType Type { get; }
 	public bool IntOnly { get; }
-	public OpInfo(string name, string sign, ExpressionType type, bool intOnly)
+	public OpInfo(bool unary, string name, string sign, ExpressionType type, bool intOnly)
 	{
+		Unary = unary;
 		Name = name;
 		Type = type;
 		Sign = sign;
 		IntOnly = intOnly;
 	}
+	public string LowerName => Name.Substring(0, 1).ToLower() + Name.Substring(1);
 }
 #>

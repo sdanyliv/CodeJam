@@ -27,16 +27,30 @@ namespace CodeJam.Arithmetic
 {
 	partial class Operators<T>
 	{
-<#foreach (var op in ops) {#>
-		private static readonly Lazy<Func<T, T, T>> _<#=op.Name.ToLower()#>
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.<#=op.Type#>), LazyThreadSafetyMode.PublicationOnly);
+<#foreach (var op in ops) {
+	if (op.Unary) {#>
+		private static readonly Lazy<Func<T, T>> _<#=op.LowerName#>
+			= new Lazy<Func<T, T>>(() => CreateNumUnOperFunc<T>(ExpressionType.<#=op.Type#>), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// <#=op.Name#> operator.
 		/// </summary>
 		[NotNull]
-		public static Func<T, T, T> <#=op.Name#> => _<#=op.Name.ToLower()#>.Value;
+		public static Func<T, T> <#=op.Name#> => _<#=op.LowerName#>.Value;
 
+
+<#	}#>
+<#	else {#>
+		private static readonly Lazy<Func<T, T, T>> _<#=op.LowerName#>
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.<#=op.Type#>), LazyThreadSafetyMode.PublicationOnly);
+
+		/// <summary>
+		/// <#=op.Name#> operator.
+		/// </summary>
+		[NotNull]
+		public static Func<T, T, T> <#=op.Name#> => _<#=op.LowerName#>.Value;
+
+<#	}#>
 <#}#>
 	}
 }

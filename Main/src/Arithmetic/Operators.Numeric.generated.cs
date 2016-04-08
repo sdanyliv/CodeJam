@@ -19,8 +19,28 @@ namespace CodeJam.Arithmetic
 {
 	partial class Operators<T>
 	{
+		private static readonly Lazy<Func<T, T>> _unaryMinus
+			= new Lazy<Func<T, T>>(() => CreateNumUnOperFunc<T>(ExpressionType.Negate), LazyThreadSafetyMode.PublicationOnly);
+
+		/// <summary>
+		/// UnaryMinus operator.
+		/// </summary>
+		[NotNull]
+		public static Func<T, T> UnaryMinus => _unaryMinus.Value;
+
+
+		private static readonly Lazy<Func<T, T>> _onesComplement
+			= new Lazy<Func<T, T>>(() => CreateNumUnOperFunc<T>(ExpressionType.OnesComplement), LazyThreadSafetyMode.PublicationOnly);
+
+		/// <summary>
+		/// OnesComplement operator.
+		/// </summary>
+		[NotNull]
+		public static Func<T, T> OnesComplement => _onesComplement.Value;
+
+
 		private static readonly Lazy<Func<T, T, T>> _plus
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.Add), LazyThreadSafetyMode.PublicationOnly);
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.Add), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// Plus operator.
@@ -29,7 +49,7 @@ namespace CodeJam.Arithmetic
 		public static Func<T, T, T> Plus => _plus.Value;
 
 		private static readonly Lazy<Func<T, T, T>> _minus
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.Subtract), LazyThreadSafetyMode.PublicationOnly);
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.Subtract), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// Minus operator.
@@ -38,7 +58,7 @@ namespace CodeJam.Arithmetic
 		public static Func<T, T, T> Minus => _minus.Value;
 
 		private static readonly Lazy<Func<T, T, T>> _mul
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.Multiply), LazyThreadSafetyMode.PublicationOnly);
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.Multiply), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// Mul operator.
@@ -47,7 +67,7 @@ namespace CodeJam.Arithmetic
 		public static Func<T, T, T> Mul => _mul.Value;
 
 		private static readonly Lazy<Func<T, T, T>> _div
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.Divide), LazyThreadSafetyMode.PublicationOnly);
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.Divide), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// Div operator.
@@ -56,7 +76,7 @@ namespace CodeJam.Arithmetic
 		public static Func<T, T, T> Div => _div.Value;
 
 		private static readonly Lazy<Func<T, T, T>> _modulo
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.Modulo), LazyThreadSafetyMode.PublicationOnly);
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.Modulo), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// Modulo operator.
@@ -65,7 +85,7 @@ namespace CodeJam.Arithmetic
 		public static Func<T, T, T> Modulo => _modulo.Value;
 
 		private static readonly Lazy<Func<T, T, T>> _xor
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.ExclusiveOr), LazyThreadSafetyMode.PublicationOnly);
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.ExclusiveOr), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// Xor operator.
@@ -73,41 +93,41 @@ namespace CodeJam.Arithmetic
 		[NotNull]
 		public static Func<T, T, T> Xor => _xor.Value;
 
-		private static readonly Lazy<Func<T, T, T>> _bitwiseand
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.And), LazyThreadSafetyMode.PublicationOnly);
+		private static readonly Lazy<Func<T, T, T>> _bitwiseAnd
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.And), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// BitwiseAnd operator.
 		/// </summary>
 		[NotNull]
-		public static Func<T, T, T> BitwiseAnd => _bitwiseand.Value;
+		public static Func<T, T, T> BitwiseAnd => _bitwiseAnd.Value;
 
-		private static readonly Lazy<Func<T, T, T>> _bitwiseor
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.Or), LazyThreadSafetyMode.PublicationOnly);
+		private static readonly Lazy<Func<T, T, T>> _bitwiseOr
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.Or), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// BitwiseOr operator.
 		/// </summary>
 		[NotNull]
-		public static Func<T, T, T> BitwiseOr => _bitwiseor.Value;
+		public static Func<T, T, T> BitwiseOr => _bitwiseOr.Value;
 
-		private static readonly Lazy<Func<T, T, T>> _leftshift
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.LeftShift), LazyThreadSafetyMode.PublicationOnly);
+		private static readonly Lazy<Func<T, T, T>> _leftShift
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.LeftShift), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// LeftShift operator.
 		/// </summary>
 		[NotNull]
-		public static Func<T, T, T> LeftShift => _leftshift.Value;
+		public static Func<T, T, T> LeftShift => _leftShift.Value;
 
-		private static readonly Lazy<Func<T, T, T>> _rightshift
-			= new Lazy<Func<T, T, T>>(() => CreateNumOperFunc<T>(ExpressionType.RightShift), LazyThreadSafetyMode.PublicationOnly);
+		private static readonly Lazy<Func<T, T, T>> _rightShift
+			= new Lazy<Func<T, T, T>>(() => CreateNumBinOperFunc<T>(ExpressionType.RightShift), LazyThreadSafetyMode.PublicationOnly);
 
 		/// <summary>
 		/// RightShift operator.
 		/// </summary>
 		[NotNull]
-		public static Func<T, T, T> RightShift => _rightshift.Value;
+		public static Func<T, T, T> RightShift => _rightShift.Value;
 
 	}
 }
