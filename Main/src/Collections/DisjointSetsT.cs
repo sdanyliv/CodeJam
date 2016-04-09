@@ -4,30 +4,29 @@ using System.Linq;
 namespace CodeJam.Collections
 {
 	/// <summary>
-	/// Реализация классической структуры Disjoint sets
-	/// Generic - версия, позволяющая хранить данные внутри
+	/// Generic implementation of the Disjoint sets
 	/// </summary>
 	///  <remarks>
-	/// http://en.wikipedia.org/wiki/Disjoint-set_data_structure
+	/// See http://en.wikipedia.org/wiki/Disjoint-set_data_structure
 	/// </remarks>
 	public sealed class DisjointSets<T> : DisjointSetsBase<DisjointSets<T>.Node>
 	{
-		/// <summary>Создает пустой DS</summary>
+		/// <summary>Creates an empty Disjoint sets</summary>
 		public DisjointSets() { }
 
-		/// <summary>Создает DS со значениями из перечисления</summary>
-		/// <param name="values">Перечисление значений для добавления</param>
+		/// <summary>Creates a Disjoint sets with the passed values</summary>
+		/// <param name="values">The values to store</param>
 		public DisjointSets(IEnumerable<T> values)
 		{
 			Add(values);
 		}
 
-		/// <summary>Получение значения элемента по индексу</summary>
-		/// <param name="index">Индекс элемента</param>
+		/// <summary>Gets an element by its index</summary>
+		/// <param name="index">Elmement's index</param>
 		public T this[int index] => Nodes_[index].Value;
 
-		/// <summary>Добавление перечисления элементов</summary>
-		/// <param name="values">Элементы</param>
+		/// <summary>Appends a list of values</summary>
+		/// <param name="values">The values to append</param>
 		public void Add(IEnumerable<T> values)
 		{
 			var initialNodesCount = Nodes_.Count;
@@ -35,18 +34,18 @@ namespace CodeJam.Collections
 			SetsCount += Nodes_.Count - initialNodesCount;
 		}
 
-		/// <summary>Добавление одного элемента</summary>
-		/// <param name="value">Элемент</param>
+		/// <summary>Appends a single element</summary>
+		/// <param name="value">The value to append</param>
 		public void Add(T value)
 		{
 			Nodes_.Add(new Node { Value = value, ParentIndex = -1, Rank = 0 });
 			++SetsCount;
 		}
 
-		/// <summary>Узел дерева</summary>
+		/// <summary>A sets node</summary>
 		public class Node : BasicNode
 		{
-			/// <summary>Собственно полезные данные</summary>
+			/// <summary>The node data</summary>
 			public T Value;
 		}
 	}

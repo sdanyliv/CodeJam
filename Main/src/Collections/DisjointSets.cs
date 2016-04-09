@@ -1,23 +1,23 @@
 ﻿namespace CodeJam.Collections
 {
-	/// <summary>Реализация классической структуры Disjoint sets</summary>
+	/// <summary>Disjoint sets without payload</summary>
 	///  <remarks>
-	/// http://en.wikipedia.org/wiki/Disjoint-set_data_structure
+	/// See http://en.wikipedia.org/wiki/Disjoint-set_data_structure
 	/// </remarks>
 	public sealed class DisjointSets : DisjointSetsBase<BasicNode>
 	{
-		/// <summary>Создает пустой DS</summary>
+		/// <summary>Creates an empty Disjoint sets</summary>
 		public DisjointSets() { }
 
-		/// <summary>Создает DS с заданным количеством элементов</summary>
-		/// <param name="count">Количество элементов</param>
+		/// <summary>Creates a Disjoint sets with the given number of elements</summary>
+		/// <param name="count">The initial number of elements</param>
 		public DisjointSets(int count)
 		{
 			Add(count);
 		}
 
-		/// <summary>Добавление заданного количества элементов</summary>
-		/// <param name="count">Количество элементов</param>
+		/// <summary>Appends the given number of new elements</summary>
+		/// <param name="count">The number of elements to add</param>
 		public void Add(int count)
 		{
 			for (var i = 0; i < count; ++i)
