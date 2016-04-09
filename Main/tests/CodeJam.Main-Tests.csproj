@@ -59,6 +59,7 @@
     <Compile Include="Assertions\CodeAssertionsTest.cs" />
     <Compile Include="Collections\AggregateFuncsTest.cs" />
     <Compile Include="Collections\ArrayExtensionsTest.cs" />
+    <Compile Include="Collections\DisjointSetsTest.cs" />
     <Compile Include="Collections\QueryableExtensionsTests.ApplyOrder.cs" />
     <Compile Include="Collections\DictionaryExtensionsTest.cs" />
     <Compile Include="Collections\AggregateFuncsTest.generated.cs">

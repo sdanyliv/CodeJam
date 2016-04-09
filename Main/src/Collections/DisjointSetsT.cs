@@ -1,0 +1,52 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace CodeJam.Collections
+{
+	/// <summary>
+	/// Generic implementation of the Disjoint sets
+	/// </summary>
+	///  <remarks>
+	/// See http://en.wikipedia.org/wiki/Disjoint-set_data_structure
+	/// </remarks>
+	public sealed class DisjointSets<T> : DisjointSetsBase<DisjointSets<T>.Node>
+	{
+		/// <summary>Creates an empty Disjoint sets</summary>
+		public DisjointSets() { }
+
+		/// <summary>Creates a Disjoint sets with the passed values</summary>
+		/// <param name="values">The values to store</param>
+		public DisjointSets(IEnumerable<T> values)
+		{
+			Add(values);
+		}
+
+		/// <summary>Gets an element by its index</summary>
+		/// <param name="index">Elmement's index</param>
+		public T this[int index] => Nodes_[index].Value;
+
+		/// <summary>Appends a list of values</summary>
+		/// <param name="values">The values to append</param>
+		public void Add(IEnumerable<T> values)
+		{
+			var initialNodesCount = Nodes_.Count;
+			Nodes_.AddRange(values.Select(_ => new Node { Value = _, ParentIndex = -1, Rank = 0 }));
+			SetsCount += Nodes_.Count - initialNodesCount;
+		}
+
+		/// <summary>Appends a single element</summary>
+		/// <param name="value">The value to append</param>
+		public void Add(T value)
+		{
+			Nodes_.Add(new Node { Value = value, ParentIndex = -1, Rank = 0 });
+			++SetsCount;
+		}
+
+		/// <summary>A sets node</summary>
+		public class Node : BasicNode
+		{
+			/// <summary>The node data</summary>
+			public T Value;
+		}
+	}
+}
