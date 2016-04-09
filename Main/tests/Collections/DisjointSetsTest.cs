@@ -6,7 +6,7 @@ using CodeJam.Collections;
 
 using NUnit.Framework;
 
-namespace Tests
+namespace CodeJam
 {
 	[TestFixture]
 	public class DisjointSetsTest
@@ -20,7 +20,7 @@ namespace Tests
 		{
 			for (var i = 1; i <= ElementsNumber; i += 1 + i / (10 + random_.Next(0, 10)))
 			{
-				Console.WriteLine("i = {0}", i);
+				Console.WriteLine($"i = {i}");
 				var djs = new DisjointSets(ElementsNumber);
 				foreach (var el in RandomShuffle(seq_))
 				{
@@ -35,7 +35,7 @@ namespace Tests
 		{
 			for (var i = 1; i <= ElementsNumber; i += 1 + i / (10 + random_.Next(0, 10)))
 			{
-				Console.WriteLine("i = {0}", i);
+				Console.WriteLine($"i = {i}");
 				var rs = RandomShuffle(seq_).ToList();
 				var djs = new DisjointSets<int>(rs);
 				foreach (var el in rs)
@@ -56,7 +56,7 @@ namespace Tests
 			Assert.That(djs.SetsCount, Is.EqualTo(mod));
 			for (var i = 0; i < ElementsNumber; ++i)
 			{
-				Assert.That(djs.IndexToSetId(i), Is.EqualTo(djs.IndexToSetId(i % mod)), "i = {0}, mod = {1}", i, mod);
+				Assert.That(djs.IndexToSetId(i), Is.EqualTo(djs.IndexToSetId(i % mod)), $"i = {i}, mod = {mod}");
 			}
 		}
 

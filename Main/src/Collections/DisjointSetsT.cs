@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 namespace CodeJam.Collections
 {
 	/// <summary>
@@ -9,6 +11,7 @@ namespace CodeJam.Collections
 	///  <remarks>
 	/// See http://en.wikipedia.org/wiki/Disjoint-set_data_structure
 	/// </remarks>
+	[PublicAPI]
 	public sealed class DisjointSets<T> : DisjointSetsBase<DisjointSets<T>.Node>
 	{
 		/// <summary>Creates an empty Disjoint sets</summary>

@@ -1,9 +1,12 @@
-﻿namespace CodeJam.Collections
+﻿using JetBrains.Annotations;
+
+namespace CodeJam.Collections
 {
 	/// <summary>Disjoint sets without payload</summary>
 	///  <remarks>
 	/// See http://en.wikipedia.org/wiki/Disjoint-set_data_structure
 	/// </remarks>
+	[PublicAPI]
 	public sealed class DisjointSets : DisjointSetsBase<BasicNode>
 	{
 		/// <summary>Creates an empty Disjoint sets</summary>
