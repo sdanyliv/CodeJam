@@ -12,7 +12,7 @@ namespace CodeJam
 	/// </summary>
 	[PublicAPI]
 	public class NaturalOrderStringComparer : IComparer<string>
-    {
+	{
 		/// <summary>
 		/// Gets a <see cref="NaturalOrderStringComparer"/> object
 		/// that performs a string comparison using a "natural order" algorithm.
@@ -22,7 +22,7 @@ namespace CodeJam
 		/// that performs a string comparison using a "natural order" algorithm.
 		/// </returns>
 		[NotNull]
-		public static NaturalOrderStringComparer Comparer => new NaturalOrderStringComparer(false);
+		public static readonly NaturalOrderStringComparer Comparer = new NaturalOrderStringComparer(false);
 
 		/// <summary>
 		/// Gets a <see cref="NaturalOrderStringComparer"/> object
@@ -33,7 +33,7 @@ namespace CodeJam
 		/// that performs a case-insensitive string comparison using a "natural order" algorithm.
 		/// </returns>
 		[NotNull]
-		public static NaturalOrderStringComparer IgnoreCaseComparer => new NaturalOrderStringComparer(true);
+		public static readonly NaturalOrderStringComparer IgnoreCaseComparer = new NaturalOrderStringComparer(true);
 
 		/// <summary>
 		/// Gets a <see cref="Comparison{T}"/> delegate that performs a string comparison using a "natural order" algorithm.
@@ -42,7 +42,7 @@ namespace CodeJam
 		/// A <see cref="Comparison{T}"/> delegate that performs a string comparison using a "natural order" algorithm.
 		/// </returns>
 		[NotNull]
-		public static Comparison<string> Comparision => (a, b) => Compare(a, b, false);
+		public static readonly Comparison<string> Comparision = (a, b) => Compare(a, b, false);
 
 		/// <summary>
 		/// Gets a <see cref="Comparison{T}"/> delegate that performs a case-insensitive
@@ -53,7 +53,7 @@ namespace CodeJam
 		/// string comparison using a "natural order" algorithm.
 		/// </returns>
 		[NotNull]
-		public static Comparison<string> IgnoreCaseComparision => (a, b) => Compare(a, b, true);
+		public static readonly Comparison<string> IgnoreCaseComparision = (a, b) => Compare(a, b, true);
 
 		/// <summary>
 		/// true to ignore case during the comparison; otherwise, false.
