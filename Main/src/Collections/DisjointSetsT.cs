@@ -26,22 +26,22 @@ namespace CodeJam.Collections
 
 		/// <summary>Gets an element by its index</summary>
 		/// <param name="index">Elmement's index</param>
-		public T this[int index] => Nodes_[index].Value;
+		public T this[int index] => Nodes[index].Value;
 
 		/// <summary>Appends a list of values</summary>
 		/// <param name="values">The values to append</param>
 		public void Add(IEnumerable<T> values)
 		{
-			var initialNodesCount = Nodes_.Count;
-			Nodes_.AddRange(values.Select(_ => new Node { Value = _, ParentIndex = -1, Rank = 0 }));
-			SetsCount += Nodes_.Count - initialNodesCount;
+			var initialNodesCount = Nodes.Count;
+			Nodes.AddRange(values.Select(_ => new Node { Value = _, ParentIndex = -1, Rank = 0 }));
+			SetsCount += Nodes.Count - initialNodesCount;
 		}
 
 		/// <summary>Appends a single element</summary>
 		/// <param name="value">The value to append</param>
 		public void Add(T value)
 		{
-			Nodes_.Add(new Node { Value = value, ParentIndex = -1, Rank = 0 });
+			Nodes.Add(new Node { Value = value, ParentIndex = -1, Rank = 0 });
 			++SetsCount;
 		}
 

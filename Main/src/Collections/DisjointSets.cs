@@ -3,7 +3,7 @@
 namespace CodeJam.Collections
 {
 	/// <summary>Disjoint sets without payload</summary>
-	///  <remarks>
+	/// <remarks>
 	/// See http://en.wikipedia.org/wiki/Disjoint-set_data_structure
 	/// </remarks>
 	[PublicAPI]
@@ -25,7 +25,7 @@ namespace CodeJam.Collections
 		{
 			for (var i = 0; i < count; ++i)
 			{
-				Nodes_.Add(new BasicNode { ParentIndex = -1, Rank = 0 });
+				Nodes.Add(new BasicNode { ParentIndex = -1, Rank = 0 });
 			}
 			SetsCount += count;
 		}

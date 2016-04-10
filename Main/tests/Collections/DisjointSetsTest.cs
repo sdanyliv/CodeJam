@@ -11,18 +11,18 @@ namespace CodeJam
 	[TestFixture]
 	public class DisjointSetsTest
 	{
-		private readonly Random random_ = new Random();
+		private readonly Random _random = new Random();
 		private const int ElementsNumber = 10000;
-		private readonly List<int> seq_ = Enumerable.Range(0, ElementsNumber).ToList();
+		private readonly List<int> _seq = Enumerable.Range(0, ElementsNumber).ToList();
 
 		[Test]
 		public void Test01NonGeneric()
 		{
-			for (var i = 1; i <= ElementsNumber; i += 1 + i / (10 + random_.Next(0, 10)))
+			for (var i = 1; i <= ElementsNumber; i += 1 + i / (10 + _random.Next(0, 10)))
 			{
 				Console.WriteLine($"i = {i}");
 				var djs = new DisjointSets(ElementsNumber);
-				foreach (var el in RandomShuffle(seq_))
+				foreach (var el in RandomShuffle(_seq))
 				{
 					djs.Union(el, el % i);
 				}
@@ -33,10 +33,10 @@ namespace CodeJam
 		[Test]
 		public void Test02Generic()
 		{
-			for (var i = 1; i <= ElementsNumber; i += 1 + i / (10 + random_.Next(0, 10)))
+			for (var i = 1; i <= ElementsNumber; i += 1 + i / (10 + _random.Next(0, 10)))
 			{
 				Console.WriteLine($"i = {i}");
-				var rs = RandomShuffle(seq_).ToList();
+				var rs = RandomShuffle(_seq).ToList();
 				var djs = new DisjointSets<int>(rs);
 				foreach (var el in rs)
 				{
@@ -60,6 +60,6 @@ namespace CodeJam
 			}
 		}
 
-		private IEnumerable<T> RandomShuffle<T>(IEnumerable<T> en) => en.OrderBy(x => random_.Next());
+		private IEnumerable<T> RandomShuffle<T>(IEnumerable<T> en) => en.OrderBy(x => _random.Next());
 	}
 }

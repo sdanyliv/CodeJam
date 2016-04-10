@@ -9,13 +9,13 @@ namespace CodeJam.Collections
 	public class DisjointSetsBase<T> where T : BasicNode
 	{
 		/// <summary>All nodes</summary>
-		protected readonly List<T> Nodes_ = new List<T>();
+		protected readonly List<T> Nodes = new List<T>();
 
 		/// <summary>Creates an empty base</summary>
 		protected DisjointSetsBase() { }
 
 		/// <summary>The number of nodes</summary>
-		public int Count => Nodes_.Count;
+		public int Count => Nodes.Count;
 
 		/// <summary>The number of disjoint sets</summary>
 		public int SetsCount { get; protected set; }
@@ -34,7 +34,7 @@ namespace CodeJam.Collections
 			var rootIndex = index;
 			for (;;)
 			{
-				var parentIndex = Nodes_[rootIndex].ParentIndex;
+				var parentIndex = Nodes[rootIndex].ParentIndex;
 				if (parentIndex == -1)
 				{
 					break;
@@ -46,7 +46,7 @@ namespace CodeJam.Collections
 			// walk from the passed element upto the root replacing the the ParentIndex with the root index
 			while (index != rootIndex)
 			{
-				var node = Nodes_[index];
+				var node = Nodes[index];
 				index = node.ParentIndex;
 				node.ParentIndex = rootIndex;
 			}
@@ -60,14 +60,16 @@ namespace CodeJam.Collections
 		{
 			elementOfSet1Index = IndexToSetId(elementOfSet1Index);
 			elementOfSet2Index = IndexToSetId(elementOfSet2Index);
+
 			if (elementOfSet1Index == elementOfSet2Index)
 			{
 				return; // Already the single set
 			}
 
-			var set1Root = Nodes_[elementOfSet1Index];
-			var set2Root = Nodes_[elementOfSet2Index];
+			var set1Root = Nodes[elementOfSet1Index];
+			var set2Root = Nodes[elementOfSet2Index];
 			var rankDifference = set1Root.Rank - set2Root.Rank;
+
 			// Attach the tree with a smaller rank to the tree with a higher rank.
 			// The resulting tree rank is equal to the higher rank
 			// except the case when initial ranks are equal.
