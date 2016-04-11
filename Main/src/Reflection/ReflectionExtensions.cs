@@ -19,8 +19,11 @@ namespace CodeJam.Reflection
 		/// A value indicating whether the <paramref name="type"/> can be instantiated.
 		/// </returns>
 		[Pure]
-		public static bool IsInstantiable([NotNull] this Type type) =>
-			!(type.IsAbstract || type.IsInterface || type.IsArray || type.ContainsGenericParameters);
+		public static bool IsInstantiable([NotNull] this Type type)
+		{
+			Code.NotNull(type, nameof(type));
+			return !(type.IsAbstract || type.IsInterface || type.IsArray || type.ContainsGenericParameters);
+		}
 
 		/// <summary>
 		/// Gets a value indicating whether the <paramref name="type"/> is declared static.
@@ -30,8 +33,11 @@ namespace CodeJam.Reflection
 		/// A value indicating whether the <paramref name="type"/> is declared static.
 		/// </returns>
 		[Pure]
-		public static bool IsStatic([NotNull] this Type type) =>
-			type.IsClass && type.IsAbstract && type.IsSealed;
+		public static bool IsStatic([NotNull] this Type type)
+		{
+			Code.NotNull(type, nameof(type));
+			return type.IsClass && type.IsAbstract && type.IsSealed;
+		}
 
 		/// <summary>
 		/// Gets a value indicating whether the <paramref name="type"/> is Nullable&#60;&#62; type.
@@ -41,18 +47,21 @@ namespace CodeJam.Reflection
 		/// A value indicating whether the <paramref name="type"/> is Nullable&#60;&#62;.
 		/// </returns>
 		[Pure]
-		public static bool IsNullable([CanBeNull] this Type type) =>
-			type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+		public static bool IsNullable([NotNull] this Type type)
+		{
+			Code.NotNull(type, nameof(type));
+			return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+		}
 
 		/// <summary>
 		/// Checks if <paramref name="type"/> is numeric type.
 		/// </summary>
 		/// <param name="type">Type to check.</param>
 		/// <returns>True, if <paramref name="type"/> is numeric.</returns>
-		public static bool IsNumeric(this Type type)
+		[Pure]
+		public static bool IsNumeric([NotNull] this Type type)
 		{
-			if (type == null)
-				throw new ArgumentNullException(nameof(type));
+			Code.NotNull(type, nameof(type));
 			while (true) // tail recursion expanded
 				switch (Type.GetTypeCode(type))
 				{
@@ -83,10 +92,10 @@ namespace CodeJam.Reflection
 		/// </summary>
 		/// <param name="type">Type to check.</param>
 		/// <returns>True, if <paramref name="type"/> is integer type.</returns>
-		public static bool IsInteger(this Type type)
+		[Pure]
+		public static bool IsInteger([NotNull] this Type type)
 		{
-			if (type == null)
-				throw new ArgumentNullException(nameof(type));
+			Code.NotNull(type, nameof(type));
 			while (true) // tail recursion expanded
 				switch (Type.GetTypeCode(type))
 				{
@@ -123,6 +132,9 @@ namespace CodeJam.Reflection
 		[Pure]
 		public static bool IsSubClass([NotNull] this Type type, [NotNull] Type check)
 		{
+			Code.NotNull(type, nameof(type));
+			Code.NotNull(check, nameof(check));
+
 			if (type == check)
 				return false;
 
@@ -157,10 +169,10 @@ namespace CodeJam.Reflection
 		/// <param name="delegateType">Type of delegate</param>
 		/// <returns>Array of <see cref="ParameterInfo"/>.</returns>
 		[NotNull]
+		[Pure]
 		public static ParameterInfo[] GetDelegateParams([NotNull] Type delegateType)
 		{
-			if (delegateType == null)
-				throw new ArgumentNullException(nameof(delegateType));
+			Code.NotNull(delegateType, nameof(delegateType));
 			return delegateType.GetMethod("Invoke").GetParameters();
 		}
 
@@ -175,10 +187,11 @@ namespace CodeJam.Reflection
 		/// <item>Otherwise, the type itself.</item>
 		/// </list>
 		/// </returns>
+		[NotNull]
 		[Pure]
 		public static Type ToUnderlying([NotNull] this Type type)
 		{
-			if (type == null) throw new ArgumentNullException(nameof(type));
+			Code.NotNull(type, nameof(type));
 
 			if (type.IsNullable()) type = type.GetGenericArguments()[0];
 			if (type.IsEnum)       type = Enum.GetUnderlyingType(type);
@@ -199,9 +212,10 @@ namespace CodeJam.Reflection
 		/// <item>If the member is an event, returns <see cref="EventInfo.EventHandlerType"/>.</item>
 		/// </list>
 		/// </returns>
+		[Pure]
 		public static Type GetMemberType([NotNull] this MemberInfo memberInfo)
 		{
-			if (memberInfo == null) throw new ArgumentNullException(nameof(memberInfo));
+			Code.NotNull(memberInfo, nameof(memberInfo));
 
 			switch (memberInfo.MemberType)
 			{
