@@ -1,6 +1,12 @@
 CodeJam 1.0.0-beta7 Release Notes
 ---------------------------------
 
+What's new in 1.0.0-beta8
+------------------------
+* Unary generic operators for numeric types (-, ~)
+* DisjointSets and DisjointSets<T> collections
+* Fixes and code cleanup
+
 What's new in 1.0.0-beta7
 ------------------------
 * ServiceContainer disposes created by factory instances
