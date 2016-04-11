@@ -50,7 +50,7 @@ namespace CodeJam.Arithmetic
 				return res;
 			}
 
-			[CompetitionBenchmark(5, 15)]
+			[CompetitionBenchmark(5, 20)]
 			public int <#=op.Name#>Operator()
 			{
 				var res = 0;
@@ -107,7 +107,7 @@ namespace CodeJam.Arithmetic
 				return res;
 			}
 
-			[CompetitionBenchmark(5, 15)]
+			[CompetitionBenchmark(5, 20)]
 			public double? <#=op.Name#>Operator()
 			{
 				double? res = 0;

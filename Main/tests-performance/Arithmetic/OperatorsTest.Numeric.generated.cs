@@ -41,7 +41,7 @@ namespace CodeJam.Arithmetic
 				return res;
 			}
 
-			[CompetitionBenchmark(5, 15)]
+			[CompetitionBenchmark(5, 20)]
 			public int UnaryMinusOperator()
 			{
 				var res = 0;
@@ -68,7 +68,7 @@ namespace CodeJam.Arithmetic
 				return res;
 			}
 
-			[CompetitionBenchmark(5, 15)]
+			[CompetitionBenchmark(5, 20)]
 			public int OnesComplementOperator()
 			{
 				var res = 0;
@@ -122,7 +122,7 @@ namespace CodeJam.Arithmetic
 				return res;
 			}
 
-			[CompetitionBenchmark(5, 15)]
+			[CompetitionBenchmark(5, 20)]
 			public double? PlusOperator()
 			{
 				double? res = 0;
@@ -176,7 +176,7 @@ namespace CodeJam.Arithmetic
 				return res;
 			}
 
-			[CompetitionBenchmark(5, 15)]
+			[CompetitionBenchmark(5, 20)]
 			public double? MinusOperator()
 			{
 				double? res = 0;
@@ -230,7 +230,7 @@ namespace CodeJam.Arithmetic
 				return res;
 			}
 
-			[CompetitionBenchmark(5, 15)]
+			[CompetitionBenchmark(5, 20)]
 			public double? MulOperator()
 			{
 				double? res = 0;
@@ -284,7 +284,7 @@ namespace CodeJam.Arithmetic
 				return res;
 			}
 
-			[CompetitionBenchmark(5, 15)]
+			[CompetitionBenchmark(5, 20)]
 			public double? DivOperator()
 			{
 				double? res = 0;
