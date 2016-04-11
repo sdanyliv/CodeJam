@@ -11,6 +11,7 @@ namespace BenchmarkDotNet.NUnit
 {
 	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
 	[PublicAPI]
+	[MeansImplicitUse]
 	public class CompetitionBenchmarkAttribute : BenchmarkAttribute
 	{
 		public CompetitionBenchmarkAttribute() { }

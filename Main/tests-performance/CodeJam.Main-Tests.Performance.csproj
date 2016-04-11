@@ -57,6 +57,11 @@
     <Compile Include="Arithmetic\OperatorsBenchmarkBase.cs" />
     <Compile Include="Arithmetic\OperatorsLessThanPerformanceTest.cs" />
     <Compile Include="Arithmetic\OperatorsGreaterThanOrEqualPerformanceTest.cs" />
+    <Compile Include="Arithmetic\OperatorsTest.Numeric.generated.cs">
+      <DependentUpon>OperatorsTest.Numeric.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Assertions\DebugCodeAssertionsPerformanceTest.cs" />
     <Compile Include="Assertions\CodeAssertionsPerformanceTest.cs" />
     <Compile Include="BenchmarkDotNet.NUnit.Tests\BenchmarkHelpersTests.cs" />
@@ -86,7 +91,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Arithmetic\OperatorsTest.Numeric.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OperatorsTest.Numeric.generated.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
