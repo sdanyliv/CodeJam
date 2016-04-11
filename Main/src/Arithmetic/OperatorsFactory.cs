@@ -120,7 +120,7 @@ namespace CodeJam.Arithmetic
 			var expr = Expression.MakeBinary(operatorType, arg1, arg2);
 			return
 				Expression
-					.Lambda<Func<T, T, T>>(expr, "plus", new[] { arg1, arg2 })
+					.Lambda<Func<T, T, T>>(expr, operatorType.ToString(), new[] { arg1, arg2 })
 					.Compile();
 		}
 
@@ -131,7 +131,7 @@ namespace CodeJam.Arithmetic
 			var expr = Expression.MakeUnary(operatorType, arg, null);
 			return
 				Expression
-					.Lambda<Func<T, T>>(expr, "plus", new[] { arg })
+					.Lambda<Func<T, T>>(expr, operatorType.ToString(), new[] { arg })
 					.Compile();
 		}
 	}

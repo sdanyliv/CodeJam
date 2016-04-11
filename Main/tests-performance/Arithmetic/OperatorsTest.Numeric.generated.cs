@@ -26,6 +26,7 @@ namespace CodeJam.Arithmetic
 	public class NumOperatorsPerfTest
 	{
 		private const int _count = 100 * 1000;
+
 		public class IntUnaryMinusCase
 		{
 			private readonly Func<int, int> _intUnaryMinus = IntOp.UnaryMinus;
@@ -53,7 +54,6 @@ namespace CodeJam.Arithmetic
 		[Test]
 		public void IntUnaryMinus() => CompetitionBenchmarkRunner.Run<IntUnaryMinusCase>(RunConfig);
 
-
 		public class IntOnesComplementCase
 		{
 			private readonly Func<int, int> _intOnesComplement = IntOp.OnesComplement;
@@ -80,7 +80,6 @@ namespace CodeJam.Arithmetic
 
 		[Test]
 		public void IntOnesComplement() => CompetitionBenchmarkRunner.Run<IntOnesComplementCase>(RunConfig);
-
 
 		public class IntPlusCase
 		{

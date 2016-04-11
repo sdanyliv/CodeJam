@@ -33,6 +33,7 @@ namespace CodeJam.Arithmetic
 	public class NumOperatorsPerfTest
 	{
 		private const int _count = 100 * 1000;
+
 <#foreach (var op in ops) {
 	if (op.Unary) {#>
 		public class Int<#=op.Name#>Case
@@ -61,7 +62,6 @@ namespace CodeJam.Arithmetic
 
 		[Test]
 		public void Int<#=op.Name#>() => CompetitionBenchmarkRunner.Run<Int<#=op.Name#>Case>(RunConfig);
-
 
 <#	}#>
 <#	else {#>
