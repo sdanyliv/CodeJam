@@ -9,6 +9,8 @@ using JetBrains.Annotations;
 
 using NUnit.Framework;
 
+using static CodeJam.AssemblyWideConfig;
+
 namespace CodeJam.Arithmetic
 {
 	/// <summary>
@@ -16,29 +18,28 @@ namespace CodeJam.Arithmetic
 	/// 1. Proofs that there's no way to make Operators (of T).GreaterThanOrEqual faster. (Fails for now)
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Operators")]
-	[Config(typeof(FastRunConfig))]
 	[PublicAPI]
 	public class OperatorsGreaterThanOrEqualPerformanceTest
 	{
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
 		public void BenchmarkGreaterThanOrEqualInt() =>
-			CompetitionBenchmarkRunner.Run<IntCase>();
+			CompetitionBenchmarkRunner.Run<IntCase>(RunConfig);
 
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkGreaterThanOrEquaNullableIntl() =>
-			CompetitionBenchmarkRunner.Run<NullableIntCase>();
+		public void BenchmarkGreaterThanOrEquaNullableInt() =>
+			CompetitionBenchmarkRunner.Run<NullableIntCase>(RunConfig);
 
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
 		public void BenchmarkGreaterThanOrEqualNullableDateTime() =>
-			CompetitionBenchmarkRunner.Run<NullableDateTimeCase>();
+			CompetitionBenchmarkRunner.Run<NullableDateTimeCase>(RunConfig);
 
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
 		public void BenchmarkGreaterThanOrEqualString()
-			=> CompetitionBenchmarkRunner.Run<StringCase>();
+			=> CompetitionBenchmarkRunner.Run<StringCase>(RunConfig);
 
 		[PublicAPI]
 		public class IntCase : IntOperatorsBenchmark<bool>
@@ -61,7 +62,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(0.9, 1.2)]
+			[CompetitionBenchmark(1.63, 2.97)]
 			public void Test01Operators()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -70,7 +71,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1.2, 1.8)]
+			[CompetitionBenchmark(2.6, 4.17)]
 			public void Test02Comparer()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -79,7 +80,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(0.9, 1.2)]
+			[CompetitionBenchmark(1.82, 3.22)]
 			public void Test03ExpressionFunc()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -110,7 +111,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1, 1.8)]
+			[CompetitionBenchmark(1.44, 2.31)]
 			public void Test01Operators()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -119,7 +120,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1, 1.8)]
+			[CompetitionBenchmark(1.62, 3.26)]
 			public void Test02Comparer()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -128,7 +129,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1, 1.8)]
+			[CompetitionBenchmark(1.49, 2.07)]
 			public void Test03ExpressionFunc()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -159,7 +160,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(0.9, 1.25)]
+			[CompetitionBenchmark(1.01, 1.29)]
 			public void Test01Operators()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -168,7 +169,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(0.9, 1.4)]
+			[CompetitionBenchmark(0.79, 1.13)]
 			public void Test02Comparer()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -177,7 +178,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(0.9, 1.25)]
+			[CompetitionBenchmark(1.05, 1.38)]
 			public void Test03ExpressionFunc()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -202,7 +203,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(0.9, 1.3)]
+			[CompetitionBenchmark(1.14, 2.07)]
 			public void Test01Operators()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -211,7 +212,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1.4, 1.7)]
+			[CompetitionBenchmark(15.4, 27.54)]
 			public void Test02Comparer()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -220,7 +221,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1, 1.8)]
+			[CompetitionBenchmark(0.94, 1.73)]
 			public void Test03ExpressionFunc()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)

@@ -8,6 +8,8 @@ using JetBrains.Annotations;
 
 using NUnit.Framework;
 
+using static CodeJam.AssemblyWideConfig;
+
 namespace CodeJam.Assertions
 {
 	/// <summary>
@@ -16,14 +18,14 @@ namespace CodeJam.Assertions
 	/// 2. Assertion should add no more than 20% penalty on tight loop use-case.
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
-	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "PassStringInterpolation")]
 	[PublicAPI]
 	public class CodeAssertionsPerformanceTest
 	{
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkCodeAssertions() => CompetitionBenchmarkRunner.Run(this, 0.75, 1.1);
+		public void BenchmarkCodeAssertions() => 
+			CompetitionBenchmarkRunner.Run(this, RunConfig);
 
 		//[Params(10 * 1000, 100 * 1000, 1000 * 1000)]
 		public int Count { get; set; } = 100 * 1000;
@@ -44,7 +46,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(0.85, 1.22)]
+		[CompetitionBenchmark(1.00, 1.23)]
 		public string Test01RunDefaultAssertion()
 		{
 			var result = "";
@@ -61,7 +63,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(0.85, 1.22)]
+		[CompetitionBenchmark(1.04, 1.22)]
 		public string Test02CodeNotNull()
 		{
 			var result = "";
@@ -77,7 +79,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(0.85, 1.22)]
+		[CompetitionBenchmark(1.02, 1.34)]
 		public string Test03CodeAssertArgument()
 		{
 			var result = "";
@@ -94,7 +96,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(3.9, 10.9)]
+		[CompetitionBenchmark(7.64, 10.86)]
 		public string Test04CodeAssertArgumentFormat()
 		{
 			var result = "";
@@ -111,7 +113,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(80, 250)]
+		[CompetitionBenchmark(155.19, 232.16)]
 		public string Test05CodeAssertArgumentInterpolateArgs()
 		{
 			var result = "";
