@@ -2,6 +2,8 @@
 
 using BenchmarkDotNet.Attributes;
 
+using JetBrains.Annotations;
+
 namespace CodeJam.Arithmetic
 {
 	/// <summary>
@@ -20,6 +22,7 @@ namespace CodeJam.Arithmetic
 		protected abstract T GetValueB(int i);
 
 		[Setup]
+		[UsedImplicitly]
 		public void Setup()
 		{
 			var count = Count;
