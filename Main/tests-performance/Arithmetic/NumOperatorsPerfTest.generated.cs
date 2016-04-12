@@ -113,7 +113,7 @@ namespace CodeJam.Arithmetic
 			public void PlusOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
-					Storage =  _doublePlus(ValuesA[i], ValuesB[i]);
+					Storage = _doublePlus(ValuesA[i], ValuesB[i]);
 			}
 		}
 
@@ -159,7 +159,7 @@ namespace CodeJam.Arithmetic
 			public void MinusOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
-					Storage =  _doubleMinus(ValuesA[i], ValuesB[i]);
+					Storage = _doubleMinus(ValuesA[i], ValuesB[i]);
 			}
 		}
 
@@ -205,7 +205,7 @@ namespace CodeJam.Arithmetic
 			public void MulOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
-					Storage =  _doubleMul(ValuesA[i], ValuesB[i]);
+					Storage = _doubleMul(ValuesA[i], ValuesB[i]);
 			}
 		}
 
@@ -251,7 +251,7 @@ namespace CodeJam.Arithmetic
 			public void DivOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
-					Storage =  _doubleDiv(ValuesA[i], ValuesB[i]);
+					Storage = _doubleDiv(ValuesA[i], ValuesB[i]);
 			}
 		}
 

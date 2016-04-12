@@ -1,51 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CompetitionBenchmarks>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntBitwiseAndCase">
-		<Candidate Target="BitwiseAndOperator" MinRatio="2.23" MaxRatio="3.06" />
+		<Candidate Target="BitwiseAndOperator" MinRatio="1.56" MaxRatio="3.06" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntBitwiseOrCase">
-		<Candidate Target="BitwiseOrOperator" MinRatio="1.77" MaxRatio="3.65" />
+		<Candidate Target="BitwiseOrOperator" MinRatio="1.69" MaxRatio="3.65" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntDivCase">
 		<Candidate Target="DivOperator" MinRatio="1.03" MaxRatio="1.53" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntLeftShiftCase">
-		<Candidate Target="LeftShiftOperator" MinRatio="1.69" MaxRatio="2.66" />
+		<Candidate Target="LeftShiftOperator" MinRatio="1.15" MaxRatio="2.66" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntMinusCase">
-		<Candidate Target="MinusOperator" MinRatio="2.82" MaxRatio="3.98" />
+		<Candidate Target="MinusOperator" MinRatio="1.55" MaxRatio="3.98" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntModuloCase">
-		<Candidate Target="ModuloOperator" MinRatio="1.23" MaxRatio="1.45" />
+		<Candidate Target="ModuloOperator" MinRatio="1.17" MaxRatio="1.45" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntMulCase">
-		<Candidate Target="MulOperator" MinRatio="1.86" MaxRatio="3.10" />
+		<Candidate Target="MulOperator" MinRatio="1.76" MaxRatio="3.10" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntOnesComplementCase">
-		<Candidate Target="OnesComplementOperator" MinRatio="2.67" MaxRatio="3.64" />
+		<Candidate Target="OnesComplementOperator" MinRatio="1.75" MaxRatio="3.64" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntPlusCase">
-		<Candidate Target="PlusOperator" MinRatio="2.34" MaxRatio="3.12" />
+		<Candidate Target="PlusOperator" MinRatio="1.48" MaxRatio="3.12" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntRightShiftCase">
-		<Candidate Target="RightShiftOperator" MinRatio="2.05" MaxRatio="2.80" />
+		<Candidate Target="RightShiftOperator" MinRatio="1.30" MaxRatio="2.80" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntUnaryMinusCase">
-		<Candidate Target="UnaryMinusOperator" MinRatio="2.74" MaxRatio="3.54" />
+		<Candidate Target="UnaryMinusOperator" MinRatio="1.94" MaxRatio="3.54" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+IntXorCase">
-		<Candidate Target="XorOperator" MinRatio="2.09" MaxRatio="3.11" />
+		<Candidate Target="XorOperator" MinRatio="1.95" MaxRatio="3.11" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+NullableDoubleDivCase">
-		<Candidate Target="DivOperator" MinRatio="1.58" MaxRatio="2.21" />
+		<Candidate Target="DivOperator" MinRatio="1.03" MaxRatio="2.21" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+NullableDoubleMinusCase">
-		<Candidate Target="MinusOperator" MinRatio="2.21" MaxRatio="2.49" />
+		<Candidate Target="MinusOperator" MinRatio="1.38" MaxRatio="2.49" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+NullableDoubleMulCase">
-		<Candidate Target="MulOperator" MinRatio="1.97" MaxRatio="3.29" />
+		<Candidate Target="MulOperator" MinRatio="1.45" MaxRatio="3.29" />
 	</Competition>
 	<Competition Target="CodeJam.Arithmetic.NumOperatorsPerfTest+NullableDoublePlusCase">
-		<Candidate Target="PlusOperator" MinRatio="1.79" MaxRatio="3.02" />
+		<Candidate Target="PlusOperator" MinRatio="1.61" MaxRatio="3.02" />
 	</Competition>
 </CompetitionBenchmarks>

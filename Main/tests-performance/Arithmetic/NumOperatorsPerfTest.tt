@@ -101,7 +101,7 @@ namespace CodeJam.Arithmetic
 			public void <#=op.Name#>Operator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
-					Storage =  _double<#=op.Name#>(ValuesA[i], ValuesB[i]);
+					Storage = _double<#=op.Name#>(ValuesA[i], ValuesB[i]);
 			}
 		}
 
