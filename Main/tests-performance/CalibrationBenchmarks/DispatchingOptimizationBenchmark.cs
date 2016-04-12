@@ -141,7 +141,7 @@ namespace CodeJam
 			return sum;
 		}
 
-		[CompetitionBenchmark(0.96, 1.11)]
+		[CompetitionBenchmark(0.89, 1.09)]
 		public int Test01SwitchOverRoField()
 		{
 			var sum = 0;
@@ -154,7 +154,7 @@ namespace CodeJam
 			return sum;
 		}
 
-		[CompetitionBenchmark(1.3, 1.68)]
+		[CompetitionBenchmark(1.18, 1.64)]
 		public int Test02SwitchOverStaticField()
 		{
 			var sum = 0;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 using BenchmarkDotNet.NUnit;
@@ -45,7 +45,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(1.00, 1.23)]
+		[CompetitionBenchmark(1.06, 1.14)]
 		public string Test01RunDefaultAssertion()
 		{
 			var result = "";
@@ -62,7 +62,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(1.04, 1.22)]
+		[CompetitionBenchmark(1.06, 1.14)]
 		public string Test02CodeNotNull()
 		{
 			var result = "";
@@ -78,7 +78,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(1.02, 1.34)]
+		[CompetitionBenchmark(1.05, 1.13)]
 		public string Test03CodeAssertArgument()
 		{
 			var result = "";
@@ -95,7 +95,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(7.64, 10.86)]
+		[CompetitionBenchmark(7.92, 8.48)]
 		public string Test04CodeAssertArgumentFormat()
 		{
 			var result = "";
@@ -112,7 +112,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(155.19, 232.16)]
+		[CompetitionBenchmark(148.94, 164.50)]
 		public string Test05CodeAssertArgumentInterpolateArgs()
 		{
 			var result = "";

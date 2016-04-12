@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Configuration;
+using System.Diagnostics;
+using System.Reflection;
 
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.NUnit;
@@ -14,9 +17,24 @@ namespace CodeJam
 	internal class AssemblyWideConfig : ManualConfig
 	{
 		/// <summary>
-		/// OPTIONAL: Set this to true to enable auto-annotation of benchmark methods
+		/// OPTIONAL: Set AssemblyWideConfig.AnnotateOnRun=true in appconfig Set this to true
+		/// to enable auto-annotation of benchmark methods
 		/// </summary>
-		public static readonly bool AnnotateOnRun = false; // = true;
+		public static readonly bool AnnotateOnRun = TryGetSwitch(
+			nameof(AssemblyWideConfig),
+			// ReSharper disable once StaticMemberInitializerReferesToMemberBelow
+			nameof(AnnotateOnRun));
+
+		private static bool TryGetSwitch(string scope, string switchName)
+		{
+			var config = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+
+			var name = scope + "." + switchName;
+			var value = config.AppSettings.Settings[name]?.Value;
+			bool result;
+			bool.TryParse(value, out result);
+			return result;
+		}
 
 		/// <summary>
 		/// Instance of the config
