@@ -1,51 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CompetitionBenchmarks>
 	<Competition Target="IntBitwiseAndCase">
-		<Candidate Target="BitwiseAndOperator" MinRatio="2.46" MaxRatio="2.86" />
+		<Candidate Target="BitwiseAndOperator" MinRatio="1.75" MaxRatio="2.86" />
 	</Competition>
 	<Competition Target="IntBitwiseOrCase">
-		<Candidate Target="BitwiseOrOperator" MinRatio="2.10" MaxRatio="2.80" />
+		<Candidate Target="BitwiseOrOperator" MinRatio="1.73" MaxRatio="2.80" />
 	</Competition>
 	<Competition Target="IntDivCase">
 		<Candidate Target="DivOperator" MinRatio="1.15" MaxRatio="1.43" />
 	</Competition>
 	<Competition Target="IntLeftShiftCase">
-		<Candidate Target="LeftShiftOperator" MinRatio="1.78" MaxRatio="1.92" />
+		<Candidate Target="LeftShiftOperator" MinRatio="1.14" MaxRatio="1.92" />
 	</Competition>
 	<Competition Target="IntMinusCase">
-		<Candidate Target="MinusOperator" MinRatio="2.26" MaxRatio="2.81" />
+		<Candidate Target="MinusOperator" MinRatio="1.44" MaxRatio="2.81" />
 	</Competition>
 	<Competition Target="IntModuloCase">
 		<Candidate Target="ModuloOperator" MinRatio="1.11" MaxRatio="1.65" />
 	</Competition>
 	<Competition Target="IntMulCase">
-		<Candidate Target="MulOperator" MinRatio="1.98" MaxRatio="2.47" />
+		<Candidate Target="MulOperator" MinRatio="1.63" MaxRatio="2.47" />
 	</Competition>
 	<Competition Target="IntOnesComplementCase">
-		<Candidate Target="OnesComplementOperator" MinRatio="2.50" MaxRatio="3.67" />
+		<Candidate Target="OnesComplementOperator" MinRatio="2.08" MaxRatio="3.67" />
 	</Competition>
 	<Competition Target="IntPlusCase">
-		<Candidate Target="PlusOperator" MinRatio="2.77" MaxRatio="3.38" />
+		<Candidate Target="PlusOperator" MinRatio="1.50" MaxRatio="3.38" />
 	</Competition>
 	<Competition Target="IntRightShiftCase">
-		<Candidate Target="RightShiftOperator" MinRatio="1.92" MaxRatio="2.55" />
+		<Candidate Target="RightShiftOperator" MinRatio="1.26" MaxRatio="2.55" />
 	</Competition>
 	<Competition Target="IntUnaryMinusCase">
-		<Candidate Target="UnaryMinusOperator" MinRatio="2.49" MaxRatio="3.41" />
+		<Candidate Target="UnaryMinusOperator" MinRatio="1.87" MaxRatio="3.41" />
 	</Competition>
 	<Competition Target="IntXorCase">
 		<Candidate Target="XorOperator" MinRatio="1.91" MaxRatio="2.94" />
 	</Competition>
 	<Competition Target="NullableDoubleDivCase">
-		<Candidate Target="DivOperator" MinRatio="1.49" MaxRatio="2.53" />
+		<Candidate Target="DivOperator" MinRatio="1.02" MaxRatio="2.53" />
 	</Competition>
 	<Competition Target="NullableDoubleMinusCase">
-		<Candidate Target="MinusOperator" MinRatio="1.96" MaxRatio="2.20" />
+		<Candidate Target="MinusOperator" MinRatio="1.41" MaxRatio="2.20" />
 	</Competition>
 	<Competition Target="NullableDoubleMulCase">
-		<Candidate Target="MulOperator" MinRatio="1.95" MaxRatio="2.45" />
+		<Candidate Target="MulOperator" MinRatio="1.31" MaxRatio="2.45" />
 	</Competition>
 	<Competition Target="NullableDoublePlusCase">
-		<Candidate Target="PlusOperator" MinRatio="1.96" MaxRatio="2.35" />
+		<Candidate Target="PlusOperator" MinRatio="1.38" MaxRatio="2.35" />
 	</Competition>
 </CompetitionBenchmarks>

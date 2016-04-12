@@ -16,7 +16,7 @@ namespace CodeJam
 		/// <summary>
 		/// OPTIONAL: Set this to true to enable auto-annotation of benchmark methods
 		/// </summary>
-		public static readonly bool AnnotateOnRun = false; // = true;
+		public static readonly bool AnnotateOnRun = true; // = true;
 
 		/// <summary>
 		/// Instance of the config
