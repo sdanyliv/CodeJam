@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
@@ -38,7 +38,7 @@ namespace CodeJam
 			return sum;
 		}
 
-		[CompetitionBenchmark]
+		[CompetitionBenchmark(1.46, 1.79)]
 		public int Test01PlusOne()
 		{
 			var sum = 0;

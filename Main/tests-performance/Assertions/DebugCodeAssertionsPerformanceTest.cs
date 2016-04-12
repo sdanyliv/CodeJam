@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using BenchmarkDotNet.NUnit;
 
@@ -39,7 +39,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(0.92, 1.05)]
+		[CompetitionBenchmark(0.82, 1.04)]
 		public string Test02AssertionExcluded()
 		{
 			var result = "";
