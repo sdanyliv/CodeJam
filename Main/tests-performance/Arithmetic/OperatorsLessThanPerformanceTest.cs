@@ -62,7 +62,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1.73, 2.56)]
+			[CompetitionBenchmark(1.73, 2.77)]
 			public void Test01Operators()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -160,7 +160,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1.08, 1.42)]
+			[CompetitionBenchmark(0.52, 1.42)]
 			public void Test01Operators()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -169,7 +169,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(0.9, 1.1)]
+			[CompetitionBenchmark(0.45, 1.10)]
 			public void Test02Comparer()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -178,7 +178,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1.03, 1.25)]
+			[CompetitionBenchmark(0.53, 1.33)]
 			public void Test03ExpressionFunc()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)

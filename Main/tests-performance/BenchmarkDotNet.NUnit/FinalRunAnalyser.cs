@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Linq;
 
 using BenchmarkDotNet.Analyzers;
 using BenchmarkDotNet.Helpers;
@@ -16,24 +19,41 @@ namespace BenchmarkDotNet.NUnit
 	/// Internal class to manage consequent runs.
 	/// DO NOT add this one explicitly
 	/// </summary>
+	[SuppressMessage("ReSharper", "ArrangeBraces_while")]
 	internal class FinalRunAnalyser : IAnalyser
 	{
+		public const string CompetitionBenchmarksRootNode = "CompetitionBenchmarks";
+		public const string CompetitionNode = "Competition";
+		public const string CandidateNode = "Candidate";
+		public const string TargetAttribute = "Target";
+		public const string MinRatioAttribute = "MinRatio";
+		public const string MaxRatioAttribute = "MaxRatio";
+
 		public class TargetMinMax
 		{
+			private static readonly CultureInfo _culture = CultureInfo.InvariantCulture;
 			public TargetMinMax() { }
 
-			public TargetMinMax(MethodInfo targetMethod, double min, double max, bool doesNotCompete)
+			public TargetMinMax(
+				MethodInfo targetMethod, double min, double max, string resourceName)
 			{
 				TargetMethod = targetMethod;
-				DoesNotCompete = doesNotCompete;
+				ResourceName = resourceName;
 				Min = min;
 				Max = max;
 			}
 
 			public MethodInfo TargetMethod { get; }
-			public bool DoesNotCompete { get; }
+			public string ResourceName { get; }
+
 			public double Min { get; private set; }
 			public double Max { get; private set; }
+
+			public string MinText => Min.ToString("0.00###", _culture);
+			public string MaxText => Max.ToString("0.00###", _culture);
+
+			public TargetMinMax Clone() =>
+				new TargetMinMax(TargetMethod, Min, Max, ResourceName);
 
 			// ReSharper disable once CompareOfFloatsByEqualityOperator
 			public bool MinIsEmpty => Min == 0;
@@ -87,13 +107,11 @@ namespace BenchmarkDotNet.NUnit
 					var competitionAttribute = (CompetitionBenchmarkAttribute)
 						targetMethod.GetCustomAttribute(typeof(CompetitionBenchmarkAttribute));
 
-					if (competitionAttribute != null && !competitionAttribute.Baseline)
+					if (competitionAttribute != null &&
+						!competitionAttribute.Baseline &&
+						!competitionAttribute.DoesNotCompete)
 					{
-						var targetData = new TargetMinMax(
-							targetMethod,
-							competitionAttribute.MinRatio,
-							competitionAttribute.MaxRatio,
-							competitionAttribute.DoesNotCompete);
+						var targetData = GetTargetMinMax(targetMethod, competitionAttribute);
 
 						_competitionData.Add(targetMethod, targetData);
 					}
@@ -101,6 +119,63 @@ namespace BenchmarkDotNet.NUnit
 			}
 
 			return _competitionData;
+		}
+
+		private static TargetMinMax GetTargetMinMax(
+			MethodInfo targetMethod, CompetitionBenchmarkAttribute competitionAttribute)
+		{
+			if (competitionAttribute.MinMaxFromResource)
+				return GetMinMaxFromResource(targetMethod);
+
+			return new TargetMinMax(
+				targetMethod,
+				competitionAttribute.MinRatio,
+				competitionAttribute.MaxRatio,
+				null);
+		}
+
+		private static TargetMinMax GetMinMaxFromResource(MethodInfo targetMethod)
+		{
+			var resourceType = targetMethod.DeclaringType;
+			// ReSharper disable once PossibleNullReferenceException
+			while (resourceType.IsNested)
+			{
+				resourceType = resourceType.DeclaringType;
+			}
+			var resourceName = resourceType.FullName + ".generated.xml";
+			var resStream = resourceType.Assembly.GetManifestResourceStream(resourceName);
+			if (resStream == null)
+				throw new InvalidOperationException(
+					$"Method {targetMethod.Name}: resurce stream {resourceName} not found");
+
+			var resDocument = XDocument.Load(resStream);
+			// ReSharper disable once PossibleNullReferenceException
+			var competitionName = targetMethod.DeclaringType.FullName;
+			var candidateName = targetMethod.Name;
+
+			var rootNode = resDocument.Element(CompetitionBenchmarksRootNode);
+			if (rootNode == null)
+			throw new InvalidOperationException(
+				$"Resource {resourceName}: root node {CompetitionBenchmarksRootNode} not found.");
+
+			var resNodes =
+				from competition in rootNode.Elements(CompetitionNode)
+				where competition.Attribute(TargetAttribute)?.Value == competitionName
+				from candidate in competition.Elements(CandidateNode)
+				where candidate.Attribute(TargetAttribute)?.Value == candidateName
+				select candidate;
+
+			var resNode = resNodes.SingleOrDefault();
+			var minText = resNode?.Attribute(MinRatioAttribute)?.Value;
+			var maxText = resNode?.Attribute(MaxRatioAttribute)?.Value;
+
+			double min;
+			double max;
+			var culture = CultureInfo.InvariantCulture;
+			double.TryParse(minText, NumberStyles.Any, culture, out min);
+			double.TryParse(maxText, NumberStyles.Any, culture, out max);
+
+			return new TargetMinMax(targetMethod, min, max, resourceName);
 		}
 
 		public void ProcessSummary(
@@ -138,9 +213,6 @@ namespace BenchmarkDotNet.NUnit
 					TargetMinMax targetMinMax;
 					if (benchmarkMinMax.TryGetValue(benchmark.Target.Method, out targetMinMax))
 					{
-						if (targetMinMax.DoesNotCompete)
-							continue;
-
 						// ReSharper disable once CompareOfFloatsByEqualityOperator
 						if (!targetMinMax.MinIsEmpty)
 						{

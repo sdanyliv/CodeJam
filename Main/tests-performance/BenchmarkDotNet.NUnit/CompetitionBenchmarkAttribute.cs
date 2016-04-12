@@ -27,5 +27,7 @@ namespace BenchmarkDotNet.NUnit
 		public double MaxRatio { get; private set; }
 
 		public double MinRatio { get; private set; }
+
+		public bool MinMaxFromResource { get; set; }
 	}
 }

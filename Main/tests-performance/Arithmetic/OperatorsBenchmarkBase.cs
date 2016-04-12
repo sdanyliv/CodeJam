@@ -12,7 +12,8 @@ namespace CodeJam.Arithmetic
 	public abstract class OperatorsBenchmarkBase<T, TStorage>
 	{
 		protected int Count { get; set; } = 1000 * 1000;
-		protected int ValueBRepeats { get; set; } = 5;
+		protected int ValueARepeats { get; set; } = 5;
+		protected int ValueAOffset { get; set; } = 0;
 
 		protected T[] ValuesA;
 		protected T[] ValuesB;
@@ -30,8 +31,8 @@ namespace CodeJam.Arithmetic
 			ValuesB = new T[count];
 			for (var i = 0; i < count; i++)
 			{
-				ValuesA[i] = GetValueA(i);
-				ValuesB[i] = GetValueB(i);
+				ValuesA[i] = GetValueA(i % ValueARepeats + ValueAOffset);
+				ValuesB[i] = GetValueB(i + 1);
 			}
 		}
 	}
@@ -39,31 +40,29 @@ namespace CodeJam.Arithmetic
 	public abstract class IntOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<int, TStorage>
 	{
 		protected override int GetValueA(int i) => i;
-		protected override int GetValueB(int i) => i % ValueBRepeats;
+		protected override int GetValueB(int i) => i;
 	}
 
 	public abstract class NullableIntOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<int?, TStorage>
 	{
-		protected override int? GetValueA(int i) => i;
+		protected override int? GetValueA(int i) => i == 0 ? null : (int?)i;
 
-		protected override int? GetValueB(int i)
-		{
-			int? b = i % ValueBRepeats;
-			if (b == 0)
-				b = null;
-			return b;
-		}
+		protected override int? GetValueB(int i) => i;
+	}
+
+	public abstract class NullableDoubleOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<double?, TStorage>
+	{
+		protected override double? GetValueA(int i) => i == 0 ? null : (int?)i;
+
+		protected override double? GetValueB(int i) => i;
 	}
 
 	public abstract class NullableDateTimeOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<DateTime?, TStorage>
 	{
-		protected override DateTime? GetValueA(int i) => DateTime.UtcNow;
+		protected override DateTime? GetValueA(int i) =>
+			i == 0 ? (DateTime?)null : DateTime.UtcNow.AddDays(i);
 
-		protected override DateTime? GetValueB(int i)
-		{
-			var i2 = i % ValueBRepeats;
-			return i2 == 0 ? (DateTime?)null : DateTime.UtcNow.AddDays(i2);
-		}
+		protected override DateTime? GetValueB(int i) => DateTime.UtcNow;
 	}
 
 	public abstract class StringOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<string, TStorage>
@@ -73,12 +72,8 @@ namespace CodeJam.Arithmetic
 			Count /= 5;
 		}
 
-		protected override string GetValueA(int i) => i.ToString();
+		protected override string GetValueA(int i) => i == 0 ? null : i.ToString();
 
-		protected override string GetValueB(int i)
-		{
-			var i2 = i % ValueBRepeats;
-			return i2 == 0 ? null : i2.ToString();
-		}
+		protected override string GetValueB(int i) => i.ToString();
 	}
 }

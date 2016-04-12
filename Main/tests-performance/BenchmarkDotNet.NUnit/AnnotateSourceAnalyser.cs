@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.SymbolStore;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Linq;
 
 using BenchmarkDotNet.Analyzers;
 using BenchmarkDotNet.Configs;
@@ -35,12 +34,17 @@ namespace BenchmarkDotNet.NUnit
 		private class AnnotateContext
 		{
 			private readonly Dictionary<string, string[]> _sourceLines = new Dictionary<string, string[]>();
+			private readonly Dictionary<string, XDocument> _xmlAnnotations = new Dictionary<string, XDocument>();
+			private readonly HashSet<string> _changedFiles = new HashSet<string>();
 
 			// ReSharper disable once MemberCanBePrivate.Local
-			public bool HasChanges { get; private set; }
+			public bool HasChanges => _changedFiles.Any();
 
 			public string[] GetFileLines(string file)
 			{
+				if (_xmlAnnotations.ContainsKey(file))
+					throw new InvalidOperationException($"File {file} already loaded as xml annotation");
+
 				string[] result;
 				if (!_sourceLines.TryGetValue(file, out result))
 				{
@@ -50,10 +54,32 @@ namespace BenchmarkDotNet.NUnit
 				return result;
 			}
 
+			public XDocument GetXmlAnnotation(string file)
+			{
+				if (_sourceLines.ContainsKey(file))
+					throw new InvalidOperationException($"File {file} already loaded as source lines");
+
+				XDocument result;
+				if (!_xmlAnnotations.TryGetValue(file, out result))
+				{
+					result = XDocument.Load(file);
+					_xmlAnnotations[file] = result;
+				}
+				return result;
+			}
+
+			public void MarkAsChanged(string file)
+			{
+				if (!_sourceLines.ContainsKey(file) && !_xmlAnnotations.ContainsKey(file))
+					throw new InvalidOperationException($"File {file} not loaded yet");
+
+				_changedFiles.Add(file);
+			}
+
 			public void ReplaceLine(string file, int lineIndex, string newLine)
 			{
 				GetFileLines(file)[lineIndex] = newLine;
-				HasChanges = true;
+				MarkAsChanged(file);
 			}
 
 			public void Save()
@@ -63,7 +89,22 @@ namespace BenchmarkDotNet.NUnit
 
 				foreach (var pair in _sourceLines)
 				{
-					BenchmarkHelpers.WriteFileContent(pair.Key, pair.Value);
+					if (_changedFiles.Contains(pair.Key))
+						BenchmarkHelpers.WriteFileContent(pair.Key, pair.Value);
+				}
+
+				var saveSettings = new XmlWriterSettings
+				{
+					Indent = true,
+					IndentChars = "\t"
+				};
+				foreach (var pair in _xmlAnnotations)
+				{
+					if (_changedFiles.Contains(pair.Key))
+					{
+						using (var writer = XmlWriter.Create(pair.Key, saveSettings))
+							pair.Value.Save(writer);
+					}
 				}
 			}
 		}
@@ -101,11 +142,7 @@ namespace BenchmarkDotNet.NUnit
 					FinalRunAnalyser.TargetMinMax newMinMax;
 					if (!newValues.TryGetValue(targetMinMax.TargetMethod, out newMinMax))
 					{
-						newMinMax = new FinalRunAnalyser.TargetMinMax(
-							targetMinMax.TargetMethod,
-							targetMinMax.Min,
-							targetMinMax.Max,
-							targetMinMax.DoesNotCompete);
+						newMinMax = targetMinMax.Clone();
 					}
 
 					if (newMinMax.UnionWithMin(minRatio))
@@ -160,89 +197,6 @@ namespace BenchmarkDotNet.NUnit
 		}
 		#endregion
 
-		#region Fix benchmark annotation
-		private static readonly Regex _breakIfRegex = new Regex(
-			@"///|\sclass\s|\}|\;",
-			RegexOptions.CultureInvariant | RegexOptions.Compiled);
-
-		private static readonly Regex _attributeRegex = new Regex(
-			@"
-				(\[CompetitionBenchmark\(?)
-				(
-					\d+\.?\d*
-					\,\s*
-					\d+\.?\d*
-					\s*
-				)?
-				(.*?\])",
-			RegexOptions.IgnorePatternWhitespace | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-
-		private static bool TryFixBenchmarkAttribute(
-			AnnotateContext annotateContext,
-			string fileName, int firstCodeLine,
-			FinalRunAnalyser.TargetMinMax targetMinMax)
-		{
-			var result = false;
-			var sourceFileLines = annotateContext.GetFileLines(fileName);
-
-			for (int i = firstCodeLine - 2; i >= 0; i--)
-			{
-				var line = sourceFileLines[i];
-				if (_breakIfRegex.IsMatch(line))
-					break;
-
-				var line2 = _attributeRegex.Replace(
-					line,
-					m => FixAttributeContent(m, targetMinMax), 1);
-				if (line2 != line)
-				{
-					annotateContext.ReplaceLine(fileName, i, line2);
-					result = true;
-					break;
-				}
-			}
-			return result;
-		}
-
-		private static string FixAttributeContent(Match m, FinalRunAnalyser.TargetMinMax targetMinMax)
-		{
-			var culture = CultureInfo.InvariantCulture;
-			var attributeStartText = m.Groups[1].Value;
-			var attributeEndText = m.Groups[3].Value;
-
-			bool attributeWithoutBraces = !attributeStartText.EndsWith("(");
-			bool attributeWithoutMinMax = !m.Groups[2].Success;
-			bool attributeHasAdditionalContent = !attributeEndText.StartsWith(")");
-
-			var result = new StringBuilder(m.Length + 10);
-			result.Append(attributeStartText);
-
-			if (attributeWithoutBraces)
-			{
-				result.Append('(');
-				result.AppendFormat(
-					culture, "{0:0.00###}, {1:0.00###}",
-					targetMinMax.Min,
-					targetMinMax.Max);
-				result.Append(')');
-			}
-			else
-			{
-				result.AppendFormat(
-					culture, "{0:0.00###}, {1:0.00###}",
-					targetMinMax.Min,
-					targetMinMax.Max);
-				if (attributeWithoutMinMax && attributeHasAdditionalContent)
-				{
-					result.Append(", ");
-				}
-			}
-
-			result.Append(attributeEndText);
-			return result.ToString();
-		}
-		#endregion
-
 		#region Public api
 		public bool RerunIfModified { get; set; }
 
@@ -285,11 +239,24 @@ namespace BenchmarkDotNet.NUnit
 					throw new InvalidOperationException($"Method {targetMethod.Name}: could not annotate. Source file not found.");
 				}
 
-				logger.WriteLineInfo($"Method {targetMethod.Name}: annotate at line {firstCodeLine}, file {fileName}.");
-				bool annotated = TryFixBenchmarkAttribute(annContext, fileName, firstCodeLine, targetMinMax);
-				if (!annotated)
+				if (targetMinMax.ResourceName == null)
 				{
-					throw new InvalidOperationException($"Method {targetMethod.Name}: could not annotate. Source file ${fileName}.");
+					logger.WriteLineInfo($"Method {targetMethod.Name}: annotate at line {firstCodeLine}, file {fileName}.");
+					bool annotated = TryFixBenchmarkAttribute(annContext, fileName, firstCodeLine, targetMinMax);
+					if (!annotated)
+					{
+						throw new InvalidOperationException($"Method {targetMethod.Name}: could not annotate. Source file ${fileName}.");
+					}
+				}
+				else
+				{
+					var xmlFileName = Path.ChangeExtension(fileName, ".xml");
+					logger.WriteLineInfo($"Method {targetMethod.Name}: annotate resource {targetMinMax.ResourceName} (file {xmlFileName}).");
+					bool annotated = TryFixBenchmarkResource(annContext, xmlFileName, targetMinMax);
+					if (!annotated)
+					{
+						throw new InvalidOperationException($"Method {targetMethod.Name}: could not annotate. Resource file ${xmlFileName}.");
+					}
 				}
 
 				if (RerunIfModified && !sharedState.LastRun)

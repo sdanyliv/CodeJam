@@ -1,5 +1,4 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#"
-#><#@ assembly name="System.Core"
+﻿<#@ assembly name="System.Core"
 #><#@ include file="$(SolutionDir)Main\src\Arithmetic\Operators.ttinclude"
 #><#@ import namespace="System.Linq"
 #><#@ import namespace="System.Text"
@@ -29,96 +28,82 @@ using static CodeJam.AssemblyWideConfig;
 
 namespace CodeJam.Arithmetic
 {
-	[TestFixture]
+	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Operators (generated)")]
 	public class NumOperatorsPerfTest
 	{
-		private const int _count = 100 * 1000;
-
 <#foreach (var op in ops) {
 	if (op.Unary) {#>
-		public class Int<#=op.Name#>Case
+		[Test]
+		public void Int<#=op.Name#>() => CompetitionBenchmarkRunner.Run<Int<#=op.Name#>Case>(RunConfig);
+
+		public class Int<#=op.Name#>Case: IntOperatorsBenchmark<int>
 		{
 			private readonly Func<int, int> _int<#=op.Name#> = IntOp.<#=op.Name#>;
 
 			[Benchmark(Baseline = true)]
 			[UsedImplicitly]
-			public int <#=op.Name#>Baseline()
+			public void <#=op.Name#>Baseline()
 			{
-				var res = 0;
-				for (var i = 0; i < _count; i++)
-					res += <#=op.Sign#>42;
-				return res;
+				for (var i = 0; i < ValuesA.Length; i++)
+					Storage = <#=op.Sign#>ValuesB[i];
 			}
 
-			[CompetitionBenchmark(5, 20)]
-			public int <#=op.Name#>Operator()
+			[CompetitionBenchmark(MinMaxFromResource = true)]
+			public void <#=op.Name#>Operator()
 			{
-				var res = 0;
-				for (var i = 0; i < _count; i++)
-					res += _int<#=op.Name#>(42);
-				return res;
+				for (var i = 0; i < ValuesA.Length; i++)
+					Storage = _int<#=op.Name#>(ValuesB[i]);
 			}
 		}
 
+<#	}#>
+<#	else {#>
 		[Test]
 		public void Int<#=op.Name#>() => CompetitionBenchmarkRunner.Run<Int<#=op.Name#>Case>(RunConfig);
 
-<#	}#>
-<#	else {#>
-		public class Int<#=op.Name#>Case
+		public class Int<#=op.Name#>Case: IntOperatorsBenchmark<int>
 		{
 			private readonly Func<int, int, int> _int<#=op.Name#> = IntOp.<#=op.Name#>;
 
 			[Benchmark(Baseline = true)]
 			[UsedImplicitly]
-			public int <#=op.Name#>Baseline()
+			public void <#=op.Name#>Baseline()
 			{
-				var res = 0;
-				for (var i = 0; i < _count; i++)
-					res += 48 <#=op.Sign#> 54;
-				return res;
+				for (var i = 0; i < ValuesA.Length; i++)
+					Storage = ValuesA[i] <#=op.Sign#> ValuesB[i];
 			}
 
-			[CompetitionBenchmark(5, 15)]
-			public int <#=op.Name#>Operator()
+			[CompetitionBenchmark(MinMaxFromResource = true)]
+			public void <#=op.Name#>Operator()
 			{
-				var res = 0;
-				for (var i = 0; i < _count; i++)
-					res += _int<#=op.Name#>(48, 54);
-				return res;
+				for (var i = 0; i < ValuesA.Length; i++)
+					Storage = _int<#=op.Name#>(ValuesA[i], ValuesB[i]);
 			}
 		}
 
-		[Test]
-		public void Int<#=op.Name#>() => CompetitionBenchmarkRunner.Run<Int<#=op.Name#>Case>(RunConfig);
-
 <#		if (!op.IntOnly) {#>
-		public class NullableDouble<#=op.Name#>Case
+		[Test]
+		public void NullableDouble<#=op.Name#>() => CompetitionBenchmarkRunner.Run<NullableDouble<#=op.Name#>Case>(RunConfig);
+
+		public class NullableDouble<#=op.Name#>Case: NullableDoubleOperatorsBenchmark<double?>
 		{
 			private readonly Func<double?, double?, double?> _double<#=op.Name#> = NullableDoubleOp.<#=op.Name#>;
 
 			[Benchmark(Baseline = true)]
 			[UsedImplicitly]
-			public double? <#=op.Name#>Baseline()
+			public void <#=op.Name#>Baseline()
 			{
-				double? res = 0;
-				for (var i = 0; i < _count; i++)
-					res += 48 <#=op.Sign#> 54;
-				return res;
+				for (var i = 0; i < ValuesA.Length; i++)
+					Storage = ValuesA[i] <#=op.Sign#> ValuesB[i];
 			}
 
-			[CompetitionBenchmark(5, 20)]
-			public double? <#=op.Name#>Operator()
+			[CompetitionBenchmark(MinMaxFromResource = true)]
+			public void <#=op.Name#>Operator()
 			{
-				double? res = 0;
-				for (var i = 0; i < _count; i++)
-					res += _double<#=op.Name#>(48, 54);
-				return res;
+				for (var i = 0; i < ValuesA.Length; i++)
+					Storage =  _double<#=op.Name#>(ValuesA[i], ValuesB[i]);
 			}
 		}
-
-		[Test]
-		public void NullableDouble<#=op.Name#>() => CompetitionBenchmarkRunner.Run<Int<#=op.Name#>Case>(RunConfig);
 
 <#		}#>
 <#	}#>
