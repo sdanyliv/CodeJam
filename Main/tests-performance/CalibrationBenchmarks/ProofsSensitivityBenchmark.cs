@@ -25,7 +25,7 @@ namespace CodeJam
 		[Params(1000, 10 * 1000, 100 * 1000, 1000 * 1000)]
 		public int Count { get; set; }
 
-		[Benchmark(Baseline = true)]
+		[CompetitionBaseline]
 		public int Test00Baseline()
 		{
 			var sum = 0;

@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
 using JetBrains.Annotations;
@@ -130,7 +129,7 @@ namespace CodeJam
 		#region Competition
 		public const int Count = 10 * 1000 * 1000;
 
-		[Benchmark(Baseline = true)]
+		[CompetitionBaseline]
 		public int Test00Baseline()
 		{
 			var sum = 0;

@@ -14,8 +14,6 @@ using BenchmarkDotNet.Helpers;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
 
-using CodeJam;
-
 using JetBrains.Annotations;
 
 // ReSharper disable CheckNamespace
@@ -111,69 +109,6 @@ namespace BenchmarkDotNet.NUnit
 		#endregion
 
 		#region Helper methods
-		private static FinalRunAnalyser.TargetMinMax[] GetNewCompetitionBoundaries(
-			Summary summary,
-			IDictionary<MethodInfo, FinalRunAnalyser.TargetMinMax> minMaxData)
-		{
-			var fixedMinPairs = new HashSet<FinalRunAnalyser.TargetMinMax>();
-			var fixedMaxPairs = new HashSet<FinalRunAnalyser.TargetMinMax>();
-			var newValues = new Dictionary<MethodInfo, FinalRunAnalyser.TargetMinMax>();
-
-			foreach (var benchGroup in summary.SameConditionBenchmarks())
-			{
-				var baselineBenchmark = benchGroup.Single(b => b.Target.Baseline);
-				var baselineMetricMin = summary.GetPercentile(baselineBenchmark, 0.5);
-				var baselineMetricMax = summary.GetPercentile(baselineBenchmark, 0.95);
-
-				foreach (var benchmark in benchGroup)
-				{
-					FinalRunAnalyser.TargetMinMax targetMinMax;
-					if (!minMaxData.TryGetValue(benchmark.Target.Method, out targetMinMax))
-						continue;
-
-					if (benchmark.Target.Baseline)
-						continue;
-
-					var minRatio = summary.GetPercentile(benchmark, 0.85) / baselineMetricMin;
-					var maxRatio = summary.GetPercentile(benchmark, 0.95) / baselineMetricMax;
-					if (minRatio > maxRatio)
-						Algorithms.Swap(ref minRatio, ref maxRatio);
-
-					FinalRunAnalyser.TargetMinMax newMinMax;
-					if (!newValues.TryGetValue(targetMinMax.TargetMethod, out newMinMax))
-					{
-						newMinMax = targetMinMax.Clone();
-					}
-
-					if (newMinMax.UnionWithMin(minRatio))
-					{
-						fixedMinPairs.Add(newMinMax);
-						newValues[newMinMax.TargetMethod] = newMinMax;
-					}
-					if (newMinMax.UnionWithMax(maxRatio))
-					{
-						fixedMaxPairs.Add(newMinMax);
-						newValues[newMinMax.TargetMethod] = newMinMax;
-					}
-				}
-			}
-
-			foreach (var targetMinMax in fixedMinPairs)
-			{
-				// min = 0.97x;
-				targetMinMax.UnionWithMin(
-					Math.Floor(targetMinMax.Min * 97) / 100);
-			}
-			foreach (var targetMinMax in fixedMaxPairs)
-			{
-				// max = 1.03x;
-				targetMinMax.UnionWithMax(
-					Math.Ceiling(targetMinMax.Max * 103) / 100);
-			}
-
-			return newValues.Values.ToArray();
-		}
-
 		private static bool TryGetSourceInfo(MethodInfo method, out string fileName, out int firstCodeLine)
 		{
 			fileName = null;
@@ -203,7 +138,6 @@ namespace BenchmarkDotNet.NUnit
 		public IEnumerable<IWarning> Analyze(Summary summary)
 		{
 			var sharedState = summary.Config.GetAnalysers().OfType<FinalRunAnalyser>().Single();
-
 			var warnings = new List<IWarning>();
 			var logger = summary.Config.GetCompositeLogger();
 			AnnotateBenchmarkFiles(summary, sharedState, logger, warnings);
@@ -218,7 +152,7 @@ namespace BenchmarkDotNet.NUnit
 		{
 			var annContext = new AnnotateContext();
 			var minMaxData = sharedState.GetCompetitionBoundaries(summary.Benchmarks);
-			var updatedRecords = GetNewCompetitionBoundaries(summary, minMaxData);
+			var updatedRecords = sharedState.GetNewCompetitionBoundaries(summary, minMaxData);
 			if (updatedRecords.Length == 0)
 			{
 				logger.WriteLineInfo("All competition benchmarks are in boundary.");
@@ -229,7 +163,7 @@ namespace BenchmarkDotNet.NUnit
 			{
 				var targetMethod = targetMinMax.TargetMethod;
 
-				logger.WriteLineInfo($"Method {targetMethod.Name}: new boundary [{targetMinMax.Min},{targetMinMax.Max}].");
+				logger.WriteLineInfo($"Method {targetMethod.Name}: new boundary [{targetMinMax.MinText},{targetMinMax.MaxText}].");
 
 				int firstCodeLine;
 				string fileName;
@@ -251,11 +185,13 @@ namespace BenchmarkDotNet.NUnit
 				else
 				{
 					var xmlFileName = Path.ChangeExtension(fileName, ".xml");
-					logger.WriteLineInfo($"Method {targetMethod.Name}: annotate resource {targetMinMax.ResourceName} (file {xmlFileName}).");
+					logger.WriteLineInfo(
+						$"Method {targetMethod.Name}: annotate resource {targetMinMax.ResourceName} (file {xmlFileName}).");
 					bool annotated = TryFixBenchmarkResource(annContext, xmlFileName, targetMinMax);
 					if (!annotated)
 					{
-						throw new InvalidOperationException($"Method {targetMethod.Name}: could not annotate. Resource file ${xmlFileName}.");
+						throw new InvalidOperationException(
+							$"Method {targetMethod.Name}: could not annotate. Resource file ${xmlFileName}.");
 					}
 				}
 

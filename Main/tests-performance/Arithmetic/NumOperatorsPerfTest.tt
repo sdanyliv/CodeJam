@@ -14,10 +14,7 @@
 //------------------------------------------------------------------------------
 using System;
 
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
-
-using JetBrains.Annotations;
 
 using NUnit.Framework;
 
@@ -29,6 +26,7 @@ using static CodeJam.AssemblyWideConfig;
 namespace CodeJam.Arithmetic
 {
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Operators (generated)")]
+	[CompetitionMetadata("CodeJam.Arithmetic.NumOperatorsPerfTest.generated.xml")]	
 	public class NumOperatorsPerfTest
 	{
 <#foreach (var op in ops) {
@@ -40,15 +38,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int> _int<#=op.Name#> = IntOp.<#=op.Name#>;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void <#=op.Name#>Baseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = <#=op.Sign#>ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void <#=op.Name#>Operator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -65,15 +62,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _int<#=op.Name#> = IntOp.<#=op.Name#>;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void <#=op.Name#>Baseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] <#=op.Sign#> ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void <#=op.Name#>Operator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -89,15 +85,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<double?, double?, double?> _double<#=op.Name#> = NullableDoubleOp.<#=op.Name#>;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void <#=op.Name#>Baseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] <#=op.Sign#> ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void <#=op.Name#>Operator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)

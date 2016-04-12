@@ -69,6 +69,8 @@
     <Compile Include="BenchmarkDotNet.NUnit.Tests\BenchmarkHelpersTests.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\AnnotateSourceAnalyser.SourceAnnotate.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\AnnotateSourceAnalyser.XmlAnnotate.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\CompetitionBaselineAttribute.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\CompetitionMetadataAttribute.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\FinalRunAnalyser.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\AnnotateSourceAnalyser.SymbolHelpers.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\CompetitionBenchmarkAttribute.cs" />

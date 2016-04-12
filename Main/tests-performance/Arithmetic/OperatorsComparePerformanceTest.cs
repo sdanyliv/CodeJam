@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
 using JetBrains.Annotations;
@@ -53,7 +52,7 @@ namespace CodeJam.Arithmetic
 				_expressionFunc = exp.Compile();
 			}
 
-			[Benchmark(Baseline = true)]
+			[CompetitionBaseline]
 			public void Test00DirectCompare()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -102,7 +101,7 @@ namespace CodeJam.Arithmetic
 				_expressionFunc = exp.Compile();
 			}
 
-			[Benchmark(Baseline = true)]
+			[CompetitionBaseline]
 			public void Test00DirectCompare()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -153,7 +152,7 @@ namespace CodeJam.Arithmetic
 				_expressionFunc = exp.Compile();
 			}
 
-			[Benchmark(Baseline = true)]
+			[CompetitionBaseline]
 			public void Test00DirectCompare()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -198,7 +197,7 @@ namespace CodeJam.Arithmetic
 			private static readonly Comparer<string> _comparer = Comparer<string>.Default;
 			private static readonly Func<string, string, int> _expressionFunc = string.CompareOrdinal;
 
-			[Benchmark(Baseline = true)]
+			[CompetitionBaseline]
 			public void Test00DirectCompare()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)

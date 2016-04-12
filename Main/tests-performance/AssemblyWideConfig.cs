@@ -40,7 +40,7 @@ namespace CodeJam
 
 			if (AnnotateOnRun)
 				Add(
-					new AnnotateSourceAnalyser()
+					new AnnotateSourceAnalyser
 					{
 						RerunIfModified = true
 					});

@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 // ReSharper disable CheckNamespace
+
 namespace BenchmarkDotNet.NUnit
 {
 	public partial class AnnotateSourceAnalyser

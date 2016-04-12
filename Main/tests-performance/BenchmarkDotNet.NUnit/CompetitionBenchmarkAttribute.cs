@@ -10,8 +10,7 @@ using JetBrains.Annotations;
 namespace BenchmarkDotNet.NUnit
 {
 	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-	[PublicAPI]
-	[MeansImplicitUse]
+	[PublicAPI, MeansImplicitUse]
 	public class CompetitionBenchmarkAttribute : BenchmarkAttribute
 	{
 		public CompetitionBenchmarkAttribute() { }
@@ -27,7 +26,5 @@ namespace BenchmarkDotNet.NUnit
 		public double MaxRatio { get; private set; }
 
 		public double MinRatio { get; private set; }
-
-		public bool MinMaxFromResource { get; set; }
 	}
 }

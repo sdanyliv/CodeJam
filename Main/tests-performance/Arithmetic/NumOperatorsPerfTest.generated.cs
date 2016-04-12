@@ -8,10 +8,7 @@
 //------------------------------------------------------------------------------
 using System;
 
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
-
-using JetBrains.Annotations;
 
 using NUnit.Framework;
 
@@ -23,6 +20,7 @@ using static CodeJam.AssemblyWideConfig;
 namespace CodeJam.Arithmetic
 {
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Operators (generated)")]
+	[CompetitionMetadata("CodeJam.Arithmetic.NumOperatorsPerfTest.generated.xml")]	
 	public class NumOperatorsPerfTest
 	{
 		[Test]
@@ -32,15 +30,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int> _intUnaryMinus = IntOp.UnaryMinus;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void UnaryMinusBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = -ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void UnaryMinusOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -55,15 +52,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int> _intOnesComplement = IntOp.OnesComplement;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void OnesComplementBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ~ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void OnesComplementOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -78,15 +74,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intPlus = IntOp.Plus;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void PlusBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] + ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void PlusOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -101,15 +96,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<double?, double?, double?> _doublePlus = NullableDoubleOp.Plus;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void PlusBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] + ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void PlusOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -124,15 +118,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intMinus = IntOp.Minus;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void MinusBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] - ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void MinusOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -147,15 +140,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<double?, double?, double?> _doubleMinus = NullableDoubleOp.Minus;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void MinusBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] - ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void MinusOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -170,15 +162,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intMul = IntOp.Mul;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void MulBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] * ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void MulOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -193,15 +184,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<double?, double?, double?> _doubleMul = NullableDoubleOp.Mul;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void MulBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] * ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void MulOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -216,15 +206,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intDiv = IntOp.Div;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void DivBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] / ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void DivOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -239,15 +228,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<double?, double?, double?> _doubleDiv = NullableDoubleOp.Div;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void DivBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] / ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void DivOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -262,15 +250,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intModulo = IntOp.Modulo;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void ModuloBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] % ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void ModuloOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -285,15 +272,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intXor = IntOp.Xor;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void XorBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] ^ ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void XorOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -308,15 +294,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intBitwiseAnd = IntOp.BitwiseAnd;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void BitwiseAndBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] & ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void BitwiseAndOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -331,15 +316,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intBitwiseOr = IntOp.BitwiseOr;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void BitwiseOrBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] | ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void BitwiseOrOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -354,15 +338,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intLeftShift = IntOp.LeftShift;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void LeftShiftBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] << ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void LeftShiftOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
@@ -377,15 +360,14 @@ namespace CodeJam.Arithmetic
 		{
 			private readonly Func<int, int, int> _intRightShift = IntOp.RightShift;
 
-			[Benchmark(Baseline = true)]
-			[UsedImplicitly]
+			[CompetitionBaseline]
 			public void RightShiftBaseline()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)
 					Storage = ValuesA[i] >> ValuesB[i];
 			}
 
-			[CompetitionBenchmark(MinMaxFromResource = true)]
+			[CompetitionBenchmark]
 			public void RightShiftOperator()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)

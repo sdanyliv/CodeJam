@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
 using JetBrains.Annotations;
@@ -31,7 +30,7 @@ namespace CodeJam
 		[Test]
 		// WAITINGFOR: https://github.com/PerfDotNet/BenchmarkDotNet/issues/126.
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkCallCosts() => 
+		public void BenchmarkCallCosts() =>
 			CompetitionBenchmarkRunner.Run(this, RunConfig);
 
 		#region CompetitionMethods
@@ -117,7 +116,7 @@ namespace CodeJam
 
 		private const int Count = 100 * 1000;
 
-		[Benchmark(Baseline = true)]
+		[CompetitionBaseline]
 		public int Test00Raw()
 		{
 			int a = 0;

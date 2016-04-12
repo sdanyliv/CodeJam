@@ -40,6 +40,7 @@ namespace BenchmarkDotNet.NUnit
 				SymBinder binder, string pathModule, string searchPath)
 			{
 				ISymbolReader reader;
+
 				IMetaDataDispenser dispenser = null;
 				IMetaDataImportStub importer = null;
 				var importerPtr = IntPtr.Zero;
@@ -60,7 +61,7 @@ namespace BenchmarkDotNet.NUnit
 					}
 					catch (COMException)
 					{
-						return null;
+						reader = null;
 					}
 				}
 				finally

@@ -3,18 +3,17 @@ using System.Linq;
 using System.Xml.Linq;
 
 // ReSharper disable CheckNamespace
+
 namespace BenchmarkDotNet.NUnit
 {
 	public partial class AnnotateSourceAnalyser
 	{
 		private bool TryFixBenchmarkResource(
-			AnnotateContext annotateContext, string xmlFileName, 
+			AnnotateContext annotateContext, string xmlFileName,
 			FinalRunAnalyser.TargetMinMax targetMinMax)
 		{
-			var targetMethod = targetMinMax.TargetMethod;
-			// ReSharper disable once PossibleNullReferenceException
-			var competitionName = targetMethod.DeclaringType.FullName;
-			var candidateName = targetMethod.Name;
+			var competitionName = targetMinMax.CompetitionName;
+			var candidateName = targetMinMax.CandidateName;
 
 			var xdoc = annotateContext.GetXmlAnnotation(xmlFileName);
 			var competition = GetOrCreateElement(xdoc.Root, FinalRunAnalyser.CompetitionNode, competitionName);
@@ -43,6 +42,7 @@ namespace BenchmarkDotNet.NUnit
 
 			return result;
 		}
+
 		private XAttribute UpdateAttribute(XElement element, XName attributeName, string attributeValue)
 		{
 			var result = element.Attribute(attributeName);

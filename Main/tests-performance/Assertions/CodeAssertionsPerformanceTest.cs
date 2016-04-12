@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
 using JetBrains.Annotations;
@@ -24,7 +23,7 @@ namespace CodeJam.Assertions
 	{
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkCodeAssertions() => 
+		public void BenchmarkCodeAssertions() =>
 			CompetitionBenchmarkRunner.Run(this, RunConfig);
 
 		//[Params(10 * 1000, 100 * 1000, 1000 * 1000)]
@@ -32,7 +31,7 @@ namespace CodeJam.Assertions
 
 		private static string GetArg(int i) => i % 2 == 0 ? "0" : "1";
 
-		[Benchmark(Baseline = true)]
+		[CompetitionBaseline]
 		public string Test00RunWithoutAssertion()
 		{
 			var result = "";
