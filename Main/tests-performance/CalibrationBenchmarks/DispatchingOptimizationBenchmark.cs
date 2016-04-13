@@ -28,6 +28,41 @@ namespace CodeJam
 		public void BenchmarkJitOptimizedDispatch() =>
 			CompetitionBenchmarkRunner.Run(this, RunConfig);
 
+		public const int Count = 10 * 1000 * 1000;
+
+		[CompetitionBaseline]
+		public int Test00Baseline()
+		{
+			var sum = 0;
+			for (var i = 0; i < Count; i++)
+			{
+				sum += DirectCall(i);
+			}
+			return sum;
+		}
+
+		[CompetitionBenchmark(0.89, 1.09)]
+		public int Test01SwitchOverReadonlyField()
+		{
+			var sum = 0;
+			for (var i = 0; i < Count; i++)
+			{
+				sum += SwitchOverReadonlyField(i);
+			}
+			return sum;
+		}
+
+		[CompetitionBenchmark(1.18, 1.64)]
+		public int Test02SwitchOverMutableField()
+		{
+			var sum = 0;
+			for (var i = 0; i < Count; i++)
+			{
+				sum += SwitchOverMutableField(i);
+			}
+			return sum;
+		}
+
 		#region Assertion to proof the idea works at all
 		[Test]
 		public void AssertJitOptimizedDispatch()
@@ -38,8 +73,8 @@ namespace CodeJam
 
 			// 1. Jitting the methods. Impl2 should be used.
 			Assert.AreEqual(DirectCall(someNum), impl2);
-			Assert.AreEqual(SwitchOverRoField(someNum), impl2);
-			Assert.AreEqual(SwitchOverStaticField(someNum), impl2);
+			Assert.AreEqual(SwitchOverReadonlyField(someNum), impl2);
+			Assert.AreEqual(SwitchOverMutableField(someNum), impl2);
 
 			// 2. Update the field values:
 
@@ -57,13 +92,12 @@ namespace CodeJam
 			// Nothing changed
 			Assert.AreEqual(DirectCall(someNum), impl2);
 			// Same as previous call (switch thrown away by JIT)
-			Assert.AreEqual(SwitchOverRoField(someNum), impl2);
+			Assert.AreEqual(SwitchOverReadonlyField(someNum), impl2);
 			// Uses implementation 3
-			Assert.AreEqual(SwitchOverStaticField(someNum), impl3);
+			Assert.AreEqual(SwitchOverMutableField(someNum), impl3);
 		}
 		#endregion
 
-		// Here we go:
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static int Implementation1(int i) => i * i;
 
@@ -87,7 +121,7 @@ namespace CodeJam
 		private static readonly ImplementationToUse _implementationToUse1 = ImplementationToUse.Implementation2;
 
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		private static int SwitchOverRoField(int i)
+		private static int SwitchOverReadonlyField(int i)
 		{
 			switch (_implementationToUse1)
 			{
@@ -105,7 +139,7 @@ namespace CodeJam
 		private static volatile ImplementationToUse _implementationToUse2 = ImplementationToUse.Implementation2;
 
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		private static int SwitchOverStaticField(int i)
+		private static int SwitchOverMutableField(int i)
 		{
 			switch (_implementationToUse2)
 			{
@@ -118,43 +152,6 @@ namespace CodeJam
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
-		}
-		#endregion
-
-		#region Competition
-		public const int Count = 10 * 1000 * 1000;
-
-		[CompetitionBaseline]
-		public int Test00Baseline()
-		{
-			var sum = 0;
-			for (var i = 0; i < Count; i++)
-			{
-				sum += DirectCall(i);
-			}
-			return sum;
-		}
-
-		[CompetitionBenchmark(0.89, 1.09)]
-		public int Test01SwitchOverRoField()
-		{
-			var sum = 0;
-			for (var i = 0; i < Count; i++)
-			{
-				sum += SwitchOverRoField(i);
-			}
-			return sum;
-		}
-
-		[CompetitionBenchmark(1.18, 1.64)]
-		public int Test02SwitchOverStaticField()
-		{
-			var sum = 0;
-			for (var i = 0; i < Count; i++)
-			{
-				sum += SwitchOverStaticField(i);
-			}
-			return sum;
 		}
 		#endregion
 	}

@@ -10,7 +10,7 @@ namespace CodeJam.Arithmetic
 	/// Base class for all operator test cases;
 	/// </summary>
 	[PublicAPI]
-	public abstract class OperatorsBenchmarkBase<T, TStorage>
+	public abstract class OperatorsBenchmarkBase<T>
 	{
 		protected int Count { get; set; } = 1000 * 1000;
 		protected int ValueARepeats { get; set; } = 5;
@@ -18,7 +18,6 @@ namespace CodeJam.Arithmetic
 
 		protected T[] ValuesA;
 		protected T[] ValuesB;
-		protected TStorage Storage;
 
 		protected abstract T GetValueA(int i);
 		protected abstract T GetValueB(int i);
@@ -38,27 +37,27 @@ namespace CodeJam.Arithmetic
 		}
 	}
 
-	public abstract class IntOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<int, TStorage>
+	public abstract class IntOperatorsBenchmark : OperatorsBenchmarkBase<int>
 	{
 		protected override int GetValueA(int i) => i;
 		protected override int GetValueB(int i) => i;
 	}
 
-	public abstract class NullableIntOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<int?, TStorage>
+	public abstract class NullableIntOperatorsBenchmark : OperatorsBenchmarkBase<int?>
 	{
 		protected override int? GetValueA(int i) => i == 0 ? null : (int?)i;
 
 		protected override int? GetValueB(int i) => i;
 	}
 
-	public abstract class NullableDoubleOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<double?, TStorage>
+	public abstract class NullableDoubleOperatorsBenchmark : OperatorsBenchmarkBase<double?>
 	{
 		protected override double? GetValueA(int i) => i == 0 ? null : (int?)i;
 
 		protected override double? GetValueB(int i) => i;
 	}
 
-	public abstract class NullableDateTimeOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<DateTime?, TStorage>
+	public abstract class NullableDateTimeOperatorsBenchmark : OperatorsBenchmarkBase<DateTime?>
 	{
 		protected override DateTime? GetValueA(int i) =>
 			i == 0 ? (DateTime?)null : DateTime.UtcNow.AddDays(i);
@@ -66,7 +65,7 @@ namespace CodeJam.Arithmetic
 		protected override DateTime? GetValueB(int i) => DateTime.UtcNow;
 	}
 
-	public abstract class StringOperatorsBenchmark<TStorage> : OperatorsBenchmarkBase<string, TStorage>
+	public abstract class StringOperatorsBenchmark : OperatorsBenchmarkBase<string>
 	{
 		protected StringOperatorsBenchmark()
 		{
