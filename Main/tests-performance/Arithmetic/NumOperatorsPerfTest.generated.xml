@@ -7,7 +7,7 @@
 		<Candidate Target="BitwiseOrOperator" MinRatio="1.73" MaxRatio="2.80" />
 	</Competition>
 	<Competition Target="IntDivCase">
-		<Candidate Target="DivOperator" MinRatio="1.15" MaxRatio="1.43" />
+		<Candidate Target="DivOperator" MinRatio="1.0" MaxRatio="1.43" />
 	</Competition>
 	<Competition Target="IntLeftShiftCase">
 		<Candidate Target="LeftShiftOperator" MinRatio="1.14" MaxRatio="2.06" />
@@ -34,7 +34,7 @@
 		<Candidate Target="UnaryMinusOperator" MinRatio="1.87" MaxRatio="3.41" />
 	</Competition>
 	<Competition Target="IntXorCase">
-		<Candidate Target="XorOperator" MinRatio="1.91" MaxRatio="2.94" />
+		<Candidate Target="XorOperator" MinRatio="1.8" MaxRatio="2.94" />
 	</Competition>
 	<Competition Target="NullableDoubleDivCase">
 		<Candidate Target="DivOperator" MinRatio="1.02" MaxRatio="2.53" />

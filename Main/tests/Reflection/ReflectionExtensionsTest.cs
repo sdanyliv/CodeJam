@@ -81,11 +81,11 @@ namespace CodeJam.Reflection
 		public bool IsNumeric(Type type) => type.IsNumeric();
 
 		[CompilerGenerated]
-		class NotAnonymousType<T> : List<T>
+		private class NotAnonymousType<T> : List<T>
 		{
 		}
 
-		class TestAnonymousCaseAttribute : TestCaseAttribute
+		private class TestAnonymousCaseAttribute : TestCaseAttribute
 		{
 			public TestAnonymousCaseAttribute()
 				: base(new { Field = 0 }.GetType())
