@@ -240,7 +240,7 @@ namespace CodeJam
 		/// <paramref name="str"/>. Default value is Integer.
 		/// </param>
 		/// <param name="provider">
-		/// An object that supplies culture-specific formatting information about <see cref="str"/>.
+		/// An object that supplies culture-specific formatting information about <paramref name="str"/>.
 		/// </param>
 		/// <returns>
 		/// When this method returns, contains the 32-bit signed integer value equivalent of the number contained in
@@ -271,7 +271,7 @@ namespace CodeJam
 		/// <paramref name="str"/>. Default value is Float.
 		/// </param>
 		/// <param name="provider">
-		/// An object that supplies culture-specific formatting information about <see cref="str"/>.
+		/// An object that supplies culture-specific formatting information about <paramref name="str"/>.
 		/// </param>
 		/// <returns>
 		/// When this method returns, contains the <see cref="double"/> value equivalent of the number contained in
