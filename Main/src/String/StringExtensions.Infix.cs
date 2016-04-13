@@ -280,7 +280,7 @@ namespace CodeJam
 		/// represents a number less than <see cref="double.MinValue"/> or greater than <see cref="double.MaxValue"/>.
 		/// </returns>
 		[Pure]
-		public static int? ToDouble(
+		public static double? ToDouble(
 			[CanBeNull] this string str,
 			NumberStyles numberStyle = NumberStyles.Float,
 			[CanBeNull] IFormatProvider provider = null)
