@@ -5,6 +5,8 @@ using System.Reflection;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.NUnit;
 
+using CodeJam.Reflection;
+
 using JetBrains.Annotations;
 
 namespace CodeJam
@@ -27,8 +29,7 @@ namespace CodeJam
 
 		private static bool TryGetSwitch(string scope, string switchName)
 		{
-			var assembly = Assembly.GetExecutingAssembly();
-			var codeBase = new Uri(assembly.CodeBase).LocalPath;
+			var codeBase = Assembly.GetExecutingAssembly().GetAssemblyPath();
 			var config = ConfigurationManager.OpenExeConfiguration(codeBase);
 
 			var name = scope + "." + switchName;
