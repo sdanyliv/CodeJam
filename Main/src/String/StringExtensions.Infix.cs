@@ -226,5 +226,36 @@ namespace CodeJam
 		/// <param name="str">The string containing the characters to encode.</param>
 		/// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
 		public static byte[] ToBytes(this string str) => ToBytes(str, Encoding.UTF8);
+
+		/// <summary>
+		/// Converts the string representation of a number in a specified style and culture-specific format to its 32-bit
+		/// signed integer equivalent. A return value indicates whether the conversion succeeded.
+		/// </summary>
+		/// <param name="str">
+		/// A string containing a number to convert. The string is interpreted using the style specified by
+		/// <paramref name="numberStyle"/>.
+		/// </param>
+		/// <param name="numberStyle">
+		/// A bitwise combination of enumeration values that indicates the style elements that can be present in
+		/// <paramref name="str"/>. A typical value to specify is Integer.
+		/// </param>
+		/// <param name="provider">
+		/// An object that supplies culture-specific formatting information about <see cref="str"/>.
+		/// </param>
+		/// <returns>
+		/// When this method returns, contains the 32-bit signed integer value equivalent of the number contained in
+		/// <paramref name="str"/>, if the conversion succeeded, or null if the conversion failed. The conversion fails if
+		/// the <paramref name="str"/> parameter is null or String.Empty, is not in a format compliant withstyle, or
+		/// represents a number less than <see cref="int.MinValue"/> or greater than <see cref="int.MaxValue"/>.
+		/// </returns>
+		[Pure]
+		public static int? ToInt(
+			[CanBeNull] this string str,
+			NumberStyles numberStyle = NumberStyles.Integer,
+			[CanBeNull] IFormatProvider provider = null)
+		{
+			int result;
+			return int.TryParse(str, numberStyle, provider, out result) ? (int?)result : null;
+		}
 	}
 }
