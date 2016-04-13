@@ -6,6 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+
 using System;
 
 using BenchmarkDotNet.NUnit;
@@ -20,7 +21,8 @@ using static CodeJam.AssemblyWideConfig;
 namespace CodeJam.Arithmetic
 {
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Operators (generated)")]
-	[CompetitionMetadata("CodeJam.Arithmetic.NumOperatorsPerfTest.generated.xml")]	
+	[CompetitionMetadata("CodeJam.Arithmetic.NumOperatorsPerfTest.generated.xml")]
+	[Explicit("Server run speed not stable")]
 	public class NumOperatorsPerfTest
 	{
 		[Test]
