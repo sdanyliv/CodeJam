@@ -10,13 +10,17 @@ namespace CodeJam
 		#region Min
 		[TestCase(new[] {3, 1, 0, 4, 6}, ExpectedResult = "0")]
 		[TestCase(new[] {1}, ExpectedResult = "1")]
-		public string MinItemString(int[] source) => Collections.EnumerableExtensions.MinItem(source.Select(v => new Item<string>(v.ToString())), i => i.Value).Value;
+		[TestCase(new int[0], ExpectedResult = null)]
+		public string MinItemString(int[] source) =>
+			Collections.EnumerableExtensions.MinItem(source.Select(v => new Item<string>(v.ToString())), i => i.Value)?.Value;
 		#endregion
 
 		#region Max
 		[TestCase(new[] { 3, 1, 8, 0, 6 }, ExpectedResult = "8")]
 		[TestCase(new[] { 1 }, ExpectedResult = "1")]
-		public string MaxItemString(int[] source) => Collections.EnumerableExtensions.MaxItem(source.Select(v => new Item<string>(v.ToString())), i => i.Value).Value;
+		[TestCase(new int[0], ExpectedResult = null)]
+		public string MaxItemString(int[] source) =>
+			Collections.EnumerableExtensions.MaxItem(source.Select(v => new Item<string>(v.ToString())), i => i.Value)?.Value;
 		#endregion
 
 		#region Item class

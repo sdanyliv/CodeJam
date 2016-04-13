@@ -6,6 +6,7 @@ What's new in 1.0.0-beta9
 * ReflectionExtensions.IsAnonymous methods
 * string.ToInt and ToDouble methods
 * OptionalElementValue overload
+* Min/MaxItem now returns default (TSource) when no elements in collection in all overloads
 * Refactoring
 * Fixes and code cleanup
 

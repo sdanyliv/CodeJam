@@ -7,8 +7,6 @@ namespace CodeJam.Collections
 {
 	partial class EnumerableExtensions
 	{
-		private static Exception NoElementsException() => new InvalidOperationException("Collection has no elements");
-
 		/// <summary>
 		/// Invokes a <paramref name="selector"/> on each element of a <paramref name="source"/>
 		/// and returns the item with minimum value.
@@ -77,7 +75,7 @@ namespace CodeJam.Collections
 				using (var e = source.GetEnumerator())
 				{
 					if (!e.MoveNext())
-						throw NoElementsException();
+						return default(TSource);
 
 					value = selector(e.Current);
 					item = e.Current;
@@ -164,7 +162,7 @@ namespace CodeJam.Collections
 				using (var e = source.GetEnumerator())
 				{
 					if (!e.MoveNext())
-						throw NoElementsException();
+						return default(TSource);
 
 					value = selector(e.Current);
 					item = e.Current;
