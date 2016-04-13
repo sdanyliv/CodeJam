@@ -57,13 +57,13 @@
       <DependentUpon>OperatorsTest.Numeric.tt</DependentUpon>
     </Compile>
     <Compile Include="Assertions\CodeAssertionsTest.cs" />
-    <Compile Include="Collections\AggregateFuncsTest.cs" />
+    <Compile Include="Collections\MinMaxItemTests.cs" />
     <Compile Include="Collections\ArrayExtensionsTest.cs" />
     <Compile Include="Collections\DisjointSetsTest.cs" />
     <Compile Include="Collections\QueryableExtensionsTests.ApplyOrder.cs" />
     <Compile Include="Collections\DictionaryExtensionsTest.cs" />
-    <Compile Include="Collections\AggregateFuncsTest.generated.cs">
-      <DependentUpon>AggregateFuncsTest.tt</DependentUpon>
+    <Compile Include="Collections\MinMaxItemTests.generated.cs">
+      <DependentUpon>MinMaxItemTests.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -102,9 +102,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>OperatorsTest.Numeric.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Collections\AggregateFuncsTest.tt">
+    <Content Include="Collections\MinMaxItemTests.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AggregateFuncsTest.generated.cs</LastGenOutput>
+      <LastGenOutput>MinMaxItemTests.generated.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="String\Data\Dates.Expected.txt" />
     <EmbeddedResource Include="String\Data\Dates.txt" />

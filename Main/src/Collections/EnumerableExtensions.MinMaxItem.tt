@@ -38,13 +38,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, <#= type #>> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -74,10 +75,9 @@ namespace CodeJam.Collections
 		public static TSource <#= info.Method #><TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, <#= type #>?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())

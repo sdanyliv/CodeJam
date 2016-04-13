@@ -24,13 +24,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, byte> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -60,10 +61,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, byte?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -119,13 +119,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, sbyte> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -155,10 +156,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, sbyte?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -214,13 +214,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, short> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -250,10 +251,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, short?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -309,13 +309,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, ushort> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -345,10 +346,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, ushort?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -404,13 +404,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, int> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -440,10 +441,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, int?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -499,13 +499,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, uint> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -535,10 +536,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, uint?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -594,13 +594,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, long> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -630,10 +631,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, long?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -689,13 +689,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, ulong> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -725,10 +726,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, ulong?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -784,13 +784,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, float> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -820,10 +821,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, float?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -879,13 +879,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, double> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -915,10 +916,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, double?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -974,13 +974,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, decimal> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1010,10 +1011,9 @@ namespace CodeJam.Collections
 		public static TSource MinItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, decimal?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1073,13 +1073,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, byte> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1109,10 +1110,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, byte?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1168,13 +1168,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, sbyte> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1204,10 +1205,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, sbyte?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1263,13 +1263,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, short> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1299,10 +1300,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, short?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1358,13 +1358,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, ushort> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1394,10 +1395,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, ushort?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1453,13 +1453,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, int> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1489,10 +1490,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, int?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1548,13 +1548,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, uint> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1584,10 +1585,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, uint?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1643,13 +1643,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, long> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1679,10 +1680,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, long?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1738,13 +1738,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, ulong> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1774,10 +1775,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, ulong?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1833,13 +1833,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, float> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1869,10 +1870,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, float?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -1928,13 +1928,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, double> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -1964,10 +1965,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, double?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())
@@ -2023,13 +2023,14 @@ namespace CodeJam.Collections
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, decimal> selector)
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
+
 			TSource item;
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					throw NoElementsException();
+					return default(TSource);
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -2059,10 +2060,9 @@ namespace CodeJam.Collections
 		public static TSource MaxItem<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, decimal?> selector)
-			where TSource : class
 		{
-			if (source == null) throw new ArgumentNullException(nameof(source));
-			if (selector == null) throw new ArgumentNullException(nameof(selector));
+			Code.NotNull(source, nameof (source));
+			Code.NotNull(selector, nameof(selector));
 
 			TSource item;
 			using (var e = source.GetEnumerator())

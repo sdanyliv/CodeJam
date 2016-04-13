@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace CodeJam
 {
 	[TestFixture]
-	partial class AggregateFuncsTest
+	partial class MinMaxItemTests
 	{
 		#region MinItem
 
