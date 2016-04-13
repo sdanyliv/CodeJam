@@ -12,7 +12,7 @@ using static CodeJam.AssemblyWideConfig;
 namespace CodeJam
 {
 	/// <summary>
-	/// Prooftest: benchmark is not sensitive enough if OperationsPerInvoke is used instead of tight loop.
+	/// Proof test: benchmark is not sensitive enough if OperationsPerInvoke is used instead of tight loop.
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Self-testing")]
 	[PublicAPI]

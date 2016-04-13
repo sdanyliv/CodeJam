@@ -10,17 +10,17 @@ namespace BenchmarkDotNet.NUnit
 	{
 		private bool TryFixBenchmarkResource(
 			AnnotateContext annotateContext, string xmlFileName,
-			FinalRunAnalyser.TargetMinMax targetMinMax)
+			CompetitionTarget competitionTarget)
 		{
-			var competitionName = targetMinMax.CompetitionName;
-			var candidateName = targetMinMax.CandidateName;
+			var competitionName = competitionTarget.CompetitionName;
+			var candidateName = competitionTarget.CandidateName;
 
 			var xdoc = annotateContext.GetXmlAnnotation(xmlFileName);
-			var competition = GetOrCreateElement(xdoc.Root, FinalRunAnalyser.CompetitionNode, competitionName);
-			var candidate = GetOrCreateElement(competition, FinalRunAnalyser.CandidateNode, candidateName);
+			var competition = GetOrCreateElement(xdoc.Root, CompetitionTargetHelpers.CompetitionNode, competitionName);
+			var candidate = GetOrCreateElement(competition, CompetitionTargetHelpers.CandidateNode, candidateName);
 
-			UpdateAttribute(candidate, FinalRunAnalyser.MinRatioAttribute, targetMinMax.MinText);
-			UpdateAttribute(candidate, FinalRunAnalyser.MaxRatioAttribute, targetMinMax.MaxText);
+			UpdateAttribute(candidate, CompetitionTargetHelpers.MinRatioAttribute, competitionTarget.MinText);
+			UpdateAttribute(candidate, CompetitionTargetHelpers.MaxRatioAttribute, competitionTarget.MaxText);
 
 			annotateContext.MarkAsChanged(xmlFileName);
 
@@ -31,12 +31,12 @@ namespace BenchmarkDotNet.NUnit
 		{
 			var result = element
 				.Elements(name)
-				.SingleOrDefault(e => e.Attribute(FinalRunAnalyser.TargetAttribute)?.Value == targetName);
+				.SingleOrDefault(e => e.Attribute(CompetitionTargetHelpers.TargetAttribute)?.Value == targetName);
 
 			if (result == null)
 			{
 				result = new XElement(name);
-				UpdateAttribute(result, FinalRunAnalyser.TargetAttribute, targetName);
+				UpdateAttribute(result, CompetitionTargetHelpers.TargetAttribute, targetName);
 				element.Add(result);
 			}
 

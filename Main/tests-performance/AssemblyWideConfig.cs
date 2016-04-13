@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Configuration;
-using System.Diagnostics;
 using System.Reflection;
 
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.NUnit;
-
-// ReSharper disable CheckNamespace
 
 namespace CodeJam
 {
@@ -17,7 +14,7 @@ namespace CodeJam
 	internal class AssemblyWideConfig : ManualConfig
 	{
 		/// <summary>
-		/// OPTIONAL: Set AssemblyWideConfig.AnnotateOnRun=true in appconfig Set this to true
+		/// OPTIONAL: Set AssemblyWideConfig.AnnotateOnRun=true in app.config Set this to true
 		/// to enable auto-annotation of benchmark methods
 		/// </summary>
 		public static readonly bool AnnotateOnRun = TryGetSwitch(

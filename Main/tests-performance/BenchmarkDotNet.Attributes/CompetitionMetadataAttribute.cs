@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace BenchmarkDotNet.NUnit
 {
 	/// <summary>
-	/// Specifies xml resource to be used as benchmark limit data.
+	/// Specifies XML resource to be used as benchmark limit data.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
 	[PublicAPI, MeansImplicitUse]

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading;
 
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
@@ -18,39 +16,32 @@ using JetBrains.Annotations;
 using NUnit.Framework;
 
 // ReSharper disable CheckNamespace
-// ReSharper disable ConvertMethodToExpressionBody
 
 namespace BenchmarkDotNet.NUnit
 {
 	[PublicAPI]
 	public static class CompetitionBenchmarkRunner
 	{
-		#region Public API overloads
+		#region Public API
 		/// <summary>
 		/// Runs the competition benchmark from a type of a callee
 		/// </summary>
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void Run<T>(T thisReference) where T : class
-		{
-			RunCompetition(0, 0, thisReference.GetType(), null);
-		}
+		public static void Run<T>(T thisReference) where T : class =>
+			RunCompetition(thisReference.GetType(), null, 0, 0);
 
 		/// <summary>
 		/// Runs the competition benchmark from a type of a callee
 		/// </summary>
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void Run<T>(T thisReference, IConfig config) where T : class
-		{
-			RunCompetition(0, 0, thisReference.GetType(), config);
-		}
+		public static void Run<T>(T thisReference, IConfig config) where T : class =>
+			RunCompetition(thisReference.GetType(), config, 0, 0);
 
 		/// <summary>
 		/// Runs the competition benchmark
 		/// </summary>
-		public static void Run<T>(IConfig config) where T : class
-		{
-			RunCompetition(0, 0, typeof(T), config);
-		}
+		public static void Run<T>(IConfig config) where T : class => 
+			RunCompetition(typeof(T), config, 0, 0);
 		#endregion
 
 		#region Core logic
@@ -59,7 +50,7 @@ namespace BenchmarkDotNet.NUnit
 		/// </summary>
 		// BASEDON: https://github.com/PerfDotNet/BenchmarkDotNet/blob/master/BenchmarkDotNet.IntegrationTests/PerformanceUnitTest.cs
 		public static void RunCompetition(
-			double minRatio, double maxRatio, Type benchType, IConfig config)
+			Type benchmarkType, IConfig config, double minRatio, double maxRatio)
 		{
 			var currentDirectory = Environment.CurrentDirectory;
 			try
@@ -67,7 +58,7 @@ namespace BenchmarkDotNet.NUnit
 				// WORKAROUND: fixing the https://github.com/nunit/nunit3-vs-adapter/issues/96
 				Environment.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
 
-				RunCompetitionUnderSetup(minRatio, maxRatio, benchType, config);
+				RunCompetitionUnderSetup(benchmarkType, config, minRatio, maxRatio);
 			}
 			finally
 			{
@@ -76,43 +67,34 @@ namespace BenchmarkDotNet.NUnit
 		}
 
 		private static void RunCompetitionUnderSetup(
-			double minRatio, double maxRatio, Type benchType, IConfig config)
+			Type benchmarkType, IConfig config, double minRatio, double maxRatio)
 		{
-			ValidateCompetition(benchType);
+			ValidateCompetitionSetup(benchmarkType);
 
 			// Capturing the output
 			var logger = InitAccumulationLogger();
-			// Shared state
-			var runState = new FinalRunAnalyser();
+			// Competition analyzer
+			var competitionAnalyser = new CompetitionAnalyser();
 			// Final config
-			var runConfig = CreateRunConfig(config, runState, logger);
+			var runConfig = CreateRunConfig(config, competitionAnalyser, logger);
 			Summary summary = null;
 			try
 			{
-				summary = RunCore(benchType, runConfig, runState);
+				summary = RunCore(benchmarkType, runConfig, competitionAnalyser);
 			}
 			finally
 			{
 				DumpOutputSummaryAtTop(summary, logger);
 			}
 
-			var culture = Thread.CurrentThread.CurrentCulture;
-			try
-			{
-				Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-				runState.ProcessSummary(summary, minRatio, maxRatio);
-			}
-			finally
-			{
-				Thread.CurrentThread.CurrentCulture = culture;
-			}
+			competitionAnalyser.ValidateSummary(summary, minRatio, maxRatio);
 		}
 
-		private static void ValidateCompetition(Type benchType)
+		private static void ValidateCompetitionSetup(Type benchmarkType)
 		{
 			if (!Debugger.IsAttached)
 			{
-				var assembly = benchType.Assembly;
+				var assembly = benchmarkType.Assembly;
 				if (assembly.IsDebugAssembly())
 					throw new InvalidOperationException(
 						$"Set the solution configuration into Release mode. Assembly {assembly.GetName().Name} was build as debug.");
@@ -137,7 +119,7 @@ namespace BenchmarkDotNet.NUnit
 			return logger;
 		}
 
-		private static IConfig CreateRunConfig(IConfig config, FinalRunAnalyser runState, AccumulationLogger logger)
+		private static IConfig CreateRunConfig(IConfig config, CompetitionAnalyser runState, AccumulationLogger logger)
 		{
 			// TODO: better setup?
 			var result = BenchmarkHelpers.CreateUnitTestConfig(config ?? DefaultConfig.Instance);
@@ -154,17 +136,18 @@ namespace BenchmarkDotNet.NUnit
 			return result;
 		}
 
-		private static Summary RunCore(Type benchType, IConfig runConfig, FinalRunAnalyser runState)
+		private static Summary RunCore(Type benchmarkType, IConfig runConfig, CompetitionAnalyser runState)
 		{
-			const int rerunCount = 10;
 			Summary summary = null;
+
+			const int rerunCount = 10;
 			for (var i = 0; i < rerunCount; i++)
 			{
 				runState.LastRun = i == rerunCount - 1;
 				runState.RerunRequested = false;
 
 				// Running the benchmark
-				summary = BenchmarkRunner.Run(benchType, runConfig);
+				summary = BenchmarkRunner.Run(benchmarkType, runConfig);
 
 				// Rerun if annotated
 				if (!runState.RerunRequested)
@@ -172,6 +155,7 @@ namespace BenchmarkDotNet.NUnit
 					break;
 				}
 			}
+
 			return summary;
 		}
 
@@ -182,6 +166,7 @@ namespace BenchmarkDotNet.NUnit
 				// Dumping the benchmark results to console
 				MarkdownExporter.Default.ExportToLog(summary, ConsoleLogger.Default);
 			}
+
 			// Dumping all captured output below the benchmark results
 			ConsoleLogger.Default.WriteLine(logger.GetLog());
 		}

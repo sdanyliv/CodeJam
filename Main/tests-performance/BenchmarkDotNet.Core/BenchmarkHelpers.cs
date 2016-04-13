@@ -28,7 +28,7 @@ namespace BenchmarkDotNet.Helpers
 		/// Calculates the Nth percentile from the set of values
 		/// </summary>
 		/// <remarks>
-		/// The implementation is expected to be consitent with the one from Excel.
+		/// The implementation is expected to be consistent with the one from Excel.
 		/// It's a quite common to export bench output into .csv for further analysis 
 		/// And it's a good idea to have same results from all tools being used.
 		/// </remarks>
@@ -66,7 +66,7 @@ namespace BenchmarkDotNet.Helpers
 		}
 
 		/// <summary>
-		/// Retrieves the typed attribute value for the specfied method
+		/// Retrieves the typed attribute value for the specified method
 		/// </summary>
 		/// <typeparam name="TAttribute">Type of the attribute</typeparam>
 		/// <param name="method">Method annotated with the attribute</param>

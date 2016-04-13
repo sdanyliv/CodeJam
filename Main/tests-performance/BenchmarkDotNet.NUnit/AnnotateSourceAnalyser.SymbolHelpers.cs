@@ -24,7 +24,7 @@ namespace BenchmarkDotNet.NUnit
 			public static ISymbolMethod TryGetSymbols(MethodBase target)
 			{
 				// ReSharper disable once PossibleNullReferenceException
-				var assembly = target.ReflectedType.Assembly;
+				var assembly = target.DeclaringType.Assembly;
 				var symbolReader = TryGetSymbolReaderForFile(assembly.Location, null);
 
 				return symbolReader?.GetMethod(new SymbolToken(target.MetadataToken));

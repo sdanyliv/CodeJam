@@ -12,7 +12,7 @@ using static CodeJam.AssemblyWideConfig;
 namespace CodeJam
 {
 	/// <summary>
-	/// Prooftest: benchmark is sensitive enough to spot a minimal method change
+	/// Proof test: benchmark is sensitive enough to spot a minimal method change
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Self-testing")]
 	[PublicAPI]

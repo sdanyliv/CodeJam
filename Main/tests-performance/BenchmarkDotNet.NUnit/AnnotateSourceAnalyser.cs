@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.SymbolStore;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -41,7 +40,7 @@ namespace BenchmarkDotNet.NUnit
 			public string[] GetFileLines(string file)
 			{
 				if (_xmlAnnotations.ContainsKey(file))
-					throw new InvalidOperationException($"File {file} already loaded as xml annotation");
+					throw new InvalidOperationException($"File {file} already loaded as XML annotation");
 
 				string[] result;
 				if (!_sourceLines.TryGetValue(file, out result))
@@ -109,11 +108,11 @@ namespace BenchmarkDotNet.NUnit
 		#endregion
 
 		#region Helper methods
-		private static bool TryGetSourceInfo(MethodInfo method, out string fileName, out int firstCodeLine)
+		private static bool TryGetSourceInfo(CompetitionTarget competitionTarget, out string fileName, out int firstCodeLine)
 		{
 			fileName = null;
 			firstCodeLine = 0;
-			var methodSymbols = SymbolHelpers.TryGetSymbols(method);
+			var methodSymbols = SymbolHelpers.TryGetSymbols(competitionTarget.Target.Method);
 			if (methodSymbols != null)
 			{
 				var count = methodSymbols.SequencePointCount;
@@ -132,81 +131,81 @@ namespace BenchmarkDotNet.NUnit
 		}
 		#endregion
 
-		#region Public api
+		#region Public API
 		public bool RerunIfModified { get; set; }
 
 		public IEnumerable<IWarning> Analyze(Summary summary)
 		{
-			var sharedState = summary.Config.GetAnalysers().OfType<FinalRunAnalyser>().Single();
+			var competitionAnalyser = summary.Config.GetAnalysers().OfType<CompetitionAnalyser>().Single();
 			var warnings = new List<IWarning>();
 			var logger = summary.Config.GetCompositeLogger();
-			AnnotateBenchmarkFiles(summary, sharedState, logger, warnings);
+			AnnotateBenchmarkFiles(summary, competitionAnalyser, logger, warnings);
 
 			return warnings;
 		}
 		#endregion
 
 		private void AnnotateBenchmarkFiles(
-			Summary summary, FinalRunAnalyser sharedState,
+			Summary summary, CompetitionAnalyser competitionAnalyser,
 			ILogger logger, List<IWarning> warnings)
 		{
 			var annContext = new AnnotateContext();
-			var minMaxData = sharedState.GetCompetitionBoundaries(summary.Benchmarks);
-			var updatedRecords = sharedState.GetNewCompetitionBoundaries(summary, minMaxData);
-			if (updatedRecords.Length == 0)
+			var competitionTargets = competitionAnalyser.GetCompetitionTargets(summary);
+			var newTargets = competitionAnalyser.GetNewCompetitionTargets(summary);
+			if (newTargets.Length == 0)
 			{
 				logger.WriteLineInfo("All competition benchmarks are in boundary.");
 				return;
 			}
 
-			foreach (var targetMinMax in updatedRecords)
+			foreach (var newTarget in newTargets)
 			{
-				var targetMethod = targetMinMax.TargetMethod;
+				var targetMethodName = newTarget.CandidateName;
 
-				logger.WriteLineInfo($"Method {targetMethod.Name}: new boundary [{targetMinMax.MinText},{targetMinMax.MaxText}].");
+				logger.WriteLineInfo($"Method {targetMethodName}: new boundary [{newTarget.MinText},{newTarget.MaxText}].");
 
 				int firstCodeLine;
 				string fileName;
-				bool hasSource = TryGetSourceInfo(targetMethod, out fileName, out firstCodeLine);
+				bool hasSource = TryGetSourceInfo(newTarget, out fileName, out firstCodeLine);
 				if (!hasSource)
 				{
-					throw new InvalidOperationException($"Method {targetMethod.Name}: could not annotate. Source file not found.");
+					throw new InvalidOperationException($"Method {targetMethodName}: could not annotate. Source file not found.");
 				}
 
-				if (targetMinMax.ResourceName == null)
+				if (newTarget.UsesResourceAnnotation)
 				{
-					logger.WriteLineInfo($"Method {targetMethod.Name}: annotate at line {firstCodeLine}, file {fileName}.");
-					bool annotated = TryFixBenchmarkAttribute(annContext, fileName, firstCodeLine, targetMinMax);
-					if (!annotated)
-					{
-						throw new InvalidOperationException($"Method {targetMethod.Name}: could not annotate. Source file ${fileName}.");
-					}
-				}
-				else
-				{
-					var xmlFileName = Path.ChangeExtension(fileName, ".xml");
+					var resourceFileName = Path.ChangeExtension(fileName, ".xml");
 					logger.WriteLineInfo(
-						$"Method {targetMethod.Name}: annotate resource {targetMinMax.ResourceName} (file {xmlFileName}).");
-					bool annotated = TryFixBenchmarkResource(annContext, xmlFileName, targetMinMax);
+						$"Method {targetMethodName}: annotate resource file {resourceFileName}.");
+					bool annotated = TryFixBenchmarkResource(annContext, resourceFileName, newTarget);
 					if (!annotated)
 					{
 						throw new InvalidOperationException(
-							$"Method {targetMethod.Name}: could not annotate. Resource file ${xmlFileName}.");
+							$"Method {targetMethodName}: could not annotate resource file {resourceFileName}.");
 					}
-				}
-
-				if (RerunIfModified && !sharedState.LastRun)
-				{
-					var message = $"Method {targetMethod.Name} annotation updated, benchmark has to be restarted";
-					logger.WriteLineInfo(message);
-					warnings.Add(new Warning(nameof(AnnotateSourceAnalyser), message, null));
-
-					minMaxData[targetMinMax.TargetMethod] = targetMinMax;
-					sharedState.RerunRequested = true;
 				}
 				else
 				{
-					var message = $"Method {targetMethod.Name} annotation updated.";
+					logger.WriteLineInfo($"Method {targetMethodName}: annotate at line {firstCodeLine}, file {fileName}.");
+					bool annotated = TryFixBenchmarkAttribute(annContext, fileName, firstCodeLine, newTarget);
+					if (!annotated)
+					{
+						throw new InvalidOperationException($"Method {targetMethodName}: could not annotate. Source file {fileName}.");
+					}
+				}
+
+				if (RerunIfModified && !competitionAnalyser.LastRun)
+				{
+					var message = $"Method {targetMethodName} annotation updated, benchmark has to be restarted";
+					logger.WriteLineInfo(message);
+					warnings.Add(new Warning(nameof(AnnotateSourceAnalyser), message, null));
+
+					competitionTargets[newTarget.Target] = newTarget;
+					competitionAnalyser.RerunRequested = true;
+				}
+				else
+				{
+					var message = $"Method {targetMethodName} annotation updated.";
 					logger.WriteLineInfo(message);
 					warnings.Add(new Warning(nameof(AnnotateSourceAnalyser), message, null));
 				}

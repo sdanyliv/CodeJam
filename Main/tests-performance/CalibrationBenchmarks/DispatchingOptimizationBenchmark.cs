@@ -14,7 +14,7 @@ using static CodeJam.AssemblyWideConfig;
 namespace CodeJam
 {
 	/// <summary>
-	/// Prooftest: JIT optimizations on handwritten method dispatching
+	/// Proof test: JIT optimizations on handwritten method dispatching
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Self-testing")]
 	[SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]

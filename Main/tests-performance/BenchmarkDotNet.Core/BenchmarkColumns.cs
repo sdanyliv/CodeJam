@@ -7,7 +7,6 @@ using BenchmarkDotNet.Running;
 
 using JetBrains.Annotations;
 
-// ReSharper disable ConvertMethodToExpressionBody
 // ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.Columns
@@ -36,10 +35,8 @@ namespace BenchmarkDotNet.Columns
 
 		protected virtual bool IsTimeColumn => true;
 
-		protected string Format(double value, TimeUnit timeUnit)
-		{
-			return IsTimeColumn ? value.ToTimeStr(timeUnit) : value.ToStr();
-		}
+		protected string Format(double value, TimeUnit timeUnit) => 
+			IsTimeColumn ? value.ToTimeStr(timeUnit) : value.ToStr();
 
 		public virtual string GetValue(Summary summary, Benchmark benchmark)
 		{

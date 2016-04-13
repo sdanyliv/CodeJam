@@ -27,7 +27,7 @@ namespace BenchmarkDotNet.NUnit
 		private static bool TryFixBenchmarkAttribute(
 			AnnotateContext annotateContext,
 			string fileName, int firstCodeLine,
-			FinalRunAnalyser.TargetMinMax targetMinMax)
+			CompetitionTarget competitionTarget)
 		{
 			var result = false;
 			var sourceFileLines = annotateContext.GetFileLines(fileName);
@@ -40,7 +40,7 @@ namespace BenchmarkDotNet.NUnit
 
 				var line2 = _attributeRegex.Replace(
 					line,
-					m => FixAttributeContent(m, targetMinMax), 1);
+					m => FixAttributeContent(m, competitionTarget), 1);
 				if (line2 != line)
 				{
 					annotateContext.ReplaceLine(fileName, i, line2);
@@ -51,7 +51,7 @@ namespace BenchmarkDotNet.NUnit
 			return result;
 		}
 
-		private static string FixAttributeContent(Match m, FinalRunAnalyser.TargetMinMax targetMinMax)
+		private static string FixAttributeContent(Match m, CompetitionTarget competitionTarget)
 		{
 			var attributeStartText = m.Groups[1].Value;
 			var attributeEndText = m.Groups[3].Value;
@@ -66,12 +66,12 @@ namespace BenchmarkDotNet.NUnit
 			if (attributeWithoutBraces)
 			{
 				result.Append('(');
-				result.Append($"{targetMinMax.MinText}, {targetMinMax.MaxText}");
+				result.Append($"{competitionTarget.MinText}, {competitionTarget.MaxText}");
 				result.Append(')');
 			}
 			else
 			{
-				result.Append($"{targetMinMax.MinText}, {targetMinMax.MaxText}");
+				result.Append($"{competitionTarget.MinText}, {competitionTarget.MaxText}");
 				if (attributeWithoutMinMax && attributeHasAdditionalContent)
 				{
 					result.Append(", ");
