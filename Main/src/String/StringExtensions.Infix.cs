@@ -237,7 +237,7 @@ namespace CodeJam
 		/// </param>
 		/// <param name="numberStyle">
 		/// A bitwise combination of enumeration values that indicates the style elements that can be present in
-		/// <paramref name="str"/>. A typical value to specify is Integer.
+		/// <paramref name="str"/>. Default value is Integer.
 		/// </param>
 		/// <param name="provider">
 		/// An object that supplies culture-specific formatting information about <see cref="str"/>.
@@ -256,6 +256,37 @@ namespace CodeJam
 		{
 			int result;
 			return int.TryParse(str, numberStyle, provider, out result) ? (int?)result : null;
+		}
+
+		/// <summary>
+		/// Converts the string representation of a number in a specified style and culture-specific format to its
+		/// <see cref="double"/> equivalent. A return value indicates whether the conversion succeeded.
+		/// </summary>
+		/// <param name="str">
+		/// A string containing a number to convert. The string is interpreted using the style specified by
+		/// <paramref name="numberStyle"/>.
+		/// </param>
+		/// <param name="numberStyle">
+		/// A bitwise combination of enumeration values that indicates the style elements that can be present in
+		/// <paramref name="str"/>. Default value is Float.
+		/// </param>
+		/// <param name="provider">
+		/// An object that supplies culture-specific formatting information about <see cref="str"/>.
+		/// </param>
+		/// <returns>
+		/// When this method returns, contains the <see cref="double"/> value equivalent of the number contained in
+		/// <paramref name="str"/>, if the conversion succeeded, or null if the conversion failed. The conversion fails if
+		/// the <paramref name="str"/> parameter is null or String.Empty, is not in a format compliant withstyle, or
+		/// represents a number less than <see cref="double.MinValue"/> or greater than <see cref="double.MaxValue"/>.
+		/// </returns>
+		[Pure]
+		public static int? ToDouble(
+			[CanBeNull] this string str,
+			NumberStyles numberStyle = NumberStyles.Float,
+			[CanBeNull] IFormatProvider provider = null)
+		{
+			double result;
+			return double.TryParse(str, numberStyle, provider, out result) ? (int?)result : null;
 		}
 	}
 }

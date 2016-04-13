@@ -4,6 +4,10 @@ CodeJam 1.0.0-beta7 Release Notes
 What's new in 1.0.0-beta9
 ------------------------
 * ReflectionExtensions.IsAnonymous methods
+* string.ToInt and ToDouble methods
+* OptionalElementValue overload
+* Refactoring
+* Fixes and code cleanup
 
 What's new in 1.0.0-beta8
 ------------------------
