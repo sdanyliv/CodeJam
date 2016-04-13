@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using BenchmarkDotNet.Analyzers;
@@ -17,7 +16,6 @@ namespace BenchmarkDotNet.NUnit
 	/// Internal class to manage consequent runs.
 	/// DO NOT add this one explicitly
 	/// </summary>
-	[SuppressMessage("ReSharper", "ArrangeBraces_while")]
 	internal class CompetitionAnalyser : IAnalyser
 	{
 		private readonly CompetitionTargets _competitionTargets = new Dictionary<Target, CompetitionTarget>();

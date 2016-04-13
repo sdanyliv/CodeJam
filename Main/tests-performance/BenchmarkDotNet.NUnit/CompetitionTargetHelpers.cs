@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -14,6 +13,8 @@ using BenchmarkDotNet.Running;
 
 using CodeJam;
 
+using JetBrains.Annotations;
+
 // ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.NUnit
@@ -23,7 +24,7 @@ namespace BenchmarkDotNet.NUnit
 	/// <summary>
 	/// Helper methods for <see cref="CompetitionTarget"/>
 	/// </summary>
-	[SuppressMessage("ReSharper", "ArrangeBraces_while")]
+	[PublicAPI]
 	public static class CompetitionTargetHelpers
 	{
 		#region XML metadata constants
@@ -189,6 +190,7 @@ namespace BenchmarkDotNet.NUnit
 			return newTargets.Values.ToArray();
 		}
 
+		// ReSharper disable once ParameterTypeCanBeEnumerable.Local
 		private static Benchmark GetBaselineBenchmark(
 			IGrouping<KeyValuePair<IJob, ParameterInstances>, Benchmark> benchmarkGroup)
 		{

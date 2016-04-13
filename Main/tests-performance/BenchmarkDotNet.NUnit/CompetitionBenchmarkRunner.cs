@@ -40,7 +40,7 @@ namespace BenchmarkDotNet.NUnit
 		/// <summary>
 		/// Runs the competition benchmark
 		/// </summary>
-		public static void Run<T>(IConfig config) where T : class => 
+		public static void Run<T>(IConfig config) where T : class =>
 			RunCompetition(typeof(T), config, 0, 0);
 		#endregion
 

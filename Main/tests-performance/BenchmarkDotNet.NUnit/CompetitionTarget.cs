@@ -3,6 +3,8 @@ using System.Globalization;
 
 using BenchmarkDotNet.Running;
 
+using JetBrains.Annotations;
+
 // ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.NUnit
@@ -10,6 +12,7 @@ namespace BenchmarkDotNet.NUnit
 	/// <summary>
 	/// Information for competition target
 	/// </summary>
+	[PublicAPI]
 	public class CompetitionTarget
 	{
 		#region Fields & .ctor

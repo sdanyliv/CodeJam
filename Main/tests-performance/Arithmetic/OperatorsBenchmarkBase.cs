@@ -9,11 +9,12 @@ namespace CodeJam.Arithmetic
 	/// <summary>
 	/// Base class for all operator test cases;
 	/// </summary>
+	[PublicAPI]
 	public abstract class OperatorsBenchmarkBase<T, TStorage>
 	{
 		protected int Count { get; set; } = 1000 * 1000;
 		protected int ValueARepeats { get; set; } = 5;
-		protected int ValueAOffset { get; set; } = 0;
+		protected int ValueAOffset { get; set; }
 
 		protected T[] ValuesA;
 		protected T[] ValuesB;

@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -17,8 +16,6 @@ namespace CodeJam
 	/// Proof test: JIT optimizations on handwritten method dispatching
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Self-testing")]
-	[SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
-	[SuppressMessage("ReSharper", "ConvertToConstant.Local")]
 	[PublicAPI]
 	public class DispatchingOptimizationBenchmark
 	{
@@ -46,12 +43,10 @@ namespace CodeJam
 
 			// 2. Update the field values:
 
-			// 2.1. Updating the readonly field.
-			// Should be ignored;
-			var bf = BindingFlags.Static | BindingFlags.NonPublic;
+			// 2.1. Updating the readonly field. The change should be ignored.
 			// ReSharper disable once PossibleNullReferenceException
 			typeof(DispatchingOptimizationBenchmark)
-				.GetField(nameof(_implementationToUse1), bf)
+				.GetField(nameof(_implementationToUse1), BindingFlags.Static | BindingFlags.NonPublic)
 				.SetValue(null, ImplementationToUse.Implementation3);
 
 			//2.2. Updating the field.
@@ -133,8 +128,7 @@ namespace CodeJam
 		public int Test00Baseline()
 		{
 			var sum = 0;
-			var count = Count;
-			for (var i = 0; i < count; i++)
+			for (var i = 0; i < Count; i++)
 			{
 				sum += DirectCall(i);
 			}
@@ -145,12 +139,10 @@ namespace CodeJam
 		public int Test01SwitchOverRoField()
 		{
 			var sum = 0;
-			var count = Count;
-			for (var i = 0; i < count; i++)
+			for (var i = 0; i < Count; i++)
 			{
 				sum += SwitchOverRoField(i);
 			}
-
 			return sum;
 		}
 
@@ -158,12 +150,10 @@ namespace CodeJam
 		public int Test02SwitchOverStaticField()
 		{
 			var sum = 0;
-			var count = Count;
-			for (var i = 0; i < count; i++)
+			for (var i = 0; i < Count; i++)
 			{
 				sum += SwitchOverStaticField(i);
 			}
-
 			return sum;
 		}
 		#endregion

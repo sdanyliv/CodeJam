@@ -35,7 +35,7 @@ namespace BenchmarkDotNet.Columns
 
 		protected virtual bool IsTimeColumn => true;
 
-		protected string Format(double value, TimeUnit timeUnit) => 
+		protected string Format(double value, TimeUnit timeUnit) =>
 			IsTimeColumn ? value.ToTimeStr(timeUnit) : value.ToStr();
 
 		public virtual string GetValue(Summary summary, Benchmark benchmark)

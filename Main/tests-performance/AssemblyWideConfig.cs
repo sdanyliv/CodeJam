@@ -5,6 +5,8 @@ using System.Reflection;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.NUnit;
 
+using JetBrains.Annotations;
+
 namespace CodeJam
 {
 	/// <summary>
@@ -17,6 +19,7 @@ namespace CodeJam
 		/// OPTIONAL: Set AssemblyWideConfig.AnnotateOnRun=true in app.config Set this to true
 		/// to enable auto-annotation of benchmark methods
 		/// </summary>
+		[UsedImplicitly]
 		public static readonly bool AnnotateOnRun = TryGetSwitch(
 			nameof(AssemblyWideConfig),
 			// ReSharper disable once StaticMemberInitializerReferesToMemberBelow
@@ -41,6 +44,7 @@ namespace CodeJam
 		/// <summary> 
 		/// Constructor
 		/// </summary>
+		[UsedImplicitly]
 		public AssemblyWideConfig() : this(false) { }
 
 		/// <summary> 
