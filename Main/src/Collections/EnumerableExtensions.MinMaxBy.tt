@@ -69,6 +69,7 @@ namespace CodeJam.Collections
 		/// <typeparam name="TSource">The type of the elements of source.</typeparam>
 		/// <param name="source">A sequence of values to determine the minimum value of.</param>
 		/// <param name="selector">A transform function to apply to each element.</param>
+		/// <param name="defaultValue">Value returned if collection contains no not null elements.</param>
 		/// <returns>
 		/// The item with <#= info.Name #> value in the sequence or <typeparamref name="TSource"/> default value if
 		/// <paramref name="source"/> has no not null elements.
@@ -76,7 +77,8 @@ namespace CodeJam.Collections
 		[Pure]
 		public static TSource <#= info.Method #>OrDefault<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
-			[NotNull, InstantHandle] Func<TSource, <#= type #>> selector)
+			[NotNull, InstantHandle] Func<TSource, <#= type #>> selector,
+			TSource defaultValue = default (TSource))
 		{
 			Code.NotNull(source, nameof (source));
 			Code.NotNull(selector, nameof(selector));
@@ -85,7 +87,7 @@ namespace CodeJam.Collections
 			using (var e = source.GetEnumerator())
 			{
 				if (!e.MoveNext())
-					return default(TSource);
+					return defaultValue;
 
 				var value = selector(e.Current);
 				item = e.Current;
@@ -163,6 +165,7 @@ namespace CodeJam.Collections
 		/// <typeparam name="TSource">The type of the elements of source.</typeparam>
 		/// <param name="source">A sequence of values to determine the minimum value of.</param>
 		/// <param name="selector">A transform function to apply to each element.</param>
+		/// <param name="defaultValue">Value returned if collection contains no not null elements.</param>
 		/// <returns>
 		/// The item with <#= info.Name #> value in the sequence or <typeparamref name="TSource"/> default value if
 		/// <paramref name="source"/> has no not null elements.
@@ -170,7 +173,8 @@ namespace CodeJam.Collections
 		[Pure]
 		public static TSource <#= info.Method #>OrDefault<TSource>(
 			[NotNull] this IEnumerable<TSource> source,
-			[NotNull, InstantHandle] Func<TSource, <#= type #>?> selector)
+			[NotNull, InstantHandle] Func<TSource, <#= type #>?> selector,
+			TSource defaultValue = default (TSource))
 		{
 			Code.NotNull(source, nameof (source));
 			Code.NotNull(selector, nameof(selector));
@@ -184,7 +188,7 @@ namespace CodeJam.Collections
 				do
 				{
 					if (!e.MoveNext())
-						return default(TSource);
+						return defaultValue;
 
 					value = selector(e.Current);
 				}

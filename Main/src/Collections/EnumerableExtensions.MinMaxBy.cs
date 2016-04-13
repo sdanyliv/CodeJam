@@ -34,6 +34,7 @@ namespace CodeJam.Collections
 		/// <typeparam name="TValue">Type of the value</typeparam>
 		/// <param name="source">A sequence of values to determine the minimum value of.</param>
 		/// <param name="selector">A transform function to apply to each element.</param>
+		/// <param name="defaultValue">Value returned if collection contains no not null elements.</param>
 		/// <returns>
 		/// The item with minimum value in the sequence or <typeparamref name="TSource"/> default value if
 		/// <paramref name="source"/> has no not null elements.
@@ -42,7 +43,8 @@ namespace CodeJam.Collections
 		[Pure]
 		public static TSource MinByOrDefault<TSource, TValue>(
 			[NotNull, InstantHandle] this IEnumerable<TSource> source,
-			[NotNull, InstantHandle] Func<TSource, TValue> selector) =>
+			[NotNull, InstantHandle] Func<TSource, TValue> selector,
+			TSource defaultValue = default(TSource)) =>
 				MinByOrDefault(source, selector, Comparer<TValue>.Default);
 
 		/// <summary>
@@ -127,6 +129,7 @@ namespace CodeJam.Collections
 		/// <param name="source">A sequence of values to determine the minimum value of.</param>
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <param name="comparer">The <see cref="IComparer{T}"/> to compare values.</param>
+		/// <param name="defaultValue">Value returned if collection contains no not null elements.</param>
 		/// <returns>
 		/// The item with minimum value in the sequence or <typeparamref name="TSource"/> default value if
 		/// <paramref name="source"/> has no not null elements.
@@ -135,7 +138,8 @@ namespace CodeJam.Collections
 		public static TSource MinByOrDefault<TSource, TValue>(
 			[NotNull, InstantHandle] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, TValue> selector,
-			[CanBeNull] IComparer<TValue> comparer)
+			[CanBeNull] IComparer<TValue> comparer,
+			TSource defaultValue = default(TSource))
 		{
 			if (source == null) throw new ArgumentNullException(nameof(source));
 			if (selector == null) throw new ArgumentNullException(nameof(selector));
@@ -152,7 +156,7 @@ namespace CodeJam.Collections
 					do
 					{
 						if (!e.MoveNext())
-							return default(TSource);
+							return defaultValue;
 
 						value = selector(e.Current);
 						item = e.Current;
@@ -194,6 +198,7 @@ namespace CodeJam.Collections
 		}
 		#endregion
 
+		#region Max
 		/// <summary>
 		/// Invokes a <paramref name="selector"/> on each element of a <paramref name="source"/>
 		/// and returns the item with maximum value.
@@ -216,15 +221,17 @@ namespace CodeJam.Collections
 		/// <typeparam name="TValue">Type of the value</typeparam>
 		/// <param name="source">A sequence of values to determine the maximum value of.</param>
 		/// <param name="selector">A transform function to apply to each element.</param>
+		/// <param name="defaultValue">Value returned if collection contains no not null elements.</param>
 		/// <returns>
 		/// The item with maximum value in the sequence or <typeparamref name="TSource"/> default value if
 		/// <paramref name="source"/> has no not null elements.
 		/// </returns>
 		[Pure]
 		public static TSource MaxByOrDefault<TSource, TValue>(
-				[NotNull, InstantHandle] this IEnumerable<TSource> source,
-				[NotNull, InstantHandle] Func<TSource, TValue> selector) =>
-			MaxByOrDefault(source, selector, Comparer<TValue>.Default);
+			[NotNull, InstantHandle] this IEnumerable<TSource> source,
+			[NotNull, InstantHandle] Func<TSource, TValue> selector,
+			TSource defaultValue = default(TSource)) =>
+				MaxByOrDefault(source, selector, Comparer<TValue>.Default, defaultValue);
 
 		/// <summary>
 		/// Invokes a <paramref name="selector"/> on each element of a <paramref name="source"/>
@@ -261,8 +268,7 @@ namespace CodeJam.Collections
 
 						value = selector(e.Current);
 						item = e.Current;
-					}
-					while (value == null);
+					} while (value == null);
 
 					while (e.MoveNext())
 					{
@@ -308,6 +314,7 @@ namespace CodeJam.Collections
 		/// <param name="source">A sequence of values to determine the maximum value of.</param>
 		/// <param name="selector">A transform function to apply to each element.</param>
 		/// <param name="comparer">The <see cref="IComparer{T}"/> to compare values.</param>
+		/// <param name="defaultValue">Value returned if collection contains no not null elements.</param>
 		/// <returns>
 		/// The item with maximum value in the sequence or <typeparamref name="TSource"/> default value if
 		/// <paramref name="source"/> has no not null elements.
@@ -316,7 +323,8 @@ namespace CodeJam.Collections
 		public static TSource MaxByOrDefault<TSource, TValue>(
 			[NotNull, InstantHandle] this IEnumerable<TSource> source,
 			[NotNull, InstantHandle] Func<TSource, TValue> selector,
-			[CanBeNull] IComparer<TValue> comparer)
+			[CanBeNull] IComparer<TValue> comparer,
+			TSource defaultValue = default(TSource))
 		{
 			if (source == null) throw new ArgumentNullException(nameof(source));
 			if (selector == null) throw new ArgumentNullException(nameof(selector));
@@ -333,12 +341,11 @@ namespace CodeJam.Collections
 					do
 					{
 						if (!e.MoveNext())
-							return default (TSource);
+							return defaultValue;
 
 						value = selector(e.Current);
 						item = e.Current;
-					}
-					while (value == null);
+					} while (value == null);
 
 					while (e.MoveNext())
 					{
@@ -374,5 +381,6 @@ namespace CodeJam.Collections
 
 			return item;
 		}
+		#endregion
 	}
 }
