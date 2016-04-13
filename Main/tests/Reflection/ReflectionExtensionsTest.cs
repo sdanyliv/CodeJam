@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 
 using NUnit.Framework;
 
@@ -78,5 +79,25 @@ namespace CodeJam.Reflection
 		[TestCase(typeof(int?), ExpectedResult = true)]
 		[TestCase(typeof(DateTime?), ExpectedResult = false)]
 		public bool IsNumeric(Type type) => type.IsNumeric();
+
+		[CompilerGenerated]
+		class NotAnonymousType<T> : List<T>
+		{
+		}
+
+		class TestAnonymousCaseAttribute : TestCaseAttribute
+		{
+			public TestAnonymousCaseAttribute()
+				: base(new { Field = 0 }.GetType())
+			{
+				ExpectedResult = true;
+			}
+		}
+
+		[TestAnonymousCase]
+		[TestCase(typeof(NotAnonymousType<int>), ExpectedResult = false)]
+		[TestCase(typeof(DateTime?),        ExpectedResult = false)]
+		[TestCase(typeof(DateTime),         ExpectedResult = false)]
+		public bool IsAnonymous(Type type) => type.IsAnonymous();
 	}
 }

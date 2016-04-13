@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
 
@@ -227,6 +228,23 @@ namespace CodeJam.Reflection
 			}
 
 			throw new InvalidOperationException();
+		}
+
+		/// <summary>
+		/// Checks if <paramref name="type"/> is an anonymous type.
+		/// </summary>
+		/// <param name="type">Type to check.</param>
+		/// <returns>True, if <paramref name="type"/> is an anonymous type.</returns>
+		[Pure]
+		public static bool IsAnonymous([NotNull] this Type type)
+		{
+			Code.NotNull(type, nameof(type));
+
+			return
+				!type.IsPublic &&
+				type.IsGenericType &&
+				Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false) &&
+				type.Name.Contains("AnonymousType") && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"));
 		}
 	}
 }

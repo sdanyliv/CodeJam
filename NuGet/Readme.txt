@@ -1,6 +1,10 @@
 CodeJam 1.0.0-beta7 Release Notes
 ---------------------------------
 
+What's new in 1.0.0-beta9
+------------------------
+* ReflectionExtensions.IsAnonymous methods
+
 What's new in 1.0.0-beta8
 ------------------------
 * Unary generic operators for numeric types (-, ~)
