@@ -243,7 +243,7 @@ namespace CodeJam.Reflection
 			return
 				!type.IsPublic &&
 				 type.IsGenericType &&
-				(type.Name.StartsWith("<>AnonymousType",  StringComparison.Ordinal) ||
+				(type.Name.StartsWith("<>f__AnonymousType",  StringComparison.Ordinal) ||
 				 type.Name.StartsWith("VB$AnonymousType", StringComparison.Ordinal) &&
 				Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false));
 		}
