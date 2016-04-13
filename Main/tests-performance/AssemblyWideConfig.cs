@@ -27,7 +27,9 @@ namespace CodeJam
 
 		private static bool TryGetSwitch(string scope, string switchName)
 		{
-			var config = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+			var assembly = Assembly.GetExecutingAssembly();
+			var codeBase = new Uri(assembly.CodeBase).LocalPath;
+			var config = ConfigurationManager.OpenExeConfiguration(codeBase);
 
 			var name = scope + "." + switchName;
 			var value = config.AppSettings.Settings[name]?.Value;

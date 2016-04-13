@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.SymbolStore;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -25,7 +26,9 @@ namespace BenchmarkDotNet.NUnit
 			{
 				// ReSharper disable once PossibleNullReferenceException
 				var assembly = target.DeclaringType.Assembly;
-				var symbolReader = TryGetSymbolReaderForFile(assembly.Location, null);
+				var codeBase = new Uri(assembly.CodeBase).LocalPath;
+				var codeBaseDirectory = Path.GetDirectoryName(codeBase);
+				var symbolReader = TryGetSymbolReaderForFile(assembly.Location, codeBaseDirectory);
 
 				return symbolReader?.GetMethod(new SymbolToken(target.MetadataToken));
 			}
