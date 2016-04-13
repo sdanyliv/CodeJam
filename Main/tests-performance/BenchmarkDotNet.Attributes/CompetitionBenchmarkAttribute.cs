@@ -15,6 +15,12 @@ namespace BenchmarkDotNet.NUnit
 	{
 		public CompetitionBenchmarkAttribute() { }
 
+		public CompetitionBenchmarkAttribute(double maxRatio)
+		{
+			MinRatio = -1;
+			MaxRatio = maxRatio;
+		}
+
 		public CompetitionBenchmarkAttribute(double minRatio, double maxRatio)
 		{
 			MinRatio = minRatio;

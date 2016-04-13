@@ -16,10 +16,8 @@ namespace BenchmarkDotNet.NUnit
 			@"
 				(\[CompetitionBenchmark\(?)
 				(
-					\d+\.?\d*
-					\,\s*
-					\d+\.?\d*
-					\s*
+					\s*\-?\d+\.?\d*\s*
+					(\,\s*\-?\d+\.?\d*\s*)?
 				)?
 				(.*?\])",
 			RegexOptions.IgnorePatternWhitespace | RegexOptions.CultureInvariant | RegexOptions.Compiled);
@@ -54,7 +52,7 @@ namespace BenchmarkDotNet.NUnit
 		private static string FixAttributeContent(Match m, CompetitionTarget competitionTarget)
 		{
 			var attributeStartText = m.Groups[1].Value;
-			var attributeEndText = m.Groups[3].Value;
+			var attributeEndText = m.Groups[4].Value;
 
 			var attributeWithoutBraces = !attributeStartText.EndsWith("(");
 			var attributeWithoutMinMax = !m.Groups[2].Success;
@@ -66,12 +64,12 @@ namespace BenchmarkDotNet.NUnit
 			if (attributeWithoutBraces)
 			{
 				result.Append('(');
-				result.Append($"{competitionTarget.MinText}, {competitionTarget.MaxText}");
+				AppendMinMax(result, competitionTarget);
 				result.Append(')');
 			}
 			else
 			{
-				result.Append($"{competitionTarget.MinText}, {competitionTarget.MaxText}");
+				AppendMinMax(result, competitionTarget);
 				if (attributeWithoutMinMax && attributeHasAdditionalContent)
 				{
 					result.Append(", ");
@@ -80,6 +78,18 @@ namespace BenchmarkDotNet.NUnit
 
 			result.Append(attributeEndText);
 			return result.ToString();
+		}
+
+		private static void AppendMinMax(StringBuilder result, CompetitionTarget competitionTarget)
+		{
+			if (!competitionTarget.IgnoreMin)
+			{
+				result.Append(competitionTarget.MinText);
+				result.Append(", ");
+			}
+
+			// Always prints
+			result.Append(competitionTarget.MaxText);
 		}
 	}
 }

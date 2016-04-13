@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml.Linq;
+
+using JetBrains.Annotations;
 
 // ReSharper disable CheckNamespace
 
 namespace BenchmarkDotNet.NUnit
 {
+	[SuppressMessage("ReSharper", "ArrangeRedundantParentheses")]
 	public partial class AnnotateSourceAnalyser
 	{
 		private bool TryFixBenchmarkResource(
@@ -16,19 +20,26 @@ namespace BenchmarkDotNet.NUnit
 			var candidateName = competitionTarget.CandidateName;
 
 			var xdoc = annotateContext.GetXmlAnnotation(xmlFileName);
-			var competition = GetOrCreateElement(xdoc.Root, CompetitionTargetHelpers.CompetitionNode, competitionName);
-			var candidate = GetOrCreateElement(competition, CompetitionTargetHelpers.CandidateNode, candidateName);
+			var competition = GetOrAdd(xdoc.Root, CompetitionTargetHelpers.CompetitionNode, competitionName);
+			var candidate = GetOrAdd(competition, CompetitionTargetHelpers.CandidateNode, candidateName);
 
-			UpdateAttribute(candidate, CompetitionTargetHelpers.MinRatioAttribute, competitionTarget.MinText);
-			UpdateAttribute(candidate, CompetitionTargetHelpers.MaxRatioAttribute, competitionTarget.MaxText);
+			var minText = !competitionTarget.IgnoreMin ? competitionTarget.MinText : null;
+			// Always prints
+			var maxText = competitionTarget.MaxText;
+
+			SetAttribute(candidate, CompetitionTargetHelpers.MinRatioAttribute, minText);
+			SetAttribute(candidate, CompetitionTargetHelpers.MaxRatioAttribute, maxText);
 
 			annotateContext.MarkAsChanged(xmlFileName);
 
 			return true;
 		}
 
-		private XElement GetOrCreateElement(XElement element, XName name, string targetName)
+		private XElement GetOrAdd(XElement element, XName name, string targetName)
 		{
+			if (targetName == null)
+				throw new ArgumentNullException(nameof(targetName));
+
 			var result = element
 				.Elements(name)
 				.SingleOrDefault(e => e.Attribute(CompetitionTargetHelpers.TargetAttribute)?.Value == targetName);
@@ -36,15 +47,22 @@ namespace BenchmarkDotNet.NUnit
 			if (result == null)
 			{
 				result = new XElement(name);
-				UpdateAttribute(result, CompetitionTargetHelpers.TargetAttribute, targetName);
+				SetAttribute(result, CompetitionTargetHelpers.TargetAttribute, targetName);
 				element.Add(result);
 			}
 
 			return result;
 		}
 
-		private XAttribute UpdateAttribute(XElement element, XName attributeName, string attributeValue)
+		[CanBeNull]
+		private XAttribute SetAttribute(XElement element, XName attributeName, string attributeValue)
 		{
+			if (attributeValue == null)
+			{
+				element.Attribute(attributeName)?.Remove();
+				return null;
+			}
+
 			var result = element.Attribute(attributeName);
 
 			if (result == null)

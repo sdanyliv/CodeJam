@@ -22,6 +22,11 @@ namespace BenchmarkDotNet.NUnit
 		public CompetitionTarget(
 			Target target, double min, double max, bool usesResourceAnnotation)
 		{
+			if (min < 0)
+				min = -1;
+			if (max < 0)
+				max = -1;
+
 			Target = target;
 			UsesResourceAnnotation = usesResourceAnnotation;
 			Min = min;
@@ -39,8 +44,8 @@ namespace BenchmarkDotNet.NUnit
 		public double Min { get; private set; }
 		public double Max { get; private set; }
 
-		public string MinText => Min.ToString("0.00###", _culture);
-		public string MaxText => Max.ToString("0.00###", _culture);
+		public string MinText => IgnoreMin ? Min.ToString(_culture) : Min.ToString("0.00###", _culture);
+		public string MaxText => IgnoreMax ? Max.ToString(_culture) : Max.ToString("0.00###", _culture);
 		#endregion
 
 		public CompetitionTarget Clone() => new CompetitionTarget(Target, Min, Max, UsesResourceAnnotation);
@@ -50,34 +55,37 @@ namespace BenchmarkDotNet.NUnit
 		// ReSharper disable once CompareOfFloatsByEqualityOperator
 		public bool MaxIsEmpty => Max == 0;
 
+		public bool IgnoreMin => Min < 0;
+		public bool IgnoreMax => Max < 0;
+
 		public bool IsEmpty => MinIsEmpty && MaxIsEmpty;
 
-		internal bool UnionWithMin(double min)
+		internal bool UnionWithMin(double newMin)
 		{
-			var expanded = false;
+			if (IgnoreMin || newMin <= 0 || double.IsInfinity(newMin))
+				return false;
 
-			// ReSharper disable once CompareOfFloatsByEqualityOperator
-			if (min != 0 && !double.IsInfinity(min) && (MinIsEmpty || Min > min))
+			if (MinIsEmpty || newMin < Min)
 			{
-				expanded = true;
-				Min = min;
+				Min = newMin;
+				return true;
 			}
 
-			return expanded;
+			return false;
 		}
 
-		internal bool UnionWithMax(double max)
+		internal bool UnionWithMax(double newMax)
 		{
-			var expanded = false;
+			if (IgnoreMax || newMax <= 0 || double.IsInfinity(newMax))
+				return false;
 
-			// ReSharper disable once CompareOfFloatsByEqualityOperator
-			if (max != 0 && !double.IsInfinity(max) && (MaxIsEmpty || Max < max))
+			if (MaxIsEmpty || newMax > Max)
 			{
-				expanded = true;
-				Max = max;
+				Max = newMax;
+				return true;
 			}
 
-			return expanded;
+			return false;
 		}
 	}
 }

@@ -126,6 +126,16 @@ namespace BenchmarkDotNet.NUnit
 			double.TryParse(minText, NumberStyles.Any, culture, out min);
 			double.TryParse(maxText, NumberStyles.Any, culture, out max);
 
+			// Only one attribute set
+			if (minText == null && maxText != null)
+			{
+				min = -1; // ignore Min
+			}
+			else if (maxText == null && minText != null)
+			{
+				max = -1; // ignore Max
+			}
+
 			return new CompetitionTarget(target, min, max, true);
 		}
 
@@ -233,6 +243,7 @@ namespace BenchmarkDotNet.NUnit
 					{
 						benchmarkMinRatio = competitionTarget.Min;
 					}
+
 					var benchmarkMaxRatio = defaultMaxRatio;
 					if (!competitionTarget.MaxIsEmpty)
 					{
@@ -242,25 +253,38 @@ namespace BenchmarkDotNet.NUnit
 					var reportMetric = summary.GetPercentile(benchmark, percentileRatio);
 					var actualRatio = Math.Round(reportMetric / baselineMetric, 2);
 
-					var culture = CultureInfo.InvariantCulture;
-					var targetMethodName = competitionTarget.CandidateName;
-					var minText = benchmarkMinRatio.ToString(culture);
-					var maxText = benchmarkMaxRatio.ToString(culture);
-					var actualRatioText = actualRatio.ToString(culture);
-
-					if (actualRatio < benchmarkMinRatio)
-						throw new InvalidOperationException(
-							$"Method {targetMethodName} runs faster than {minText}x baseline. Actual ratio: {actualRatioText}x");
-
-					// ReSharper disable once CompareOfFloatsByEqualityOperator
-					if (benchmarkMaxRatio == 0)
-						throw new InvalidOperationException(
-							$"Method {targetMethodName}: max ratio not set. Actual ratio: {actualRatioText}x");
-
-					if (actualRatio > benchmarkMaxRatio)
-						throw new InvalidOperationException(
-							$"Method {targetMethodName} runs slower than {maxText}x baseline. Actual ratio: {actualRatioText}x");
+					ValidateBenchmark(benchmark, actualRatio, benchmarkMinRatio, benchmarkMaxRatio);
 				}
+			}
+		}
+
+		private static void ValidateBenchmark(
+			Benchmark benchmark,
+			double actualRatio, double benchmarkMinRatio, double benchmarkMaxRatio)
+		{
+			var culture = CultureInfo.InvariantCulture;
+			var targetMethodName = benchmark.Target.Method.Name;
+			var minText = benchmarkMinRatio.ToString(culture);
+			var maxText = benchmarkMaxRatio.ToString(culture);
+			var actualRatioText = actualRatio.ToString(culture);
+
+			if (benchmarkMinRatio >= 0)
+			{
+				if (actualRatio < benchmarkMinRatio)
+					throw new InvalidOperationException(
+						$"Method {targetMethodName} runs faster than {minText}x baseline. Actual ratio: {actualRatioText}x");
+			}
+
+			if (benchmarkMaxRatio >= 0)
+			{
+				// ReSharper disable once CompareOfFloatsByEqualityOperator
+				if (benchmarkMaxRatio == 0)
+					throw new InvalidOperationException(
+						$"Method {targetMethodName}: max ratio not set. Actual ratio: {actualRatioText}x");
+
+				if (actualRatio > benchmarkMaxRatio)
+					throw new InvalidOperationException(
+						$"Method {targetMethodName} runs slower than {maxText}x baseline. Actual ratio: {actualRatioText}x");
 			}
 		}
 	}
