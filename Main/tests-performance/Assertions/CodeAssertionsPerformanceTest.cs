@@ -45,7 +45,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(1.06, 1.14)]
+		[CompetitionBenchmark(0.94, 1.14)]
 		public string Test01RunDefaultAssertion()
 		{
 			var result = "";
@@ -62,7 +62,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(1.06, 1.14)]
+		[CompetitionBenchmark(0.93, 1.14)]
 		public string Test02CodeNotNull()
 		{
 			var result = "";
@@ -78,7 +78,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(1.05, 1.13)]
+		[CompetitionBenchmark(0.95, 1.13)]
 		public string Test03CodeAssertArgument()
 		{
 			var result = "";
@@ -95,7 +95,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(7.92, 8.48)]
+		[CompetitionBenchmark(7.41, 8.48)]
 		public string Test04CodeAssertArgumentFormat()
 		{
 			var result = "";
@@ -112,7 +112,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(148.94, 164.50)]
+		[CompetitionBenchmark(148.94, 175.52)]
 		public string Test05CodeAssertArgumentInterpolateArgs()
 		{
 			var result = "";

@@ -128,7 +128,7 @@ namespace CodeJam.Arithmetic
 				}
 			}
 
-			[CompetitionBenchmark(1.55, 1.95)]
+			[CompetitionBenchmark(1.55, 2.26)]
 			public void Test03ExpressionFunc()
 			{
 				for (var i = 0; i < ValuesA.Length; i++)

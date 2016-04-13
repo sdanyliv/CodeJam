@@ -10,7 +10,7 @@
 		<Candidate Target="DivOperator" MinRatio="1.15" MaxRatio="1.43" />
 	</Competition>
 	<Competition Target="IntLeftShiftCase">
-		<Candidate Target="LeftShiftOperator" MinRatio="1.14" MaxRatio="1.92" />
+		<Candidate Target="LeftShiftOperator" MinRatio="1.14" MaxRatio="2.06" />
 	</Competition>
 	<Competition Target="IntMinusCase">
 		<Candidate Target="MinusOperator" MinRatio="1.44" MaxRatio="2.81" />
@@ -19,7 +19,7 @@
 		<Candidate Target="ModuloOperator" MinRatio="1.11" MaxRatio="1.65" />
 	</Competition>
 	<Competition Target="IntMulCase">
-		<Candidate Target="MulOperator" MinRatio="1.63" MaxRatio="2.47" />
+		<Candidate Target="MulOperator" MinRatio="1.63" MaxRatio="2.60" />
 	</Competition>
 	<Competition Target="IntOnesComplementCase">
 		<Candidate Target="OnesComplementOperator" MinRatio="2.08" MaxRatio="3.67" />
@@ -46,6 +46,6 @@
 		<Candidate Target="MulOperator" MinRatio="1.31" MaxRatio="2.45" />
 	</Competition>
 	<Competition Target="NullableDoublePlusCase">
-		<Candidate Target="PlusOperator" MinRatio="1.38" MaxRatio="2.35" />
+		<Candidate Target="PlusOperator" MinRatio="1.38" MaxRatio="2.77" />
 	</Competition>
 </CompetitionBenchmarks>
