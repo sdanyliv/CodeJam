@@ -108,10 +108,10 @@
     <Compile Include="Collections\LazyDictionary`2.cs" />
     <Compile Include="Collections\EnumerableExtensions.Split.cs" />
     <Compile Include="Collections\KeyEqualityComparer.cs" />
-    <Compile Include="Collections\EnumerableExtensions.MinMaxItem.generated.cs">
+    <Compile Include="Collections\EnumerableExtensions.MinMaxBy.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EnumerableExtensions.MinMaxItem.tt</DependentUpon>
+      <DependentUpon>EnumerableExtensions.MinMaxBy.tt</DependentUpon>
     </Compile>
     <Compile Include="Collections\ILazyDictionary.cs" />
     <Compile Include="Targeting\IReadOnlyCollection.cs" />
@@ -160,7 +160,7 @@
     <Compile Include="Xml\XNodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\EnumerableExtensions.MinMaxItem.cs" />
+    <Compile Include="Collections\EnumerableExtensions.MinMaxBy.cs" />
     <None Include="Compile.cmd">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -182,9 +182,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ArrayExtensions.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Collections\EnumerableExtensions.MinMaxItem.tt">
+    <Content Include="Collections\EnumerableExtensions.MinMaxBy.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EnumerableExtensions.MinMaxItem.generated.cs</LastGenOutput>
+      <LastGenOutput>EnumerableExtensions.MinMaxBy.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Compile.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
