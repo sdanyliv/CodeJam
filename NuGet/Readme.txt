@@ -1,4 +1,4 @@
-CodeJam 1.0.0-beta7 Release Notes
+CodeJam 1.0.0-beta9 Release Notes
 ---------------------------------
 
 What's new in 1.0.0-beta9
@@ -6,7 +6,9 @@ What's new in 1.0.0-beta9
 * ReflectionExtensions.IsAnonymous methods
 * string.ToInt and ToDouble methods
 * OptionalElementValue overload
-* Min/MaxItem now returns default (TSource) when no elements in collection in all overloads
+* Min/MaxItem renamed to Min/MaxBy
+* Min/MaxBy now throws exception when no not null elements in collection in all overloads
+* Min/MaxByOrDefault, returns default(TSource) if no not null elements in source added
 * Refactoring
 * Fixes and code cleanup
 
