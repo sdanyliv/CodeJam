@@ -1,5 +1,13 @@
-CodeJam 1.0.0-beta9 Release Notes
+CodeJam 1.0.0-beta10 Release Notes
 ---------------------------------
+
+What's new in 1.0.0-beta10
+------------------------
+* Add defaultValue parameter to all Min/MaxByOrDefault overloads
+* AssemblyExtensions.GetAssemblyDir/Path improvements
+* Move all string related functions to separate namespace CodeJam.Strings
+* Refactoring
+* Fixes and code cleanup
 
 What's new in 1.0.0-beta9
 ------------------------
