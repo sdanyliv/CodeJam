@@ -5,7 +5,7 @@ using System.Text;
 
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Strings
 {
 	static partial class StringExtensions
 	{

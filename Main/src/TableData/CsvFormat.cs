@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 
 using CodeJam.Collections;
+using CodeJam.Strings;
 
 using JetBrains.Annotations;
 

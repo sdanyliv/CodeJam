@@ -3,7 +3,7 @@ using System.Globalization;
 
 using NUnit.Framework;
 
-namespace CodeJam
+namespace CodeJam.Strings
 {
 	[TestFixture]
 	public class StringExtensionsTests

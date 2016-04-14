@@ -2,6 +2,8 @@
 using System.IO;
 using System.Reflection;
 
+using CodeJam.Strings;
+
 using JetBrains.Annotations;
 
 namespace CodeJam.Reflection

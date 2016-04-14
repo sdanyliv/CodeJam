@@ -147,11 +147,11 @@
     <Compile Include="Reflection\ExpressionHelper.cs" />
     <Compile Include="Reflection\InfoOf.cs" />
     <Compile Include="Reflection\ReflectionExtensions.cs" />
-    <Compile Include="String\CharExtensions.cs" />
-    <Compile Include="String\NaturalOrderStringComparer.cs" />
-    <Compile Include="String\StringExtensions.cs" />
-    <Compile Include="String\StringExtensions.Infix.cs" />
-    <Compile Include="String\StringOrigin.cs" />
+    <Compile Include="Strings\CharExtensions.cs" />
+    <Compile Include="Strings\NaturalOrderStringComparer.cs" />
+    <Compile Include="Strings\StringExtensions.cs" />
+    <Compile Include="Strings\StringExtensions.Infix.cs" />
+    <Compile Include="Strings\StringOrigin.cs" />
     <Compile Include="Threading\InterlockedOperations.cs" />
     <Compile Include="Threading\ParallelExtensions.cs" />
     <Compile Include="Threading\ParallelQueue.cs" />

@@ -1,6 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿using System;
 
-namespace CodeJam
+using JetBrains.Annotations;
+
+namespace CodeJam.Strings
 {
 	/// <summary>
 	/// <see cref="char"/> structure extensions.

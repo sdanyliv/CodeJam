@@ -7,7 +7,7 @@ using CodeJam.Reflection;
 
 using NUnit.Framework;
 
-namespace CodeJam
+namespace CodeJam.Strings
 {
 	[TestFixture]
 	public class NaturalOrderStringComparerTests

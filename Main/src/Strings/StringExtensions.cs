@@ -4,7 +4,7 @@ using System.Globalization;
 
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Strings
 {
 	/// <summary>
 	/// <see cref="string"/> class extensions.

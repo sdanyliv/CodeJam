@@ -4,6 +4,7 @@ using System.Xml;
 using System.Xml.Linq;
 
 using CodeJam.Collections;
+using CodeJam.Strings;
 
 using JetBrains.Annotations;
 

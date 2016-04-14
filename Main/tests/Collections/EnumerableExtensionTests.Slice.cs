@@ -1,6 +1,7 @@
 ﻿using System;
 
 using CodeJam.Collections;
+using CodeJam.Strings;
 
 using NUnit.Framework;
 

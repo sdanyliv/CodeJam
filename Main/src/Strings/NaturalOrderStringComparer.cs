@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
-namespace CodeJam
+namespace CodeJam.Strings
 {
 	/// <summary>
 	/// String comparisons using a "natural order" algorithm.
