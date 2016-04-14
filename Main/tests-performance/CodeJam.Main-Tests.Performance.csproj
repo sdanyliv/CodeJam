@@ -35,6 +35,7 @@
       <HintPath>..\..\packages\BenchmarkDotNet.0.9.3\lib\net45\BenchmarkDotNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ISymWrapper" />
     <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
@@ -48,23 +49,44 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arithmetic\OperatorsGreaterThanPerformanceTest.cs" />
+    <Compile Include="Arithmetic\NumOperatorsPerfTest.generated.cs">
+      <DependentUpon>NumOperatorsPerfTest.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Arithmetic\OperatorsBenchmarkBase.cs" />
     <Compile Include="Arithmetic\OperatorsComparePerformanceTest.cs" />
-    <Compile Include="Assertions\DebugCodeAssertionsPerformanceTest.cs" />
+    <Compile Include="Arithmetic\OperatorsGreaterThanOrEqualPerformanceTest.cs" />
+    <Compile Include="Arithmetic\OperatorsLessThanPerformanceTest.cs" />
+    <Compile Include="AssemblyWideConfig.cs" />
     <Compile Include="Assertions\CodeAssertionsPerformanceTest.cs" />
+    <Compile Include="Assertions\DebugCodeAssertionsPerformanceTest.cs" />
+    <Compile Include="BenchmarkConstants.cs" />
+    <Compile Include="BenchmarkDotNet.Attributes\CompetitionBaselineAttribute.cs" />
+    <Compile Include="BenchmarkDotNet.Attributes\CompetitionBenchmarkAttribute.cs" />
+    <Compile Include="BenchmarkDotNet.Attributes\CompetitionMetadataAttribute.cs" />
+    <Compile Include="BenchmarkDotNet.Core\BenchmarkColumns.cs" />
+    <Compile Include="BenchmarkDotNet.Core\BenchmarkHelpers.cs" />
     <Compile Include="BenchmarkDotNet.NUnit.Tests\BenchmarkHelpersTests.cs" />
-    <Compile Include="BenchmarkDotNet.NUnit\CompetitionBenchmarkAttribute.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\AnnotateSourceAnalyser.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\AnnotateSourceAnalyser.SourceAnnotate.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\AnnotateSourceAnalyser.SymbolHelpers.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\AnnotateSourceAnalyser.XmlAnnotate.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\CompetitionAnalyser.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\CompetitionBenchmarkRunner.cs" />
-    <Compile Include="BenchmarkDotNet.NUnit\BenchmarkHelpers.cs" />
-    <Compile Include="BenchmarkDotNet.NUnit\BenchmarkColumns.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\CompetitionTarget.cs" />
+    <Compile Include="BenchmarkDotNet.NUnit\CompetitionTargetHelpers.cs" />
     <Compile Include="BenchmarkDotNet.NUnit\Configs.cs" />
-    <Compile Include="CalibrationBenchmarks\BenchmarkConstants.cs" />
     <Compile Include="CalibrationBenchmarks\CallCostsBenchmark.cs" />
     <Compile Include="CalibrationBenchmarks\DispatchingOptimizationBenchmark.cs" />
+    <Compile Include="CalibrationBenchmarks\ProofsOpsCountNotSensitiveBenchmark .cs" />
     <Compile Include="CalibrationBenchmarks\ProofsSensitivityBenchmark.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,8 +100,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Content Include="Arithmetic\NumOperatorsPerfTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NumOperatorsPerfTest.generated.cs</LastGenOutput>
+    </Content>
+    <EmbeddedResource Include="Arithmetic\NumOperatorsPerfTest.generated.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
 using JetBrains.Annotations;
 
 using NUnit.Framework;
+
+using static CodeJam.AssemblyWideConfig;
 
 namespace CodeJam.Assertions
 {
@@ -14,18 +15,18 @@ namespace CodeJam.Assertions
 	/// 1. Heavy DebugCode assertions has no impact on release build
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
-	[Config(typeof(FastRunConfig))]
 	[PublicAPI]
 	public class DebugCodeAssertionsPerformanceTest
 	{
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkDebugCodeAssertions() => CompetitionBenchmarkRunner.Run(this, 1, 1);
+		public void BenchmarkDebugCodeAssertions() =>
+			CompetitionBenchmarkRunner.Run(this, RunConfig);
 
 		//[Params(10 * 1000, 100 * 1000, 1000 * 1000)]
 		public int Count { get; set; } = 100 * 1000;
 
-		[Benchmark(Baseline = true)]
+		[CompetitionBaseline]
 		public string Test00RunWithoutAssertion()
 		{
 			var result = "";
@@ -38,8 +39,8 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(0.92, 1.05)]
-		public string Test02CodeNotNullExcluded()
+		[CompetitionBenchmark(0.82, 1.04)]
+		public string Test02AssertionExcluded()
 		{
 			var result = "";
 			var count = Count;

@@ -19,7 +19,7 @@ namespace CodeJam.Arithmetic
 			// Recommendation from https://msdn.microsoft.com/en-us/library/azhsac5f.aspx
 			// For string comparisons, the StringComparer class is recommended over Comparer<String>
 			if (t == typeof(string))
-				return (Func<T, T, int>)(object)(Func<string, string, int>)StringComparer.Ordinal.Compare;
+				return (Func<T, T, int>)(object)(Func<string, string, int>)string.CompareOrdinal;
 
 			if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
 				t = t.GetGenericArguments()[0];
@@ -33,11 +33,11 @@ namespace CodeJam.Arithmetic
 
 		[CanBeNull]
 		public static Func<T, T, bool> GetComparisonCallback<T>(ExpressionType comparisonType) =>
-			CompareUsingOperators<T>(comparisonType) ??
-				CompareUsingComparer<T>(comparisonType);
+			CompareUsingOperators<T>(comparisonType)
+				?? CompareUsingComparer<T>(comparisonType);
 
 		[CanBeNull]
-		public static Func<T, T, bool> CompareUsingOperators<T>(ExpressionType comparisonType)
+		private static Func<T, T, bool> CompareUsingOperators<T>(ExpressionType comparisonType)
 		{
 			switch (comparisonType)
 			{
@@ -81,7 +81,7 @@ namespace CodeJam.Arithmetic
 		}
 
 		[CanBeNull]
-		public static Func<T, T, bool> CompareUsingComparer<T>(ExpressionType comparisonType)
+		private static Func<T, T, bool> CompareUsingComparer<T>(ExpressionType comparisonType)
 		{
 			switch (comparisonType)
 			{
@@ -111,6 +111,28 @@ namespace CodeJam.Arithmetic
 					throw CodeExceptions.UnexpectedArgumentValue(
 						nameof(comparisonType), comparisonType);
 			}
+		}
+
+		public static Func<T, T, T> CreateNumBinOperFunc<T>(ExpressionType operatorType)
+		{
+			var arg1 = Expression.Parameter(typeof(T));
+			var arg2 = Expression.Parameter(typeof(T));
+			var expr = Expression.MakeBinary(operatorType, arg1, arg2);
+			return
+				Expression
+					.Lambda<Func<T, T, T>>(expr, operatorType.ToString(), new[] { arg1, arg2 })
+					.Compile();
+		}
+
+		public static Func<T, T> CreateNumUnOperFunc<T>(ExpressionType operatorType)
+		{
+			var arg = Expression.Parameter(typeof(T));
+			// ReSharper disable once AssignNullToNotNullAttribute
+			var expr = Expression.MakeUnary(operatorType, arg, null);
+			return
+				Expression
+					.Lambda<Func<T, T>>(expr, operatorType.ToString(), new[] { arg })
+					.Compile();
 		}
 	}
 }

@@ -1,13 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
 using JetBrains.Annotations;
 
 using NUnit.Framework;
+
+using static CodeJam.AssemblyWideConfig;
 
 namespace CodeJam.Arithmetic
 {
@@ -16,34 +17,16 @@ namespace CodeJam.Arithmetic
 	/// 1. Proofs that there's no way to make Operators (of T).Compare faster.
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Operators")]
-	[Config(typeof(FastRunConfig))]
 	[PublicAPI]
 	public class OperatorsComparePerformanceTest
 	{
-		private const int Count = 10 * 1000;
-
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkIntComparison() =>
-			CompetitionBenchmarkRunner.Run<IntCase>(1, 1);
-
-		[Test]
-		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkNullableIntComparison() =>
-			CompetitionBenchmarkRunner.Run<NullableIntCase>(1, 1);
-
-		[Test]
-		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkNullableDateTimeComparison() =>
-			CompetitionBenchmarkRunner.Run<NullableDateTimeCase>(1, 1);
-
-		[Test]
-		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkStringComparison()
-			=> CompetitionBenchmarkRunner.Run<StringCase>(1, 1);
+		public void BenchmarkComparisonInt() =>
+			CompetitionBenchmarkRunner.Run<IntCase>(RunConfig);
 
 		[PublicAPI]
-		public class IntCase
+		public class IntCase : IntOperatorsBenchmark
 		{
 			private static readonly Comparer<int> _comparer = Comparer<int>.Default;
 			private static readonly Func<int, int, int> _expressionFunc;
@@ -54,57 +37,50 @@ namespace CodeJam.Arithmetic
 				_expressionFunc = exp.Compile();
 			}
 
-			[Benchmark(Baseline = true)]
+			[CompetitionBaseline]
 			public int Test00DirectCompare()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					result = 1.CompareTo(i % 5);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = ValuesA[i].CompareTo(ValuesB[i]);
 				return result;
 			}
 
-			[CompetitionBenchmark(1.2, 1.3)]
+			[CompetitionBenchmark(2.02, 2.45)]
 			public int Test01Operators()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					result = Operators<int>.Compare(i, i % 5);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = Operators<int>.Compare(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 
-			[CompetitionBenchmark(1.2, 1.95)]
+			[CompetitionBenchmark(1.99, 2.45)]
 			public int Test02Comparer()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					result = _comparer.Compare(i, i % 5);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = _comparer.Compare(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 
-			[CompetitionBenchmark(1.2, 1.9)]
-			public int Test02ExpressionFunc()
+			[CompetitionBenchmark(1.93, 2.11)]
+			public int Test03ExpressionFunc()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					result = _expressionFunc(i, i % 5);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = _expressionFunc(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 		}
 
+		[Test]
+		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
+		public void BenchmarkComparisonNullableInt() =>
+			CompetitionBenchmarkRunner.Run<NullableIntCase>(RunConfig);
+
 		[PublicAPI]
-		public class NullableIntCase
+		public class NullableIntCase : NullableIntOperatorsBenchmark
 		{
 			private static readonly Comparer<int?> _comparer = Comparer<int?>.Default;
 			private static readonly Func<int?, int?, int> _expressionFunc;
@@ -115,73 +91,54 @@ namespace CodeJam.Arithmetic
 				_expressionFunc = exp.Compile();
 			}
 
-			[Benchmark(Baseline = true)]
+			[CompetitionBaseline]
 			public int Test00DirectCompare()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
+				for (var i = 0; i < ValuesA.Length; i++)
 				{
-					int? a = i;
-					int? b = i % 5;
-					if (b == 0)
-						b = null;
+					var a = ValuesA[i];
+					var b = ValuesB[i];
 					result = a == b ? 0 : (a > b ? 1 : -1);
 				}
-
 				return result;
 			}
 
-			[CompetitionBenchmark(0.95, 1.3)]
+			[CompetitionBenchmark(0.72, 0.88)]
 			public int Test01Operators()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					int? a = i;
-					int? b = i % 5;
-					if (b == 0)
-						b = null;
-					result = Operators<int?>.Compare(a, b);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = Operators<int?>.Compare(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 
-			[CompetitionBenchmark(0.95, 1.3)]
+			[CompetitionBenchmark(0.79, 0.90)]
 			public int Test02Comparer()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					int? a = i;
-					int? b = i % 5;
-					if (b == 0)
-						b = null;
-					result = _comparer.Compare(a, b);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = _comparer.Compare(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 
-			[CompetitionBenchmark(1.2, 1.9)]
+			[CompetitionBenchmark(1.46, 1.75)]
 			public int Test03ExpressionFunc()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					int? a = i;
-					int? b = i % 5;
-					if (b == 0)
-						b = null;
-					result = _expressionFunc(a, b);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = _expressionFunc(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 		}
 
+		[Test]
+		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
+		public void BenchmarkComparisonNullableDateTime() => 
+			CompetitionBenchmarkRunner.Run<NullableDateTimeCase>(RunConfig);
+
 		[PublicAPI]
-		public class NullableDateTimeCase
+		public class NullableDateTimeCase : NullableDateTimeOperatorsBenchmark
 		{
 			private static readonly Comparer<DateTime?> _comparer = Comparer<DateTime?>.Default;
 			private static readonly Func<DateTime?, DateTime?, int> _expressionFunc;
@@ -192,128 +149,91 @@ namespace CodeJam.Arithmetic
 				_expressionFunc = exp.Compile();
 			}
 
-			[Benchmark(Baseline = true)]
+			[CompetitionBaseline]
 			public int Test00DirectCompare()
 			{
 				var result = 0;
-				var dt = DateTime.UtcNow;
-				for (var i = 0; i < Count; i++)
+				for (var i = 0; i < ValuesA.Length; i++)
 				{
-					DateTime? a = dt;
-					var i2 = i % 5;
-					var b = i2 == 0 ? (DateTime?)null : dt.AddDays(i2);
-
+					var a = ValuesA[i];
+					var b = ValuesB[i];
 					result = a == b ? 0 : (a > b ? 1 : -1);
 				}
-
 				return result;
 			}
 
-			[CompetitionBenchmark(0.7, 1.1)]
+			[CompetitionBenchmark(0.31, 0.36)]
 			public int Test01Operators()
 			{
 				var result = 0;
-				var dt = DateTime.UtcNow;
-				for (var i = 0; i < Count; i++)
-				{
-					DateTime? a = dt;
-					var i2 = i % 5;
-					var b = i2 == 0 ? (DateTime?)null : dt.AddDays(i2);
-
-					result = Operators<DateTime?>.Compare(a, b);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = Operators<DateTime?>.Compare(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 
-			[CompetitionBenchmark(0.7, 1.1)]
+			[CompetitionBenchmark(0.30, 0.34)]
 			public int Test02Comparer()
 			{
 				var result = 0;
-				var dt = DateTime.UtcNow;
-				for (var i = 0; i < Count; i++)
-				{
-					DateTime? a = dt;
-					var i2 = i % 5;
-					var b = i2 == 0 ? (DateTime?)null : dt.AddDays(i2);
-
-					result = _comparer.Compare(a, b);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = _comparer.Compare(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 
-			[CompetitionBenchmark(0.9, 1.3)]
+			[CompetitionBenchmark(0.55, 0.60)]
 			public int Test03ExpressionFunc()
 			{
 				var result = 0;
-				var dt = DateTime.UtcNow;
-				for (var i = 0; i < Count; i++)
-				{
-					DateTime? a = dt;
-					var i2 = i % 5;
-					var b = i2 == 0 ? (DateTime?)null : dt.AddDays(i2);
-
-					result = _expressionFunc(a, b);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = _expressionFunc(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 		}
 
+		[Test]
+		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
+		public void BenchmarkComparisonString() => 
+			CompetitionBenchmarkRunner.Run<StringCase>(RunConfig);
+
 		[PublicAPI]
-		public class StringCase
+		public class StringCase : StringOperatorsBenchmark
 		{
 			private static readonly Comparer<string> _comparer = Comparer<string>.Default;
+			private static readonly Func<string, string, int> _expressionFunc = string.CompareOrdinal;
 
-			[Benchmark(Baseline = true)]
+			[CompetitionBaseline]
 			public int Test00DirectCompare()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					var a = i.ToString();
-					var b = (i % 5).ToString();
-					if (a == "0")
-						b = null;
-
-					result = string.Compare(a, b, StringComparison.Ordinal);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = string.Compare(ValuesA[i], ValuesB[i], StringComparison.Ordinal);
 				return result;
 			}
 
-			[CompetitionBenchmark(0.95, 1.15)]
+			[CompetitionBenchmark(0.94, 1.04)]
 			public int Test01Operators()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					var a = i.ToString();
-					var b = (i % 5).ToString();
-					if (a == "0")
-						b = null;
-
-					result = Operators<string>.Compare(a, b);
-				}
-
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = Operators<string>.Compare(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 
-			[CompetitionBenchmark(1.4, 1.7)]
+			[CompetitionBenchmark(15.57, 17.70)]
 			public int Test02Comparer()
 			{
 				var result = 0;
-				for (var i = 0; i < Count; i++)
-				{
-					var a = i.ToString();
-					var b = (i % 5).ToString();
-					if (a == "0")
-						b = null;
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = _comparer.Compare(ValuesA[i], ValuesB[i]);
+				return result;
+			}
 
-					result = _comparer.Compare(a, b);
-				}
-
+			[CompetitionBenchmark(0.89, 0.99)]
+			public int Test03ExpressionFunc()
+			{
+				var result = 0;
+				for (var i = 0; i < ValuesA.Length; i++)
+					result = _expressionFunc(ValuesA[i], ValuesB[i]);
 				return result;
 			}
 		}

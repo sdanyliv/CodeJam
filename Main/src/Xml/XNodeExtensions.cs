@@ -4,6 +4,7 @@ using System.Xml;
 using System.Xml.Linq;
 
 using CodeJam.Collections;
+using CodeJam.Strings;
 
 using JetBrains.Annotations;
 
@@ -167,6 +168,24 @@ namespace CodeJam.Xml
 		{
 			if (name == null) throw new ArgumentNullException(nameof(name));
 			return OptionalElementAltValue(parent, valueSelector, defaultValue, name);
+		}
+
+		/// <summary>
+		/// Returns value of optional element.
+		/// </summary>
+		/// <param name="parent">Parent element.</param>
+		/// <param name="valueSelector">Function to parse element value</param>
+		/// <param name="defaultValue">Default value.</param>
+		/// <param name="name">Element name.</param>
+		/// <returns>Selected element value or <paramref name="defaultValue"/> if element does not exist</returns>
+		public static T OptionalElementValue<T>(
+			[NotNull] this XElement parent,
+			[NotNull] XName name,
+			[NotNull] Func<string, T> valueSelector,
+			T defaultValue)
+		{
+			if (name == null) throw new ArgumentNullException(nameof(name));
+			return OptionalElementAltValue(parent, elem => valueSelector(elem.Value), defaultValue, name);
 		}
 
 		/// <summary>

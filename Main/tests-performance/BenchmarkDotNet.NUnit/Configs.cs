@@ -30,7 +30,7 @@ namespace BenchmarkDotNet.NUnit
 				{
 					IterationTime = 100,
 					LaunchCount = 1,
-					WarmupCount = 1,
+					WarmupCount = 3,
 					TargetCount = 10,
 					Jit = Jit.RyuJit
 				});

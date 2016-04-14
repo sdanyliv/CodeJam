@@ -2,6 +2,8 @@
 using System.IO;
 using System.Reflection;
 
+using CodeJam.Strings;
+
 using JetBrains.Annotations;
 
 namespace CodeJam.Reflection
@@ -28,7 +30,7 @@ namespace CodeJam.Reflection
 
 			var result = assembly.GetManifestResourceStream(name);
 			if (result == null)
-				throw new ArgumentException("Resource with specified name not found");
+				throw new ArgumentException($"Resource '{name}' not found in assembly '{assembly}'.");
 
 			return result;
 		}
@@ -37,7 +39,8 @@ namespace CodeJam.Reflection
 		/// Returns path to assembly <paramref name="assembly"/> file.
 		/// </summary>
 		/// <param name="assembly">Assembly.</param>
-		[NotNull, Pure]
+		[NotNull]
+		[Pure]
 		public static string GetAssemblyPath([NotNull] this Assembly assembly)
 		{
 			if (assembly == null)
@@ -45,21 +48,22 @@ namespace CodeJam.Reflection
 
 			var codeBase = assembly.CodeBase;
 			if (codeBase == null)
-				throw new ArgumentException("Specified assembly has no physical code base.");
+				throw new ArgumentException($"Assembly {assembly} has no physical code base.");
 
 			var uri = new Uri(codeBase);
 			if (uri.IsFile)
-				return uri.AbsolutePath;
+				return uri.LocalPath;
 
-			throw new ArgumentException("Specified assembly placed not on local disk.");
+			throw new ArgumentException($"Assembly '{assembly}' placed not on local disk.");
 		}
 
 		/// <summary>
 		/// Returns directory part of path to assembly <paramref name="assembly"/> file.
 		/// </summary>
 		/// <param name="assembly">Assembly.</param>
-		[NotNull, Pure]
+		[CanBeNull]
+		[Pure]
 		public static string GetAssemblyDirectory([NotNull] this Assembly assembly) =>
-			Path.GetDirectoryName(GetAssemblyPath(assembly)) ?? "";
+			Path.GetDirectoryName(GetAssemblyPath(assembly));
 	}
 }

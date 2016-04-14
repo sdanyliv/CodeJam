@@ -13,7 +13,7 @@ namespace CodeJam.Arithmetic
 	/// </summary>
 	// IMPORTANT: DO NOT declare static .ctor on the type. The class should be marked as beforefieldinit. 
 	[PublicAPI]
-	public static class Operators<T>
+	public static partial class Operators<T>
 	{
 		/// <summary>
 		/// Comparison callback

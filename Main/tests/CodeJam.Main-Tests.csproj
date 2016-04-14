@@ -51,12 +51,19 @@
     <Compile Include="Algorithms\EqualRangeTest.cs" />
     <Compile Include="Algorithms\UpperBoundTest.cs" />
     <Compile Include="Arithmetic\OperatorsTest.cs" />
+    <Compile Include="Arithmetic\OperatorsTest.Numeric.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OperatorsTest.Numeric.tt</DependentUpon>
+    </Compile>
     <Compile Include="Assertions\CodeAssertionsTest.cs" />
-    <Compile Include="Collections\AggregateFuncsTest.cs" />
+    <Compile Include="Collections\MinMaxItemTests.cs" />
     <Compile Include="Collections\ArrayExtensionsTest.cs" />
+    <Compile Include="Collections\DisjointSetsTest.cs" />
+    <Compile Include="Collections\QueryableExtensionsTests.ApplyOrder.cs" />
     <Compile Include="Collections\DictionaryExtensionsTest.cs" />
-    <Compile Include="Collections\AggregateFuncsTest.generated.cs">
-      <DependentUpon>AggregateFuncsTest.tt</DependentUpon>
+    <Compile Include="Collections\MinMaxItemTests.generated.cs">
+      <DependentUpon>MinMaxItemTests.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -66,15 +73,18 @@
     <Compile Include="Collections\EnumerableExtensionTests.TakeLast.cs" />
     <Compile Include="Collections\EnumerableExtensionTests.cs" />
     <Compile Include="IO\TempDataTests.cs" />
+    <Compile Include="QueryableExtensionsTests.cs" />
     <Compile Include="Reflection\AssemblyExtensionsTest.cs" />
     <Compile Include="Reflection\CreateInstanceTests.cs" />
+    <Compile Include="Services\ServicesTests.cs" />
+    <Compile Include="TableData\TableDataTest.cs" />
     <Compile Include="Threading\ParallelQueueTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\InfoOfTest.cs" />
     <Compile Include="Reflection\EnumHelperTest.cs" />
     <Compile Include="Reflection\ReflectionExtensionsTest.cs" />
-    <Compile Include="String\NaturalOrderStringComparerTests.cs" />
-    <Compile Include="String\StringExtensionsTests.cs" />
+    <Compile Include="Strings\NaturalOrderStringComparerTests.cs" />
+    <Compile Include="Strings\StringExtensionsTests.cs" />
     <Compile Include="Algorithms\MemoizeTests.cs" />
     <Compile Include="Utilities\MemoryTests.cs" />
   </ItemGroup>
@@ -88,22 +98,26 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Collections\AggregateFuncsTest.tt">
+    <Content Include="Arithmetic\OperatorsTest.Numeric.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AggregateFuncsTest.generated.cs</LastGenOutput>
+      <LastGenOutput>OperatorsTest.Numeric.generated.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="String\Data\Dates.Expected.txt" />
-    <EmbeddedResource Include="String\Data\Dates.txt" />
-    <EmbeddedResource Include="String\Data\Debs.Expected.txt" />
-    <EmbeddedResource Include="String\Data\Debs.txt" />
-    <EmbeddedResource Include="String\Data\DebVersions.Expected.txt" />
-    <EmbeddedResource Include="String\Data\DebVersions.txt" />
-    <EmbeddedResource Include="String\Data\Fractions.Expected.txt" />
-    <EmbeddedResource Include="String\Data\Fractions.txt" />
-    <EmbeddedResource Include="String\Data\Versions.Expected.txt" />
-    <EmbeddedResource Include="String\Data\Versions.txt" />
-    <EmbeddedResource Include="String\Data\Words.Expected.txt" />
-    <EmbeddedResource Include="String\Data\Words.txt" />
+    <Content Include="Collections\MinMaxItemTests.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MinMaxItemTests.generated.cs</LastGenOutput>
+    </Content>
+    <EmbeddedResource Include="Strings\Data\Dates.Expected.txt" />
+    <EmbeddedResource Include="Strings\Data\Dates.txt" />
+    <EmbeddedResource Include="Strings\Data\Debs.Expected.txt" />
+    <EmbeddedResource Include="Strings\Data\Debs.txt" />
+    <EmbeddedResource Include="Strings\Data\DebVersions.Expected.txt" />
+    <EmbeddedResource Include="Strings\Data\DebVersions.txt" />
+    <EmbeddedResource Include="Strings\Data\Fractions.Expected.txt" />
+    <EmbeddedResource Include="Strings\Data\Fractions.txt" />
+    <EmbeddedResource Include="Strings\Data\Versions.Expected.txt" />
+    <EmbeddedResource Include="Strings\Data\Versions.txt" />
+    <EmbeddedResource Include="Strings\Data\Words.Expected.txt" />
+    <EmbeddedResource Include="Strings\Data\Words.txt" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

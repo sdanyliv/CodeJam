@@ -12,9 +12,8 @@ namespace CodeJam.Arithmetic
 	[TestFixture(Category = "Arithmetic")]
 	[TestFixture]
 	[SuppressMessage("ReSharper", "ClassNeverInstantiated.Local")]
-	[SuppressMessage("ReSharper", "PossibleNullReferenceException")]
 	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
-	public class OperatorsTest
+	public partial class OperatorsTest
 	{
 		#region Helper types
 		private class ClassNoComparable { }
@@ -117,7 +116,7 @@ namespace CodeJam.Arithmetic
 			Assert.IsTrue(ClassOperatorsComparable.OpCalled);
 			Assert.IsFalse(ClassOperatorsComparable.GenericCalled);
 
-			// Proof: IComparable called for Compare mmethod
+			// Proof: IComparable called for Compare method
 			ClassOperatorsComparable.OpCalled = false;
 			ClassOperatorsComparable.GenericCalled = false;
 			Operators<ClassOperatorsComparable>.Compare(
@@ -137,7 +136,7 @@ namespace CodeJam.Arithmetic
 			Assert.IsFalse(obj2.NonGenericCalled);
 			Assert.IsTrue(obj2.GenericCalled);
 
-			// Proof: IComparable<T>  called for Compare mmethod
+			// Proof: IComparable<T>  called for Compare method
 			obj2.NonGenericCalled = false;
 			obj2.GenericCalled = false;
 			Operators<ClassComparable2>.Compare(
@@ -236,5 +235,8 @@ namespace CodeJam.Arithmetic
 			Assert.That(StringOp.LessThan("2", "2"), Is.EqualTo(false));
 			Assert.That(StringOp.LessThan("2", "1"), Is.EqualTo(false));
 		}
+
+		//[Test]
+		//public void StrPlus() => Assert.AreEqual("3", StringOp.Plus("1", "2"));
 	}
 }

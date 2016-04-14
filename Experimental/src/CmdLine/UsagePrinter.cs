@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
+using CodeJam.Strings;
+
 namespace CodeJam.CmdLine
 {
 	internal static class UsagePrinter

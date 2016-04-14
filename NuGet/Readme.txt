@@ -1,11 +1,53 @@
-CodeJam 1.0.0-beta6 Release Notes
----------------------------------------
+CodeJam 1.0.0-beta10 Release Notes
+---------------------------------
+
+What's new in 1.0.0-beta10
+------------------------
+* Add defaultValue parameter to all Min/MaxByOrDefault overloads
+* AssemblyExtensions.GetAssemblyDir/Path improvements
+* Move all string related functions to separate namespace CodeJam.Strings
+* Refactoring
+* Fixes and code cleanup
+
+What's new in 1.0.0-beta9
+------------------------
+* ReflectionExtensions.IsAnonymous methods
+* string.ToInt and ToDouble methods
+* OptionalElementValue overload
+* Min/MaxItem renamed to Min/MaxBy
+* Min/MaxBy now throws exception when no not null elements in collection in all overloads
+* Min/MaxByOrDefault, returns default(TSource) if no not null elements in source added
+* Refactoring
+* Fixes and code cleanup
+
+What's new in 1.0.0-beta8
+------------------------
+* Unary generic operators for numeric types (-, ~)
+* DisjointSets and DisjointSets<T> collections
+* Fixes and code cleanup
+
+What's new in 1.0.0-beta7
+------------------------
+* ServiceContainer disposes created by factory instances
+* Service provider chaining in ServiceContainer
+* ReflectionExtensions.IsNumeric and IsInteger methods
+* Generic operators for numeric types (+, -, *, /, %, ^, &, |, >>, <<)
+* Refactoring
+* Fixes, code cleanup and annotations
 
 What's new in 1.0.0-beta6
 -------------------------
 * ReflectionExtensions.ToUnderlying method
 * ReflectionExtensions.GetMemberType method
+* QueryableExtensions.ApplyOrder method
+* EnumHelper.GetField and GetPairs methods
+* Additional methods in InfoOf classes
+* IServicePublisher interface
+* System.IServiceProvider and IServicePublisher helper methods
+* ServiceContainer class (IServicePublisher implementation)
+* CSV and fixed width parsers
 * Performance optimization
+* Refactoring
 * Fixes, code cleanup and annotations
 
 What's new in 1.0.0-beta5

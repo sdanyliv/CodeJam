@@ -1,12 +1,13 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
 
 using JetBrains.Annotations;
 
 using NUnit.Framework;
+
+using static CodeJam.AssemblyWideConfig;
 
 namespace CodeJam.Assertions
 {
@@ -16,21 +17,21 @@ namespace CodeJam.Assertions
 	/// 2. Assertion should add no more than 20% penalty on tight loop use-case.
 	/// </summary>
 	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
-	[Config(typeof(FastRunConfig))]
 	[SuppressMessage("ReSharper", "PassStringInterpolation")]
 	[PublicAPI]
 	public class CodeAssertionsPerformanceTest
 	{
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkCodeAssertions() => CompetitionBenchmarkRunner.Run(this, 0.75, 1.1);
+		public void BenchmarkCodeAssertions() =>
+			CompetitionBenchmarkRunner.Run(this, RunConfig);
 
 		//[Params(10 * 1000, 100 * 1000, 1000 * 1000)]
 		public int Count { get; set; } = 100 * 1000;
 
 		private static string GetArg(int i) => i % 2 == 0 ? "0" : "1";
 
-		[Benchmark(Baseline = true)]
+		[CompetitionBaseline]
 		public string Test00RunWithoutAssertion()
 		{
 			var result = "";
@@ -44,7 +45,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(0.85, 1.22)]
+		[CompetitionBenchmark(0.94, 1.14)]
 		public string Test01RunDefaultAssertion()
 		{
 			var result = "";
@@ -61,7 +62,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(0.85, 1.22)]
+		[CompetitionBenchmark(0.93, 1.14)]
 		public string Test02CodeNotNull()
 		{
 			var result = "";
@@ -77,7 +78,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(0.85, 1.22)]
+		[CompetitionBenchmark(0.95, 1.13)]
 		public string Test03CodeAssertArgument()
 		{
 			var result = "";
@@ -94,7 +95,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(3.9, 10.9)]
+		[CompetitionBenchmark(7.41, 8.48)]
 		public string Test04CodeAssertArgumentFormat()
 		{
 			var result = "";
@@ -111,7 +112,7 @@ namespace CodeJam.Assertions
 			return result;
 		}
 
-		[CompetitionBenchmark(80, 250)]
+		[CompetitionBenchmark(148.94, 175.52)]
 		public string Test05CodeAssertArgumentInterpolateArgs()
 		{
 			var result = "";

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.ConstrainedExecution;
 
-namespace CodeJam.Utilities
+namespace CodeJam
 {
 	/// <summary>
 	/// The utility class for working with arrays of primitive types.

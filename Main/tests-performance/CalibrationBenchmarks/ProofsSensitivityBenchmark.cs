@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.NUnit;
@@ -7,24 +7,25 @@ using JetBrains.Annotations;
 
 using NUnit.Framework;
 
+using static CodeJam.AssemblyWideConfig;
+
 namespace CodeJam
 {
 	/// <summary>
-	/// Prooftest: benchmark is sensitive enough to spot a minimal method change
+	/// Proof test: benchmark is sensitive enough to spot a minimal method change
 	/// </summary>
-	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory)]
-	[Config(typeof(FastRunConfig))]
+	[TestFixture(Category = BenchmarkConstants.BenchmarkCategory + ": Self-testing")]
 	[PublicAPI]
 	public class ProofsSensitivityBenchmark
 	{
 		[Test]
 		[Explicit(BenchmarkConstants.ExplicitExcludeReason)]
-		public void BenchmarkSensitivity() => CompetitionBenchmarkRunner.Run(this, 1.5, 1.75);
+		public void BenchmarkSensitivity() => CompetitionBenchmarkRunner.Run(this, RunConfig);
 
 		[Params(1000, 10 * 1000, 100 * 1000, 1000 * 1000)]
 		public int Count { get; set; }
 
-		[Benchmark(Baseline = true)]
+		[CompetitionBaseline]
 		public int Test00Baseline()
 		{
 			var sum = 0;
@@ -37,7 +38,7 @@ namespace CodeJam
 			return sum;
 		}
 
-		[CompetitionBenchmark(1.5, 1.75)]
+		[CompetitionBenchmark(1.46, 1.79)]
 		public int Test01PlusOne()
 		{
 			var sum = 0;

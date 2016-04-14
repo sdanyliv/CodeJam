@@ -58,6 +58,11 @@
     <Compile Include="Algorithms\Memoize.cs" />
     <Compile Include="Algorithms\Swap.cs" />
     <Compile Include="Algorithms\UpperBound.cs" />
+    <Compile Include="Arithmetic\Operators.Numeric.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Operators.Numeric.tt</DependentUpon>
+    </Compile>
     <Compile Include="Arithmetic\OperatorsFactory.cs" />
     <Compile Include="Arithmetic\Operators.cs" />
     <Compile Include="Assertions\Code.NonDebug.cs" />
@@ -69,12 +74,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DebugCode.tt</DependentUpon>
     </Compile>
+    <Compile Include="Collections\DisjointSets.cs" />
+    <Compile Include="Collections\DisjointSetsBase.cs" />
+    <Compile Include="Collections\DisjointSetsT.cs" />
     <Compile Include="Collections\EnumerableExtensions.Index.cs" />
     <Compile Include="Collections\IndexedItem.cs" />
     <Compile Include="Collections\EnumerableExtensions.Page.cs" />
     <Compile Include="Collections\EnumerableExtensions.Slice.cs" />
+    <Compile Include="Collections\QueryableExtensions.ApplyOrder.cs" />
     <Compile Include="Collections\QueryableExtensions.cs" />
+    <Compile Include="Reflection\InfoOf`1.cs" />
     <Compile Include="Reflection\ParamInfo.cs" />
+    <Compile Include="Services\IServicePublisher.cs" />
+    <Compile Include="Services\ServiceContainer.cs" />
+    <Compile Include="Services\ServiceProviderHelper.cs" />
+    <Compile Include="TableData\CsvFormat.cs" />
+    <Compile Include="TableData\DataLine.cs" />
+    <Compile Include="TableData\FixedWidthFormat.cs" />
+    <Compile Include="TableData\ITableDataFormatter.cs" />
+    <Compile Include="TableData\TableDataParser.cs" />
+    <Compile Include="TableData\TableDataPrinter.cs" />
     <Compile Include="Targeting\CustomAttributeExtensions.cs" />
     <Compile Include="Targeting\PlatformDependent.cs" />
     <Compile Include="Collections\ArrayExtensions.cs" />
@@ -89,10 +108,10 @@
     <Compile Include="Collections\LazyDictionary`2.cs" />
     <Compile Include="Collections\EnumerableExtensions.Split.cs" />
     <Compile Include="Collections\KeyEqualityComparer.cs" />
-    <Compile Include="Collections\EnumerableExtensions.generated.cs">
+    <Compile Include="Collections\EnumerableExtensions.MinMaxBy.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EnumerableExtensions.tt</DependentUpon>
+      <DependentUpon>EnumerableExtensions.MinMaxBy.tt</DependentUpon>
     </Compile>
     <Compile Include="Collections\ILazyDictionary.cs" />
     <Compile Include="Targeting\IReadOnlyCollection.cs" />
@@ -128,11 +147,11 @@
     <Compile Include="Reflection\ExpressionHelper.cs" />
     <Compile Include="Reflection\InfoOf.cs" />
     <Compile Include="Reflection\ReflectionExtensions.cs" />
-    <Compile Include="String\CharExtensions.cs" />
-    <Compile Include="String\NaturalOrderStringComparer.cs" />
-    <Compile Include="String\StringExtensions.cs" />
-    <Compile Include="String\StringExtensions.Infix.cs" />
-    <Compile Include="String\StringOrigin.cs" />
+    <Compile Include="Strings\CharExtensions.cs" />
+    <Compile Include="Strings\NaturalOrderStringComparer.cs" />
+    <Compile Include="Strings\StringExtensions.cs" />
+    <Compile Include="Strings\StringExtensions.Infix.cs" />
+    <Compile Include="Strings\StringOrigin.cs" />
     <Compile Include="Threading\InterlockedOperations.cs" />
     <Compile Include="Threading\ParallelExtensions.cs" />
     <Compile Include="Threading\ParallelQueue.cs" />
@@ -141,7 +160,7 @@
     <Compile Include="Xml\XNodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\EnumerableExtensions.AggregateFuncs.cs" />
+    <Compile Include="Collections\EnumerableExtensions.MinMaxBy.cs" />
     <None Include="Compile.cmd">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -150,6 +169,11 @@
     <Compile Include="Reflection\ReflectionExtension.CreateInstance.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Arithmetic\Operators.Numeric.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Operators.Numeric.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Arithmetic\Operators.ttinclude" />
     <Content Include="Assertions\DebugCode.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DebugCode.generated.cs</LastGenOutput>
@@ -158,9 +182,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ArrayExtensions.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Collections\EnumerableExtensions.tt">
+    <Content Include="Collections\EnumerableExtensions.MinMaxBy.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EnumerableExtensions.generated.cs</LastGenOutput>
+      <LastGenOutput>EnumerableExtensions.MinMaxBy.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Compile.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

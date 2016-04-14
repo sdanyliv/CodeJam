@@ -26,7 +26,7 @@ namespace CodeJam.IO
 				Assert.AreNotEqual(dir.Path, dir2.Path, "Path should not match");
 				Assert.IsTrue(dir2.Info.Exists, "Directory should exist");
 				dir2.Dispose();
-				Assert.Throws<ObjectDisposedException>(() => dir2.Info.Exists.ToString());
+				Assert.Throws<ObjectDisposedException>(() => dir2.Info.ToString());
 			}
 			Assert.IsFalse(Directory.Exists(dirPath), "Directory should NOT exist");
 
@@ -87,7 +87,7 @@ namespace CodeJam.IO
 				Assert.AreNotEqual(file.Path, file2.Path, "Path should not match");
 				Assert.IsTrue(file2.Info.Exists, "File should exist");
 				file2.Dispose();
-				Assert.Throws<ObjectDisposedException>(() => file2.Info.Exists.ToString());
+				Assert.Throws<ObjectDisposedException>(() => file2.Info.ToString());
 			}
 			Assert.IsFalse(File.Exists(filePath), "File should NOT exist");
 
