@@ -194,8 +194,11 @@ namespace CodeJam.Reflection
 		{
 			Code.NotNull(type, nameof(type));
 
-			if (type.IsNullable()) type = type.GetGenericArguments()[0];
-			if (type.IsEnum)       type = Enum.GetUnderlyingType(type);
+			if (type.IsEnum)
+				return Enum.GetUnderlyingType(type);
+			var nullUnder = Nullable.GetUnderlyingType(type);
+			if (nullUnder != null)
+				return nullUnder;
 
 			return type;
 		}
@@ -225,9 +228,8 @@ namespace CodeJam.Reflection
 				case MemberTypes.Method      : return ((MethodInfo)  memberInfo).ReturnType;
 				case MemberTypes.Constructor : return                memberInfo. DeclaringType;
 				case MemberTypes.Event       : return ((EventInfo)   memberInfo).EventHandlerType;
+				default                      : throw new InvalidOperationException();
 			}
-
-			throw new InvalidOperationException();
 		}
 
 		/// <summary>

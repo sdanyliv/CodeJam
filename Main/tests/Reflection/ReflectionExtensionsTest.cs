@@ -80,6 +80,11 @@ namespace CodeJam.Reflection
 		[TestCase(typeof(DateTime?), ExpectedResult = false)]
 		public bool IsNumeric(Type type) => type.IsNumeric();
 
+		[TestCase(typeof(AttributeTargets), ExpectedResult = typeof(int))]
+		[TestCase(typeof(int?), ExpectedResult = typeof(int))]
+		[TestCase(typeof(string), ExpectedResult = typeof(string))]
+		public Type ToUndelying(Type type) => type.ToUnderlying();
+
 		[CompilerGenerated]
 		private class NotAnonymousType<T> : List<T>
 		{
