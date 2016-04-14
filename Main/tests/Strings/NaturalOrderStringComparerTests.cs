@@ -20,8 +20,8 @@ namespace CodeJam.Strings
 		[TestCase("Words.txt")]
 		public void Test(string source)
 		{
-			var data = LoadTestData($"CodeJam.String.Data.{source}");
-			var expected = LoadTestData($"CodeJam.String.Data.{Path.ChangeExtension(source, ".Expected.txt")}");
+			var data = LoadTestData($"CodeJam.Strings.Data.{source}");
+			var expected = LoadTestData($"CodeJam.Strings.Data.{Path.ChangeExtension(source, ".Expected.txt")}");
 
 			var actual = data.OrderBy(s => s, NaturalOrderStringComparer.Comparer).ToList();
 			DumpData(actual);
